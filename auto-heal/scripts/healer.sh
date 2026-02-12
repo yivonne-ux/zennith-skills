@@ -150,13 +150,14 @@ if [ "$LOCK_ERRORS" -gt 2 ] 2>/dev/null; then
     post_to_room "feedback" "healer" "Removed stale session locks ($LOCK_ERRORS errors)" "recovery"
     record_fix "lock-stuck" "Removed stale lock files"
   else
-    # Locks are held by active process — restart gateway
+    # Locks are held by active process — restart gateway via LaunchAgent
     log "  No stale locks found — restarting gateway to clear in-memory locks"
-    openclaw gateway stop 2>/dev/null || true
+    launchctl bootout gui/501/ai.openclaw.gateway 2>/dev/null || true
     sleep 3
     kill $(pgrep -f "openclaw-gateway") 2>/dev/null || true
     sleep 2
-    nohup openclaw gateway >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
+    launchctl bootstrap gui/501 ~/Library/LaunchAgents/ai.openclaw.gateway.plist 2>/dev/null || \
+      nohup openclaw gateway --force >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
     sleep 5
     if pgrep -f "openclaw-gateway" >/dev/null 2>&1; then
       log "  Gateway restarted to clear locks"
@@ -270,13 +271,14 @@ EMPTY_RUNS=$(echo "$RECENT_LOGS" | grep -c "sessionKey=unknown" 2>/dev/null || e
 if [ "$EMPTY_RUNS" -gt 3 ] 2>/dev/null; then
   log "DETECTED: $EMPTY_RUNS runs with sessionKey=unknown (broken session mapping)"
 
-  # Fix: restart gateway to re-establish session mappings
+  # Fix: restart gateway via LaunchAgent to re-establish session mappings
   log "  Restarting gateway to fix session mappings"
-  openclaw gateway stop 2>/dev/null || true
+  launchctl bootout gui/501/ai.openclaw.gateway 2>/dev/null || true
   sleep 3
   kill $(pgrep -f "openclaw-gateway") 2>/dev/null || true
   sleep 2
-  nohup openclaw gateway >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
+  launchctl bootstrap gui/501 ~/Library/LaunchAgents/ai.openclaw.gateway.plist 2>/dev/null || \
+    nohup openclaw gateway --force >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
   sleep 5
 
   if pgrep -f "openclaw-gateway" >/dev/null 2>&1; then

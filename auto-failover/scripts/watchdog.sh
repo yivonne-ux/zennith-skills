@@ -45,8 +45,11 @@ if [ -z "$GATEWAY_PID" ]; then
   log "ALERT: Gateway process not found. Attempting restart..."
   post_to_room "feedback" "watchdog" "Gateway dead — auto-restarting" "incident"
 
-  # Restart gateway
-  nohup openclaw gateway --force >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
+  # Restart gateway via LaunchAgent (persists across cron cycles)
+  launchctl bootout gui/501/ai.openclaw.gateway 2>/dev/null || true
+  sleep 2
+  launchctl bootstrap gui/501 ~/Library/LaunchAgents/ai.openclaw.gateway.plist 2>/dev/null || \
+    nohup openclaw gateway --force >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
   sleep 5
 
   NEW_PID=$(pgrep -f "openclaw-gateway" 2>/dev/null || true)
