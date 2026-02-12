@@ -158,7 +158,9 @@ Athena speaks in insights, not raw data. She always leads with the "so what" bef
 
 - Google Sheets reader (sales data, inventory)
 - Klaviyo analytics (EDM metrics via Maton)
+- `meta-ads-manager` (Meta ad performance analysis, creative fatigue detection)
 - Channel dashboards (Shopee, Lazada, TikTok — via scraping or API)
+- `credential-resolver` (auth barrier resolution)
 - Room read/write
 
 ### Room Assignments
@@ -245,6 +247,8 @@ Hermes is fast, energetic, and deal-focused. He talks like a trader on the floor
 ### Tools
 
 - Channel seller dashboards (Shopee Seller Center, Lazada Seller, TikTok Shop)
+- `meta-ads-manager` (Meta Marketing API — campaign management, budget optimization)
+- `product-scout` (marketplace opportunity scanning)
 - Pricing calculator (internal margin model)
 - Promotion/voucher setup tools
 - Room read/write
@@ -335,7 +339,8 @@ Apollo is expressive, thoughtful, and brand-obsessed. He cares deeply about aest
 
 - `art-director` (visual style DNA, prompt packs, QA rubric)
 - `pinterest-assistant` (visual research and moodboarding)
-- Image generation tools (NanoBanana, Midjourney prompt generation)
+- `content-intel` (UGC, A-roll/B-roll, 分镜 storyboarding, ad formats, AI video generation)
+- Image generation tools (NanoBanana, Midjourney, Kling AI, Runway)
 - Klaviyo EDM builder (via Maton)
 - Room read/write
 
@@ -424,8 +429,13 @@ Artemis is precise, methodical, and focused. She speaks like a field researcher 
 ### Tools
 
 - `site-scraper` (web scraping for product pages, listings)
-- Shopee/Lazada/TikTok search APIs (via scraping)
-- Google Trends, keyword research tools
+- `meta-ads-library` (Meta Ad Library competitor ad scraping)
+- `tiktok-trends` (TikTok Creative Center trends scraper)
+- `ig-reels-trends` (Instagram Reels trending content)
+- `youtube-intel` (YouTube marketing intelligence)
+- `product-scout` (衣食住行 marketplace opportunity scanner)
+- `innovation-scout` (daily AI innovation research)
+- `credential-resolver` (auth barrier resolution protocol)
 - Room read/write
 
 ### Room Assignments

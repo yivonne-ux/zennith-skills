@@ -23,7 +23,7 @@ An always-on R&D loop where Artemis researches the best AI agent innovations and
 ## Daily Scout Cycle
 
 **Trigger:** Cron job, daily at 08:00 Asia/Kuala_Lumpur (morning report before work begins)
-**Agent:** Artemis 🏹 (with `site-scraper`, `firecrawl-search`, `browser-use`)
+**Agent:** Artemis 🏹 (with `site-scraper`, `meta-ads-library`, `tiktok-trends`, `ig-reels-trends`, `youtube-intel`, `product-scout`, `credential-resolver`)
 
 ### Scrape Targets
 
