@@ -99,10 +99,17 @@ for key, session in data.items():
         continue
 
     if tokens > reset_threshold:
-        # Auto-reset: backup session ID and clear
+        # Auto-reset: backup session ID and clear ALL state
         old_sid = session.get("sessionId", "none")
         session["totalTokens"] = 0
+        session["inputTokens"] = 0
+        session["outputTokens"] = 0
         session["sessionId"] = None
+        session["sessionFile"] = None
+        session["systemSent"] = False
+        session["compactionCount"] = 0
+        session.pop("systemPromptReport", None)
+        session.pop("skillsSnapshot", None)
         modified = True
         reset_count += 1
         print(f"RESET: {key[:50]} (was {tokens} tokens, sid={old_sid})", file=sys.stderr)
