@@ -66,6 +66,12 @@ fi
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 if [ -f "$SESSIONS_FILE" ]; then
+  # FIRST: Extract recap from bloated sessions BEFORE resetting them
+  RECALL_SCRIPT="$HOME/.openclaw/skills/session-recall/scripts/recall.sh"
+  if [ -x "$RECALL_SCRIPT" ]; then
+    bash "$RECALL_SCRIPT" all "watchdog-auto-reset" >> "$LOG_FILE" 2>&1 || true
+  fi
+
   RESET_COUNT=$(python3 << 'PYEOF'
 import json, os, sys, shutil
 from datetime import datetime
