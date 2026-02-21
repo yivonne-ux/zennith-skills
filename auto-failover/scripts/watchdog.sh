@@ -7,16 +7,14 @@
 set -uo pipefail
 
 OPENCLAW_DIR="$HOME/.openclaw"
-SESSIONS_FILE="$OPENCLAW_DIR/agents/main/sessions/sessions.json"
+AGENTS_DIR="$OPENCLAW_DIR/agents"
 CONFIG_FILE="$OPENCLAW_DIR/openclaw.json"
 ROOMS_DIR="$OPENCLAW_DIR/workspace/rooms"
 LOG_FILE="$OPENCLAW_DIR/logs/watchdog.log"
 VERBOSE="${1:-}"
 
-# Context window limit (tokens) — leave 20% headroom
-CONTEXT_LIMIT=262144
-WARN_THRESHOLD=$(( CONTEXT_LIMIT * 80 / 100 ))   # 209715
-RESET_THRESHOLD=$(( CONTEXT_LIMIT * 90 / 100 ))   # 235929
+# Default context limit — overridden per-agent below
+DEFAULT_CONTEXT_LIMIT=200000
 
 TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TS_LOCAL=$(date +"%Y-%m-%d %H:%M:%S %Z")
@@ -39,7 +37,7 @@ post_to_room() {
 # 1. CHECK GATEWAY ALIVE
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-GATEWAY_PID=$(pgrep -f "openclaw-gateway" 2>/dev/null || true)
+GATEWAY_PID=$(pgrep -x "openclaw-gateway" 2>/dev/null || ps aux | grep -v grep | grep "openclaw-gateway" | awk '{print $2}' | head -1 || true)
 
 if [ -z "$GATEWAY_PID" ]; then
   log "ALERT: Gateway process not found. Attempting restart..."
@@ -65,45 +63,93 @@ else
 fi
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# 2. CHECK SESSION TOKEN COUNTS
+# 2. CHECK SESSION TOKEN COUNTS (ALL AGENTS)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-if [ -f "$SESSIONS_FILE" ]; then
-  # FIRST: Extract recap from bloated sessions BEFORE resetting them
-  RECALL_SCRIPT="$HOME/.openclaw/skills/session-recall/scripts/recall.sh"
-  if [ -x "$RECALL_SCRIPT" ]; then
-    bash "$RECALL_SCRIPT" all "watchdog-auto-reset" >> "$LOG_FILE" 2>&1 || true
+# Get context limit per agent (capped for safety — no agent gets full 1M)
+get_context_limit() {
+  local agent_name="$1"
+  case "$agent_name" in
+    main|artemis|hermes)       echo 202000 ;;   # GLM-4.7-flash
+    calliope|apollo|iris)      echo 202000 ;;   # Gemini 3 Pro (capped — don't use full 1M)
+    athena)                    echo 200000 ;;   # GLM-5
+    daedalus)                  echo 200000 ;;   # Kimi K2.5
+    *)                         echo 200000 ;;   # Default safe limit
+  esac
+}
+
+RECALL_SCRIPT="$HOME/.openclaw/skills/session-recall/scripts/recall.sh"
+TOTAL_RESETS=0
+AGENTS_CHECKED=0
+
+for AGENT_DIR in "$AGENTS_DIR"/*/; do
+  # Skip if not a real directory (could be symlink — follow it, but skip broken ones)
+  [ -d "$AGENT_DIR" ] || continue
+
+  AGENT_NAME=$(basename "$AGENT_DIR")
+
+  # Skip symlinks to avoid double-processing (art-director -> daedalus, creative-director -> calliope)
+  if [ -L "$AGENTS_DIR/$AGENT_NAME" ]; then
+    log "SKIP: $AGENT_NAME (symlink to $(readlink "$AGENTS_DIR/$AGENT_NAME"))"
+    continue
   fi
 
-  RESET_COUNT=$(python3 << 'PYEOF'
+  SESSION_FILE="$AGENT_DIR/sessions/sessions.json"
+  if [ ! -f "$SESSION_FILE" ]; then
+    continue
+  fi
+
+  AGENTS_CHECKED=$(( AGENTS_CHECKED + 1 ))
+  AGENT_LIMIT=$(get_context_limit "$AGENT_NAME")
+  AGENT_WARN=$(( AGENT_LIMIT * 75 / 100 ))
+  AGENT_RESET=$(( AGENT_LIMIT * 85 / 100 ))
+
+  # Run session-recall BEFORE resetting (only if recall script exists)
+  if [ -x "$RECALL_SCRIPT" ]; then
+    bash "$RECALL_SCRIPT" all "watchdog-auto-reset-$AGENT_NAME" >> "$LOG_FILE" 2>&1 || true
+  fi
+
+  RESET_COUNT=$(WATCHDOG_AGENT="$AGENT_NAME" WATCHDOG_AGENT_DIR="$AGENT_DIR" WATCHDOG_WARN="$AGENT_WARN" WATCHDOG_RESET="$AGENT_RESET" WATCHDOG_LIMIT="$AGENT_LIMIT" python3 << 'PYEOF'
 import json, os, sys, shutil
 from datetime import datetime
 
-sessions_file = os.path.expanduser("~/.openclaw/agents/main/sessions/sessions.json")
-warn_threshold = int(sys.argv[1]) if len(sys.argv) > 1 else 209715
-reset_threshold = int(sys.argv[2]) if len(sys.argv) > 2 else 235929
+agent_name = os.environ.get("WATCHDOG_AGENT", "unknown")
+agent_dir = os.environ.get("WATCHDOG_AGENT_DIR", "")
+sessions_file = os.path.join(agent_dir, "sessions", "sessions.json")
+context_limit = int(os.environ.get("WATCHDOG_LIMIT", "200000"))
+warn_threshold = int(os.environ.get("WATCHDOG_WARN", "150000"))
+reset_threshold = int(os.environ.get("WATCHDOG_RESET", "170000"))
 
 try:
     with open(sessions_file) as f:
         data = json.load(f)
-except:
+except Exception:
     print("0")
     sys.exit(0)
 
 reset_count = 0
 modified = False
 
+# Handle both dict and list formats (zenni uses [] instead of {})
+if isinstance(data, list):
+    # Zenni and some agents use list format — treat as empty dict
+    data = {}
+
+if not data:
+    print("0")
+    sys.exit(0)
+
 for key, session in data.items():
-    tokens = session.get("totalTokens", 0)
+    tokens = session.get("totalTokens", 0) or session.get("contextTokens", 0) or 0
     if tokens == 0:
         continue
 
     if tokens > reset_threshold:
-        # Auto-reset: backup session ID and clear ALL state
         old_sid = session.get("sessionId", "none")
         session["totalTokens"] = 0
         session["inputTokens"] = 0
         session["outputTokens"] = 0
+        session["contextTokens"] = 0
         session["sessionId"] = None
         session["sessionFile"] = None
         session["systemSent"] = False
@@ -112,14 +158,15 @@ for key, session in data.items():
         session.pop("skillsSnapshot", None)
         modified = True
         reset_count += 1
-        print(f"RESET: {key[:50]} (was {tokens} tokens, sid={old_sid})", file=sys.stderr)
+        print("[RESET] Agent: {}, Session: {}, was {} tokens".format(
+            agent_name, key[:60], tokens), file=sys.stderr)
     elif tokens > warn_threshold:
-        pct = int(tokens * 100 / 262144)
-        print(f"WARN: {key[:50]} at {pct}% ({tokens} tokens)", file=sys.stderr)
+        pct = int(tokens * 100 / context_limit)
+        print("[WARN] Agent: {}, Session: {} at {}% ({} tokens)".format(
+            agent_name, key[:60], pct, tokens), file=sys.stderr)
 
 if modified:
-    # Backup before writing
-    backup = sessions_file + f".bak.{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    backup = sessions_file + ".bak.{}".format(datetime.now().strftime('%Y%m%d%H%M%S'))
     shutil.copy2(sessions_file, backup)
     with open(sessions_file, "w") as f:
         json.dump(data, f, indent=2)
@@ -129,13 +176,16 @@ PYEOF
   )
 
   if [ "$RESET_COUNT" -gt 0 ] 2>/dev/null; then
-    log "ACTION: Reset $RESET_COUNT bloated session(s)"
-    post_to_room "feedback" "watchdog" "Auto-reset $RESET_COUNT bloated session(s) approaching token limit" "recovery"
-  else
-    log "OK: All sessions within token limits"
+    TOTAL_RESETS=$(( TOTAL_RESETS + RESET_COUNT ))
+    log "ACTION: Reset $RESET_COUNT session(s) for agent $AGENT_NAME"
   fi
+done
+
+if [ "$TOTAL_RESETS" -gt 0 ]; then
+  log "ACTION: Total resets across all agents: $TOTAL_RESETS"
+  post_to_room "feedback" "watchdog" "Auto-reset $TOTAL_RESETS bloated session(s) across agents (checked $AGENTS_CHECKED agents)" "recovery"
 else
-  log "WARN: Sessions file not found: $SESSIONS_FILE"
+  log "OK: All $AGENTS_CHECKED agents within token limits"
 fi
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -153,25 +203,25 @@ if [ "$RECENT_ERRORS" -gt 3 ] 2>/dev/null; then
   log "ALERT: $RECENT_ERRORS model errors in recent logs — checking if failover needed"
 
   # Check if primary model is specifically failing
-  PRIMARY_ERRORS=$(openclaw logs --max-bytes 50000 2>&1 | tail -100 | grep -c "kimi\|moonshot" 2>/dev/null || echo "0")
+  PRIMARY_ERRORS=$(openclaw logs --max-bytes 50000 2>&1 | tail -100 | grep -c "glm-4.7-flash\|glm-5\|glm-4.7" 2>/dev/null || echo "0")
 
   if [ "$PRIMARY_ERRORS" -gt 2 ] 2>/dev/null; then
-    log "FAILOVER: Primary model (Kimi K2.5) has $PRIMARY_ERRORS errors. Checking fallback..."
+    log "FAILOVER: GLM models have $PRIMARY_ERRORS errors. Checking fallback..."
 
     # Test fallback model
     FALLBACK_OK=$(curl -s -o /dev/null -w "%{http_code}" \
       -X POST "https://openrouter.ai/api/v1/chat/completions" \
       -H "Authorization: Bearer $(python3 -c "import json; c=json.load(open('$CONFIG_FILE')); print(c['models']['providers']['openrouter']['apiKey'])")" \
       -H "Content-Type: application/json" \
-      -d '{"model":"qwen/qwen3-coder-next","messages":[{"role":"user","content":"ping"}],"max_tokens":5}' \
+      -d '{"model":"z-ai/glm-4.5-air:free","messages":[{"role":"user","content":"ping"}],"max_tokens":5}' \
       2>/dev/null || echo "000")
 
     if [ "$FALLBACK_OK" = "200" ]; then
-      log "OK: Fallback model (Qwen3 Coder) is healthy"
-      post_to_room "feedback" "watchdog" "Primary model errors detected ($PRIMARY_ERRORS). Fallback (Qwen3) is healthy — OpenClaw will auto-route." "warning"
+      log "OK: Fallback model (GLM-4.5 Air) is healthy"
+      post_to_room "feedback" "watchdog" "GLM model errors detected ($PRIMARY_ERRORS). Fallback (GLM-4.5 Air) is healthy — OpenClaw will auto-route." "warning"
     else
       log "CRITICAL: Fallback model also failing (HTTP $FALLBACK_OK)"
-      post_to_room "feedback" "watchdog" "CRITICAL: Both primary (Kimi) and fallback (Qwen3) models failing. HTTP=$FALLBACK_OK" "incident"
+      post_to_room "feedback" "watchdog" "CRITICAL: Both primary (GLM) and fallback (GLM-4.5 Air) models failing. HTTP=$FALLBACK_OK" "incident"
     fi
   fi
 else

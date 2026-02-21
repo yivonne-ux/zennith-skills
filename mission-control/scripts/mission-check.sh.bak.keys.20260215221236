@@ -8,6 +8,9 @@
 
 set -uo pipefail
 
+# Ensure PATH includes openclaw binary location (cron has minimal PATH)
+export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
+
 OPENCLAW_DIR="$HOME/.openclaw"
 WORKSPACE="$OPENCLAW_DIR/workspace"
 MISSIONS_FILE="$WORKSPACE/MISSIONS.md"
@@ -200,7 +203,23 @@ invoke_agent() {
   local exit_code=0
 
   if command -v openclaw &>/dev/null; then
-    result=$(timeout "$timeout_s" openclaw agent --agent "$agent_id" --message "$message" --json 2>&1) || exit_code=$?
+    # macOS has no `timeout` — use background + wait + kill pattern
+    openclaw agent --agent "$agent_id" --message "$message" --json > /tmp/mc-resp-$$.json 2>&1 &
+    local bgpid=$!
+    local waited=0
+    while kill -0 "$bgpid" 2>/dev/null && [ "$waited" -lt "$timeout_s" ]; do
+      sleep 1
+      waited=$((waited + 1))
+    done
+    if kill -0 "$bgpid" 2>/dev/null; then
+      kill "$bgpid" 2>/dev/null || true
+      result='{"error":"timeout after '"$timeout_s"'s"}'
+      exit_code=124
+    else
+      wait "$bgpid" 2>/dev/null || exit_code=$?
+      result=$(cat /tmp/mc-resp-$$.json 2>/dev/null || echo '{"error":"no output"}')
+    fi
+    rm -f /tmp/mc-resp-$$.json
   else
     log "ERROR: openclaw not in PATH"
     echo "NO_OPENCLAW"
@@ -315,7 +334,7 @@ TASK: Fix the issue described above. If the task was incomplete, complete it now
         content|creative)    alt_agent="iris" ;;      # Iris can help with content
         pricing|commerce)    alt_agent="athena" ;;    # Athena for financial analysis
         analytics|reporting) alt_agent="artemis" ;;   # Artemis can gather data
-        code|tools)          alt_agent="hephaestus" ;;
+        code|tools)          alt_agent="taoz" ;;
         *)                   alt_agent="artemis" ;;   # Default: send scout
       esac
 
@@ -335,12 +354,12 @@ You are being called as backup. Try a different approach than what was attempted
 - Post results to $room room"
 
       # Special case: code tasks go to Claude Code
-      if [ "$alt_agent" = "hephaestus" ]; then
+      if [ "$alt_agent" = "taoz" ]; then
         local b_result
         b_result=$(invoke_claude_code "Mission $mission_id failed. Error: $error_type — $error_detail. Diagnose and fix." "$OPENCLAW_DIR" "2.00") || true
         if [ -n "$b_result" ] && ! echo "$b_result" | grep -q "NO_RUNNER"; then
           update_mission_state "$mission_id" "B" "success"
-          post_to_room "$room" "hephaestus" "[$mission_id] Strategy B (Claude Code) resolved: ${b_result:0:500}" "mission-result"
+          post_to_room "$room" "taoz" "[$mission_id] Strategy B (Claude Code) resolved: ${b_result:0:500}" "mission-result"
           log "[$mission_id] Strategy B (Claude Code) succeeded"
           return 0
         fi
@@ -405,7 +424,7 @@ INSTRUCTIONS:
 
       if [ -n "$c_result" ] && ! echo "$c_result" | grep -q "NO_RUNNER"; then
         update_mission_state "$mission_id" "C" "success"
-        post_to_room "$room" "hephaestus" "[$mission_id] Strategy C (Claude Code creative fix): ${c_result:0:500}" "mission-result"
+        post_to_room "$room" "taoz" "[$mission_id] Strategy C (Claude Code creative fix): ${c_result:0:500}" "mission-result"
         post_to_room "feedback" "mission-control" "[$mission_id] Strategy C applied. Claude Code output: ${c_result:0:300}" "learning"
         log "[$mission_id] Strategy C completed"
         return 0
@@ -450,7 +469,7 @@ with open(missions_file) as f:
 
 # Extract missions
 missions = []
-pattern = r'### (M\d+): (.+)\n((?:- \*\*.+\n?)+)'
+pattern = r'### (M\d+): (.+)\n((?:(?:- \*\*|  ).+\n?)+)'
 for match in re.finditer(pattern, content):
     mid = match.group(1)
     title = match.group(2).strip()
@@ -570,6 +589,77 @@ PYEOF
 }
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ERROR DETECTION FROM MISSION STATE (unresolved errors)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+scan_mission_state_errors() {
+  local STATE_FILE="$OPENCLAW_DIR/logs/mission-state.json"
+  local TIME_THRESHOLD_HOURS=4  # Errors older than 4 hours are stale
+
+  if [ ! -f "$STATE_FILE" ]; then
+    echo "[]"
+    return
+  fi
+
+  python3 - "$STATE_FILE" "$TS_EPOCH" "$TIME_THRESHOLD_HOURS" << 'PYEOF'
+import json, sys, os
+
+state_file = sys.argv[1]
+now = int(sys.argv[2])
+hours_threshold = float(sys.argv[3])
+
+try:
+    with open(state_file) as f:
+        state = json.load(f)
+except:
+    print("[]")
+    sys.exit(0)
+
+cutoff_seconds = now - (hours_threshold * 3600)
+cutoff_ms = cutoff_seconds * 1000
+
+errors = []
+for key, data in state.get("missions", {}).items():
+    if not key.startswith("ERR-"):
+        continue
+
+    # Check if resolved
+    if data.get("resolved", False):
+        continue
+
+    # Check if error is stale
+    attempts = data.get("attempts", [])
+    if len(attempts) == 0:
+        continue
+
+    ts = attempts[-1].get("ts", 0)
+    if ts < cutoff_ms:
+        continue
+
+    # Extract error type from key
+    error_type = key.replace("ERR-", "")
+
+    # Get last attempt
+    attempts = data.get("attempts", [])
+    if len(attempts) == 0:
+        continue
+
+    last_attempt = attempts[-1]
+    result = last_attempt.get("result", "unknown")
+
+    errors.append({
+        "mission_id": key,
+        "error_type": error_type,
+        "last_attempt": result,
+        "msg": f"Unresolved {error_type} error (Mission: {key})",
+        "room": "build"  # Default room for technical errors
+    })
+
+print(json.dumps(errors))
+PYEOF
+}
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # MAIN LOOP
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -628,7 +718,7 @@ owner = sys.stdin.read().strip().lower()
 agent_map = {
     'artemis': 'artemis', 'apollo': 'apollo', 'hermes': 'hermes',
     'athena': 'athena', 'iris': 'iris', 'zenni': 'main',
-    'hephaestus': 'hephaestus'
+    'taoz': 'taoz'
 }
 for name, aid in agent_map.items():
     if name in owner:
@@ -677,6 +767,77 @@ for e in errors:
   done < "$TMPDIR_MC/errors.jsonl"
 fi
 
+# 3. Scan mission state for unresolved errors (timeout, runtime, etc.)
+MISSION_STATE_ERRORS=$(scan_mission_state_errors 2>/dev/null || echo "[]")
+MISSION_STATE_ERROR_COUNT=$(echo "$MISSION_STATE_ERRORS" | python3 -c "import sys,json; print(len(json.load(sys.stdin)))" 2>/dev/null || echo "0")
+
+if [ "$MISSION_STATE_ERROR_COUNT" -gt 0 ] 2>/dev/null; then
+  log "Found $MISSION_STATE_ERROR_COUNT unresolved errors in mission-state.json"
+
+  # Write to temp file
+  echo "$MISSION_STATE_ERRORS" 2>/dev/null > "$TMPDIR_MC/mission-state-errors.jsonl"
+
+  while IFS= read -r error_json; do
+    EMISSION_ID=$(echo "$error_json" | python3 -c "import sys,json; print(json.load(sys.stdin)['mission_id'])" 2>/dev/null)
+    ETYPE=$(echo "$error_json" | python3 -c "import sys,json; print(json.load(sys.stdin)['error_type'])" 2>/dev/null) || ETYPE="unknown"
+    EMSG=$(echo "$error_json" | python3 -c "import sys,json; print(json.load(sys.stdin)['msg'])" 2>/dev/null) || EMSG="Unknown error"
+
+    log "  Unresolved error: $EMISSION_ID ($ETYPE)"
+
+    # Reset circuit breaker for this agent if stuck open (after cooldown)
+    # Extract agent name from error ID (ERR-timeout-athena -> athena)
+    EAGENT="${EMISSION_ID#*-}"
+    EAGENT="${EAGENT#*-}"
+    EAGENT="${EAGENT%%-*}"
+
+    if [ "$ETYPE" = "timeout" ] || [ "$ETYPE" = "runtime" ]; then
+      log "    Resetting circuit breaker for $EAGENT (timeout/runtime error)"
+
+      # Wait for cooldown to expire before resetting
+      if [ -f "$STATE_FILE" ]; then
+        cooldown=$(python3 - "$STATE_FILE" "$EAGENT" << 'PYEOF'
+import json, sys
+try:
+    with open(sys.argv[1]) as f:
+        state = json.load(f)
+    cb = state.get("circuit_breakers", {}).get(sys.argv[2], {})
+    if cb.get("circuit") == "open":
+        print(cb.get("cooldown_until", 0))
+    else:
+        print(0)
+except:
+    print(0)
+PYEOF
+)
+        if [ "$cooldown" -lt $(date +%s) ]; then
+          python3 - "$STATE_FILE" "$EAGENT" << 'PYEOF'
+import json, sys
+
+state_file = sys.argv[1]
+agent_id = sys.argv[2]
+
+try:
+    with open(state_file) as f:
+        state = json.load(f)
+except:
+    state = {"missions": {}, "circuit_breakers": {}, "last_check": 0}
+
+cbs = state.setdefault("circuit_breakers", {})
+cbs[agent_id] = {"consecutive_failures": 0, "circuit": "closed"}
+
+with open(state_file, "w") as f:
+    json.dump(state, f, indent=2)
+PYEOF
+          log "      Circuit breaker reset for $EAGENT"
+        fi
+      fi
+
+      # Trigger retry strategy
+      try_abc "$EMISSION_ID" "$ETYPE" "$EMSG" "$EAGENT" "build"
+    fi
+  done < "$TMPDIR_MC/mission-state-errors.jsonl"
+fi
+
 # 3. Log feedback summary
 TOTAL_ACTIONS=0
 if [ "$MISSION_COUNT" -gt 0 ] || [ "$ERROR_COUNT" -gt 0 ]; then
@@ -685,7 +846,68 @@ if [ "$MISSION_COUNT" -gt 0 ] || [ "$ERROR_COUNT" -gt 0 ]; then
   log "$SUMMARY"
 fi
 
-# 4. Trim log
+# 4. Reset stuck circuit breakers (manual intervention for stuck system)
+RESET_CB_LIST=$(python3 - "$STATE_FILE" "$TS_EPOCH" << 'PYEOF'
+import json, sys, datetime, time
+
+state_file = sys.argv[1]
+now = int(sys.argv[2])
+
+try:
+    with open(state_file) as f:
+        state = json.load(f)
+except:
+    print("[]")
+    sys.exit(0)
+
+cbs = state.get("circuit_breakers", {})
+reset_agents = []
+
+for agent_id, cb in cbs.items():
+    if cb.get("circuit") == "open":
+        cooldown = cb.get("cooldown_until", 0)
+        if cooldown > 0 and cooldown > now:
+            # Still in cooldown - skip
+            continue
+
+        # Allow manual reset for stuck circuits (P0/P1 tasks)
+        if agent_id in ("mission-control", "taoz"):
+            reset_agents.append(agent_id)
+
+print(json.dumps(reset_agents))
+PYEOF
+)
+
+RESET_CB_COUNT=$(echo "$RESET_CB_LIST" | python3 -c "import sys,json; print(len(json.load(sys.stdin)))" 2>/dev/null || echo "0")
+
+if [ "$RESET_CB_COUNT" -gt 0 ] 2>/dev/null; then
+  log "Manual reset of stuck circuit breakers: $RESET_CB_LIST"
+
+  while IFS= read -r agent_id; do
+    python3 - "$STATE_FILE" "$agent_id" << 'PYEOF'
+import json, sys
+
+state_file = sys.argv[1]
+agent_id = sys.argv[2]
+
+try:
+    with open(state_file) as f:
+        state = json.load(f)
+except:
+    state = {"missions": {}, "circuit_breakers": {}, "last_check": 0}
+
+cbs = state.setdefault("circuit_breakers", {})
+cbs[agent_id] = {"consecutive_failures": 0, "circuit": "closed"}
+
+with open(state_file, "w") as f:
+    json.dump(state, f, indent=2)
+PYEOF
+
+    log "  Reset circuit breaker for $agent_id"
+  done <<< "$RESET_CB_LIST"
+fi
+
+# 5. Trim log
 if [ -f "$LOG_FILE" ]; then
   LINE_COUNT=$(wc -l < "$LOG_FILE" 2>/dev/null | tr -d ' ' || echo "0")
   LINE_COUNT=${LINE_COUNT:-0}

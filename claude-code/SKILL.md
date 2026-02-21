@@ -10,7 +10,7 @@ metadata:
       - Never run claude-code.review AND claude-code.build on the same task simultaneously.
       - Review mode is strictly read-only — no file edits, no bash commands.
       - Build mode is sandboxed to the specified working directory only.
-      - Budget cap is enforced per invocation. Default USD 0.50 for review, USD 1.00 for build.
+      - No budget limits (unlimited for review, unlimited for build)
       - Do not pass secrets, API keys, or credentials in the prompt text.
       - If Claude Code returns an error or empty output, report failure to the orchestrator — do not retry silently.
 ---
@@ -50,7 +50,7 @@ Uses `claude -p` (print mode) for non-interactive, programmatic invocation.
 
 Option A — using the wrapper script:
 ```bash
-bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh review "Review brief goes here" . 0.50
+bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh review "Review brief goes here" .
 ```
 
 Option B — direct CLI (for custom system prompts or longer briefs):
@@ -59,7 +59,6 @@ claude -p \
   --model opus \
   --system-prompt "You are a Red Team Reviewer for GAIA CORP-OS. Output: (1) Risk Register, (2) Failure Modes, (3) Cost/ROI Critique, (4) Counter-Options, (5) Recommendation. Be concise and structured." \
   --tools "" \
-  --max-budget-usd 0.50 \
   "YOUR REVIEW BRIEF HERE"
 ```
 
@@ -68,13 +67,12 @@ Option C — pipe a long brief from a file:
 cat /path/to/brief.md | claude -p \
   --model opus \
   --tools "" \
-  --max-budget-usd 0.50 \
   --system-prompt "You are a Red Team Reviewer for GAIA CORP-OS. Output: (1) Risk Register, (2) Failure Modes, (3) Cost/ROI Critique, (4) Counter-Options, (5) Recommendation."
 ```
 
 **Constraints:**
 - `--tools ""` disables all tools — review is pure analysis, no file access
-- Budget capped at USD 0.50 per review (override with caution)
+- No budget limits
 - Timeout: 120 seconds default
 
 ---
@@ -108,7 +106,7 @@ cat /path/to/brief.md | claude -p \
 
 Option A — using the wrapper script:
 ```bash
-bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh build "Build task description here" /path/to/project 1.00
+bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh build "Build task description here" /path/to/project
 ```
 
 Option B — direct CLI:
@@ -117,7 +115,6 @@ claude -p \
   --model opus \
   --system-prompt "You are a Skill Builder for GAIA CORP-OS. Write clean, tested code. Return: (1) Result summary, (2) Build/test proof, (3) Files changed, (4) One-line learning." \
   --allowedTools "Bash,Edit,Read,Write,Glob,Grep" \
-  --max-budget-usd 1.00 \
   --add-dir /path/to/project \
   "YOUR BUILD TASK HERE"
 ```
@@ -125,7 +122,7 @@ claude -p \
 **Constraints:**
 - `--allowedTools` limits to safe coding tools only (no Task, no WebFetch)
 - `--add-dir` restricts file access to the specified project directory
-- Budget capped at USD 1.00 per build task (override with caution)
+- No budget limits
 - Timeout: 300 seconds for build tasks
 
 ---
@@ -135,7 +132,7 @@ claude -p \
 | Setting | Review | Build |
 |---------|--------|-------|
 | Tools | None (read-only) | Bash, Edit, Read, Write, Glob, Grep |
-| Budget cap | USD 0.50 | USD 1.00 |
+| Budget cap | None (unlimited) | None (unlimited) |
 | Timeout | 120s | 300s |
 | File access | None | Scoped to --add-dir |
 | Model | Opus 4.6 | Opus 4.6 |
@@ -152,10 +149,53 @@ claude -p \
 
 ---
 
+## Skill 3 — claude-code.dispatch (Agent-Dispatched Tasks)
+
+**When to use:**
+- Other agents dispatch engineering tasks to Taoz via `dispatch.sh`
+- Zenni routes WhatsApp engineering requests to Taoz
+- Link digester routes YouTube URLs to Taoz for `/learn-youtube` pipeline
+
+**How it works:**
+1. Agent calls `dispatch.sh zenni taoz request "TASK" build`
+2. dispatch.sh invokes `claude-code-runner.sh dispatch "TASK" FROM_AGENT ROOM`
+3. Task is always queued to `~/.openclaw/workspace/taoz-inbox.jsonl`
+4. Simple tasks auto-run via `claude -p` (180s timeout, $1 budget)
+5. Complex tasks (refactor, debug, investigate, >500 chars) stay queued for interactive session
+6. Results post back to the originating room
+
+**How to run:**
+```bash
+bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh dispatch "Fix the CSS on the dashboard" zenni build
+```
+
+**Inbox management:**
+```bash
+bash ~/.openclaw/skills/claude-code/scripts/taoz-inbox.sh list    # Show pending
+bash ~/.openclaw/skills/claude-code/scripts/taoz-inbox.sh peek    # Next task details
+bash ~/.openclaw/skills/claude-code/scripts/taoz-inbox.sh done ID # Mark completed
+```
+
+---
+
+## Skill 4 — WhatsApp Bridges
+
+### Forward Bridge (Claude Code → Rooms)
+- Script: `cc-bridge.sh` (cron every 5 min)
+- Reads Claude Code transcripts → posts activity summaries to build room
+- Significant activity (>5 tool uses) also posted to exec room
+
+### Reverse Bridge (Rooms → WhatsApp)
+- Script: `wa-reverse-bridge.sh` (cron every 2 min)
+- Scans rooms for messages with `"to":"jenn"` or `type:"taoz-result"`
+- Creates `[WA-RELAY]` entries in exec room for Zenni to forward via WhatsApp
+- Capped at 5 relays per run to prevent spam
+
+---
+
 ## Definition of Done
 
 A claude-code invocation is complete when:
 - Output contains all required sections (risk register for review, result+proof for build)
 - No errors or warnings in stderr
-- Budget was not exceeded
 - Orchestrator has processed and filed the output

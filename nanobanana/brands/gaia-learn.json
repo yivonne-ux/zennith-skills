@@ -1,0 +1,21 @@
+{
+  "brand_name": "GAIA Learn",
+  "brand_slug": "gaia-learn",
+  "tagline": "Knowledge that nourishes",
+  "colors": {
+    "primary": "#4A90A4",
+    "secondary": "#7BC5AE",
+    "background": "#F5FAFA",
+    "accent": "#2C6E49"
+  },
+  "style": "clean, modern, educational, trustworthy, professional",
+  "lighting": "bright, even studio lighting, minimal shadows",
+  "photography_style": "educational content, clean graphics, infographic style",
+  "character": null,
+  "products": ["online courses", "workshops", "certifications", "masterclasses"],
+  "target_audience": "Aspiring entrepreneurs, health professionals, 25-55",
+  "languages": ["English", "Bahasa Malaysia"],
+  "ecommerce_platforms": ["own website", "Teachable", "Udemy"],
+  "social_platforms": ["Instagram", "LinkedIn", "YouTube", "TikTok"],
+  "brand_values": ["knowledge", "empowerment", "sustainability", "community"]
+}

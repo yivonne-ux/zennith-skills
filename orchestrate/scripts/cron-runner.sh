@@ -6,6 +6,9 @@
 
 set -uo pipefail
 
+# Ensure PATH includes openclaw binary location (cron has minimal PATH)
+export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
+
 JOB_ID="${1:-}"
 OPENCLAW_DIR="$HOME/.openclaw"
 LOG_FILE="$OPENCLAW_DIR/logs/cron-runner.log"
@@ -38,7 +41,7 @@ case "$JOB_ID" in
 
   innovation-scout)
     RESULT=$(openclaw agent --agent artemis \
-      --message "Run innovation-scout protocol. Scout GitHub trending, Product Hunt, HN for AI innovations relevant to GAIA. Post structured scout report to townhall room." \
+      --message "You are Artemis. Read ~/.openclaw/workspace-artemis/SOUL.md. Run innovation-scout protocol: Scout GitHub trending, Product Hunt, HN for AI agent innovations relevant to GAIA Eats (e-commerce, social, content, marketing). Post structured scout report to townhall room." \
       --json --timeout 300 2>&1)
     AGENT="artemis"
     ROOM="townhall"
@@ -46,7 +49,7 @@ case "$JOB_ID" in
 
   meta-ads-scan)
     RESULT=$(openclaw agent --agent artemis \
-      --message "Run meta-ads-library scraping. Execute: python3 ~/.openclaw/skills/meta-ads-library/scripts/scrape_meta_library.py --keyword 'vegan food,plant based,organic snack' --country MY --max-results 20 --output /tmp/meta-ads-daily.json. Post competitive intelligence summary to build room." \
+      --message "You are Artemis. Read ~/.openclaw/workspace-artemis/SOUL.md. Run meta-ads-library scraping. Execute: python3 ~/.openclaw/skills/meta-ads-library/scripts/scrape_meta_library.py --keyword 'vegan food,plant based,organic snack' --country MY --max-results 20 --output /tmp/meta-ads-daily.json. Post competitive intelligence summary to build room." \
       --json --timeout 300 2>&1)
     AGENT="artemis"
     ROOM="build"
@@ -54,7 +57,7 @@ case "$JOB_ID" in
 
   tiktok-trends-scan)
     RESULT=$(openclaw agent --agent artemis \
-      --message "Run tiktok-trends scraping. Execute: python3 ~/.openclaw/skills/tiktok-trends/scripts/scrape_tiktok_trends.py --type hashtags --country MY --output /tmp/tiktok-trends-daily.json. Post GAIA-relevant trends summary to build room." \
+      --message "You are Artemis. Read ~/.openclaw/workspace-artemis/SOUL.md. Run tiktok-trends scraping. Execute: python3 ~/.openclaw/skills/tiktok-trends/scripts/scrape_tiktok_trends.py --type hashtags --country MY --output /tmp/tiktok-trends-daily.json. Post GAIA-relevant trends summary to build room." \
       --json --timeout 300 2>&1)
     AGENT="artemis"
     ROOM="build"
@@ -62,16 +65,15 @@ case "$JOB_ID" in
 
   product-scout-weekly)
     RESULT=$(openclaw agent --agent artemis \
-      --message "Run product-scout weekly scan. Execute: python3 ~/.openclaw/skills/product-scout/scripts/scout_products.py --platform shopee --country MY --category all --output /tmp/product-scout-weekly.json. Post opportunity report to townhall room." \
+      --message "You are Artemis. Read ~/.openclaw/workspace-artemis/SOUL.md. Run product-scout weekly scan. Execute: python3 ~/.openclaw/skills/product-scout/scripts/scout_products.py --platform shopee --country MY --category all --output /tmp/product-scout-weekly.json. Post opportunity report to townhall room." \
       --json --timeout 600 2>&1)
     AGENT="artemis"
     ROOM="townhall"
     ;;
 
   nightly-review)
-    RESULT=$(openclaw agent --agent main \
-      --message "Run corp-os-compound nightly review. Scan all rooms from last 24h, extract patterns, detect gaps, update learning-log. Post summary to townhall room." \
-      --json --timeout 300 2>&1)
+    LABEL="zenni-nightly-$(date +%s)"
+    RESULT=$(openclaw sessions spawn --label "$LABEL" --timeout 300 "You are Zenni. Read ~/.openclaw/workspace/SOUL.md. Run corp-os-compound nightly review. Scan all rooms from last 24h, extract patterns, detect gaps, update learning-log. Post summary to townhall room." 2>&1)
     AGENT="zenni"
     ROOM="townhall"
     ;;

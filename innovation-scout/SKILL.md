@@ -84,7 +84,7 @@ When Zenni receives a scout report, she tags each idea:
 
 | Tag | Meaning | Next Step |
 |-----|---------|-----------|
-| `[BUILD]` | Worth building now | Zenni composes task brief → routes to Hephaestus (build room) |
+| `[BUILD]` | Worth building now | Zenni composes task brief → routes to Taoz (build room) |
 | `[EVALUATE]` | Promising but needs analysis | Athena does cost/benefit analysis → exec room for Jenn's decision |
 | `[PARK]` | Interesting but not now | Saved to learning-log for future reference |
 | `[SKIP]` | Not relevant enough | No action, archived in scout report |
@@ -94,7 +94,7 @@ When Zenni receives a scout report, she tags each idea:
 - **New frameworks that would replace existing tools** → exec room as decision brief with A/B/C options
 - **Security-relevant tools** (auth, encryption, sandboxing) → Zenni reviews + Claude Code red-team review
 - **Cost-impacting tools** (paid APIs, new subscriptions) → exec room for Jenn's approval
-- **Quick wins** (free, easy to adopt, low risk) → Zenni can approve directly, routes to Hephaestus
+- **Quick wins** (free, easy to adopt, low risk) → Zenni can approve directly, routes to Taoz
 
 ---
 
@@ -102,7 +102,7 @@ When Zenni receives a scout report, she tags each idea:
 
 When an idea is tagged `[BUILD]`:
 
-1. **Hephaestus builds a proof-of-concept**
+1. **Taoz builds a proof-of-concept**
    - Scoped to 2-4 hours of work
    - Must produce working code, not just a plan
 

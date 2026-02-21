@@ -64,13 +64,27 @@ def check_playwright():
 
 
 def scrape_hashtags(country: str = "MY", max_results: int = 30) -> dict:
-    """Scrape trending hashtags from TikTok Creative Center."""
+    """Scrape trending hashtags from TikTok Creative Center via API interception."""
     from playwright.sync_api import sync_playwright
 
     url = f"https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/en?countryCode={country}&period=7"
     trends = []
+    api_data = []
 
     print(f"[tiktok] Scraping trending hashtags for {country}...")
+
+    def handle_response(response):
+        """Intercept API responses for hashtag data."""
+        try:
+            if "popular/hashtag/list" in response.url or "trending/hashtag" in response.url:
+                data = response.json()
+                if isinstance(data, dict):
+                    items = data.get("data", {}).get("list", data.get("data", {}).get("hashtag_list", []))
+                    if isinstance(items, list):
+                        api_data.extend(items)
+                        print(f"[tiktok] API intercepted: {len(items)} hashtags")
+        except Exception:
+            pass
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -79,82 +93,102 @@ def scrape_hashtags(country: str = "MY", max_results: int = 30) -> dict:
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
         )
         page = context.new_page()
+        page.on("response", handle_response)
 
         try:
             page.goto(url, wait_until="networkidle", timeout=30000)
             time.sleep(3)
 
-            # Scroll to load content
             for _ in range(3):
                 page.evaluate("window.scrollBy(0, 800)")
                 time.sleep(2)
 
-            # Extract hashtag entries
-            # TikTok Creative Center uses table/list format
-            rows = page.query_selector_all('tr, [class*="hashtag"], [class*="trend"], [class*="item"]')
-
-            for i, row in enumerate(rows):
-                if len(trends) >= max_results:
-                    break
-                try:
-                    text = row.inner_text().strip()
-                    if not text or len(text) < 3:
+            # Method 1: Use intercepted API data
+            if api_data:
+                for item in api_data[:max_results]:
+                    name = item.get("hashtag_name", item.get("name", ""))
+                    if not name:
                         continue
-
-                    # Parse hashtag name and stats
-                    lines = [l.strip() for l in text.split("\n") if l.strip()]
-                    if not lines:
-                        continue
-
-                    hashtag_name = ""
-                    views = ""
-                    growth = ""
-
-                    for line in lines:
-                        if line.startswith("#"):
-                            hashtag_name = line
-                        elif re.search(r'\d+[KMB]', line, re.IGNORECASE):
-                            if not views:
-                                views = line
-                            else:
-                                growth = line
-                        elif "%" in line:
-                            growth = line
-
-                    if not hashtag_name and lines:
-                        # First item might be hashtag without #
-                        hashtag_name = "#" + lines[0].lstrip("#")
-
-                    if hashtag_name:
-                        category, score = score_relevance(hashtag_name + " " + " ".join(lines))
-                        trends.append({
-                            "rank": len(trends) + 1,
-                            "name": hashtag_name,
-                            "views": views or "N/A",
-                            "growth": growth or "N/A",
-                            "gaia_relevance": category,
-                            "relevance_score": score,
-                            "raw": text[:200],
-                        })
-                        print(f"[tiktok] #{len(trends)}: {hashtag_name} ({views}) — {category} ({score}/10)")
-
-                except Exception as e:
-                    continue
-
-            # Fallback: extract from full page text if structured extraction failed
-            if not trends:
-                page_text = page.inner_text("body")
-                hashtags = re.findall(r'#\w+', page_text)
-                for tag in hashtags[:max_results]:
-                    category, score = score_relevance(tag)
+                    if not name.startswith("#"):
+                        name = "#" + name
+                    views = item.get("publish_cnt", item.get("video_views", item.get("view_count", "N/A")))
+                    growth = item.get("trend", item.get("growth_rate", "N/A"))
+                    if isinstance(growth, (int, float)):
+                        growth = f"{growth:+.1f}%"
+                    category, score = score_relevance(name)
                     trends.append({
                         "rank": len(trends) + 1,
-                        "name": tag,
-                        "views": "N/A",
-                        "growth": "N/A",
+                        "name": name,
+                        "views": str(views),
+                        "growth": str(growth),
                         "gaia_relevance": category,
                         "relevance_score": score,
                     })
+                    print(f"[tiktok] #{len(trends)}: {name} ({views}) — {category} ({score}/10)")
+
+            # Method 2: DOM fallback with better selectors
+            if not trends:
+                # Try table rows with actual hashtag text
+                rows = page.query_selector_all('table tbody tr')
+                if not rows:
+                    rows = page.query_selector_all('[class*="CardPc"], [class*="RankingCard"]')
+
+                for row in rows:
+                    if len(trends) >= max_results:
+                        break
+                    try:
+                        text = row.inner_text().strip()
+                        if not text or len(text) < 3:
+                            continue
+                        lines = [l.strip() for l in text.split("\n") if l.strip()]
+                        hashtag_name = ""
+                        views = ""
+                        growth = ""
+
+                        for line in lines:
+                            if line.startswith("#") and len(line) > 2:
+                                hashtag_name = line
+                            elif re.search(r'\d+\.?\d*[KMBkmb]', line):
+                                if not views:
+                                    views = line
+                                else:
+                                    growth = line
+                            elif "%" in line and re.search(r'[\d.]+%', line):
+                                growth = line
+
+                        # Skip numeric-only "hashtags" (garbage from UI elements)
+                        if hashtag_name and not re.match(r'^#\d+$', hashtag_name):
+                            category, score = score_relevance(hashtag_name + " " + " ".join(lines))
+                            trends.append({
+                                "rank": len(trends) + 1,
+                                "name": hashtag_name,
+                                "views": views or "N/A",
+                                "growth": growth or "N/A",
+                                "gaia_relevance": category,
+                                "relevance_score": score,
+                                "raw": text[:200],
+                            })
+                            print(f"[tiktok] #{len(trends)}: {hashtag_name} ({views}) — {category} ({score}/10)")
+                    except Exception:
+                        continue
+
+            # Method 3: Regex fallback from page text
+            if not trends:
+                page_text = page.inner_text("body")
+                hashtags = re.findall(r'#[A-Za-z]\w{2,}', page_text)
+                seen = set()
+                for tag in hashtags:
+                    if tag.lower() not in seen and len(seen) < max_results:
+                        seen.add(tag.lower())
+                        category, score = score_relevance(tag)
+                        trends.append({
+                            "rank": len(trends) + 1,
+                            "name": tag,
+                            "views": "N/A",
+                            "growth": "N/A",
+                            "gaia_relevance": category,
+                            "relevance_score": score,
+                        })
 
         except Exception as e:
             print(f"[tiktok] Error: {e}")

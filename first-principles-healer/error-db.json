@@ -1,0 +1,170 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-02-12T23:30:00+08:00",
+  "patterns": [
+    {
+      "id": "native-better-sqlite3-node25",
+      "category": "NATIVE",
+      "severity": "medium",
+      "signatures": [
+        "better-sqlite3",
+        "node-gyp.*rebuild",
+        "gyp ERR",
+        "binding.gyp not found",
+        "cannot find module.*better-sqlite3"
+      ],
+      "exclude_signatures": [
+        "already built"
+      ],
+      "playbook": "native-module-failure",
+      "context_hints": [
+        "npm install",
+        "node_modules"
+      ],
+      "first_seen": "2026-02-12",
+      "last_seen": "2026-02-12",
+      "fix_count": 1,
+      "success_count": 1,
+      "success_rate": 1.0,
+      "auto_fixable": true,
+      "requires_interactive": false,
+      "estimated_fix_time_seconds": 120,
+      "fixes": [
+        {
+          "method": "npm uninstall better-sqlite3 && npm install sqlite3",
+          "context": "boss-dashboard",
+          "result": "success",
+          "timestamp": "2026-02-12T23:30:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "network-timeout-whatsapp",
+      "category": "NETWORK",
+      "severity": "medium",
+      "signatures": [
+        "failed to get device list",
+        "usync query",
+        "info query timed out",
+        "ETIMEDOUT",
+        "ECONNRESET"
+      ],
+      "exclude_signatures": [],
+      "playbook": "network-timeout",
+      "context_hints": [
+        "WhatsApp",
+        "Baileys"
+      ],
+      "first_seen": "2026-02-12",
+      "last_seen": "2026-02-12",
+      "fix_count": 0,
+      "success_count": 0,
+      "success_rate": 0.0,
+      "auto_fixable": true,
+      "requires_interactive": false,
+      "estimated_fix_time_seconds": 30
+    }
+  ],
+  "categories": {
+    "NATIVE": {
+      "description": "Compiled binary incompatibility",
+      "common_causes": [
+        "Node.js version mismatch",
+        "Missing build tools (Xcode, python, make)",
+        "Architecture mismatch (ARM vs x86)",
+        "Corrupted node_modules"
+      ],
+      "prevention": [
+        "Pin Node.js versions in .nvmrc",
+        "Use Docker for consistent environments",
+        "Prefer pure-JS alternatives when possible"
+      ]
+    },
+    "NETWORK": {
+      "description": "Connectivity and timeout issues",
+      "common_causes": [
+        "DNS resolution failure",
+        "Firewall blocking",
+        "Rate limiting",
+        "Service downtime"
+      ],
+      "prevention": [
+        "Implement exponential backoff",
+        "Use circuit breakers",
+        "Monitor service health"
+      ]
+    },
+    "AUTH": {
+      "description": "Credential and permission failures",
+      "common_causes": [
+        "Expired tokens",
+        "Revoked credentials",
+        "Missing permissions",
+        "Wrong API keys"
+      ],
+      "prevention": [
+        "Token rotation automation",
+        "Credential vault (1Password)",
+        "Regular permission audits"
+      ]
+    },
+    "CONFIG": {
+      "description": "Configuration state mismatch",
+      "common_causes": [
+        "Missing environment variables",
+        "Wrong file paths",
+        "Version incompatibilities",
+        "Stale config cache"
+      ],
+      "prevention": [
+        "Config validation on startup",
+        "Schema enforcement",
+        "Environment parity"
+      ]
+    },
+    "RESOURCE": {
+      "description": "Resource exhaustion",
+      "common_causes": [
+        "Disk full",
+        "Memory OOM",
+        "File descriptor limits",
+        "CPU throttling"
+      ],
+      "prevention": [
+        "Resource monitoring",
+        "Auto-scaling",
+        "Log rotation",
+        "Memory leak detection"
+      ]
+    },
+    "CODE": {
+      "description": "Logic and runtime errors",
+      "common_causes": [
+        "Null pointer dereference",
+        "Type mismatches",
+        "Race conditions",
+        "Unhandled edge cases"
+      ],
+      "prevention": [
+        "Static type checking",
+        "Unit tests",
+        "Integration tests",
+        "Code reviews"
+      ]
+    }
+  },
+  "stats": {
+    "total_errors_classified": 2,
+    "total_healing_attempts": 1,
+    "auto_fixed": 1,
+    "escalated_to_claude": 0,
+    "playbooks_created": 1,
+    "learned_patterns": 1,
+    "success_rate": 1.0
+  },
+  "learning": {
+    "successful_fixes": [],
+    "failed_fixes": [],
+    "systemic_issues": []
+  }
+}

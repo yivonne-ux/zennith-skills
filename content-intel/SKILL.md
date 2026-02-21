@@ -324,23 +324,31 @@ B-Roll:
 - 分镜 animatics (rough motion from storyboard)
 
 ### Best AI Video Tools (2026)
-| Tool | Best For | Input | Output |
-|------|----------|-------|--------|
-| **Kling AI** | Realistic motion, product demos | Image + text prompt | 5-10s video |
-| **Runway Gen-3** | Creative effects, transitions | Text/image prompt | 4-16s video |
-| **Pika** | Quick social clips, animations | Text prompt | 3-8s video |
-| **HeyGen** | Talking head / avatar videos | Script + avatar | 30s-5min |
-| **Midjourney** | Still images (hero, lifestyle) | Text prompt | Images |
-| **NanoBanana** | Product shots, flat lays | Product image + prompt | Styled images |
+| Tool | Best For | Input | Output | Cost |
+|------|----------|-------|--------|------|
+| **Kling AI 3.0 Omni** (PRIMARY) | All video — realistic motion, product demos, native audio | Text/image prompt | 5-10s video, 4K | Via API |
+| **Wan 2.6** (BUDGET) | Quick drafts, high volume | Text/image prompt | 5s video | $0.08-0.20 |
+| **Sora 2** (PREMIUM) | Special projects, cinematic | Text prompt | 5-20s video | OpenAI pricing |
+| **NanoBanana** (IMAGES) | Product shots, flat lays, storyboards | Text prompt + brand profile | Styled images | Gemini API |
 
 ### AI Generation Workflow
 ```
 1. Define 分镜 (storyboard with shot-by-shot plan)
-2. Generate hero images (Midjourney/NanoBanana)
-3. Animate hero images to video (Kling/Runway)
+2. Generate hero images (NanoBanana with brand profile)
+3. Animate hero images to video (Kling AI — primary)
 4. Add text overlays + music (CapCut/Premiere)
 5. Review against brand guidelines (art-director skill)
 6. Export per platform (9:16 for Reels/TikTok, 1:1 for Feed, 4:5 for Ads)
+```
+
+### Kling AI Commands
+```bash
+# Text to video
+bash ~/.openclaw/skills/art-director/scripts/kling-video.sh text2video "prompt" --duration 5 --ratio 16:9
+# Image to video (animate a NanoBanana hero image)
+bash ~/.openclaw/skills/art-director/scripts/kling-video.sh image2video "motion prompt" --image "url" --duration 5
+# Check status
+bash ~/.openclaw/skills/art-director/scripts/kling-video.sh status <task_id>
 ```
 
 ### Prompt Engineering for Product Video

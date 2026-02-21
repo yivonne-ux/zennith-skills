@@ -34,13 +34,13 @@ When Zenni receives a task, she routes it to the right agent based on task type:
 | Pricing / Channel Ops | Hermes ⚡ | Qwen3 | Kimi for complex deals |
 | Social Media Posting | Iris 🌈 | Qwen3 | Kimi for engagement |
 | Analytics / Reporting | Athena 🦉 | Qwen3/Kimi | — |
-| Code / Tools / Skills | Hephaestus 🔨 | Claude Code (Opus 4.6) | — |
+| Code / Tools / Skills | Taoz 🔨 | Claude Code (Opus 4.6) | — |
 | Bulk / Parallel Tasks | Myrmidons 🐝 | Qwen3 | — |
 
 ### Delegation Rules
 
 1. **Zenni never scrapes** — always routes to Artemis
-2. **Zenni never writes code** — always routes to Hephaestus
+2. **Zenni never writes code** — always routes to Taoz
 3. **Zenni never creates content** — always routes to Apollo
 4. **Zenni never posts to social** — always routes to Iris
 5. **Zenni never runs analytics queries** — always routes to Athena

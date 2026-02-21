@@ -179,8 +179,8 @@ if [ "$CRON_ERRORS" -gt 0 ] 2>/dev/null; then
   log "DETECTED: Cron error — $CRON_ERROR_MSG"
 
   # Check if it's the known trim bug (don't waste Claude Code budget on known bugs)
-  if echo "$CRON_ERROR_MSG" | grep -q "reading 'trim'" 2>/dev/null; then
-    log "SKIP: Known cron CLI bug (trim). Cron jobs run via jobs.json directly."
+  if echo "$CRON_ERROR_MSG" | grep -q "reading 'trim'\|gateway/cron" 2>/dev/null; then
+    log "SKIP: Known cron CLI bug (trim/gateway). Cron jobs run via jobs.json directly."
   else
     # Unknown cron error — escalate to Claude Code
     if check_rate_limit; then
@@ -188,14 +188,14 @@ if [ "$CRON_ERRORS" -gt 0 ] 2>/dev/null; then
       record_attempt
 
       if [ -x "$CLAUDE_RUNNER" ]; then
-        HEAL_RESULT=$(bash "$CLAUDE_RUNNER" build \
-          "OpenClaw cron system error. Error: $CRON_ERROR_MSG. Diagnose root cause and fix. Config file: $OPENCLAW_DIR/openclaw.json, Cron config: $OPENCLAW_DIR/cron/jobs.json" \
+        HEAL_RESULT=$(bash "$CLAUDE_RUNNER" review \
+          "OpenClaw cron error. Error: $CRON_ERROR_MSG. DIAGNOSE ONLY — explain root cause and suggest fix. DO NOT modify openclaw.json. DO NOT run 'openclaw doctor'." \
           "$OPENCLAW_DIR" \
           "$MAX_BUDGET" 2>&1 | tail -50)
 
-        log "Claude Code result: $HEAL_RESULT"
+        log "Claude Code diagnosis: $HEAL_RESULT"
         post_to_room "feedback" "healer" "Claude Code diagnosed cron error. Result: ${HEAL_RESULT:0:200}" "recovery"
-        record_fix "cron-broken" "Claude Code auto-fix applied"
+        record_fix "cron-broken" "Claude Code diagnosis (read-only)"
       else
         log "WARN: claude-code-runner.sh not found or not executable"
       fi
@@ -207,15 +207,13 @@ fi
 # 4. DETECT CODE/RUNTIME ERRORS
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CODE_ERRORS=$(echo "$RECENT_LOGS" | grep -c "TypeError\|ReferenceError\|SyntaxError\|Cannot read properties\|undefined is not" 2>/dev/null || true)
+CODE_ERRORS=$(echo "$RECENT_LOGS" | grep "TypeError\|ReferenceError\|SyntaxError\|Cannot read properties\|undefined is not" 2>/dev/null | grep -cv "reading 'trim'\|gateway/cron\|cron.*trim" || true)
 CODE_ERRORS=${CODE_ERRORS:-0}
-# Subtract known cron trim bug
-KNOWN_TRIM=$(echo "$RECENT_LOGS" | grep -c "reading 'trim'" 2>/dev/null || true)
-KNOWN_TRIM=${KNOWN_TRIM:-0}
-REAL_CODE_ERRORS=$(( ${CODE_ERRORS%%[!0-9]*} - ${KNOWN_TRIM%%[!0-9]*} ))
+REAL_CODE_ERRORS=${CODE_ERRORS%%[!0-9]*}
+REAL_CODE_ERRORS=${REAL_CODE_ERRORS:-0}
 
 if [ "$REAL_CODE_ERRORS" -gt 2 ] 2>/dev/null; then
-  ERROR_SAMPLE=$(echo "$RECENT_LOGS" | grep "TypeError\|ReferenceError\|SyntaxError\|Cannot read properties\|undefined is not" | grep -v "reading 'trim'" | tail -3)
+  ERROR_SAMPLE=$(echo "$RECENT_LOGS" | grep "TypeError\|ReferenceError\|SyntaxError\|Cannot read properties\|undefined is not" | grep -v "reading 'trim'\|gateway/cron" | tail -3)
   log "DETECTED: $REAL_CODE_ERRORS code/runtime errors"
 
   if check_rate_limit; then
@@ -223,14 +221,14 @@ if [ "$REAL_CODE_ERRORS" -gt 2 ] 2>/dev/null; then
     record_attempt
 
     if [ -x "$CLAUDE_RUNNER" ]; then
-      HEAL_RESULT=$(bash "$CLAUDE_RUNNER" build \
-        "OpenClaw runtime errors detected in logs. Errors: $ERROR_SAMPLE. Investigate the OpenClaw gateway code and config, diagnose root cause, and fix. Gateway log: /tmp/openclaw/openclaw-$(date +%Y-%m-%d).log. Config: $OPENCLAW_DIR/openclaw.json" \
+      HEAL_RESULT=$(bash "$CLAUDE_RUNNER" review \
+        "OpenClaw runtime errors detected in logs. Errors: $ERROR_SAMPLE. DIAGNOSE ONLY — explain root cause and suggest fix. DO NOT modify openclaw.json. DO NOT run 'openclaw doctor'. Gateway log: /tmp/openclaw/openclaw-$(date +%Y-%m-%d).log" \
         "$OPENCLAW_DIR" \
         "$MAX_BUDGET" 2>&1 | tail -50)
 
-      log "Claude Code result: $HEAL_RESULT"
-      post_to_room "feedback" "healer" "Claude Code fixed $REAL_CODE_ERRORS runtime errors. Result: ${HEAL_RESULT:0:200}" "recovery"
-      record_fix "code-bug" "Claude Code auto-fix for runtime errors"
+      log "Claude Code diagnosis: $HEAL_RESULT"
+      post_to_room "feedback" "healer" "Claude Code diagnosed $REAL_CODE_ERRORS runtime errors. Result: ${HEAL_RESULT:0:200}" "recovery"
+      record_fix "code-bug" "Claude Code diagnosis (read-only)"
     fi
   fi
 fi
@@ -250,14 +248,14 @@ if [ "$ALL_MODELS_FAILED" -gt 3 ] 2>/dev/null; then
     record_attempt
 
     if [ -x "$CLAUDE_RUNNER" ]; then
-      HEAL_RESULT=$(bash "$CLAUDE_RUNNER" build \
-        "All AI models are failing for OpenClaw gateway. Error: $FAILURE_SAMPLE. Check model config in $OPENCLAW_DIR/openclaw.json, test API connectivity, and fix the issue. Models configured: openrouter/qwen/qwen3-coder-next (primary) and moonshot/kimi-k2.5 (fallback)." \
+      HEAL_RESULT=$(bash "$CLAUDE_RUNNER" review \
+        "All AI models are failing for OpenClaw gateway. Error: $FAILURE_SAMPLE. DIAGNOSE ONLY — explain root cause and suggest fix. DO NOT modify openclaw.json. DO NOT run 'openclaw doctor'." \
         "$OPENCLAW_DIR" \
         "$MAX_BUDGET" 2>&1 | tail -50)
 
-      log "Claude Code result: $HEAL_RESULT"
-      post_to_room "feedback" "healer" "Claude Code investigated model failures. Result: ${HEAL_RESULT:0:200}" "recovery"
-      record_fix "model-failure" "Claude Code auto-fix for model failures"
+      log "Claude Code diagnosis: $HEAL_RESULT"
+      post_to_room "feedback" "healer" "Claude Code diagnosed model failures. Result: ${HEAL_RESULT:0:200}" "recovery"
+      record_fix "model-failure" "Claude Code diagnosis (read-only)"
     fi
   fi
 fi
@@ -269,23 +267,10 @@ fi
 EMPTY_RUNS=$(echo "$RECENT_LOGS" | grep -c "sessionKey=unknown" 2>/dev/null || echo "0")
 
 if [ "$EMPTY_RUNS" -gt 3 ] 2>/dev/null; then
-  log "DETECTED: $EMPTY_RUNS runs with sessionKey=unknown (broken session mapping)"
-
-  # Fix: restart gateway via LaunchAgent to re-establish session mappings
-  log "  Restarting gateway to fix session mappings"
-  launchctl bootout gui/501/ai.openclaw.gateway 2>/dev/null || true
-  sleep 3
-  kill $(pgrep -f "openclaw-gateway") 2>/dev/null || true
-  sleep 2
-  launchctl bootstrap gui/501 ~/Library/LaunchAgents/ai.openclaw.gateway.plist 2>/dev/null || \
-    nohup openclaw gateway --force >> "$OPENCLAW_DIR/logs/gateway-restart.log" 2>&1 &
-  sleep 5
-
-  if pgrep -f "openclaw-gateway" >/dev/null 2>&1; then
-    log "  Gateway restarted to fix session mappings"
-    post_to_room "feedback" "healer" "Fixed broken session mappings (sessionKey=unknown). Gateway restarted." "recovery"
-    record_fix "session-mapping" "Gateway restart to fix sessionKey=unknown"
-  fi
+  log "INFO: $EMPTY_RUNS sessionKey=unknown entries (normal noise from CLI invocations — no action needed)"
+  # NOTE: sessionKey=unknown is normal for CLI-invoked agent runs.
+  # DO NOT restart gateway for this — it causes a death loop.
+  # The healer previously killed the gateway repeatedly for this benign log entry.
 fi
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

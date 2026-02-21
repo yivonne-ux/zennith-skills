@@ -72,13 +72,28 @@ def parse_number(text: str) -> float:
 
 
 def scrape_shopee(keyword: str, country: str = "MY", max_results: int = 30) -> list:
-    """Scrape Shopee search results."""
+    """Scrape Shopee search results via API interception + DOM fallback."""
     from playwright.sync_api import sync_playwright
 
     url = build_shopee_url(keyword, country)
     products = []
+    api_items = []
 
     print(f"[scout] Scraping Shopee {country}: {keyword}")
+
+    def handle_response(response):
+        """Intercept Shopee search API responses."""
+        try:
+            resp_url = response.url
+            if "search_items" in resp_url or "search/v2" in resp_url or "api/v4/search" in resp_url:
+                data = response.json()
+                if isinstance(data, dict):
+                    items = data.get("items", data.get("data", {}).get("items", []))
+                    if isinstance(items, list):
+                        api_items.extend(items)
+                        print(f"[scout] API intercepted: {len(items)} products")
+        except Exception:
+            pass
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -87,96 +102,123 @@ def scrape_shopee(keyword: str, country: str = "MY", max_results: int = 30) -> l
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
         )
         page = context.new_page()
+        page.on("response", handle_response)
 
         try:
             page.goto(url, wait_until="networkidle", timeout=30000)
             time.sleep(3)
 
-            # Scroll to load products
             for _ in range(min(5, max_results // 6)):
                 page.evaluate("window.scrollBy(0, 1000)")
                 time.sleep(2)
 
-            # Shopee product cards
-            cards = page.query_selector_all('[class*="shopee-search-item-result__item"], [data-sqe="item"]')
-            if not cards:
-                cards = page.query_selector_all('a[data-sqe="link"]')
-            if not cards:
-                # Broader fallback
-                cards = page.query_selector_all('.shopee-search-item-result__items > div')
-
-            for card in cards:
-                if len(products) >= max_results:
-                    break
-                try:
-                    text = card.inner_text().strip()
-                    if not text or len(text) < 10:
+            # Method 1: Use intercepted API data
+            if api_items:
+                for item in api_items[:max_results]:
+                    info = item.get("item_basic", item) if isinstance(item, dict) else {}
+                    if not isinstance(info, dict):
                         continue
-
-                    lines = [l.strip() for l in text.split("\n") if l.strip()]
-
-                    # Parse product data from text
-                    name = ""
-                    price = 0
-                    sold = ""
-                    rating = ""
-
-                    for line in lines:
-                        # Price detection (RM XX.XX)
-                        price_match = re.search(r'(?:RM|rm)\s*([\d,.]+)', line)
-                        if price_match and not price:
-                            price = float(price_match.group(1).replace(",", ""))
-                        # Sold count
-                        sold_match = re.search(r'([\d.]+[KMk]?)\s*sold', line, re.IGNORECASE)
-                        if sold_match:
-                            sold = sold_match.group(1)
-                        # Rating
-                        rating_match = re.search(r'([\d.]+)\s*(?:stars?|\u2605)', line, re.IGNORECASE)
-                        if rating_match:
-                            rating = rating_match.group(1)
-                        # Name (longest line that isn't price/stats)
-                        if len(line) > len(name) and not price_match and "sold" not in line.lower():
-                            name = line
-
+                    name = info.get("name", info.get("title", ""))
                     if not name:
-                        name = lines[0] if lines else "Unknown"
-
-                    # Get link
-                    link_elem = card.query_selector("a[href]")
-                    product_url = ""
-                    if link_elem:
-                        href = link_elem.get_attribute("href") or ""
-                        if href.startswith("/"):
-                            domain = {"MY": "shopee.com.my", "SG": "shopee.sg"}.get(country, "shopee.com.my")
-                            product_url = f"https://{domain}{href}"
-                        elif href.startswith("http"):
-                            product_url = href
-
-                    # Estimate monthly sales from "sold" count
-                    monthly_est = 0
-                    if sold:
-                        total_sold = parse_number(sold)
-                        monthly_est = int(total_sold / 6)  # Rough estimate: divide total by ~6 months
+                        continue
+                    price_raw = info.get("price", info.get("price_min", 0))
+                    price = price_raw / 100000 if price_raw > 10000 else price_raw / 100 if price_raw > 1000 else price_raw
+                    sold = info.get("sold", info.get("historical_sold", 0))
+                    rating = info.get("item_rating", {})
+                    if isinstance(rating, dict):
+                        rating_star = rating.get("rating_star", 0)
+                    else:
+                        rating_star = 0
+                    shop_loc = info.get("shop_location", "")
+                    monthly_est = int(sold / 6) if sold else 0
 
                     products.append({
                         "name": name[:200],
-                        "price_myr": price,
-                        "rating": rating or "N/A",
-                        "sold_total": sold,
+                        "price_myr": round(price, 2),
+                        "rating": f"{rating_star:.1f}" if rating_star else "N/A",
+                        "sold_total": str(sold) if sold else "N/A",
                         "monthly_sales_est": monthly_est,
-                        "url": product_url,
-                        "raw": text[:300],
+                        "shop_location": shop_loc,
+                        "url": "",
                     })
-                    print(f"[scout] {len(products)}. {name[:50]} — RM{price} ({sold} sold)")
+                    print(f"[scout] {len(products)}. {name[:50]} — RM{price:.2f} ({sold} sold)")
 
-                except Exception:
-                    continue
+            # Method 2: DOM fallback with broader selectors
+            if not products:
+                selectors = [
+                    '[data-sqe="item"]',
+                    'a[data-sqe="link"]',
+                    'li[class*="col-xs"]',
+                    'div[class*="product-card"]',
+                    'div[class*="search-item"]',
+                ]
+                cards = []
+                for sel in selectors:
+                    cards = page.query_selector_all(sel)
+                    if cards:
+                        print(f"[scout] DOM: found {len(cards)} cards with selector '{sel}'")
+                        break
 
-            # Fallback text extraction
+                for card in cards:
+                    if len(products) >= max_results:
+                        break
+                    try:
+                        text = card.inner_text().strip()
+                        if not text or len(text) < 10:
+                            continue
+                        lines = [l.strip() for l in text.split("\n") if l.strip()]
+                        name = ""
+                        price = 0
+                        sold = ""
+                        rating = ""
+
+                        for line in lines:
+                            price_match = re.search(r'(?:RM|rm)\s*([\d,.]+)', line)
+                            if price_match and not price:
+                                price = float(price_match.group(1).replace(",", ""))
+                            sold_match = re.search(r'([\d.]+[KMk]?)\s*sold', line, re.IGNORECASE)
+                            if sold_match:
+                                sold = sold_match.group(1)
+                            rating_match = re.search(r'([\d.]+)\s*(?:stars?|\u2605)', line, re.IGNORECASE)
+                            if rating_match:
+                                rating = rating_match.group(1)
+                            if len(line) > len(name) and not price_match and "sold" not in line.lower():
+                                name = line
+
+                        if not name:
+                            name = lines[0] if lines else "Unknown"
+
+                        link_elem = card.query_selector("a[href]")
+                        product_url = ""
+                        if link_elem:
+                            href = link_elem.get_attribute("href") or ""
+                            if href.startswith("/"):
+                                domain = {"MY": "shopee.com.my", "SG": "shopee.sg"}.get(country, "shopee.com.my")
+                                product_url = f"https://{domain}{href}"
+                            elif href.startswith("http"):
+                                product_url = href
+
+                        monthly_est = 0
+                        if sold:
+                            monthly_est = int(parse_number(sold) / 6)
+
+                        products.append({
+                            "name": name[:200],
+                            "price_myr": price,
+                            "rating": rating or "N/A",
+                            "sold_total": sold or "N/A",
+                            "monthly_sales_est": monthly_est,
+                            "url": product_url,
+                            "raw": text[:300],
+                        })
+                        print(f"[scout] {len(products)}. {name[:50]} — RM{price} ({sold} sold)")
+                    except Exception:
+                        continue
+
+            # Method 3: Text fallback
             if not products:
                 print("[scout] Card extraction failed, trying text fallback...")
                 body = page.inner_text("body")
-                # Look for price patterns
                 price_blocks = re.findall(r'(.{20,100}RM\s*[\d,.]+.{0,50})', body)
                 for block in price_blocks[:max_results]:
                     price_match = re.search(r'RM\s*([\d,.]+)', block)
@@ -198,7 +240,16 @@ def scrape_shopee(keyword: str, country: str = "MY", max_results: int = 30) -> l
 def analyze_opportunity(products: list, keyword: str) -> dict:
     """Calculate market gap score and generate opportunity analysis."""
     if not products:
-        return {"market_gap_score": 0, "recommendation": "No products found. Check keyword."}
+        return {
+            "total_products_scanned": 0,
+            "avg_price": 0,
+            "median_price": 0,
+            "price_range": "N/A",
+            "avg_monthly_sales": 0,
+            "market_gap_score": 0,
+            "gaps_found": ["No products found — keyword may not exist or scraper blocked"],
+            "recommendation": "Check keyword spelling or try alternative terms"
+        }
 
     prices = [p.get("price_myr", 0) for p in products if p.get("price_myr", 0) > 0]
     monthly_sales = [p.get("monthly_sales_est", 0) for p in products if p.get("monthly_sales_est", 0) > 0]

@@ -55,7 +55,23 @@ RESULT=""
 EXIT_CODE=0
 
 if command -v openclaw &>/dev/null; then
-  RESULT=$(timeout "$TIMEOUT" openclaw agent --agent "$AGENT_ID" --message "$FULL_PROMPT" --json 2>&1) || EXIT_CODE=$?
+  # macOS has no `timeout` — use background + wait + kill pattern
+  openclaw agent --agent "$AGENT_ID" --message "$FULL_PROMPT" --json > /tmp/delegate-resp-$$.json 2>&1 &
+  BGPID=$!
+  WAITED=0
+  while kill -0 "$BGPID" 2>/dev/null && [ "$WAITED" -lt "$TIMEOUT" ]; do
+    sleep 1
+    WAITED=$((WAITED + 1))
+  done
+  if kill -0 "$BGPID" 2>/dev/null; then
+    kill "$BGPID" 2>/dev/null || true
+    RESULT='{"error":"timeout after '"$TIMEOUT"'s"}'
+    EXIT_CODE=124
+  else
+    wait "$BGPID" 2>/dev/null || EXIT_CODE=$?
+    RESULT=$(cat /tmp/delegate-resp-$$.json 2>/dev/null || echo '{"error":"no output"}')
+  fi
+  rm -f /tmp/delegate-resp-$$.json
 else
   echo "ERROR: openclaw CLI not found in PATH"
   EXIT_CODE=127

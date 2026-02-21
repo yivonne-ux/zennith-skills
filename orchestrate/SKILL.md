@@ -9,7 +9,7 @@ metadata:
       - Zenni delegates, never executes grunt work
       - Every delegation must include acceptance criteria
       - All results posted to rooms
-      - Hephaestus uses claude-code-runner.sh, not openclaw agent
+      - Taoz uses claude-code-runner.sh, not openclaw agent
 ---
 
 # Orchestrate — Multi-Agent Delegation Protocol
@@ -30,7 +30,7 @@ This skill teaches Zenni (the orchestrator) how to delegate tasks to real Panthe
 | Apollo | `apollo` | The Muse | Kimi 2.5 | Creative, brand, content |
 | Artemis | `artemis` | The Scout | Qwen3 Coder | Research, scraping, competitive intel |
 | Iris | `iris` | The Voice | Qwen3 Coder | Social media, community, engagement |
-| Hephaestus | — | The Forge | Claude Code Opus 4.6 | Code, tools, skill building |
+| Taoz | — | The Forge | Claude Code Opus 4.6 | Code, tools, skill building |
 
 ---
 
@@ -45,13 +45,13 @@ When a task arrives, Zenni routes it based on type:
 | Pricing / Bundles / Channel ops | Hermes | margin_math |
 | Analytics / Reporting / Forecasting | Athena | data_table |
 | Social posting / Community / Engagement | Iris | post_schedule |
-| Code / Tools / Skills / Infrastructure | Hephaestus | build_log |
+| Code / Tools / Skills / Infrastructure | Taoz | build_log |
 | Bulk parallel tasks | Multiple agents | varies |
 
 ### Delegation Rules
 
 1. **Zenni never scrapes** — always route to Artemis
-2. **Zenni never writes code** — always route to Hephaestus
+2. **Zenni never writes code** — always route to Taoz
 3. **Zenni never creates content** — always route to Apollo
 4. **Zenni never posts to social** — always route to Iris
 5. **Zenni never runs analytics queries** — always route to Athena
@@ -105,9 +105,9 @@ When the agent returns:
 
 ---
 
-## Special Case: Hephaestus (Code Tasks)
+## Special Case: Taoz (Code Tasks)
 
-Hephaestus uses Claude Code, NOT `openclaw agent`. Invoke via:
+Taoz uses Claude Code, NOT `openclaw agent`. Invoke via:
 
 ```bash
 bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh \

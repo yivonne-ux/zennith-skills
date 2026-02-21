@@ -1,0 +1,30 @@
+{
+  "id": "network-whatsapp-device-timeout",
+  "category": "NETWORK",
+  "severity": "low",
+  "signatures": [
+    "failed to get device list",
+    "usync query",
+    "info query timed out",
+    "ETIMEDOUT",
+    "ECONNRESET",
+    "socket hang up"
+  ],
+  "exclude_signatures": [
+    "authentication failed"
+  ],
+  "playbook": "network-timeout",
+  "context_hints": [
+    "WhatsApp",
+    "Baileys",
+    "websocket"
+  ],
+  "first_seen": "2026-02-12",
+  "last_seen": "2026-02-12",
+  "fix_count": 0,
+  "success_count": 0,
+  "success_rate": 0.0,
+  "auto_fixable": true,
+  "requires_interactive": false,
+  "estimated_fix_time_seconds": 30
+}

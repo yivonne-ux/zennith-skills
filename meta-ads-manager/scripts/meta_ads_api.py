@@ -90,6 +90,8 @@ def check_auth() -> dict:
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
+            if isinstance(data, list):
+                data = data[0] if data else {}
             status["configured"] = True
             status["user_name"] = data.get("name", "Unknown")
             status["user_id"] = data.get("id", "Unknown")
@@ -130,6 +132,8 @@ def get_campaigns(days: int = 7) -> dict:
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read())
+            if isinstance(data, list):
+                data = {"data": data}
             return {
                 "period": f"{since} to {until}",
                 "campaigns": data.get("data", []),
@@ -168,6 +172,8 @@ def get_top_creatives(days: int = 30, limit: int = 10) -> dict:
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read())
+            if isinstance(data, list):
+                data = {"data": data}
             return {
                 "period": f"{since} to {until}",
                 "top_creatives": data.get("data", []),
@@ -204,6 +210,8 @@ def fatigue_check(days: int = 14) -> dict:
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read())
+            if isinstance(data, list):
+                data = {"data": data}
             daily_data = data.get("data", [])
 
             # Detect CTR decline
