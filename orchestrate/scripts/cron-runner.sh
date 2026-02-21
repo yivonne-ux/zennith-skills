@@ -86,6 +86,68 @@ case "$JOB_ID" in
     ROOM="townhall"
     ;;
 
+  wa-group-digest)
+    DATE=$(date +"%Y-%m-%d")
+    DIGEST_DIR="$HOME/.openclaw/workspace/rooms/wa-groups"
+    mkdir -p "$DIGEST_DIR"
+    RESULT=$(openclaw agent --agent myrmidons \
+      --message "You are Myrmidons, GAIA CORP-OS worker agent. Task: Write today's WhatsApp group digest.
+
+Read today's session activity from:
+- $HOME/.openclaw/agents/myrmidons/sessions/ (today's files)
+- $HOME/.openclaw/agents/artemis/sessions/ (branding group)
+- $HOME/.openclaw/workspace/rooms/exec.jsonl
+- $HOME/.openclaw/workspace/rooms/creative.jsonl
+- $HOME/.openclaw/workspace/rooms/townhall.jsonl
+
+Write a digest file to: $DIGEST_DIR/$DATE.md
+
+Use this format:
+# GAIA WhatsApp Group Digest — $DATE
+
+## Gaia Eats Marketing
+- Key topics: ...
+- Decisions: ...
+- Action items: ...
+
+## Gaia Sales Group
+- Key topics: ...
+- Decisions: ...
+- Action items: ...
+
+## Gaia Branding
+- Key topics: ...
+- Decisions: ...
+- Action items: ...
+
+## Gaia \$\$\$
+- Key topics: ...
+- Decisions: ...
+- Action items: ...
+
+## GAIA Townhall
+- Key topics: ...
+- Decisions: ...
+- Action items: ...
+
+## GAIA War Room
+- Key topics: ...
+- Decisions: ...
+- Action items: ...
+
+---
+*Generated $(date '+%Y-%m-%d %H:%M %Z') by GAIA CORP-OS Myrmidons*
+
+Rules: max 4 bullets per group. If group had no activity, write 'Quiet — no notable activity.' Focus on actionable info only. Write the file directly.
+
+Verify: cat $DIGEST_DIR/$DATE.md | wc -l" \
+      --json --timeout 300 2>&1)
+    AGENT="myrmidons"
+    ROOM="townhall"
+    # Clean up digests older than 30 days
+    find "$DIGEST_DIR" -name "*.md" -mtime +30 -delete 2>/dev/null
+    ;;
+
   test-all)
     # Quick test: ping each agent
     for AGENT_ID in artemis apollo hermes athena iris; do
