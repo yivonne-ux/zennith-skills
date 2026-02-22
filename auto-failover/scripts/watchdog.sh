@@ -199,7 +199,7 @@ RECENT_ERRORS=0
 if command -v openclaw &>/dev/null; then
   # Check last 100 log lines for model errors
   ERROR_CHECK=$(openclaw logs --max-bytes 50000 2>&1 | tail -100 | grep -c "token limit\|rate_limit\|HTTP 429\|HTTP 500\|HTTP 502\|HTTP 503\|model.*error\|exceeded model" 2>/dev/null || echo "0")
-  RECENT_ERRORS=$ERROR_CHECK
+  RECENT_ERRORS=$(echo "$ERROR_CHECK" | tail -1 | tr -d '[:space:]')
 fi
 
 if [ "$RECENT_ERRORS" -gt 3 ] 2>/dev/null; then
@@ -207,6 +207,7 @@ if [ "$RECENT_ERRORS" -gt 3 ] 2>/dev/null; then
 
   # Check if primary model is specifically failing
   PRIMARY_ERRORS=$(openclaw logs --max-bytes 50000 2>&1 | tail -100 | grep -c "glm-4.7-flash\|glm-5\|glm-4.7" 2>/dev/null || echo "0")
+  PRIMARY_ERRORS=$(echo "$PRIMARY_ERRORS" | tail -1 | tr -d '[:space:]')
 
   if [ "$PRIMARY_ERRORS" -gt 2 ] 2>/dev/null; then
     log "FAILOVER: GLM models have $PRIMARY_ERRORS errors. Checking fallback..."
