@@ -1,19 +1,23 @@
 ---
 name: gaia-art-style
-description: GAIA CORP-OS official visual art style bible. Defines the character design system, environment language, spell/skill effects, fashion vocabulary, and rendering standards for all GAIA agents and brand visuals. Read this before generating any GAIA character, environment, or visual asset.
+description: GAIA CORP-OS working art style guide — v1 draft for current character design phase. NOT permanent. Jenn Woei may evolve or completely change this style. Read this for the current active style, but treat all decisions as revisable. Do not hardcode this as doctrine.
 metadata:
   openclaw:
     scope: creative
     guardrails:
-      - Never deviate from the proportion system without approval
-      - All agent sprites must pass the style checklist before use
-      - Color palettes must follow the agent-specific color assignments
+      - This is v1 DRAFT — style may change at any time per Jenn Woei's direction
+      - Do not treat this as permanent brand doctrine
+      - Always ask Jenn before committing to a new style direction
+      - Color palettes are working assignments, not final locks
 ---
 
-# GAIA ART STYLE BIBLE — v1.0
+# GAIA ART STYLE — v1 DRAFT (Working, Not Permanent)
+
+> ⚠️ **This is a working draft.** Jenn Woei may evolve or completely change the art direction at any time. Use this as the current guide, not as permanent gospel.
 
 **Author:** Zenni + Jenn Woei  
 **Date:** 2026-02-22  
+**Status:** v1 Draft — current agent character design phase only  
 **For:** Daedalus (Art Direction), Apollo (Creative), Calliope (Campaign), all image-generating agents
 
 ---
