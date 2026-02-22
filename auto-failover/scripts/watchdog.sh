@@ -71,9 +71,9 @@ get_context_limit() {
   local agent_name="$1"
   case "$agent_name" in
     main|artemis|hermes)       echo 202000 ;;   # GLM-4.7-flash
-    calliope|apollo|iris)      echo 202000 ;;   # Gemini 3 Pro (capped — don't use full 1M)
+    dreami|calliope|apollo|iris) echo 202000 ;; # Gemini 3 Pro / Kimi K2.5 (capped)
     athena)                    echo 200000 ;;   # GLM-5
-    daedalus)                  echo 200000 ;;   # Kimi K2.5
+    artee|daedalus)            echo 200000 ;;   # Kimi K2.5
     *)                         echo 200000 ;;   # Default safe limit
   esac
 }
@@ -88,7 +88,7 @@ for AGENT_DIR in "$AGENTS_DIR"/*/; do
 
   AGENT_NAME=$(basename "$AGENT_DIR")
 
-  # Skip symlinks to avoid double-processing (art-director -> daedalus, creative-director -> calliope)
+  # Skip symlinks to avoid double-processing (art-director -> artee, creative-director -> dreami)
   if [ -L "$AGENTS_DIR/$AGENT_NAME" ]; then
     log "SKIP: $AGENT_NAME (symlink to $(readlink "$AGENTS_DIR/$AGENT_NAME"))"
     continue
@@ -266,3 +266,24 @@ if [ -f "$LOG_FILE" ]; then
 fi
 
 log "--- watchdog cycle complete ---"
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 6. FINAL OUTPUT — SILENT IF ALL CLEAR
+# Only print a summary if something needs attention.
+# When all clear, print nothing so the cron announce step stays quiet.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ISSUES_FOUND=0
+[ -z "$GATEWAY_PID" ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
+[ "$TOTAL_RESETS" -gt 0 ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
+[ "$RECENT_ERRORS" -gt 3 ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
+[ "$DASHBOARD_HTTP" != "200" ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
+
+if [ "$ISSUES_FOUND" -gt 0 ]; then
+  echo "🚨 Watchdog Alert — $(date '+%I:%M %p, %d %b %Y')"
+  [ -z "$GATEWAY_PID" ]         && echo "  ❌ Gateway was down (auto-restart attempted)"
+  [ "$TOTAL_RESETS" -gt 0 ]     && echo "  ♻️  $TOTAL_RESETS session(s) auto-reset (token overflow)"
+  [ "$RECENT_ERRORS" -gt 3 ]    && echo "  ⚠️  $RECENT_ERRORS model errors detected in logs"
+  [ "$DASHBOARD_HTTP" != "200" ] && echo "  ❌ Dashboard was down (HTTP $DASHBOARD_HTTP, restart attempted)"
+fi
+# If ISSUES_FOUND=0, we print nothing → cron announce delivers nothing → no WhatsApp ping
