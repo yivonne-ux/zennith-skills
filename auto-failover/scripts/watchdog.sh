@@ -277,13 +277,13 @@ ISSUES_FOUND=0
 [ -z "$GATEWAY_PID" ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
 [ "$TOTAL_RESETS" -gt 0 ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
 [ "$RECENT_ERRORS" -gt 3 ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
-[ "$DASHBOARD_HTTP" != "200" ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
+[ "${DASHBOARD_HTTP:-000}" != "200" ] && ISSUES_FOUND=$(( ISSUES_FOUND + 1 ))
 
 if [ "$ISSUES_FOUND" -gt 0 ]; then
   echo "🚨 Watchdog Alert — $(date '+%I:%M %p, %d %b %Y')"
   [ -z "$GATEWAY_PID" ]         && echo "  ❌ Gateway was down (auto-restart attempted)"
   [ "$TOTAL_RESETS" -gt 0 ]     && echo "  ♻️  $TOTAL_RESETS session(s) auto-reset (token overflow)"
   [ "$RECENT_ERRORS" -gt 3 ]    && echo "  ⚠️  $RECENT_ERRORS model errors detected in logs"
-  [ "$DASHBOARD_HTTP" != "200" ] && echo "  ❌ Dashboard was down (HTTP $DASHBOARD_HTTP, restart attempted)"
+  [ "${DASHBOARD_HTTP:-000}" != "200" ] && echo "  ❌ Dashboard was down (HTTP ${DASHBOARD_HTTP:-000}, restart attempted)"
 fi
 # If ISSUES_FOUND=0, we print nothing → cron announce delivers nothing → no WhatsApp ping
