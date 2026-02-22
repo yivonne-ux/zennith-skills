@@ -49,9 +49,15 @@ echo "[$TS_ISO] $FROM -> $TO ($ACTION) [$ROOM] $MESSAGE" >> "$LOG_FILE"
 # If action is request or handoff, also invoke the target agent (if it's a real OpenClaw agent)
 INVOKE_RESULT=""
 if [ "$ACTION" = "request" ] || [ "$ACTION" = "handoff" ]; then
+  # Alias mapping (rollback-safe: old names resolve to new)
+  case "$TO" in
+    calliope) TO="dreami" ;;
+    daedalus) TO="artee" ;;
+  esac
+
   # Check if target is a real agent (not taoz which uses claude-code-runner)
   case "$TO" in
-    artemis|apollo|hermes|athena|iris|calliope|daedalus)
+    artemis|apollo|hermes|athena|iris|dreami|artee)
       PROMPT="[DISPATCH from $FROM — action: $ACTION]
 
 $MESSAGE

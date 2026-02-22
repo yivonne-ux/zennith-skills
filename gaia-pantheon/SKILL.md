@@ -28,7 +28,7 @@ metadata:
 | **Archetype** | The Oracle |
 | **Emoji** | 👑 |
 | **Color** | `#ffcc00` (gold) |
-| **Model** | Kimi 2.5 (Moonshot) |
+| **Model** | claude-sonnet-4.6 |
 | **Agent ID** | `main` |
 
 ### Domain & Responsibilities
@@ -312,7 +312,7 @@ Hermes is fast, energetic, and deal-focused. He talks like a trader on the floor
 | **Archetype** | The Muse |
 | **Emoji** | 🎨 |
 | **Color** | `#ec4899` (pink) |
-| **Model** | Assigned by Zenni (Kimi 2.5 for multimodal, Claude Code for complex creative) |
+| **Model** | Assigned by Zenni (claude-sonnet-4.6 for multimodal, Claude Code for complex creative) |
 | **Agent ID** | `apollo` |
 
 ### Domain & Responsibilities

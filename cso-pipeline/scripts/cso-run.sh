@@ -398,7 +398,7 @@ fi
 # Step 1: Determine required steps
 # -----------------------------------------------------------------------
 # Pipeline: ANALYSIS → CREATIVE_BRIEF → ADAPTATION → CREATIVE_REVIEW → PUBLISHING
-# Calliope (Creative Director) creates brief after research, reviews copy after adaptation.
+# Dreami (Creative Director) creates brief after research, reviews copy after adaptation.
 STEPS_NEEDED="ANALYSIS CREATIVE_BRIEF ADAPTATION CREATIVE_REVIEW PUBLISHING"
 
 if has_attachments "$STRATEGY_JSON"; then
@@ -458,25 +458,25 @@ for STEP_TYPE in $STEPS_NEEDED; do
       update_strategy_progress "ANALYSIS in progress"
       ;;
     CREATIVE_BRIEF)
-      DISPATCH_AGENT="calliope"
+      DISPATCH_AGENT="dreami"
       DISPATCH_ROOM="creative"
-      DISPATCH_MSG="[CSO CREATIVE_BRIEF] Strategy: $STRATEGY_TITLE. Read Brand DNA at $BRAND_DNA for brand identity. Select a mood preset from ~/.openclaw/brands/$BRAND/moods/ that fits the campaign concept. Include BRAND and MOOD in your brief. Create a campaign brief based on Artemis research. Define: CAMPAIGN name, BRAND, MOOD, THEME, TARGET persona, TONE, KEY MESSAGING (3 points), COPY DIRECTION for Apollo, VISUAL DIRECTION for Daedalus (Art Director), OUTPUT TYPES needed (from: broll/aroll/promotion/education/raw/lofi/channel/podcast/ip/ugc/hero/carousel). After creating the brief, dispatch copy work to Apollo and visual work to Daedalus via the creative room. Strategy ID: $STRATEGY_ID. Step ID: $STEP_ID. Brief: $STRATEGY_DESC$PERF_CONTEXT$MARKETING_BRAIN"
+      DISPATCH_MSG="[CSO CREATIVE_BRIEF] Strategy: $STRATEGY_TITLE. Read Brand DNA at $BRAND_DNA for brand identity. Select a mood preset from ~/.openclaw/brands/$BRAND/moods/ that fits the campaign concept. Include BRAND and MOOD in your brief. Create a campaign brief based on Artemis research. Define: CAMPAIGN name, BRAND, MOOD, THEME, TARGET persona, TONE, KEY MESSAGING (3 points), COPY DIRECTION for Apollo, VISUAL DIRECTION for Artee (Art Director), OUTPUT TYPES needed (from: broll/aroll/promotion/education/raw/lofi/channel/podcast/ip/ugc/hero/carousel). After creating the brief, dispatch copy work to Apollo and visual work to Artee via the creative room. Strategy ID: $STRATEGY_ID. Step ID: $STEP_ID. Brief: $STRATEGY_DESC$PERF_CONTEXT$MARKETING_BRAIN"
       update_strategy_status "CREATIVE_BRIEF"
-      update_strategy_progress "CREATIVE_BRIEF in progress — Calliope creating campaign brief"
+      update_strategy_progress "CREATIVE_BRIEF in progress — Dreami creating campaign brief"
       ;;
     ADAPTATION)
       DISPATCH_AGENT="apollo"
       DISPATCH_ROOM="creative"
-      DISPATCH_MSG="[CSO ADAPTATION] Strategy: $STRATEGY_TITLE. Brand DNA: $BRAND_DNA. If Calliope (Creative Director) specified a mood in the brief, read the mood preset for copy tone guidance. Adapt and rewrite the campaign content for each target channel. Use the winning patterns and top-performing hooks/copies provided below as reference for what resonates with our audience. Ensure brand voice consistency and platform-native formatting. After creating content, register all content atoms in the seed bank via: bash ~/.openclaw/skills/content-seed-bank/scripts/seed-store.sh add --type hook --text 'your hook' --tags 'campaign,$STRATEGY_CATEGORY' --source apollo --campaign $STRATEGY_ID. Also store creatives in local DB via: python3 ~/.openclaw/workspace/gaia-db/gaia_db.py. Strategy ID: $STRATEGY_ID. Step ID: $STEP_ID. Brief: $STRATEGY_DESC$PERF_CONTEXT$MARKETING_BRAIN"
+      DISPATCH_MSG="[CSO ADAPTATION] Strategy: $STRATEGY_TITLE. Brand DNA: $BRAND_DNA. If Dreami (Creative Director) specified a mood in the brief, read the mood preset for copy tone guidance. Adapt and rewrite the campaign content for each target channel. Use the winning patterns and top-performing hooks/copies provided below as reference for what resonates with our audience. Ensure brand voice consistency and platform-native formatting. After creating content, register all content atoms in the seed bank via: bash ~/.openclaw/skills/content-seed-bank/scripts/seed-store.sh add --type hook --text 'your hook' --tags 'campaign,$STRATEGY_CATEGORY' --source apollo --campaign $STRATEGY_ID. Also store creatives in local DB via: python3 ~/.openclaw/workspace/gaia-db/gaia_db.py. Strategy ID: $STRATEGY_ID. Step ID: $STEP_ID. Brief: $STRATEGY_DESC$PERF_CONTEXT$MARKETING_BRAIN"
       update_strategy_status "ADAPTATION"
       update_strategy_progress "ADAPTATION in progress"
       ;;
     CREATIVE_REVIEW)
-      DISPATCH_AGENT="calliope"
+      DISPATCH_AGENT="dreami"
       DISPATCH_ROOM="creative"
       DISPATCH_MSG="[CSO CREATIVE_REVIEW] Strategy: $STRATEGY_TITLE. Review Apollo's adapted content from the ADAPTATION step. Score each piece on: (1) Brand fit 1-5, (2) Engagement potential 1-5, (3) Channel appropriateness 1-5, (4) Copy-visual harmony 1-5, (5) Cultural fit for Malaysian audience 1-5. If any piece scores below 3.5 average, provide specific revision notes and post them to the creative room for Apollo to revise. If all pass, approve for publishing. Strategy ID: $STRATEGY_ID. Step ID: $STEP_ID."
       update_strategy_status "CREATIVE_REVIEW"
-      update_strategy_progress "CREATIVE_REVIEW in progress — Calliope reviewing content"
+      update_strategy_progress "CREATIVE_REVIEW in progress — Dreami reviewing content"
       ;;
     PUBLISHING)
       DISPATCH_AGENT="iris"
@@ -503,8 +503,8 @@ for STEP_TYPE in $STEPS_NEEDED; do
   # For ADAPTATION, also dispatch to Daedalus (Art Director) for visual content (parallel with Apollo)
   if [ "$STEP_TYPE" = "ADAPTATION" ]; then
     ART_MSG="[CSO ADAPTATION - Visual] Strategy: $STRATEGY_TITLE. Brand DNA: $BRAND_DNA. Read DNA.visual for style guardrails. If a mood was specified in the brief, read the mood preset from ~/.openclaw/brands/$BRAND/moods/ for style overrides. Generate visual content for this campaign. Use NanoBanana for brand-consistent images (bash nanobanana-gen.sh --brand $BRAND --prompt 'your prompt'). Generate hero images, product shots, and social media visuals. After generation, run visual audit: bash audit-visual.sh audit-image /path/to/image.png --brand $BRAND (must score >= 4.0). Register approved visuals in seed bank. Strategy ID: $STRATEGY_ID. Step ID: $STEP_ID. Brief: $STRATEGY_DESC$PERF_CONTEXT"
-    dispatch_to_agent "daedalus" "ADAPTATION-VISUAL" "$ART_MSG" "creative"
-    log "INFO" "Daedalus (Art Director) dispatched for parallel visual content generation"
+    dispatch_to_agent "artee" "ADAPTATION-VISUAL" "$ART_MSG" "creative"
+    log "INFO" "Artee (Art Director) dispatched for parallel visual content generation"
   fi
 
   # For PUBLISHING, also dispatch to Hermes for commerce channels

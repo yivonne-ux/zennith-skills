@@ -24,13 +24,16 @@ This skill teaches Zenni (the orchestrator) how to delegate tasks to real Panthe
 
 | Agent | ID | Archetype | Model | Domain |
 |-------|-----|-----------|-------|--------|
-| Zenni | `main` | The Oracle | Kimi 2.5 | Orchestration, governance, Jenn interface |
-| Athena | `athena` | The Strategist | Qwen3 Coder | Analytics, reporting, insights |
-| Hermes | `hermes` | The Merchant | Qwen3 Coder | Pricing, promotions, channel ops |
-| Apollo | `apollo` | The Muse | Kimi 2.5 | Creative, brand, content |
-| Artemis | `artemis` | The Scout | Qwen3 Coder | Research, scraping, competitive intel |
-| Iris | `iris` | The Voice | Qwen3 Coder | Social media, community, engagement |
-| Taoz | — | The Forge | Claude Code Opus 4.6 | Code, tools, skill building |
+| Zenni | `main` | The Oracle | claude-sonnet-4.6 | Orchestration, governance, Jenn interface |
+| Athena | `athena` | The Strategist | glm-5 | Analytics, reporting, insights |
+| Hermes | `hermes` | The Merchant | glm-5 | Pricing, promotions, channel ops |
+| Apollo | `apollo` | The Muse | qwen3-235b-a22b | Creative, brand, content |
+| Artemis | `artemis` | The Scout | kimi-k2.5 | Research, scraping, competitive intel |
+| Iris | `iris` | The Voice | qwen3-vl-235b | Social media, community, engagement |
+| Taoz | `taoz` | The Forge | qwen3-coder-next | Code, tools, skill building |
+| Myrmidons | `myrmidons` | The Swarm | minimax-m2.5 | Bulk tasks, WhatsApp processing |
+| Dreami | `dreami` | Creative Director | kimi-k2.5 | Campaign strategy, creative direction |
+| Artee | `artee` | Art Director | kimi-k2.5 | Visual QA, brand consistency |
 
 ---
 

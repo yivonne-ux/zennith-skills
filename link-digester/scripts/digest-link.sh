@@ -44,7 +44,7 @@ if [ -n "$FORCE_TYPE" ]; then
     social)     AGENT="iris";       ROOM="creative" ;;
     competitor) AGENT="artemis";    ROOM="build" ;;
     article)    AGENT="artemis";    ROOM="exec" ;;
-    visual-reference) AGENT="daedalus"; ROOM="creative" ;;
+    visual-reference) AGENT="artee"; ROOM="creative" ;;
     general)    AGENT="artemis";    ROOM="exec" ;;
     *)
       log "ERROR: Unknown type: $FORCE_TYPE, falling back to classify"
