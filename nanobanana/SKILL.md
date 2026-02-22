@@ -11,7 +11,7 @@ NanoBanana is Google's Gemini image generation system. This skill contains best 
 
 | Model | ID | Best For | Max Refs |
 |-------|-----|----------|----------|
-| **NanoBanana** (fast) | `gemini-2.5-flash-image` | High-volume, quick iterations | Limited |
+| **NanoBanana** (fast) | `gemini-3-pro-image-preview` | High-volume, quick iterations | Limited |
 | **NanoBanana Pro** (quality) | `gemini-3-pro-image-preview` | Professional assets, character consistency, 4K | 14 images, 5 humans |
 
 ## API
