@@ -70,10 +70,13 @@ fi
 get_context_limit() {
   local agent_name="$1"
   case "$agent_name" in
-    main|artemis|hermes)       echo 202000 ;;   # GLM-4.7-flash
-    dreami|calliope|apollo|iris) echo 202000 ;; # Gemini 3 Pro / Kimi K2.5 (capped)
-    athena)                    echo 200000 ;;   # GLM-5
-    artee|daedalus)            echo 200000 ;;   # Kimi K2.5
+    main)                      echo 200000 ;;   # claude-sonnet-4.6
+    taoz)                      echo 262144 ;;   # qwen3-coder-next
+    myrmidons)                 echo 196608 ;;   # minimax-m2.5
+    artemis|dreami|artee)      echo 262144 ;;   # kimi-k2.5
+    apollo)                    echo 131000 ;;   # qwen3-235b-a22b
+    athena|hermes)             echo 202000 ;;   # glm-5
+    iris)                      echo 262144 ;;   # qwen3-vl-235b (capped safe)
     *)                         echo 200000 ;;   # Default safe limit
   esac
 }
