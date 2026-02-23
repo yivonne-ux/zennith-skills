@@ -80,9 +80,9 @@ Single Cell (Agent):
 Agents pulse every 3 hours, staggered by 25 minutes:
 - `:00` — Artemis (scout — learns from research)
 - `:25` — Athena (analyst — learns from data)
-- `:50` — Calliope (creative director — learns from reviews)
+- `:50` — Dreami (creative director — learns from reviews)
 - `+1h :15` — Apollo (copywriter — learns from content)
-- `+1h :40` — Daedalus (art director — learns from visuals)
+- `+1h :40` — Artee (art director — learns from visuals)
 - `+2h :05` — Iris (social — learns from engagement)
 - `+2h :30` — Hermes (commerce — learns from sales)
 

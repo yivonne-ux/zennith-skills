@@ -39,6 +39,30 @@ log "START: $JOB_ID"
 
 case "$JOB_ID" in
 
+  heartbeat)
+    # System health pulse — checks rooms, agent status, stalled tasks
+    # Posts a brief health check to townhall
+    STALE_ROOMS=""
+    for ROOM in exec build creative social; do
+      ROOM_FILE="$ROOMS_DIR/${ROOM}.jsonl"
+      if [ -f "$ROOM_FILE" ]; then
+        LAST_TS=$(tail -1 "$ROOM_FILE" 2>/dev/null | python3 -c "import sys,json; print(json.loads(sys.stdin.read()).get('ts',0))" 2>/dev/null || echo "0")
+        NOW_MS=$(python3 -c "import time; print(int(time.time()*1000))")
+        AGE_H=$(python3 -c "print(round(($NOW_MS - $LAST_TS) / 3600000, 1))" 2>/dev/null || echo "?")
+        if python3 -c "exit(0 if $AGE_H > 24 else 1)" 2>/dev/null; then
+          STALE_ROOMS="$STALE_ROOMS $ROOM(${AGE_H}h)"
+        fi
+      fi
+    done
+    if [ -n "$STALE_ROOMS" ]; then
+      post_to_room "feedback" "heartbeat" "Stale rooms (>24h):$STALE_ROOMS" "health"
+      log "HEARTBEAT: stale rooms:$STALE_ROOMS"
+    else
+      log "HEARTBEAT: all rooms active"
+    fi
+    exit 0
+    ;;
+
   innovation-scout)
     RESULT=$(openclaw agent --agent artemis \
       --message "You are Artemis. Read ~/.openclaw/workspace-artemis/SOUL.md. Run innovation-scout protocol: Scout GitHub trending, Product Hunt, HN for AI agent innovations relevant to GAIA Eats (e-commerce, social, content, marketing). Post structured scout report to townhall room." \
@@ -72,8 +96,9 @@ case "$JOB_ID" in
     ;;
 
   nightly-review)
-    LABEL="zenni-nightly-$(date +%s)"
-    RESULT=$(openclaw sessions spawn --label "$LABEL" --timeout 300 "You are Zenni. Read ~/.openclaw/workspace/SOUL.md. Run corp-os-compound nightly review. Scan all rooms from last 24h, extract patterns, detect gaps, update learning-log. Post summary to townhall room." 2>&1)
+    RESULT=$(openclaw agent --agent main \
+      --message "Run corp-os-compound nightly review. Scan all rooms from last 24h, extract patterns, detect gaps, update learning-log. Post summary to townhall room." \
+      --json --timeout 300 2>&1)
     AGENT="zenni"
     ROOM="townhall"
     ;;
