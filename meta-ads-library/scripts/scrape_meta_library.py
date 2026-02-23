@@ -32,6 +32,16 @@ def check_playwright():
         return False
 
 
+# BM (Bahasa Malaysia) keyword fallbacks for better coverage
+BM_KEYWORDS = [
+    "makanan vegan",
+    "snek sihat",
+    "makanan organik",
+    "suplemen kesihatan",
+    "produk organik",
+]
+
+
 def build_url(keyword: str | None, advertiser: str | None, country: str = "MY") -> str:
     """Build Meta Ad Library search URL."""
     base = "https://www.facebook.com/ads/library/"
@@ -227,7 +237,7 @@ def scrape_ads(keyword: str | None, advertiser: str | None, country: str = "MY",
 
 def main():
     parser = argparse.ArgumentParser(description="Scrape Meta Ad Library")
-    parser.add_argument("--keyword", "-k", help="Search keyword (e.g., 'vegan food')")
+    parser.add_argument("--keyword", "-k", action="append", help="Search keyword (repeatable). BM fallbacks: makanan vegan, snek sihat, makanan organik, suplemen kesihatan, produk organik")
     parser.add_argument("--advertiser", "-a", help="Advertiser name (e.g., 'Green Monday')")
     parser.add_argument("--country", "-c", default="MY", help="Country code (default: MY)")
     parser.add_argument("--max-results", "-n", type=int, default=20, help="Max ads to extract (default: 20)")
@@ -242,14 +252,61 @@ def main():
     if not check_playwright():
         sys.exit(1)
 
-    result = scrape_ads(
-        keyword=args.keyword,
-        advertiser=args.advertiser,
-        country=args.country,
-        max_results=args.max_results,
-        output_dir=args.output_dir,
-        screenshots=not args.no_screenshots,
-    )
+    # Process keywords: split comma-separated, handle multiple --keyword args
+    all_keywords = []
+    if args.keyword:
+        for kw in args.keyword:
+            all_keywords.extend([k.strip() for k in kw.split(",") if k.strip()])
+    
+    # Ensure we have at least one keyword (English + BM fallbacks if not provided)
+    if not all_keywords:
+        all_keywords = ["vegan food", "plant based", "organic snack"]
+    
+    # Add BM fallback keywords for better MY coverage
+    all_keywords.extend(BM_KEYWORDS)
+
+    # Run scraping for each keyword and aggregate results
+    all_ads = []
+    for keyword in all_keywords:
+        print(f"\n[meta-ads] Searching: {keyword}")
+        result = scrape_ads(
+            keyword=keyword,
+            advertiser=args.advertiser,
+            country=args.country,
+            max_results=args.max_results // len(all_keywords) + 2,  # Distribute results
+            output_dir=args.output_dir,
+            screenshots=not args.no_screenshots,
+        )
+        all_ads.extend(result.get("ads", []))
+    
+    # Deduplicate by advertiser + ad_text
+    seen = set()
+    unique_ads = []
+    for ad in all_ads:
+        key = (ad.get("advertiser", ""), ad.get("ad_text", "")[:100])
+        if key not in seen:
+            seen.add(key)
+            unique_ads.append(ad)
+    
+    # Truncate to max_results
+    unique_ads = unique_ads[:args.max_results]
+
+    # Build final result
+    result = {
+        "query": ", ".join(all_keywords),
+        "country": args.country,
+        "scraped_at": datetime.now(timezone.utc).isoformat(),
+        "ads": unique_ads,
+        "total_found": len(unique_ads),
+        "output_dir": args.output_dir,
+    }
+
+    # Save JSON output
+    output_file = os.path.join(args.output_dir, "results.json")
+    os.makedirs(args.output_dir, exist_ok=True)
+    with open(output_file, "w") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print(f"\n[meta-ads] Done. {len(unique_ads)} unique ads saved to {output_file}")
 
     if args.json:
         print(json.dumps(result, indent=2, ensure_ascii=False))

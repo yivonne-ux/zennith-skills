@@ -190,6 +190,57 @@ def scrape_hashtags(country: str = "MY", max_results: int = 30) -> dict:
                             "relevance_score": score,
                         })
 
+            # Method 4: Web scraping fallback - try public trending page if Creative Center fails
+            if not trends:
+                print("[tiktok] No results from API/DOM methods. Falling back to public trending page scrape...")
+                public_url = "https://www.tiktok.com"
+                try:
+                    page.goto(public_url, wait_until="networkidle", timeout=30000)
+                    time.sleep(4)
+                    
+                    # Try to scroll and look for trending content
+                    for _ in range(5):
+                        page.evaluate("window.scrollBy(0, 1500)")
+                        time.sleep(1.5)
+                    
+                    # Get all visible text from the page
+                    page_text = page.inner_text("body")
+                    
+                    # Look for trending hashtags in various formats
+                    patterns = [
+                        r'#\w{3,}',  # Basic hashtag pattern
+                        r'trending.*?#(\w+)',  # "trending #hashtag" pattern
+                        r'#\w+.*?view.*?\d+[KMBkmb]',  # Hashtag with views
+                    ]
+                    
+                    found_tags = set()
+                    for pattern in patterns:
+                        matches = re.findall(pattern, page_text, re.IGNORECASE)
+                        for match in matches:
+                            if isinstance(match, tuple):
+                                match = match[0] if match[0] else match[1] if len(match) > 1 else ""
+                            if match:
+                                tag = f"#{match}" if not match.startswith("#") else match
+                                if len(tag) > 2 and len(tag) < 50:
+                                    found_tags.add(tag.lower())
+                    
+                    for tag in found_tags:
+                        if len(trends) >= max_results:
+                            break
+                        category, score = score_relevance(tag)
+                        trends.append({
+                            "rank": len(trends) + 1,
+                            "name": tag,
+                            "views": "N/A",
+                            "growth": "N/A",
+                            "gaia_relevance": category,
+                            "relevance_score": score,
+                            "source": "public-trending-page-fallback",
+                        })
+                    print(f"[tiktok] Public page fallback: {len(trends)} hashtags found")
+                except Exception as e:
+                    print(f"[tiktok] Public page fallback failed: {e}")
+
         except Exception as e:
             print(f"[tiktok] Error: {e}")
         finally:
