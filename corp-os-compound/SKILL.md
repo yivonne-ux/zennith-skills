@@ -267,3 +267,32 @@ This ensures the system has a complete history of everything that happened and e
 
 ### v1.0.0 (2026-02-12)
 - Initial creation: nightly review, weekly review, skill auto-builder, append-only memory policy
+
+## NIGHTLY CRYSTALLIZATION PROTOCOL
+
+Every night (cron at 2am), read rooms/feedback.jsonl and:
+
+1. **Extract Patterns**
+   - Find insights that appeared 3+ times
+   - Find errors that were solved the same way
+   - Find wins that can be replicated
+
+2. **Crystallize into Skills**
+   - If pattern works 3+ times → encode into a skill
+   - Create or update ~/.openclaw/skills/<pattern-name>/SKILL.md
+
+3. **Update Agent SOUL.md**
+   - Add learned behaviors to relevant agent's SOUL.md
+   - Example: If Apollo learns a winning hook format, add to his SOUL.md
+
+4. **Update MEMORY.md**
+   - Add cross-agent insights to MEMORY.md
+   - These become common knowledge
+
+5. **Report to Townhall**
+   - Write summary to rooms/townhall.jsonl
+   - "Compound Learning Report: X patterns crystallized, Y insights shared"
+
+## CROSS-POLLINATION
+
+Agents should read rooms/feedback.jsonl at session start to learn from others.

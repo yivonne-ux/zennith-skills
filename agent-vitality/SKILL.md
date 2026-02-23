@@ -45,7 +45,7 @@ bash cross-pollinate.sh
 ```
 
 - Reads all agents' recent learnings from RAG memory
-- Classifies relevance: visual → daedalus, copy → apollo, strategy → athena, etc.
+- Classifies relevance: visual → artee, copy → apollo, strategy → athena, etc.
 - Posts relevant cross-team learnings to the appropriate room
 - Prevents duplicate notifications
 

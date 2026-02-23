@@ -4,7 +4,7 @@ version: "1.0.0"
 description: "Image compression and optimization for GAIA assets"
 author: "taoz"
 tags: ["images", "optimization", "compression", "avatars", "dashboard"]
-agents: ["daedalus", "taoz"]
+agents: ["artee", "taoz"]
 ---
 
 # Image Optimizer
