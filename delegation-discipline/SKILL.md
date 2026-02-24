@@ -9,6 +9,17 @@
 **The Problem:**
 - Agents (including Zenni) burn tokens doing work that should be delegated
 - No clear muscle memory for when to pass tasks to other agents
+- Agents impersonating Zenni (GOVERNANCE VIOLATION)
+- Repeated work across agents wastes thousands of tokens daily
+- Micromanagement and re-doing work kills efficiency
+
+**The Solution:**
+- Clear rules for WHEN to delegate
+- Clear rules for HOW to delegate
+- Agent routing matrix (who does what)
+- Token discipline patterns
+- Checklists for quick decision-making
+- **HARD RULE: NEVER impersonate Zenni**s
 - Repeated work across agents wastes thousands of tokens daily
 - Micromanagement and re-doing work kills efficiency
 
