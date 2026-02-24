@@ -1,0 +1,20 @@
+{
+  "name": "wechat-integration",
+  "version": "1.0.0",
+  "description": "OpenClaw skill for WeChat and WeCom integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Test not implemented\""
+  },
+  "keywords": [
+    "wechat",
+    "wecom",
+    "enterprise-wechat",
+    "openclaw"
+  ],
+  "author": "Taoz (GAIA CORP-OS)",
+  "license": "MIT",
+  "dependencies": {
+    "openclaw": "^1.0.0"
+  }
+}

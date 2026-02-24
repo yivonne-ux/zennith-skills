@@ -1,0 +1,21 @@
+{
+  "name": "taobao-1688-agent",
+  "version": "1.0.0",
+  "description": "OpenClaw skill for autonomous product research on Taobao and 1688",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "taobao",
+    "1688",
+    "alibaba",
+    "product-research",
+    "openclaw"
+  ],
+  "author": "Taoz (GAIA CORP-OS)",
+  "license": "MIT",
+  "dependencies": {
+    "openclaw": "^1.0.0"
+  }
+}

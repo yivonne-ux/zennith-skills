@@ -1,0 +1,24 @@
+{
+  "brand_name": "MIRRA",
+  "brand_slug": "mirra",
+  "tagline": "",
+  "colors": {
+    "primary": "#C84B9E",
+    "secondary": "#F2A0C8",
+    "background": "#F9D1E0",
+    "accent": "#BBAED6"
+  },
+  "style": "vintage cinematic film photography, warm dusty rose peach mauve tones, 35mm film grain, slightly faded, editorial",
+  "lighting": "golden hour warm light, soft shadows, cinematic warm colour grade",
+  "photography_style": "35mm film grain, dusty rose peach mauve, real photographic lens flare bokeh star glints, NOT flat vector glitter",
+  "character": null,
+  "products": ["meal delivery"],
+  "target_audience": "Young Malaysian professional women 22-35, girlboss energy, self-love, unapologetically feminine",
+  "languages": ["English", "Chinese"],
+  "hard_rules": [
+    "NEVER mention GAIA or GAIA Eats anywhere in the image or prompt enrichment",
+    "Only branding: MIRRA wordmark, clean white, bottom center",
+    "No cheap flat vector glitter — only photographic film grain and real lens flare bokeh",
+    "Font: ultra-bold condensed serif ALL CAPS, heavy weight"
+  ]
+}
