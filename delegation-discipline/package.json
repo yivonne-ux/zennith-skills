@@ -1,0 +1,21 @@
+{
+  "name": "delegation-discipline",
+  "version": "1.0.0",
+  "description": "OpenClaw skill for teaching agents when, how, and who to delegate work to",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "delegation",
+    "routing",
+    "efficiency",
+    "token-discipline",
+    "openclaw"
+  ],
+  "author": "Taoz (GAIA CORP-OS)",
+  "license": "MIT",
+  "dependencies": {
+    "openclaw": "^1.0.0"
+  }
+}
