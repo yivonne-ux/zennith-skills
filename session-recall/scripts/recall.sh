@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# recall.sh — Extract session facts before reset (v2: structured memory)
+# recall.sh — Extract conversation recap before session reset (v3: readable recap)
 # Usage: recall.sh [session_key] [reason]
 #
-# v2 changes:
-# - Extracts atomic FACTS from conversations (not raw turns)
-# - Stores facts in memory.jsonl via memory-store.sh
-# - Daily .md gets only a 1-line pointer
-# - No more context bloat on agent boot
+# v3 changes:
+# - Writes human-readable recap to memory/YYYY-MM-DD.md (auto-read on boot)
+# - Captures last 15 conversation turns (user + assistant)
+# - No more RAG-only storage that never gets read
+# - Simple, reliable, zero external dependencies
 
 set -uo pipefail
 
@@ -14,7 +14,6 @@ OPENCLAW_DIR="$HOME/.openclaw"
 SESSIONS_DIR="$OPENCLAW_DIR/agents/main/sessions"
 SESSIONS_JSON="$SESSIONS_DIR/sessions.json"
 MEMORY_DIR="$OPENCLAW_DIR/workspace/memory"
-MEMORY_STORE="$OPENCLAW_DIR/skills/rag-memory/scripts/memory-store.sh"
 TODAY=$(date +"%Y-%m-%d")
 MEMORY_FILE="$MEMORY_DIR/$TODAY.md"
 TS=$(date +"%Y-%m-%d %H:%M:%S %Z")
@@ -24,15 +23,13 @@ REASON="${2:-auto-reset}"
 
 mkdir -p "$MEMORY_DIR"
 
-echo "--- session-recall v2 ---"
+echo "--- session-recall v3 ---"
 echo "Time: $TS"
 echo "Target: $SESSION_KEY"
 echo "Reason: $REASON"
 
-# Extract facts from sessions and store in memory.jsonl
-python3 - "$SESSIONS_JSON" "$SESSIONS_DIR" "$MEMORY_FILE" "$SESSION_KEY" "$REASON" "$TS" "$MEMORY_STORE" << 'PYEOF'
-import json, os, sys, subprocess
-from datetime import datetime
+python3 - "$SESSIONS_JSON" "$SESSIONS_DIR" "$MEMORY_FILE" "$SESSION_KEY" "$REASON" "$TS" << 'PYEOF'
+import json, os, sys
 
 sessions_file = sys.argv[1]
 sessions_dir = sys.argv[2]
@@ -40,55 +37,56 @@ memory_file = sys.argv[3]
 target_key = sys.argv[4]
 reason = sys.argv[5]
 ts = sys.argv[6]
-memory_store = sys.argv[7]
 
 try:
     with open(sessions_file) as f:
         sessions = json.load(f)
-except:
-    print("ERROR: Could not read sessions.json")
+except Exception as e:
+    print(f"ERROR: Could not read sessions.json: {e}")
     sys.exit(1)
 
 # Determine which sessions to recap
 to_recap = []
 for key, session in sessions.items():
-    sid = session.get("sessionId")
     tokens = session.get("totalTokens", 0)
-    if not sid:
+    # Use sessionFile field (correct path) — fall back to sessionId-based guess
+    jsonl_path = session.get("sessionFile", "")
+    if not jsonl_path:
+        sid = session.get("sessionId", "")
+        jsonl_path = os.path.join(sessions_dir, f"{sid}.jsonl") if sid else ""
+    if not jsonl_path:
         continue
     if target_key == "all":
-        if tokens > 100000:
-            to_recap.append((key, sid, tokens))
+        if tokens > 80000:  # capture sessions approaching limit
+            to_recap.append((key, jsonl_path, tokens))
     elif target_key in key:
-        to_recap.append((key, sid, tokens))
+        to_recap.append((key, jsonl_path, tokens))
 
 if not to_recap:
     print("No sessions need recap")
     sys.exit(0)
 
-total_facts = 0
+recaps_written = 0
 
-for session_key, session_id, token_count in to_recap:
-    jsonl_file = os.path.join(sessions_dir, f"{session_id}.jsonl")
+for session_key, jsonl_file, token_count in to_recap:
     if not os.path.exists(jsonl_file):
         print(f"WARN: Session file not found: {jsonl_file}")
         continue
 
-    print(f"Extracting facts for: {session_key} ({token_count} tokens)")
+    print(f"Recapping: {session_key} ({token_count:,} tokens)")
+    print(f"  JSONL: {jsonl_file}")
 
-    # Read last 200 lines of the session file
-    lines = []
+    # Read last 300 lines of the session JSONL
     try:
         with open(jsonl_file) as f:
             all_lines = f.readlines()
-            lines = all_lines[-200:]
-    except:
-        print(f"WARN: Could not read {jsonl_file}")
+            lines = all_lines[-300:]
+    except Exception as e:
+        print(f"WARN: Could not read {jsonl_file}: {e}")
         continue
 
-    # Extract conversation text (assistant messages only — these contain decisions/actions)
-    assistant_texts = []
-    user_texts = []
+    # Extract conversation turns (user + assistant only)
+    turns = []
     for line in lines:
         try:
             entry = json.loads(line.strip())
@@ -101,149 +99,80 @@ for session_key, session_id, token_count in to_recap:
             if isinstance(content, list):
                 text_parts = []
                 for block in content:
-                    if isinstance(block, dict):
-                        if block.get("type") == "text":
-                            text_parts.append(block.get("text", ""))
+                    if isinstance(block, dict) and block.get("type") == "text":
+                        text_parts.append(block.get("text", ""))
                 content = " ".join(text_parts)
             elif not isinstance(content, str):
                 content = str(content)
 
             content = content.strip()
-            if not content or len(content) < 20:
+            if not content or len(content) < 10:
                 continue
 
-            # Clean WhatsApp metadata
-            if content.startswith("[WhatsApp"):
+            # Strip WhatsApp metadata prefix
+            if content.startswith("[WhatsApp") or content.startswith("[Wed") or content.startswith("[Tue") or content.startswith("[Mon"):
                 parts = content.split("] ", 2)
                 content = parts[-1] if len(parts) >= 2 else content
 
-            if role == "assistant":
-                assistant_texts.append(content[:500])
-            else:
-                user_texts.append(content[:300])
+            # Skip system-like messages
+            if content.startswith("HEARTBEAT") or content.startswith("NO_REPLY"):
+                continue
+
+            turns.append((role, content[:600]))
         except:
             continue
 
-    # --- EXTRACT ATOMIC FACTS ---
-    facts = []
+    # Keep only last 15 turns
+    turns = turns[-15:]
 
-    # 1. Extract decisions (assistant messages with decision language)
-    decision_keywords = ["decided", "decision", "approved", "confirmed", "set to", "changed to",
-                         "switched", "configured", "enabled", "disabled", "removed", "added",
-                         "scheduled", "created", "deployed", "updated"]
-    for text in assistant_texts:
-        lower = text.lower()
-        for kw in decision_keywords:
-            if kw in lower:
-                # Extract the sentence containing the keyword
-                sentences = text.replace("!", ".").replace("?", ".").split(".")
-                for s in sentences:
-                    s = s.strip()
-                    if kw in s.lower() and 15 < len(s) < 300:
-                        facts.append(("decision", s, 7))
-                        break
-                break
+    if not turns:
+        print(f"  No conversation turns found in {session_key}")
+        continue
 
-    # 2. Extract pending tasks
-    pending_keywords = ["will do", "next step", "pending", "todo", "i'll", "i will",
-                        "need to", "working on", "in progress", "blocked by"]
-    for text in assistant_texts:
-        lower = text.lower()
-        for kw in pending_keywords:
-            if kw in lower:
-                sentences = text.replace("!", ".").replace("?", ".").split(".")
-                for s in sentences:
-                    s = s.strip()
-                    if kw in s.lower() and 15 < len(s) < 300:
-                        facts.append(("task", s, 8))
-                        break
-                break
+    # Build readable recap block
+    session_label = session_key.split(":")[-1] if ":" in session_key else session_key
+    recap_lines = [
+        f"\n## 🔁 Session Recap — {ts}",
+        f"**Session:** {session_key} | **Tokens:** {token_count:,} | **Reason:** {reason}",
+        f"**Last {len(turns)} turns:**",
+        ""
+    ]
 
-    # 3. Extract learnings / errors
-    learning_keywords = ["found that", "root cause", "the fix", "the issue was",
-                         "learned", "gotcha", "workaround", "solved by", "fixed by",
-                         "turns out", "the problem was", "key insight"]
-    for text in assistant_texts:
-        lower = text.lower()
-        for kw in learning_keywords:
-            if kw in lower:
-                sentences = text.replace("!", ".").replace("?", ".").split(".")
-                for s in sentences:
-                    s = s.strip()
-                    if kw in s.lower() and 15 < len(s) < 300:
-                        facts.append(("learning", s, 7))
-                        break
-                break
+    for role, text in turns:
+        prefix = "**Jenn:**" if role == "user" else "**Zenni:**"
+        # Truncate long texts
+        display = text[:400] + "..." if len(text) > 400 else text
+        # Flatten newlines for compact display
+        display = display.replace("\n", " ").strip()
+        recap_lines.append(f"{prefix} {display}")
 
-    # 4. Extract user requests (what Jenn asked for — important context)
-    for text in user_texts[-5:]:  # Last 5 user messages only
-        if len(text) > 20:
-            facts.append(("task", f"Jenn asked: {text[:200]}", 6))
+    recap_lines.append("")
+    recap_lines.append("---")
+    recap_block = "\n".join(recap_lines)
 
-    # 5. Always add a session summary fact
-    topic_words = []
-    for text in (assistant_texts[-5:] + user_texts[-3:]):
-        words = text.lower().split()
-        for w in words:
-            if len(w) > 4 and w.isalpha() and w not in ("about", "their", "which", "would", "could", "should", "there", "these", "those", "being", "after", "before"):
-                topic_words.append(w)
-    # Get top 5 most common topic words
-    from collections import Counter
-    top_topics = [w for w, _ in Counter(topic_words).most_common(5)]
-    summary = f"Session reset ({token_count:,} tokens). Topics: {', '.join(top_topics)}"
-    facts.append(("config", summary, 4))
+    # Read existing memory file
+    existing = ""
+    if os.path.exists(memory_file):
+        with open(memory_file) as f:
+            existing = f.read()
 
-    # Deduplicate facts
-    seen_texts = set()
-    unique_facts = []
-    for ftype, ftext, fimp in facts:
-        key = ftext[:60].lower()
-        if key not in seen_texts:
-            seen_texts.add(key)
-            unique_facts.append((ftype, ftext, fimp))
+    # Safety cap: don't grow memory file beyond 8KB
+    if len(existing) + len(recap_block) > 8000:
+        # Trim existing to make room
+        existing = existing[-4000:]
+        print(f"WARN: Memory file trimmed to make room for recap")
 
-    # Limit to 10 facts per session (prevent bloat)
-    unique_facts = unique_facts[:10]
-
-    # Store facts via memory-store.sh
-    session_label = session_key.split(":")[-1][:20] if ":" in session_key else session_key[:20]
-    for ftype, ftext, fimp in unique_facts:
-        try:
-            result = subprocess.run(
-                ["bash", memory_store,
-                 "--agent", "zenni",
-                 "--type", ftype,
-                 "--tags", f"session-recall,{session_label}",
-                 "--text", ftext,
-                 "--importance", str(fimp)],
-                capture_output=True, text=True, timeout=10
-            )
-            if result.returncode == 0:
-                total_facts += 1
-        except Exception as e:
-            print(f"WARN: Failed to store fact: {e}")
-
-    print(f"  Extracted {len(unique_facts)} facts from {len(assistant_texts)} assistant messages")
-
-# Write minimal pointer to daily .md (NOT the full recap)
-os.makedirs(os.path.dirname(memory_file), exist_ok=True)
-existing = ""
-if os.path.exists(memory_file):
-    with open(memory_file) as f:
-        existing = f.read()
-
-pointer = f"\n- [{ts}] Session recall: {total_facts} facts indexed from {len(to_recap)} session(s) ({reason})\n"
-
-# Only append if daily file is under 5KB (safety cap)
-if len(existing) + len(pointer) < 5000:
+    # Write
+    os.makedirs(os.path.dirname(memory_file), exist_ok=True)
     with open(memory_file, "a") as f:
         if not existing:
             f.write(f"# Memory — {ts[:10]}\n")
-        f.write(pointer)
-else:
-    print(f"WARN: Daily memory at {len(existing)} chars, skipping pointer append")
+        f.write(recap_block)
 
-print(f"\nTotal: {total_facts} facts indexed into memory.jsonl")
+    print(f"  ✅ Wrote {len(turns)}-turn recap to {memory_file}")
+    recaps_written += 1
+
+print(f"\nTotal: {recaps_written} session(s) recapped → {memory_file}")
 PYEOF
 
-echo "--- session-recall v2 complete ---"
+echo "--- session-recall v3 complete ---"
