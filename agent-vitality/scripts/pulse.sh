@@ -53,7 +53,7 @@ case "$AGENT" in
 esac
 
 # Extract this agent's entries from last 24h
-YESTERDAY=$(python3 -c "from datetime import datetime, timedelta; print(int((datetime.utcnow() - timedelta(hours=24)).timestamp() * 1000))")
+YESTERDAY=$(python3 -c "from datetime import datetime, timedelta, timezone; print(int((datetime.now(timezone.utc) - timedelta(hours=24)).timestamp() * 1000))")
 
 for ROOM in $AGENT_ROOMS; do
   ROOM_FILE="$ROOMS_DIR/${ROOM}.jsonl"
