@@ -30,38 +30,69 @@ if [[ -z "$AGENT" || -z "$TASK" || -z "$LABEL" ]]; then
   exit 1
 fi
 
-# ── Agent → Model map ─────────────────────────────────────────────────────────
-# These are the canonical models per agent (matches SOUL.md + openclaw.json)
-declare -A AGENT_MODEL=(
-  ["myrmidons"]="minimax-m2.5"
-  ["taoz"]="anthropic/claude-opus-4-6"      # claude-code runner; falls back to opus
-  ["artemis"]="kimi-k2.5"                   # web-search-pro tier
-  ["dreami"]="kimi-k2.5"
-  ["iris"]="qwen3-vl-235b"
-  ["athena"]="anthropic/claude-opus-4-6"    # reasoning tier
-  ["hermes"]="anthropic/claude-opus-4-6"    # reasoning tier
-)
+# ── Agent → Model (case-based for bash 3.x compat) ───────────────────────────
+get_model() {
+  case "$1" in
+    myrmidons) echo "minimax-m2.5" ;;
+    taoz)      echo "anthropic/claude-opus-4-6" ;;
+    artemis)   echo "kimi-k2.5" ;;
+    dreami)    echo "kimi-k2.5" ;;
+    iris)      echo "qwen3-vl-235b" ;;
+    athena)    echo "anthropic/claude-opus-4-6" ;;
+    hermes)    echo "anthropic/claude-opus-4-6" ;;
+    *)         echo "" ;;
+  esac
+}
 
-# ── Agent → Cost tier (for logging) ───────────────────────────────────────────
-declare -A AGENT_COST_TIER=(
-  ["myrmidons"]="cheapest"
-  ["taoz"]="premium"
-  ["artemis"]="medium"
-  ["dreami"]="medium"
-  ["iris"]="medium"
-  ["athena"]="high"
-  ["hermes"]="high"
-)
+get_cost_tier() {
+  case "$1" in
+    myrmidons) echo "cheapest (0.14/0.14 per M tok)" ;;
+    taoz)      echo "premium (claude-code)" ;;
+    artemis)   echo "medium" ;;
+    dreami)    echo "medium" ;;
+    iris)      echo "medium" ;;
+    athena)    echo "high (reasoning)" ;;
+    hermes)    echo "high (reasoning)" ;;
+    *)         echo "unknown" ;;
+  esac
+}
+
+get_agent_context() {
+  case "$1" in
+    myrmidons)
+      echo "You are a Myrmidon — a fast, cost-efficient task executor in GAIA CORP-OS. Execute the task below precisely and report the result. No fluff, just do it."
+      ;;
+    taoz)
+      echo "You are Taoz — the builder agent of GAIA CORP-OS. You write code, build skills, fix bugs, and deploy infrastructure. Use your full tool suite. Run regression if touching Creative Studio."
+      ;;
+    artemis)
+      echo "You are Artemis — the research agent of GAIA CORP-OS. You find information, research markets, scrape data, and deliver structured findings. Use web_search and web_fetch aggressively."
+      ;;
+    dreami)
+      echo "You are Dreami — the creative director of GAIA CORP-OS. You write compelling copy, develop campaign concepts, and give creative direction. Output polished, ready-to-use content."
+      ;;
+    iris)
+      echo "You are Iris — the visual and social agent of GAIA CORP-OS. You generate images (use NanoBanana: gemini-3-pro-image-preview), manage social content, and handle visual direction."
+      ;;
+    athena)
+      echo "You are Athena — the strategy and analysis agent of GAIA CORP-OS. You analyze data, build strategic plans, write reports, and provide business insights. Think deeply; structure outputs clearly."
+      ;;
+    hermes)
+      echo "You are Hermes — the ads and pricing agent of GAIA CORP-OS. You optimize Meta ads, structure pricing, analyze revenue, and manage Shopee/Lazada channel operations. Always show the math. Flag changes >RM 500 impact for human approval."
+      ;;
+  esac
+}
 
 # ── Validate agent ────────────────────────────────────────────────────────────
-if [[ -z "${AGENT_MODEL[$AGENT]:-}" ]]; then
+MODEL=$(get_model "$AGENT")
+if [[ -z "$MODEL" ]]; then
   echo "❌ Unknown agent: '$AGENT'"
-  echo "   Valid agents: ${!AGENT_MODEL[*]}"
+  echo "   Valid: myrmidons | taoz | artemis | dreami | iris | athena | hermes"
   exit 1
 fi
 
-MODEL="${AGENT_MODEL[$AGENT]}"
-COST_TIER="${AGENT_COST_TIER[$AGENT]}"
+COST_TIER=$(get_cost_tier "$AGENT")
+AGENT_CONTEXT=$(get_agent_context "$AGENT")
 
 # ── Log paths ─────────────────────────────────────────────────────────────────
 LOG_DIR="$HOME/.openclaw/logs"
@@ -74,37 +105,12 @@ TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TS_LOCAL=$(date +"%Y-%m-%d %H:%M %Z")
 
 # ── Build the full task prompt for the subagent ───────────────────────────────
-# We prepend the agent's identity context so subagents know who they are
-case "$AGENT" in
-  myrmidons)
-    AGENT_CONTEXT="You are a Myrmidon — a fast, cost-efficient task executor in GAIA CORP-OS. Execute the task below precisely and report the result. No fluff, just do it."
-    ;;
-  taoz)
-    AGENT_CONTEXT="You are Taoz — the builder agent of GAIA CORP-OS. You write code, build skills, fix bugs, and deploy infrastructure. Read SOUL.md and AGENTS.md first if this is your first task. Use your full tool suite."
-    ;;
-  artemis)
-    AGENT_CONTEXT="You are Artemis — the research agent of GAIA CORP-OS. You find information, research markets, scrape data, and deliver structured findings. Use web_search and web_fetch aggressively."
-    ;;
-  dreami)
-    AGENT_CONTEXT="You are Dreami — the creative director of GAIA CORP-OS. You write compelling copy, develop campaign concepts, and give creative direction. Read brand briefs carefully. Output polished, ready-to-use content."
-    ;;
-  iris)
-    AGENT_CONTEXT="You are Iris — the visual and social agent of GAIA CORP-OS. You generate images (use NanoBanana: gemini-3-pro-image-preview), manage social content, and handle visual direction. Always use NanoBanana for image generation."
-    ;;
-  athena)
-    AGENT_CONTEXT="You are Athena — the strategy and analysis agent of GAIA CORP-OS. You analyze data, build strategic plans, write reports, and provide business insights. Think deeply and structure your outputs clearly."
-    ;;
-  hermes)
-    AGENT_CONTEXT="You are Hermes — the ads and pricing agent of GAIA CORP-OS. You optimize Meta ads, structure pricing, analyze revenue, and manage Shopee/Lazada channel operations. Always show the math. Flag changes >RM 500 impact for human approval."
-    ;;
-esac
-
-FULL_TASK="$AGENT_CONTEXT
+FULL_TASK="${AGENT_CONTEXT}
 
 ---
 
-TASK (dispatched by Zenni at $TS_LOCAL):
-$TASK
+TASK (dispatched by Zenni at ${TS_LOCAL}):
+${TASK}
 
 ---
 
@@ -122,47 +128,46 @@ echo "   Time:     $TS_LOCAL"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# ── Log the dispatch (before spawn — so we have a record even if spawn fails) ─
-DISPATCH_ENTRY=$(cat <<EOF
-{"ts":"$TS","agent":"$AGENT","label":"$LABEL","model":"$MODEL","cost_tier":"$COST_TIER","thinking":"$THINKING","timeout":$TIMEOUT,"task_preview":"$(echo "$TASK" | head -c 200 | tr '\n' ' ' | sed 's/"/\\"/g')","status":"dispatched","session_id":"pending"}
-EOF
-)
+# ── Log the dispatch ──────────────────────────────────────────────────────────
+TASK_PREVIEW=$(echo "$TASK" | head -c 200 | tr '\n' ' ' | sed 's/"/\\"/g')
+DISPATCH_ENTRY="{\"ts\":\"$TS\",\"agent\":\"$AGENT\",\"label\":\"$LABEL\",\"model\":\"$MODEL\",\"cost_tier\":\"$COST_TIER\",\"thinking\":\"$THINKING\",\"timeout\":$TIMEOUT,\"task_preview\":\"$TASK_PREVIEW\",\"status\":\"dispatched\",\"session_id\":\"pending\"}"
 echo "$DISPATCH_ENTRY" >> "$DISPATCH_LOG"
 echo "$DISPATCH_ENTRY" >> "$ACTIVE_LOG"
 
 echo "📋 Logged to dispatch-log.jsonl"
 echo ""
 
-# ── Dispatch note ─────────────────────────────────────────────────────────────
-# dispatch.sh outputs the openclaw CLI command to spawn this agent.
-# Zenni (the main agent) uses sessions_spawn via tool call — this script 
-# can't call the OpenClaw tool API directly from bash.
-# 
-# So dispatch.sh serves TWO purposes:
-#   1. In TOOL contexts (Zenni's AI session): provides the JSON config for sessions_spawn
-#   2. In SHELL contexts (cron/scripts): emits the openclaw CLI command
+# ── Output sessions_spawn config (for Zenni to use as tool call) ──────────────
+# dispatch.sh serves two purposes:
+#   1. Shell context: emits openclaw CLI command + sessions_spawn JSON params
+#   2. AI context: Zenni reads this output and uses sessions_spawn tool directly
 #
-# Output the sessions_spawn parameters as JSON for Zenni to use:
-echo "📦 sessions_spawn config:"
+echo "📦 sessions_spawn config (use this in your sessions_spawn tool call):"
 echo ""
-cat <<JSONEOF
-{
-  "agent_id":        "$AGENT",
-  "label":           "$LABEL",
-  "model":           "$MODEL",
-  "thinking":        "$THINKING",
-  "timeout_seconds": $TIMEOUT,
-  "task":            $(echo "$FULL_TASK" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
+python3 -c "
+import json, sys
+task = sys.argv[1]
+agent = sys.argv[2]
+model = sys.argv[3]
+label = sys.argv[4]
+thinking = sys.argv[5]
+timeout = int(sys.argv[6])
+
+config = {
+    'label': label,
+    'model': model,
+    'thinking': thinking,
+    'timeoutSeconds': timeout,
+    'task': task
 }
-JSONEOF
+print(json.dumps(config, indent=2, ensure_ascii=False))
+" "$FULL_TASK" "$AGENT" "$MODEL" "$LABEL" "$THINKING" "$TIMEOUT"
 
 echo ""
 echo "📌 CLI equivalent (if running from shell):"
-echo "   openclaw agent --agent $AGENT --message \"$TASK\""
+echo "   openclaw agent --agent $AGENT --message \"$(echo "$TASK" | head -c 80)...\""
 echo ""
-
-# ── Update active log with a reminder ─────────────────────────────────────────
-echo "⏳ Waiting for auto-announcement from subagent..."
-echo "   Label: $LABEL | Agent: $AGENT"
-echo "   When done: run 'bash track.sh done \"$LABEL\" success|fail \"summary\"'"
+echo "⏳ Result will auto-announce when subagent completes."
+echo "   Label: $LABEL"
+echo "   When done: bash track.sh done \"$LABEL\" success|fail \"summary\""
 echo ""

@@ -96,7 +96,7 @@ agent_to_model() {
 
 agent_to_cost() {
   case "$1" in
-    myrmidons) echo "💚 cheapest ($0.14/$0.14 per M)" ;;
+    myrmidons) echo "💚 cheapest (0.14/0.14 per M tok)" ;;
     taoz)      echo "🔴 premium" ;;
     artemis)   echo "🟡 medium" ;;
     dreami)    echo "🟡 medium" ;;
@@ -133,7 +133,7 @@ if [[ "$OVERRIDE" != "auto" ]]; then
   AGENT="$OVERRIDE"
   MODEL=$(agent_to_model "$AGENT")
   COST=$(agent_to_cost "$AGENT")
-  echo "✅ AGENT:      ${AGENT^^}"
+  echo "✅ AGENT:      $(echo "$AGENT" | tr '[:lower:]' '[:upper:]')"
   echo "   Source:     SOUL.md override rule"
   echo "   Model:      $MODEL"
   echo "   Cost tier:  $COST"
@@ -162,7 +162,7 @@ if results:
     AGENT="${AGENT:-myrmidons}"
     MODEL=$(agent_to_model "$AGENT")
     COST=$(agent_to_cost "$AGENT")
-    echo "✅ AGENT:      ${AGENT^^}"
+    echo "✅ AGENT:      $(echo "$AGENT" | tr '[:lower:]' '[:upper:]')"
     echo "   Source:     route-task.py"
     echo "$ROUTER_RESULT" | grep -v '^AGENT:' | sed 's/^/   /'
     echo "   Model:      $MODEL"
