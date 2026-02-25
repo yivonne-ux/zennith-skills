@@ -32,13 +32,13 @@ watchdog.sh (every 5 min via cron)
   └── Log health status
 ```
 
-## Model Priority Chain
+## Model Priority Chain (Zenni / main agent)
 
 | Priority | Model | Provider | Context | Use When |
 |----------|-------|----------|---------|----------|
-| P1 (Primary) | kimi-k2.5 | Moonshot | 262K | Default orchestrator |
-| P2 (Fallback) | qwen/qwen3-coder-next | OpenRouter | 262K | When P1 is down |
-| P3 (Emergency) | qwen/qwen3-coder:free | OpenRouter | 262K | When P1+P2 both down |
+| P1 (Primary) | claude-opus-4-6 | Anthropic | 200K | Default orchestrator |
+| P2 (Fallback) | claude-sonnet-4-6 | Anthropic | 200K | When P1 is down |
+| P3 (Emergency) | z-ai/glm-4.7 | OpenRouter | 202K | When P1+P2 both down |
 
 ## Session Health Thresholds
 

@@ -70,7 +70,7 @@ fi
 get_context_limit() {
   local agent_name="$1"
   case "$agent_name" in
-    main)                      echo 200000 ;;   # claude-sonnet-4.6
+    main)                      echo 200000 ;;   # claude-opus-4-6
     taoz)                      echo 262144 ;;   # qwen3-coder-next
     myrmidons)                 echo 196608 ;;   # minimax-m2.5
     artemis|dreami|artee)      echo 262144 ;;   # kimi-k2.5
@@ -149,6 +149,7 @@ for key, session in data.items():
 
     if tokens > reset_threshold:
         old_sid = session.get("sessionId", "none")
+        old_model = session.get("model", "?")
         session["totalTokens"] = 0
         session["inputTokens"] = 0
         session["outputTokens"] = 0
@@ -157,12 +158,16 @@ for key, session in data.items():
         session["sessionFile"] = None
         session["systemSent"] = False
         session["compactionCount"] = 0
+        # Clear stale model/provider so next boot picks up canonical primary from openclaw.json
+        session.pop("model", None)
+        session.pop("modelProvider", None)
+        session.pop("totalTokensFresh", None)
         session.pop("systemPromptReport", None)
         session.pop("skillsSnapshot", None)
         modified = True
         reset_count += 1
-        print("[RESET] Agent: {}, Session: {}, was {} tokens".format(
-            agent_name, key[:60], tokens), file=sys.stderr)
+        print("[RESET] Agent: {}, Session: {}, was {} tokens (model was {})".format(
+            agent_name, key[:60], tokens, old_model), file=sys.stderr)
     elif tokens > warn_threshold:
         pct = int(tokens * 100 / context_limit)
         print("[WARN] Agent: {}, Session: {} at {}% ({} tokens)".format(
