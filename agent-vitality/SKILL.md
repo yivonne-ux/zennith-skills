@@ -45,7 +45,7 @@ bash cross-pollinate.sh
 ```
 
 - Reads all agents' recent learnings from RAG memory
-- Classifies relevance: visual → artee, copy → apollo, strategy → athena, etc.
+- Classifies relevance: visual → iris, copy → dreami, strategy → athena, etc.
 - Posts relevant cross-team learnings to the appropriate room
 - Prevents duplicate notifications
 
@@ -81,8 +81,8 @@ Agents pulse every 3 hours, staggered by 25 minutes:
 - `:00` — Artemis (scout — learns from research)
 - `:25` — Athena (analyst — learns from data)
 - `:50` — Dreami (creative director — learns from reviews)
-- `+1h :15` — Apollo (copywriter — learns from content)
-- `+1h :40` — Artee (art director — learns from visuals)
+- `+1h :15` — Dreami (creative director + copywriter — learns from content)
+- `+1h :40` — Iris (art director — learns from visuals)
 - `+2h :05` — Iris (social — learns from engagement)
 - `+2h :30` — Hermes (commerce — learns from sales)
 

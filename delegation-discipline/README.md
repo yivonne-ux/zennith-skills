@@ -87,8 +87,8 @@ I follow strict delegation rules:
    - >3 lookups → Myrmidons
    - Coding → Taoz
    - Research → Artemis
-   - Creative → Dreami/Artee
-   - Copy → Apollo
+   - Creative → Dreami/Iris
+   - Copy → Dreami
    - Strategy → Athena/Hermes
 
 2. **How to delegate:**

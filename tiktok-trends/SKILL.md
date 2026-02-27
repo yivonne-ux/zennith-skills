@@ -78,7 +78,7 @@ Only trends scoring 5+ on relevance are included in agent reports.
 - **Artemis 🏹** — daily trend scanning
 - **Iris 🌈** — content timing and sound selection
 - **Hermes ⚡** — commercial trend opportunities
-- **Apollo 🎨** — creative format inspiration
+- **Dreami 🎭** — creative format inspiration
 
 ## CHANGELOG
 

@@ -50,11 +50,9 @@ get_agent_model() {
   local agent="$1"
   case "$agent" in
     main|artemis|hermes)       echo "z-ai/glm-4.7-flash" ;;
-    dreami|calliope)           echo "moonshotai/kimi-k2.5" ;;
-    apollo)                    echo "qwen/qwen3-235b-a22b" ;;
+    dreami)                    echo "moonshotai/kimi-k2.5" ;;
     iris)                      echo "qwen/qwen3-vl-235b-a22b-instruct" ;;
     athena)                    echo "z-ai/glm-5" ;;
-    artee|daedalus)            echo "moonshotai/kimi-k2.5" ;;
     *)                         echo "z-ai/glm-4.7-flash" ;;
   esac
 }
@@ -63,9 +61,8 @@ get_context_limit() {
   local agent="$1"
   case "$agent" in
     main|artemis|hermes)       echo 202000 ;;
-    dreami|calliope|apollo|iris) echo 202000 ;;
+    dreami|iris)               echo 202000 ;;
     athena)                    echo 200000 ;;
-    artee|daedalus)            echo 200000 ;;
     *)                         echo 200000 ;;
   esac
 }

@@ -1,7 +1,7 @@
 # Art Direction & Creative Design Skill
 
 ## Purpose
-Equip creative agents (Iris/Artee, Dreami) with structured art direction, UI/UX design thinking, character design, and graphic design capabilities. Every visual output must follow a brand's Design DNA — never generic.
+Equip creative agents (Iris, Dreami) with structured art direction, UI/UX design thinking, character design, and graphic design capabilities. Every visual output must follow a brand's Design DNA — never generic.
 
 ## When to Use
 - Designing landing pages, UI components, or marketing visuals

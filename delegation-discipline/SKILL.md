@@ -63,13 +63,13 @@
 - Cross-channel campaign coherence
 - Creative direction
 
-**Artee** (Art Director)
+**Iris** (Art Director + Visual)
 - Visual design
 - Brand consistency
 - Image generation briefs
 - Visual system design
 
-**Apollo** (Copywriter)
+**Dreami** (Copywriter/Creative Director)
 - Copywriting tasks
 - Social media captions
 - Ad creative copy
@@ -153,9 +153,9 @@ Before delegating, ask:
 | **Lookups** | Myrmidons | Artemis | Dozens of lookups |
 | **Coding** | Taoz | Myrmidons | Build/fix code |
 | **Research** | Artemis | Myrmidons | Deep investigation |
-| **Creative Strategy** | Dreami | Apollo | Campaign direction |
-| **Visual Design** | Artee | Dreami | Images, brand visuals |
-| **Copywriting** | Apollo | Dreami | Text, captions, ads |
+| **Creative Strategy** | Dreami | Iris | Campaign direction |
+| **Visual Design** | Iris | Dreami | Images, brand visuals |
+| **Copywriting** | Dreami | Iris | Text, captions, ads |
 | **Strategy** | Athena | Hermes | Business strategy |
 | **E-commerce** | Hermes | Myrmidons | Products, pricing |
 | **Social** | Iris | Hermes | Engagement, comments |
@@ -171,12 +171,12 @@ Before delegating, ask:
 - Should return structured data for other agents to use
 
 **Artemis → Others:**
-- Research results → Apollo (copy), Artee (visuals), Hermes (products)
+- Research results → Dreami (copy), Iris (visuals), Hermes (products)
 - trends → Dreami (creative direction)
 
-**Dreami/Artee → Others:**
-- Creative brief → Apollo (copy), Artee (visuals)
-- Visual style → Artee (implementation)
+**Dreami/Iris → Others:**
+- Creative brief → Dreami (copy), Iris (visuals)
+- Visual style → Iris (implementation)
 
 **Athena → Others:**
 - Strategy → Hermes (execution), Artemis (research)
@@ -199,8 +199,8 @@ Before delegating, ask:
 │  Coding ────────────────────────→ Taoz              │
 │  Research ──────────────────────→ Artemis           │
 │  Creative Direction ────────────→ Dreami            │
-│  Visual Design ─────────────────→ Artee             │
-│  Copywriting ───────────────────→ Apollo            │
+│  Visual Design ─────────────────→ Iris              │
+│  Copywriting ───────────────────→ Dreami            │
 │  Strategy ──────────────────────→ Athena            │
 │  E-commerce/Merch ──────────────→ Hermes            │
 │  Social Engagement ─────────────→ Iris              │
@@ -282,7 +282,7 @@ Before delegating, ask:
 - [ ] Am I doing >3 lookups? → Delegate to Myrmidons
 - [ ] Am I coding? → Delegate to Taoz
 - [ ] Am I researching? → Delegate to Artemis
-- [ ] Am I copying? → Delegate to Apollo
+- [ ] Am I copying? → Delegate to Dreami
 
 **Before finishing session:**
 - [ ] Did I burn tokens on lookups? → Next time, delegate
@@ -311,10 +311,10 @@ Return summary table."
 **Use when:** Multi-step process with clear handoffs
 
 ```
-Zenni → Artemis → Apollo → Artee → Hermes:
+Zenni → Artemis → Dreami → Iris → Hermes:
 "Research organic skincare products (Artemis)
-→ Write copy for ad campaign (Apollo)
-→ Design visual assets (Artee)
+→ Write copy for ad campaign (Dreami)
+→ Design visual assets (Iris)
 → Source products and pricing (Hermes)"
 ```
 

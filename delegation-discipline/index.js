@@ -23,21 +23,9 @@ const AGENT_MATRIX = {
   },
   dreami: {
     name: 'Dreami',
-    role: 'Creative Director',
-    focus: 'campaign strategy, creative briefs, cross-channel coherence',
-    keywordList: ['campaign', 'creative', 'strategy', 'vision', 'coherence'],
-  },
-  artee: {
-    name: 'Artee',
-    role: 'Art Director',
-    focus: 'visual design, brand consistency, image generation',
-    keywordList: ['visual', 'design', 'brand', 'image', 'art', 'style'],
-  },
-  apollo: {
-    name: 'Apollo',
-    role: 'Copywriter',
-    focus: 'copywriting, captions, ad copy, email, brand voice',
-    keywordList: ['copy', 'caption', 'ad', 'email', 'brand voice', 'text'],
+    role: 'Creative Director + Copywriter',
+    focus: 'campaign strategy, creative briefs, cross-channel coherence, copywriting, captions, ad copy, email, brand voice',
+    keywordList: ['campaign', 'creative', 'strategy', 'vision', 'coherence', 'copy', 'caption', 'ad', 'email', 'brand voice', 'text'],
   },
   athena: {
     name: 'Athena',
@@ -53,9 +41,9 @@ const AGENT_MATRIX = {
   },
   iris: {
     name: 'Iris',
-    role: 'Social & Visual',
-    focus: 'social engagement, comments, visual content',
-    keywordList: ['social', 'comment', 'engage', 'visual', 'user'],
+    role: 'Art Director + Social & Visual',
+    focus: 'visual design, brand consistency, image generation, social engagement, comments, visual content',
+    keywordList: ['visual', 'design', 'brand', 'image', 'art', 'style', 'social', 'comment', 'engage', 'user'],
   },
 };
 
@@ -65,8 +53,8 @@ const TASK_MAP = {
   coding: 'taoz',
   research: 'artemis',
   creative: 'dreami',
-  visual: 'artee',
-  copy: 'apollo',
+  visual: 'iris',
+  copy: 'dreami',
   strategy: 'athena',
   commerce: 'hermes',
   social: 'iris',

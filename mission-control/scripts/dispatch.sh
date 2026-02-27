@@ -7,7 +7,7 @@
 # Actions: request, report, escalate, handoff, ping
 #
 # Examples:
-#   bash dispatch.sh artemis apollo request "Need hero image for CNY email" build
+#   bash dispatch.sh artemis dreami request "Need hero image for CNY email" build
 #   bash dispatch.sh athena zenni report "Sales report for Feb 12 ready" exec
 #   bash dispatch.sh healer zenni escalate "3 retries exhausted on M001" feedback
 
@@ -52,12 +52,11 @@ if [ "$ACTION" = "request" ] || [ "$ACTION" = "handoff" ]; then
   # Alias mapping (rollback-safe: old names resolve to new)
   case "$TO" in
     calliope) TO="dreami" ;;
-    daedalus) TO="artee" ;;
   esac
 
   # Check if target is a real agent (not taoz which uses claude-code-runner)
   case "$TO" in
-    artemis|apollo|hermes|athena|iris|dreami|artee)
+    artemis|hermes|athena|iris|dreami)
       PROMPT="[DISPATCH from $FROM — action: $ACTION]
 
 $MESSAGE

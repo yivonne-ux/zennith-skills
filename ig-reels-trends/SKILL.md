@@ -76,7 +76,7 @@ The scraper tags each post with detected format:
 ## Agent Assignment
 
 - **Artemis 🏹** — hashtag research and trend detection
-- **Apollo 🎨** — creative format inspiration
+- **Dreami 🎭** — creative format inspiration
 - **Iris 🌈** — posting strategy and engagement patterns
 
 ## CHANGELOG

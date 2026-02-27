@@ -71,7 +71,7 @@ if [ "$TYPE" = "general" ]; then
   case "$DOMAIN" in
     *pinterest.com*|*pin.it*|*behance.net*|*dribbble.com*)
       TYPE="visual-reference"
-      AGENT="artee"
+      AGENT="iris"
       ROOM="creative"
       ;;
   esac

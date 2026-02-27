@@ -63,10 +63,73 @@ This skill captures the PROCESS of how we create, so every project gets better.
 - Regression testing catches build failures before manual review
 - Copy character images to public/ directory for proper Vite serving
 
+## Phase 5: Agent Collaboration — Creative Handoff Protocol
+
+The handoff protocol defines the multi-agent pipeline for creative production.
+Full spec: `handoff-protocol.md` (same directory as this SKILL.md).
+
+### Pipeline
+
+```
+BRIEF (Dreami) -> ART DIRECTION (Iris) -> GENERATION (Iris + Tools) -> POST-PROD (Taoz) -> REVIEW (Iris + Dreami + Hermes) -> PLACEMENT (Hermes)
+```
+
+### Handoff Dispatch CLI
+
+Script: `scripts/handoff-dispatch.sh`
+
+**Start a new pipeline:**
+```bash
+bash handoff-dispatch.sh start \
+  --brand pinxin-vegan \
+  --campaign cny-2026 \
+  --funnel-stage TOFU \
+  --output-type hero \
+  --prompt "CNY celebration hero image with festive red and gold"
+```
+
+**Check status:**
+```bash
+bash handoff-dispatch.sh status --handoff-id ho-1709000000
+```
+
+**List all handoffs:**
+```bash
+bash handoff-dispatch.sh list --brand pinxin-vegan --status active
+```
+
+**Advance to next stage** (called by agents after completing their stage):
+```bash
+bash handoff-dispatch.sh advance \
+  --handoff-id ho-1709000000 \
+  --artifact-path brands/pinxin-vegan/campaigns/cny-2026/art-direction/art-dir-ho-1709000000.json
+```
+
+**Send back for revision** (called during REVIEW if changes needed):
+```bash
+bash handoff-dispatch.sh revise \
+  --handoff-id ho-1709000000 \
+  --target-stage ART_DIRECTION \
+  --feedback "Colors too muted, need more vibrant reds for CNY"
+```
+
+### Key Rules
+- Max 2 revision cycles before escalating to human (posts to approvals.jsonl)
+- Each revision must reference the review feedback
+- All handoff messages go to `creative.jsonl` room
+- Handoff manifests stored in `brands/{brand}/campaigns/{campaign}/handoff-{id}.json`
+- Campaign working dirs auto-created: briefs/, art-direction/, generated/, final/, reviews/
+
+### Generation Metadata
+- All generated assets now log full metadata: model, prompt, brand, campaign, funnel_stage, style_seed_id, output_type, references, generated_by, handoff_id
+- NanoBanana registers images in the image seed bank with campaign and funnel context
+- Creative Studio logs the same fields via generation_params in library.db
+
 ## Anti-Patterns
-- ❌ Building without Design DNA (produces generic output)
-- ❌ Writing vague briefs ("make it pretty") instead of specific design specs
-- ❌ Not studying reference websites before building
-- ❌ Generating characters without the Character Design Bible
-- ❌ Forgetting to log learnings after each production
-- ❌ Skipping multi-agent review
+- Building without Design DNA (produces generic output)
+- Writing vague briefs ("make it pretty") instead of specific design specs
+- Not studying reference websites before building
+- Generating characters without the Character Design Bible
+- Forgetting to log learnings after each production
+- Skipping multi-agent review
+- Skipping the handoff protocol for production content (ad-hoc is fine for experiments)

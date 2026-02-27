@@ -73,8 +73,7 @@ get_context_limit() {
     main)                      echo 200000 ;;   # claude-opus-4-6
     taoz)                      echo 262144 ;;   # qwen3-coder-next
     myrmidons)                 echo 196608 ;;   # minimax-m2.5
-    artemis|dreami|artee)      echo 262144 ;;   # kimi-k2.5
-    apollo)                    echo 131000 ;;   # qwen3-235b-a22b
+    artemis|dreami)            echo 262144 ;;   # kimi-k2.5
     athena|hermes)             echo 202000 ;;   # glm-5
     iris)                      echo 262144 ;;   # qwen3-vl-235b (capped safe)
     *)                         echo 200000 ;;   # Default safe limit
@@ -91,7 +90,7 @@ for AGENT_DIR in "$AGENTS_DIR"/*/; do
 
   AGENT_NAME=$(basename "$AGENT_DIR")
 
-  # Skip symlinks to avoid double-processing (art-director -> artee, creative-director -> dreami)
+  # Skip symlinks to avoid double-processing (creative-director -> dreami)
   if [ -L "$AGENTS_DIR/$AGENT_NAME" ]; then
     log "SKIP: $AGENT_NAME (symlink to $(readlink "$AGENTS_DIR/$AGENT_NAME"))"
     continue

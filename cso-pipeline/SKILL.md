@@ -1,7 +1,7 @@
 ---
 name: cso-pipeline
 version: "1.0.0"
-description: Content Strategy Operation pipeline for GAIA CORP-OS. Replaces n8n CSO workflow with native OpenClaw agent orchestration. Zenni coordinates Artemis, Apollo, Athena, Iris, and Hermes through strategy analysis, content adaptation, and multi-channel publishing.
+description: Content Strategy Operation pipeline for GAIA CORP-OS. Replaces n8n CSO workflow with native OpenClaw agent orchestration. Zenni coordinates Artemis, Dreami, Athena, Iris, and Hermes through strategy analysis, content adaptation, and multi-channel publishing.
 metadata:
   openclaw:
     scope: orchestration
@@ -31,11 +31,11 @@ Campaign Brief / Strategy ID
         v
   [Determine Required Steps]
         |
-        +---> IMAGES_ANALYSIS (if attachments exist) --> Apollo
+        +---> IMAGES_ANALYSIS (if attachments exist) --> Dreami
         |
         +---> ANALYSIS (always) -----------------------> Artemis + Athena
         |
-        +---> ADAPTATION (always) ---------------------> Apollo
+        +---> ADAPTATION (always) ---------------------> Dreami
         |
         +---> PUBLISHING (always) ---------------------> Iris + Hermes
         |
@@ -47,9 +47,9 @@ Campaign Brief / Strategy ID
 
 | CSO Step | Agent(s) | What They Do |
 |----------|----------|--------------|
-| IMAGES_ANALYSIS | Apollo | Analyzes creative prop attachments (images, videos) for brand alignment, quality, and channel suitability |
+| IMAGES_ANALYSIS | Dreami | Analyzes creative prop attachments (images, videos) for brand alignment, quality, and channel suitability |
 | ANALYSIS | Artemis + Athena | Artemis researches the market context; Athena analyzes data and produces strategic insights |
-| ADAPTATION | Apollo | Rewrites and adapts content for each target channel (IG, TikTok, Shopee, EDM, etc.) |
+| ADAPTATION | Dreami | Rewrites and adapts content for each target channel (IG, TikTok, Shopee, EDM, etc.) |
 | PUBLISHING | Iris + Hermes | Iris handles social channels; Hermes handles commerce channels (Shopee, Lazada, website) |
 
 ## Triggering the Pipeline
@@ -175,7 +175,7 @@ Takes free text (idea, brief, URL) and creates a new strategy in the backend, th
 |------|-----------------|
 | `exec` | Pipeline start, phase transitions, completion summary |
 | `feedback` | Errors, failures, agent dispatch issues, learnings |
-| `creative` | IMAGES_ANALYSIS and ADAPTATION results from Apollo |
+| `creative` | IMAGES_ANALYSIS and ADAPTATION results from Dreami |
 | `social` | PUBLISHING results from Iris |
 
 ## CHANGELOG
@@ -183,5 +183,5 @@ Takes free text (idea, brief, URL) and creates a new strategy in the backend, th
 ### v1.0.0 (2026-02-13)
 - Initial creation: replaces n8n CSO workflow with OpenClaw agent orchestration
 - Scripts: cso-run.sh (main pipeline), cso-brief.sh (brief-to-pipeline)
-- Agent mapping: Apollo (images/adaptation), Artemis+Athena (analysis), Iris+Hermes (publishing)
+- Agent mapping: Dreami (images/adaptation), Artemis+Athena (analysis), Iris+Hermes (publishing)
 - Full API integration with GAIA backend at ai.gaiafoodtech.com

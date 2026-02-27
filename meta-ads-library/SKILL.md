@@ -69,7 +69,7 @@ python3 ~/.openclaw/skills/meta-ads-library/scripts/scrape_meta_library.py \
 ## Agent Assignment
 
 - **Artemis 🏹** — runs competitive research scans
-- **Apollo 🎨** — uses output for creative inspiration and ad copy patterns
+- **Dreami 🎭** — uses output for creative inspiration and ad copy patterns
 - **Hermes ⚡** — analyzes competitor positioning and offers
 - **Athena 🦉** — tracks competitor ad spend patterns over time
 

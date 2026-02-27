@@ -663,7 +663,7 @@ Weekly cycle:
 ```
 
 ### How Agents Access Formulas
-- **Apollo** → Copywriting frameworks, hooks, headlines
+- **Dreami** → Copywriting frameworks, hooks, headlines
 - **Artemis** → Competitor formula analysis, trend hooks
 - **Athena** → Performance analytics, A/B testing, growth metrics
 - **Hermes** → Upsell/downsell, pricing, email sequences

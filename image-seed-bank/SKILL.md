@@ -42,7 +42,7 @@ Each image is catalogued with metadata: brand, campaign, tags, performance, etc.
   "generation": 1,
   "performance": {"ctr": null, "roas": null, "impressions": null},
   "status": "draft|approved|winner|retired",
-  "created_by": "artee",
+  "created_by": "iris",
   "created_at": "2026-02-23"
 }
 ```
@@ -50,7 +50,7 @@ Each image is catalogued with metadata: brand, campaign, tags, performance, etc.
 ## CLI Commands
 
 ```bash
-# Add a new image seed
+# Add a new image seed (--brand and --tags are REQUIRED)
 bash ~/.openclaw/skills/image-seed-bank/scripts/image-seed.sh add \
   --type key_visual \
   --brand pinxin \
@@ -76,6 +76,37 @@ bash ~/.openclaw/skills/image-seed-bank/scripts/image-seed.sh promote \
 bash ~/.openclaw/skills/image-seed-bank/scripts/image-seed.sh export \
   --id img-001 \
   --drive-path "GAIA/Campaigns/CNY 2026"
+
+# Digest — Analyze reference images via Gemini Vision and save as a style seed (Phase 2)
+bash ~/.openclaw/skills/image-seed-bank/scripts/image-seed.sh digest \
+  --images "ref1.jpg,ref2.jpg" \
+  --name "mirra ig vibes" \
+  --brand mirra \
+  --tags "instagram,lifestyle"
+
+# Query style seeds — search saved style seeds by brand and tags (Phase 2)
+bash ~/.openclaw/skills/image-seed-bank/scripts/image-seed.sh query-style \
+  --brand mirra \
+  --tags "instagram"
+```
+
+## Asset Bridge (Phase 1)
+
+Syncs assets between `library.db` (Creative Studio) and `image-seed-bank.jsonl` (seed bank).
+Runs every 6 hours via cron. Script: `scripts/asset-bridge.sh`
+
+```bash
+# Sync in both directions
+bash ~/.openclaw/skills/image-seed-bank/scripts/asset-bridge.sh --direction both
+
+# Dry-run (no writes, just show what would sync)
+bash ~/.openclaw/skills/image-seed-bank/scripts/asset-bridge.sh --dry-run
+
+# Sync only from library.db -> seed bank
+bash ~/.openclaw/skills/image-seed-bank/scripts/asset-bridge.sh --direction db-to-jsonl
+
+# Sync only from seed bank -> library.db
+bash ~/.openclaw/skills/image-seed-bank/scripts/asset-bridge.sh --direction jsonl-to-db
 ```
 
 ## Integration with Creative Studio
@@ -91,3 +122,4 @@ bash ~/.openclaw/skills/image-seed-bank/scripts/image-seed.sh export \
 - Never modify `file_path` of existing seeds
 - Always backup `seed-index.jsonl` before bulk operations
 - Performance metrics are optional (can be null)
+- **Force-tag guardrail**: `--brand` and `--tags` are required for `add` — untagged seeds are rejected to prevent orphaned assets

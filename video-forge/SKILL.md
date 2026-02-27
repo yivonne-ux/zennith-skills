@@ -9,9 +9,9 @@ Automated video post-production pipeline. Takes raw video clips from Kling, Sora
 
 ## Who Uses This
 
-- **Daedalus (Art Director)** — chains VideoForge after video generation (Kling/Sora/Wan)
+- **Iris (Art Director)** — chains VideoForge after video generation (Kling/Sora/Wan)
 - **Taoz** — builds and maintains the pipeline, runs batch operations
-- **Calliope (Creative Director)** — specifies output type + mood in briefs; VideoForge executes
+- **Dreami (Creative Director)** — specifies output type + mood in briefs; VideoForge executes
 
 ## Dependencies
 

@@ -116,6 +116,45 @@ register_seed() {
   fi
 }
 
+# Register with image seed bank (richer metadata for creative pipeline)
+IMAGE_SEED_SH="$HOME/.openclaw/skills/image-seed-bank/scripts/image-seed.sh"
+
+register_image_seed() {
+  local image_path="$1"
+  local brand="$2"
+  local use_case="$3"
+  local campaign_arg="${4:-}"
+  local funnel_arg="${5:-}"
+  local style_seed_arg="${6:-}"
+  local prompt_arg="${7:-}"
+
+  if [ ! -f "$IMAGE_SEED_SH" ]; then
+    return 0
+  fi
+
+  # Build tags: brand, use_case, nanobanana, plus funnel if set
+  local tags="${brand},${use_case},nanobanana,generated"
+  if [ -n "$funnel_arg" ]; then
+    tags="${tags},$(echo "$funnel_arg" | tr 'A-Z' 'a-z')"
+  fi
+  if [ -n "$style_seed_arg" ]; then
+    tags="${tags},styled"
+  fi
+
+  # campaign defaults to "general" if not set (image-seed.sh requires it)
+  local camp="${campaign_arg:-general}"
+
+  bash "$IMAGE_SEED_SH" add \
+    --type "$use_case" \
+    --brand "$brand" \
+    --campaign "$camp" \
+    --file-path "$image_path" \
+    --tags "$tags" \
+    --prompt "${prompt_arg:-}" \
+    --created-by "nanobanana" \
+    --status draft 2>/dev/null || warn "Failed to register image seed for $image_path"
+}
+
 # ---------------------------------------------------------------------------
 # Brand Profile Loading
 # ---------------------------------------------------------------------------
@@ -165,6 +204,118 @@ print(\"BRAND_PHOTO_STYLE='%s'\" % sh_escape(visual.get('photography', 'magazine
 # Build brand enrichment string to append to prompts
 brand_enrichment() {
   echo "Brand: ${BRAND_NAME}. Colors: primary ${BRAND_COLOR_PRIMARY}, secondary ${BRAND_COLOR_SECONDARY}, background ${BRAND_COLOR_BG}. Style: ${BRAND_STYLE}. Lighting: ${BRAND_LIGHTING}. Photography: ${BRAND_PHOTO_STYLE}."
+}
+
+# ---------------------------------------------------------------------------
+# Campaign + Funnel Override Loading
+# ---------------------------------------------------------------------------
+
+# Campaign override variables (populated by load_campaign_overrides)
+CAMPAIGN_NAME=""
+CAMPAIGN_MOOD=""
+CAMPAIGN_LIGHTING=""
+CAMPAIGN_COLORS=""
+CAMPAIGN_TONE=""
+CAMPAIGN_CTA=""
+CAMPAIGN_CREATIVE_MODE=""
+FUNNEL_SUFFIX=""
+
+load_campaign_overrides() {
+  local brand_slug="$1"
+  local campaign_slug="$2"
+  local funnel_stage="$3"
+
+  local campaign_path="$BRANDS_DIR/${brand_slug}/campaigns/${campaign_slug}.json"
+
+  if [ ! -f "$campaign_path" ]; then
+    log "WARN" "Campaign file not found: $campaign_path"
+    return 1
+  fi
+
+  log "INFO" "Loading campaign: $campaign_path (funnel: ${funnel_stage:-none})"
+
+  # Parse campaign JSON and extract funnel overrides via python3
+  local stage_upper=""
+  if [ -n "$funnel_stage" ]; then
+    stage_upper=$(echo "$funnel_stage" | tr 'a-z' 'A-Z')
+  fi
+
+  eval "$(python3 -c "
+import json, sys
+
+campaign_path = sys.argv[1]
+funnel_stage = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else ''
+
+with open(campaign_path, 'r') as f:
+    c = json.loads(f.read())
+
+def sh_escape(s):
+    if s is None:
+        return ''
+    return str(s).replace(\"'\", \"'\\\"'\\\"'\")
+
+print(\"CAMPAIGN_NAME='%s'\" % sh_escape(c.get('name', c.get('campaign_slug', ''))))
+
+if funnel_stage and 'funnel_overrides' in c:
+    ov = c['funnel_overrides'].get(funnel_stage, {})
+    vis = ov.get('visual_override', {})
+    voice = ov.get('voice_override', {})
+
+    colors = vis.get('colors', [])
+    print(\"CAMPAIGN_COLORS='%s'\" % sh_escape(', '.join(colors) if colors else ''))
+    print(\"CAMPAIGN_MOOD='%s'\" % sh_escape(vis.get('mood', '')))
+    print(\"CAMPAIGN_LIGHTING='%s'\" % sh_escape(vis.get('lighting', '')))
+    print(\"CAMPAIGN_TONE='%s'\" % sh_escape(voice.get('tone', '')))
+    print(\"CAMPAIGN_CTA='%s'\" % sh_escape(voice.get('cta', '')))
+    print(\"CAMPAIGN_CREATIVE_MODE='%s'\" % sh_escape(ov.get('creative_mode', '')))
+else:
+    print(\"CAMPAIGN_COLORS=''\")
+    print(\"CAMPAIGN_MOOD=''\")
+    print(\"CAMPAIGN_LIGHTING=''\")
+    print(\"CAMPAIGN_TONE=''\")
+    print(\"CAMPAIGN_CTA=''\")
+    print(\"CAMPAIGN_CREATIVE_MODE=''\")
+
+# Funnel-stage-specific prompt suffix
+suffixes = {
+    'TOFU': 'Style: aspirational, educational, broad appeal. The viewer should feel curious and inspired. No hard sell.',
+    'MOFU': 'Style: detailed, trustworthy, benefit-focused. Show the product in use. Include social proof elements.',
+    'BOFU': 'Style: urgent, direct, conversion-focused. Bold text overlays. Clear price/offer. Strong call to action.',
+}
+print(\"FUNNEL_SUFFIX='%s'\" % sh_escape(suffixes.get(funnel_stage, '')))
+" "$campaign_path" "$stage_upper" 2>/dev/null)" || {
+    warn "Could not parse campaign: $campaign_path"
+    return 1
+  }
+
+  return 0
+}
+
+# Build campaign enrichment string to append to prompts
+campaign_enrichment() {
+  local parts=""
+  if [ -n "$CAMPAIGN_NAME" ]; then
+    parts="Campaign: ${CAMPAIGN_NAME}."
+  fi
+  if [ -n "$CAMPAIGN_MOOD" ]; then
+    parts="${parts} Mood: ${CAMPAIGN_MOOD}."
+  fi
+  if [ -n "$CAMPAIGN_LIGHTING" ]; then
+    parts="${parts} Lighting: ${CAMPAIGN_LIGHTING}."
+  fi
+  if [ -n "$CAMPAIGN_COLORS" ]; then
+    parts="${parts} Campaign colors: ${CAMPAIGN_COLORS}."
+  fi
+  if [ -n "$CAMPAIGN_TONE" ]; then
+    parts="${parts} Tone: ${CAMPAIGN_TONE}."
+  fi
+  if [ -n "$CAMPAIGN_CTA" ]; then
+    parts="${parts} CTA: ${CAMPAIGN_CTA}."
+  fi
+  if [ -n "$FUNNEL_SUFFIX" ]; then
+    parts="${parts} ${FUNNEL_SUFFIX}"
+  fi
+  echo "$parts"
 }
 
 # ---------------------------------------------------------------------------
@@ -446,18 +597,22 @@ else:
 # ---------------------------------------------------------------------------
 
 cmd_generate() {
-  local brand="" use_case="product" prompt="" size="2K" ratio="1:1" model="flash" dry_run="false" raw="false"
+  local brand="" use_case="product" prompt="" size="2K" ratio="1:1" model="flash" dry_run="false" raw="false" style_seed=""
+  local campaign="" funnel_stage=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
-      --brand)     brand="$2";     shift 2 ;;
-      --use-case)  use_case="$2";  shift 2 ;;
-      --prompt)    prompt="$2";    shift 2 ;;
-      --size)      size="$2";      shift 2 ;;
-      --ratio)     ratio="$2";     shift 2 ;;
-      --model)     model="$2";     shift 2 ;;
-      --dry-run)   dry_run="true"; shift ;;
-      --raw)       raw="true";     shift ;;
+      --brand)         brand="$2";         shift 2 ;;
+      --use-case)      use_case="$2";      shift 2 ;;
+      --prompt)        prompt="$2";        shift 2 ;;
+      --size)          size="$2";          shift 2 ;;
+      --ratio)         ratio="$2";         shift 2 ;;
+      --model)         model="$2";         shift 2 ;;
+      --style-seed)    style_seed="$2";    shift 2 ;;
+      --campaign)      campaign="$2";      shift 2 ;;
+      --funnel-stage)  funnel_stage="$2";  shift 2 ;;
+      --dry-run)       dry_run="true";     shift ;;
+      --raw)           raw="true";         shift ;;
       *) die "generate: unknown option: $1" ;;
     esac
   done
@@ -476,6 +631,65 @@ cmd_generate() {
   # Load brand profile
   load_brand_profile "$brand"
 
+  # Load style seed if provided
+  local seed_style_prompt=""
+  local seed_ref_images=""
+  if [ -n "$style_seed" ]; then
+    log "INFO" "Loading style seed: $style_seed"
+    local seed_data
+    seed_data=$(python3 - "$HOME/.openclaw/workspace/rag/image-seed-bank.jsonl" "$style_seed" << 'PYEOF'
+import json, sys
+
+index_file = sys.argv[1]
+target_id = sys.argv[2]
+
+try:
+    with open(index_file) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+                if entry.get("type") == "style_seed" and entry.get("id") == target_id:
+                    # Output style_prompt on line 1, source_images (comma-joined) on line 2
+                    print(entry.get("style_prompt", ""))
+                    imgs = entry.get("source_images", [])
+                    print(",".join(imgs) if imgs else "")
+                    sys.exit(0)
+            except:
+                continue
+except:
+    pass
+
+# Not found
+sys.exit(1)
+PYEOF
+    )
+    if [ $? -eq 0 ] && [ -n "$seed_data" ]; then
+      seed_style_prompt=$(echo "$seed_data" | head -1)
+      seed_ref_images=$(echo "$seed_data" | tail -1)
+      log "INFO" "Style seed loaded: prompt=${seed_style_prompt:0:80}..."
+      echo "  Style seed: $style_seed"
+    else
+      warn "Style seed not found: $style_seed"
+    fi
+  fi
+
+  # Load campaign overrides if --campaign provided
+  if [ -n "$campaign" ]; then
+    if load_campaign_overrides "$brand" "$campaign" "$funnel_stage"; then
+      echo "  Campaign: $campaign ($CAMPAIGN_NAME)"
+      if [ -n "$funnel_stage" ]; then
+        echo "  Funnel:   $funnel_stage"
+      fi
+      # If campaign specifies creative_mode, apply it to override BRAND_LIGHTING
+      if [ -n "$CAMPAIGN_LIGHTING" ]; then
+        BRAND_LIGHTING="$CAMPAIGN_LIGHTING"
+      fi
+    fi
+  fi
+
   # Enrich prompt with brand context and use case template (skip if --raw)
   local full_prompt
   if [ "$raw" = "true" ]; then
@@ -486,6 +700,20 @@ cmd_generate() {
     local enrichment
     enrichment=$(brand_enrichment)
     full_prompt="${prompt}. ${template} ${enrichment}"
+  fi
+
+  # Append campaign enrichment if campaign loaded
+  if [ -n "$campaign" ] && [ -n "$CAMPAIGN_NAME" ]; then
+    local camp_enrich
+    camp_enrich=$(campaign_enrichment)
+    if [ -n "$camp_enrich" ]; then
+      full_prompt="${full_prompt} ${camp_enrich}"
+    fi
+  fi
+
+  # Prepend style seed prompt if available
+  if [ -n "$seed_style_prompt" ]; then
+    full_prompt="[Style: ${seed_style_prompt}] ${full_prompt}"
   fi
 
   # Output path
@@ -501,6 +729,12 @@ cmd_generate() {
   echo "  Model:    $model"
   echo "  Size:     $size_upper"
   echo "  Ratio:    $ratio"
+  if [ -n "$campaign" ]; then
+    echo "  Campaign: $campaign"
+  fi
+  if [ -n "$funnel_stage" ]; then
+    echo "  Funnel:   $funnel_stage"
+  fi
 
   local result
   result=$(call_gemini_api "$model" "$full_prompt" "$ratio" "$size_upper" "$output_path" "$dry_run")
@@ -512,15 +746,38 @@ cmd_generate() {
 
   if [ -n "$result" ] && [ -f "$result" ]; then
     echo "  Output:   $result"
-    log "INFO" "Generated: $result (brand=$brand use_case=$use_case)"
+    local log_suffix=""
+    if [ -n "$style_seed" ]; then
+      log_suffix=" style_seed=$style_seed"
+    fi
+    if [ -n "$campaign" ]; then
+      log_suffix="${log_suffix} campaign=$campaign"
+    fi
+    if [ -n "$funnel_stage" ]; then
+      log_suffix="${log_suffix} funnel=$funnel_stage"
+    fi
+    log "INFO" "Generated: $result (brand=$brand use_case=$use_case${log_suffix})"
 
-    # Register with seed store
+    # Register with content seed store (legacy)
     register_seed "$result" "$brand" "$use_case"
+
+    # Register with image seed bank (full metadata for creative pipeline)
+    register_image_seed "$result" "$brand" "$use_case" "$campaign" "$funnel_stage" "$style_seed" "$prompt"
 
     # Post to creative room
     local escaped_path
     escaped_path=$(echo "$result" | sed 's/"/\\"/g')
-    post_to_room "creative" "Image generated: ${use_case} for ${brand}. Path: ${escaped_path}"
+    local room_msg="Image generated: ${use_case} for ${brand}. Path: ${escaped_path}"
+    if [ -n "$style_seed" ]; then
+      room_msg="${room_msg}. Style seed: ${style_seed}"
+    fi
+    if [ -n "$campaign" ]; then
+      room_msg="${room_msg}. Campaign: ${campaign}"
+    fi
+    if [ -n "$funnel_stage" ]; then
+      room_msg="${room_msg}. Funnel: ${funnel_stage}"
+    fi
+    post_to_room "creative" "$room_msg"
 
     echo "Done."
   fi
@@ -608,6 +865,7 @@ cmd_character_sheet() {
         generated_files="$result"
       fi
       register_seed "$result" "$brand" "character"
+      register_image_seed "$result" "$brand" "character" "" "" "" ""
     fi
   done
 
@@ -754,6 +1012,7 @@ cmd_storyboard() {
         generated_files="$result"
       fi
       register_seed "$result" "$brand" "storyboard"
+      register_image_seed "$result" "$brand" "storyboard" "" "" "" ""
     fi
 
     # Track scene descriptions for metadata
@@ -886,6 +1145,7 @@ cmd_batch() {
       echo "    Saved: $result"
       success_count=$((success_count + 1))
       register_seed "$result" "$brand" "$uc_clean"
+      register_image_seed "$result" "$brand" "$uc_clean" "" "" "" ""
     else
       warn "Failed to generate $uc_clean: $result"
       fail_count=$((fail_count + 1))
@@ -919,13 +1179,16 @@ COMMANDS:
   --help            Show this help
 
 GENERATE OPTIONS:
-  --brand <slug>     Brand slug (required, e.g., gaia-eats)
-  --use-case <uc>    Use case type (default: product)
-  --prompt <text>    Image prompt (required)
-  --size <size>      Image size: 1K, 2K, 4K (default: 2K)
-  --ratio <ratio>    Aspect ratio: 1:1, 16:9, 9:16, 4:3, etc. (default: 1:1)
-  --model <model>    Model: flash (fast) or pro (quality) (default: flash)
-  --dry-run          Show prompt without calling API
+  --brand <slug>          Brand slug (required, e.g., gaia-eats)
+  --use-case <uc>         Use case type (default: product)
+  --prompt <text>         Image prompt (required)
+  --size <size>           Image size: 1K, 2K, 4K (default: 2K)
+  --ratio <ratio>         Aspect ratio: 1:1, 16:9, 9:16, 4:3, etc. (default: 1:1)
+  --model <model>         Model: flash (fast) or pro (quality) (default: flash)
+  --style-seed <id>       Style seed ID (e.g., ss-1234567890) to apply style
+  --campaign <slug>       Campaign slug (e.g., cny-2026) for campaign overrides
+  --funnel-stage <stage>  Funnel stage: TOFU, MOFU, or BOFU
+  --dry-run               Show prompt without calling API
 
 CHARACTER-SHEET OPTIONS:
   --brand <slug>          Brand slug (required)
@@ -1009,6 +1272,25 @@ EXAMPLES:
   # Dry run (preview prompt without API call)
   nanobanana-gen.sh generate --brand gaia-eats --use-case food \
     --prompt "Vegan laksa bowl" --dry-run
+
+  # Generate with campaign + funnel stage (CNY TOFU hero)
+  nanobanana-gen.sh generate \
+    --brand pinxin-vegan \
+    --prompt "Festive vegan poon choi reunion dinner" \
+    --campaign cny-2026 --funnel-stage TOFU \
+    --ratio 16:9 --size 2K
+
+  # BOFU ugly ads for meal kits
+  nanobanana-gen.sh generate \
+    --brand gaia-eats \
+    --prompt "Last chance meal kit bundle deal" \
+    --campaign mco-meal-kits --funnel-stage BOFU \
+    --ratio 9:16
+
+CAMPAIGNS:
+  Campaign files: ~/.openclaw/brands/{brand}/campaigns/{campaign}.json
+  Funnel stages:  TOFU (awareness), MOFU (consideration), BOFU (conversion)
+  Overrides:      visual (colors, mood, lighting), voice (tone, CTA), creative_mode
 
 RATE LIMITING:
   Free tier: ~2 requests/minute (30s between calls, auto-enforced)

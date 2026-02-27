@@ -65,7 +65,7 @@ python3 ~/.openclaw/skills/youtube-intel/scripts/scrape_youtube.py \
 
 ## Agent Assignment
 
-- **Apollo 🎨** — creative techniques, visual production
+- **Dreami 🎭** — creative techniques, visual production
 - **Iris 🌈** — platform strategy, engagement tactics
 - **Hermes ⚡** — e-commerce and ads optimization
 - **All agents** — general marketing education

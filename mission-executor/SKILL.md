@@ -32,7 +32,7 @@ M005|System Stability|ACTIVE|Taoz|P0|Check logs, processes, disk, memory
 - **Iris** → Social content, lifestyle, persona work
 - **Calliope** → Creative direction, campaign strategy
 - **Daedalus** → Visual content, art direction
-- **Apollo** → Content creation, writing
+- **Dreami** → Content creation, writing
 - **Hermes** → Commerce, product research
 
 ## Special Handling

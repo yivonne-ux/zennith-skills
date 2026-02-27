@@ -264,7 +264,7 @@ REFERRAL
 ## Agent Assignment
 - **Athena** → Statistical testing, winner detection, dashboard
 - **Hermes** → Scaling decisions, budget management
-- **Apollo** → Variant factory (creative duplication)
+- **Dreami** → Variant factory (creative duplication)
 - **Artemis** → Growth experiment scouting
 - **Zenni** → Approval gates for budget increases
 

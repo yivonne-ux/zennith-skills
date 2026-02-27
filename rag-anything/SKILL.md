@@ -4,14 +4,14 @@ description: >
   Multimodal RAG pipeline powered by RAGAnything + LightRAG. Ingests PDFs, images,
   tables, equations, Office docs, and web pages into a persistent knowledge graph.
   Query with natural language. Designed for brand research (Athena) and content
-  reference (Apollo). Python venv at ~/.openclaw/venvs/rag-anything.
+  reference (Dreami). Python venv at ~/.openclaw/venvs/rag-anything.
 metadata:
   clawdbot:
     emoji: 🧠
     requires:
       bins: [python3]
       paths: ["~/.openclaw/venvs/rag-anything"]
-    agents: [athena, apollo]
+    agents: [athena, dreami]
 ---
 
 # RAG-Anything — Multimodal Knowledge Graph for GAIA
@@ -32,7 +32,7 @@ not just chunks.
 | Agent | Use Case |
 |-------|----------|
 | **Athena** | Ingest brand reports, competitor docs, strategy PDFs → query for insights |
-| **Apollo** | Ingest brand DNA, style guides, reference content → query for copy angles |
+| **Dreami** | Ingest brand DNA, style guides, reference content → query for copy angles |
 | **Taoz** | Ingest codebase docs, API references → query during builds |
 
 ---
@@ -165,7 +165,7 @@ Standard paths:
 # 3. Use output in strategy report → post to exec room
 ```
 
-## Apollo Workflow — Content Research
+## Dreami Workflow — Content Research
 
 ```bash
 # 1. Query brand DNA KB before writing copy

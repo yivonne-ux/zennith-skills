@@ -21,7 +21,7 @@ The Content Seed Bank is the central repository for every content atom produced 
 
 Seeds flow in from multiple sources:
 - **Artemis** scouts trends and deposits raw hooks and topic seeds
-- **Apollo** creates copy, storyboards, and templates during CSO pipeline adaptation
+- **Dreami** creates copy, storyboards, and templates during CSO pipeline adaptation
 - **Iris** generates social-native content variants
 - **Ad performance tagging** annotates seeds with real CTR, ROAS, and engagement data
 - **Content tuner** reads winning patterns to evolve the next generation of seeds
@@ -37,7 +37,7 @@ Each seed is stored as a single JSON line in `~/.openclaw/workspace/data/seeds.j
   "type": "hook|copy|image|video|ad|storyboard|template|headline|cta",
   "text": "content text or file path",
   "tags": ["trending", "tiktok", "vegan", "rendang"],
-  "source_agent": "artemis|apollo|iris",
+  "source_agent": "artemis|dreami|iris",
   "source_type": "trend-scout|cso-pipeline|manual|winning-ad",
   "campaign_id": "cso-42",
   "channel": "ig|tiktok|shopee|edm|facebook",
@@ -156,11 +156,11 @@ bash seed-store.sh --help
 
 ### CSO Pipeline (writes seeds)
 
-After the ADAPTATION step, Apollo stores each content variant as a seed:
+After the ADAPTATION step, Dreami stores each content variant as a seed:
 
 ```bash
 bash seed-store.sh add --type copy --text "$adapted_copy" \
-  --source apollo --source-type cso-pipeline \
+  --source dreami --source-type cso-pipeline \
   --campaign "$strategy_id" --channel "$target_channel"
 ```
 
@@ -188,7 +188,7 @@ When a content tuner creates a derivative of a winning seed:
 
 ```bash
 bash seed-store.sh add --type hook --text "$evolved_text" \
-  --source apollo --source-type winning-ad \
+  --source dreami --source-type winning-ad \
   --parent "$parent_seed_id" --generation 2 \
   --tags "evolved,tiktok,vegan"
 ```

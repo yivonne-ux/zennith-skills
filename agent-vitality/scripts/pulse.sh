@@ -44,8 +44,6 @@ case "$AGENT" in
   artemis)  AGENT_ROOMS="build townhall" ;;
   athena)   AGENT_ROOMS="exec build" ;;
   dreami)   AGENT_ROOMS="creative exec" ;;
-  apollo)   AGENT_ROOMS="creative" ;;
-  artee)    AGENT_ROOMS="creative" ;;
   iris)     AGENT_ROOMS="social creative" ;;
   hermes)   AGENT_ROOMS="exec" ;;
   main)     AGENT_ROOMS="exec townhall" ;;
@@ -156,10 +154,8 @@ import sys
 RELEVANCE = {
     'artemis': ['research', 'scraping', 'competitive', 'trends', 'scout'],
     'athena':  ['analytics', 'sales', 'performance', 'ROI', 'metrics', 'forecast'],
-    'dreami':  ['brief', 'campaign', 'brand', 'creative direction', 'review'],
-    'apollo':  ['copy', 'headline', 'hook', 'caption', 'voice', 'tone'],
-    'artee':   ['visual', 'image', 'design', 'style', 'photo', 'color'],
-    'iris':    ['social', 'engagement', 'post', 'reel', 'community'],
+    'dreami':  ['brief', 'campaign', 'brand', 'creative direction', 'review', 'copy', 'headline', 'hook', 'caption', 'voice', 'tone'],
+    'iris':    ['social', 'engagement', 'post', 'reel', 'community', 'visual', 'image', 'design', 'style', 'photo', 'color'],
     'hermes':  ['pricing', 'margin', 'channel', 'promotion', 'deal', 'ads'],
     'main':    ['delegation', 'routing', 'orchestration', 'workflow'],
 }

@@ -58,10 +58,10 @@ ARTEMIS_BRIEF="WAR ROOM ANALYSIS REQUEST. Analyze this from a RESEARCH & MARKET 
 bash "$DISPATCH" "war-room" "artemis" "request" "$ARTEMIS_BRIEF" "exec" >> "$LOG_FILE" 2>&1 &
 echo "  → Artemis (Research): dispatched"
 
-# Apollo — Creative & Brand angle
-APOLLO_BRIEF="WAR ROOM ANALYSIS REQUEST. Analyze this from a CREATIVE & BRAND perspective: ${INPUT}. Consider: How does this fit GAIA's brand? What content can we create? What's the storytelling angle? What creative assets are needed? Post your analysis to exec room."
-bash "$DISPATCH" "war-room" "apollo" "request" "$APOLLO_BRIEF" "exec" >> "$LOG_FILE" 2>&1 &
-echo "  → Apollo (Creative): dispatched"
+# Dreami — Creative & Brand angle
+DREAMI_BRIEF="WAR ROOM ANALYSIS REQUEST. Analyze this from a CREATIVE & BRAND perspective: ${INPUT}. Consider: How does this fit GAIA's brand? What content can we create? What's the storytelling angle? What creative assets are needed? Post your analysis to exec room."
+bash "$DISPATCH" "war-room" "dreami" "request" "$DREAMI_BRIEF" "exec" >> "$LOG_FILE" 2>&1 &
+echo "  → Dreami (Creative): dispatched"
 
 # Athena — Data & Strategy angle
 ATHENA_BRIEF="WAR ROOM ANALYSIS REQUEST. Analyze this from a DATA & STRATEGY perspective: ${INPUT}. Consider: What's the expected ROI? What metrics should we track? What's the risk/reward? How does this compare to our current priorities? Post your analysis to exec room."

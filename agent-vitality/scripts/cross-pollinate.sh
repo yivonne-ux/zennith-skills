@@ -94,19 +94,11 @@ ROUTING = {
         "room": "exec"
     },
     "dreami": {
-        "keywords": ["brief", "campaign", "brand", "creative direction", "review", "strategy"],
-        "room": "creative"
-    },
-    "apollo": {
-        "keywords": ["copy", "headline", "hook", "caption", "voice", "tone", "CTA", "writing"],
-        "room": "creative"
-    },
-    "artee": {
-        "keywords": ["visual", "image", "design", "style", "photo", "color", "layout", "graphic"],
+        "keywords": ["brief", "campaign", "brand", "creative direction", "review", "strategy", "copy", "headline", "hook", "caption", "voice", "tone", "CTA", "writing"],
         "room": "creative"
     },
     "iris": {
-        "keywords": ["social", "engagement", "post", "reel", "community", "instagram", "tiktok"],
+        "keywords": ["social", "engagement", "post", "reel", "community", "instagram", "tiktok", "visual", "image", "design", "style", "photo", "color", "layout", "graphic"],
         "room": "social"
     },
     "hermes": {

@@ -44,7 +44,7 @@ if [ -n "$FORCE_TYPE" ]; then
     social)     AGENT="iris";       ROOM="creative" ;;
     competitor) AGENT="artemis";    ROOM="build" ;;
     article)    AGENT="artemis";    ROOM="exec" ;;
-    visual-reference) AGENT="artee"; ROOM="creative" ;;
+    visual-reference) AGENT="iris"; ROOM="creative" ;;
     general)    AGENT="artemis";    ROOM="exec" ;;
     *)
       log "ERROR: Unknown type: $FORCE_TYPE, falling back to classify"
@@ -95,7 +95,7 @@ if [ -n "$INSTRUCTIONS" ]; then
     *athena*)     AGENT="athena";     log "Agent override from instructions: athena" ;;
     *hermes*)     AGENT="hermes";     log "Agent override from instructions: hermes" ;;
     *iris*)       AGENT="iris";       log "Agent override from instructions: iris" ;;
-    *apollo*)     AGENT="apollo";     log "Agent override from instructions: apollo" ;;
+    *dreami*)     AGENT="dreami";     log "Agent override from instructions: dreami" ;;
   esac
 
   # Check for urgency
@@ -224,6 +224,18 @@ printf '{"ts":%s000,"agent":"zenni","room":"exec","type":"link-digest","msg":"%s
 }
 
 log "Posted summary to exec room"
+
+# --- Post to intake room (feeds Creative Intake Engine) ---
+INTAKE_ROOM="$HOME/.openclaw/workspace/rooms/intake.jsonl"
+if [ -f "$INTAKE_ROOM" ] || [ -d "$(dirname "$INTAKE_ROOM")" ]; then
+  INTAKE_URL_ESCAPED=$(printf '%s' "$URL" | sed 's/\\/\\\\/g; s/"/\\"/g')
+  INTAKE_CONTEXT_ESCAPED=$(printf '%s' "${INSTRUCTIONS:-}" | sed 's/\\/\\\\/g; s/"/\\"/g' | head -c 500)
+  printf '{"ts":%s000,"agent":"zenni","source":"link-digester","type":"link","content":"%s","brand":"","context":"%s","requested_by":"user"}\n' \
+    "$TIMESTAMP" "$INTAKE_URL_ESCAPED" "$INTAKE_CONTEXT_ESCAPED" >> "$INTAKE_ROOM" 2>/dev/null || {
+    log "WARNING: Could not write to intake room at $INTAKE_ROOM"
+  }
+  log "Posted to intake room"
+fi
 
 # --- Store in RAG memory ---
 if [ -x "$MEMORY_STORE" ]; then

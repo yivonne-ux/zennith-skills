@@ -67,7 +67,7 @@ echo "my idea here" | bash ~/.openclaw/skills/war-room/scripts/analyze.sh
 1. Idea gets posted to exec room as a `war-room-brief`
 2. All 5 agents are dispatched concurrently:
    - **Artemis** → Market & Competition angle
-   - **Apollo** → Creative & Brand angle
+   - **Dreami** → Creative & Brand angle
    - **Athena** → Data & Strategy angle
    - **Hermes** → Commerce & Pricing angle
    - **Iris** → Social & Community angle

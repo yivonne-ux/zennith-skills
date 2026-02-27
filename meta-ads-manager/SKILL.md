@@ -103,7 +103,7 @@ python3 meta_ads_api.py --fatigue-check --days 14
 
 - **Hermes ⚡** — campaign management, budget optimization, offer testing
 - **Athena 🦉** — performance analysis, ROAS tracking, fatigue detection
-- **Apollo 🎨** — creative upload, A/B variant management
+- **Dreami 🎭** — creative upload, A/B variant management
 - **Zenni 👑** — governance approval for all write operations
 
 ## Integration with Existing Tools

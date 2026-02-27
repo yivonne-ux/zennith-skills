@@ -25,7 +25,7 @@ metadata:
 
 ## Purpose
 
-Automated strategy improvement -- the system that makes everything else get smarter over time. The Content Tuner closes the feedback loop in the Content Factory by reading real performance data, identifying what works, and evolving the playbooks that Apollo, Iris, and the rest of the team use to create content.
+Automated strategy improvement -- the system that makes everything else get smarter over time. The Content Tuner closes the feedback loop in the Content Factory by reading real performance data, identifying what works, and evolving the playbooks that Dreami, Iris, and the rest of the team use to create content.
 
 Without the tuner, the content-intel playbook is static -- based on best practices and assumptions. With the tuner, the playbook evolves based on what actually performs for GAIA's audience.
 
@@ -102,7 +102,7 @@ Commands:
 
 ### Posts To Rooms
 - **exec** -- weekly tuning summary, A/B test results
-- **creative** -- promotion notifications for Apollo to incorporate
+- **creative** -- promotion notifications for Dreami to incorporate
 - **feedback** -- underperformer flags, A/B control wins
 
 ## CHANGELOG

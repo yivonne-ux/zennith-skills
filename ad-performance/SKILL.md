@@ -13,7 +13,7 @@ Phase 2 of the Content Factory. This skill closes the feedback loop between ad s
 - Ingest ad performance data from Meta Ads CSV exports (and eventually the Meta Marketing API)
 - Map campaign results back to seed bank entries (hooks, copy, ads)
 - Extract winning patterns from top-performing content
-- Feed actionable insights to Apollo (creative) and Athena (analytics)
+- Feed actionable insights to Dreami (creative) and Athena (analytics)
 
 ## Data Flow
 
@@ -33,9 +33,9 @@ analyze-winners.sh
   |-- query seed bank for seeds with performance data
   |-- analyze patterns across top performers (type, channel, persona, tags, text)
   |-- write winning patterns to winning-patterns.jsonl
-  |-- post insights to creative room (Apollo) and exec room
+  |-- post insights to creative room (Dreami) and exec room
   v
-Apollo uses winning patterns to generate better content
+Dreami uses winning patterns to generate better content
 ```
 
 ## Scripts
@@ -64,7 +64,7 @@ Crontab entries (MYT = UTC+8):
 
 - **Seed Bank**: Tags seeds via `seed-store.sh tag` with performance metrics (CTR, ROAS, impressions, engagement). Updates seed status to "tested" or "winner".
 - **Exec Room**: Posts ingestion summaries and weekly analysis reports.
-- **Creative Room**: Posts winning patterns for Apollo to use when generating new content.
+- **Creative Room**: Posts winning patterns for Dreami to use when generating new content.
 - **Winning Patterns**: Stored in `~/.openclaw/workspace/data/winning-patterns.jsonl` for persistent reference.
 
 ## Data Files

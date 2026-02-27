@@ -299,6 +299,53 @@ bash scripts/nanobanana-gen.sh generate \
   --ratio 1:1
 ```
 
+### Generate with Style Seed (Phase 2)
+Apply a saved style seed for visual consistency across generations:
+```bash
+bash scripts/nanobanana-gen.sh generate \
+  --brand mirra \
+  --use-case lifestyle \
+  --prompt "Mirra skincare routine morning scene" \
+  --style-seed ss-1709000000 \
+  --size 2K \
+  --ratio 9:16
+```
+
+The `--style-seed` flag loads mood, lighting, color, and style_prompt from the seed bank and prepends them to your prompt for consistent visual style.
+
+### Generate with Campaign + Funnel Stage (Phase 4)
+Apply campaign-specific overrides (creative mode, tone, colors) and funnel-stage modifiers:
+```bash
+# CNY TOFU hero image
+bash scripts/nanobanana-gen.sh generate \
+  --brand pinxin-vegan \
+  --use-case product \
+  --prompt "Festive poon choi hero shot" \
+  --campaign cny-2026 \
+  --funnel-stage TOFU \
+  --size 4K \
+  --ratio 16:9
+
+# MCO meal kit BOFU conversion image
+bash scripts/nanobanana-gen.sh generate \
+  --brand gaia-eats \
+  --use-case product \
+  --prompt "Meal kit box with ingredients spread" \
+  --campaign mco-meal-kits \
+  --funnel-stage BOFU \
+  --ratio 1:1
+```
+
+Campaign files live at `~/.openclaw/brands/{brand}/campaigns/{campaign}.json`. Funnel stages: TOFU, MOFU, BOFU.
+
+### Auto-Registration in Seed Bank (Phase 5)
+Every successful generation is automatically registered in the image seed bank with full metadata:
+- brand, campaign, funnel_stage, style_seed_id
+- generation model, prompt, output type
+- File path, created_by agent
+
+No manual `image-seed.sh add` needed after generation.
+
 ### Generate Character Sheet
 ```bash
 bash scripts/nanobanana-gen.sh character-sheet \

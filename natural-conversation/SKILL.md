@@ -182,7 +182,7 @@ Example templates:
 
 ## Rollout Plan
 
-**Step 1:** Add skill to all agent SOUL.md files (Zenni, Artemis, Apollo, Hermes, Athena, Iris)
+**Step 1:** Add skill to all agent SOUL.md files (Zenni, Artemis, Dreami, Hermes, Athena, Iris)
 
 **Step 2:** Test with Jenn on WhatsApp
 
