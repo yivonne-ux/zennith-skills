@@ -1,6 +1,6 @@
 ---
 name: persona
-description: AI avatar/influencer generation pipeline. Creates consistent virtual characters with persistent profiles, animates them via Kling I2V, generates speech via ElevenLabs, and produces full UGC-style content. Used by Daedalus (Art Director) and Calliope (Creative Director).
+description: AI avatar/influencer generation pipeline. Creates consistent virtual characters with persistent profiles, animates them via Kling I2V, generates speech via ElevenLabs, and produces full UGC-style content. Used by Iris (Art Director) and Dreami (Creative Director).
 ---
 
 # Persona — AI Avatar & Influencer Pipeline
@@ -124,8 +124,8 @@ bash scripts/persona-gen.sh show Maya
 ## Used By
 
 - **Iris (Social Voice)** — lifestyle selfies, social posting, influencer content
-- **Daedalus (Art Director)** — visual generation, character consistency, animation
-- **Calliope (Creative Director)** — campaign personas, brand ambassadors, UGC content planning
+- **Iris (Art Director)** — visual generation, character consistency, animation
+- **Dreami (Creative Director)** — campaign personas, brand ambassadors, UGC content planning
 
 ## Notes
 
