@@ -30,29 +30,39 @@ if [[ -z "$AGENT" || -z "$TASK" || -z "$LABEL" ]]; then
   exit 1
 fi
 
-# ── Agent → Model (case-based for bash 3.x compat) ───────────────────────────
+# ── Agent → Model (reads from openclaw.json — source of truth) ────────────────
 get_model() {
-  case "$1" in
-    myrmidons) echo "minimax-m2.5" ;;
-    taoz)      echo "anthropic/claude-opus-4-6" ;;
-    artemis)   echo "kimi-k2.5" ;;
-    dreami)    echo "kimi-k2.5" ;;
-    iris)      echo "qwen3-vl-235b" ;;
-    athena)    echo "anthropic/claude-opus-4-6" ;;
-    hermes)    echo "anthropic/claude-opus-4-6" ;;
-    *)         echo "" ;;
-  esac
+  local agent="$1"
+  local config="$HOME/.openclaw/openclaw.json"
+  # Read primary model from openclaw.json (source of truth)
+  local model
+  model=$(python3 -c "
+import json, os
+with open(os.path.expanduser('$config')) as f:
+    data = json.load(f)
+for a in data['agents']['list']:
+    if a['id'] == '$agent':
+        print(a.get('model',{}).get('primary',''))
+        break
+" 2>/dev/null)
+  if [[ -n "$model" ]]; then
+    echo "$model"
+  else
+    echo "openrouter/z-ai/glm-4.7-flash"  # safe fallback
+  fi
 }
 
 get_cost_tier() {
   case "$1" in
-    myrmidons) echo "cheapest (0.14/0.14 per M tok)" ;;
-    taoz)      echo "premium (claude-code)" ;;
-    artemis)   echo "medium" ;;
-    dreami)    echo "medium" ;;
-    iris)      echo "medium" ;;
-    athena)    echo "high (reasoning)" ;;
-    hermes)    echo "high (reasoning)" ;;
+    myrmidons) echo "cheapest (minimax-m2.5)" ;;
+    taoz)      echo "cheapest (glm-4.7-flash, chat only - real builds via Claude Code CLI)" ;;
+    artemis)   echo "free (kimi-k2.5 Moonshot direct)" ;;
+    dreami)    echo "free (kimi-k2.5 Moonshot direct)" ;;
+    iris)      echo "medium (qwen3-vl OpenRouter)" ;;
+    athena)    echo "medium (glm-5)" ;;
+    hermes)    echo "medium (glm-5)" ;;
+    argus)     echo "medium (glm-5)" ;;
+    bee001)    echo "cheapest (glm-4.7-flash)" ;;
     *)         echo "unknown" ;;
   esac
 }

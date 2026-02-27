@@ -57,15 +57,15 @@ bash ~/.openclaw/skills/orchestrate-v2/scripts/track.sh stats
 | Agent | Model | $/M in | $/M out |
 |-------|-------|--------|---------|
 | Myrmidons | minimax-m2.5 | $0.14 | $0.14 |
-| Artemis | kimi-k2.5 | ~$0.15 | ~$0.60 |
-| Dreami | kimi-k2.5 | ~$0.15 | ~$0.60 |
+| Artemis | kimi-k2.5 | FREE | FREE |
+| Dreami | kimi-k2.5 | FREE | FREE |
 | Iris | qwen3-vl-235b | ~$0.40 | ~$1.60 |
-| Taoz | claude-code | $3.00 | $15.00 |
-| Athena | claude-opus-4-6 | $15.00 | $75.00 |
-| Hermes | claude-opus-4-6 | $15.00 | $75.00 |
-| Zenni | claude-opus-4-6 | $15.00 | $75.00 |
+| Taoz | glm-4.7-flash | $0.06 | $0.40 |
+| Athena | glm-5 | $0.80 | $2.56 |
+| Hermes | glm-5 | $0.80 | $2.56 |
+| Zenni | glm-4.7-flash | $0.06 | $0.40 |
 
-**Every lookup Zenni does herself instead of Myrmidons = ~100x overspend.**
+**Zenni is now on glm-4.7-flash (v4). Routing is dirt cheap.**
 
 ---
 

@@ -116,13 +116,13 @@ INCOMING TASK
 | Agent | ID | Model | Cost Tier | Domain |
 |-------|-----|-------|-----------|--------|
 | **Myrmidons** | `myrmidons` | `minimax-m2.5` | 💚 Cheapest ($0.14/$0.14/M) | Simple tasks, lookups, git, file ops, health checks |
-| **Taoz** | `taoz` | `claude-code` | 🔴 Premium | Code, builds, infrastructure, skills |
-| **Artemis** | `artemis` | `web-search-pro` | 🟡 Medium | Research, web scraping, competitive intel |
-| **Dreami** | `dreami` | `kimi-k2.5` | 🟡 Medium | Creative direction, copy, campaigns, brand voice |
-| **Iris** | `iris` | `qwen3-vl-235b` | 🟡 Medium | Visual content, social media, image gen |
-| **Athena** | `athena` | `reasoning` | 🟠 High | Strategy, analysis, reporting, forecasting |
-| **Hermes** | `hermes` | `reasoning` | 🟠 High | Ads, pricing, revenue optimization |
-| **Zenni** | `main` | `claude-opus-4-6` | 🔴 Premium | Orchestration ONLY — never specialist work |
+| **Taoz** | `taoz` | `glm-4.7-flash` | 💚 Budget ($0.06/$0.40/M) | Code, builds, infrastructure, skills (heavy builds via Claude Code CLI) |
+| **Artemis** | `artemis` | `kimi-k2.5` | 🟢 Free (Moonshot) | Research, web scraping, competitive intel |
+| **Dreami** | `dreami` | `kimi-k2.5` | 🟢 Free (Moonshot) | Creative direction, copy, campaigns, brand voice |
+| **Iris** | `iris` | `qwen3-vl-235b` | 🟡 Medium ($0.40/$1.60/M) | Visual content, social media, image gen |
+| **Athena** | `athena` | `glm-5` | 🟠 High ($0.80/$2.56/M) | Strategy, analysis, reporting, forecasting |
+| **Hermes** | `hermes` | `glm-5` | 🟠 High ($0.80/$2.56/M) | Ads, pricing, revenue optimization |
+| **Zenni** | `main` | `glm-4.7-flash` | 💚 Budget ($0.06/$0.40/M) | Orchestration ONLY — never specialist work |
 
 ### Cost Efficiency Rule
 
@@ -131,7 +131,7 @@ Before dispatching to a premium agent, ask:
 "Can Myrmidons do this?"
 
 Myrmidons = $0.14/$0.14 per M tokens
-Zenni     = $15/$75 per M tokens  (that's ~500x more expensive!)
+Zenni     = $0.06/$0.40 per M tokens (v4: glm-4.7-flash)
 
 If Myrmidons can do 80% as well → use Myrmidons.
 Only escalate if the task genuinely needs specialist capability.
@@ -174,8 +174,8 @@ Cost saved vs Zenni: ~100-500x
    - Database schema / migrations
    - Refactor / improve existing code
    
-Model: claude-code (full tool access)
-Budget: $0.50 (review) | $1.00 (build) | $2.00 (complex)
+Model: glm-4.7-flash (chat routing) / Claude Code CLI (heavy builds)
+Budget: $0 (Claude Code subscription) | API: $0.06/$0.40/M
 ```
 
 ### → ARTEMIS (research tasks)
@@ -190,7 +190,7 @@ Budget: $0.50 (review) | $1.00 (build) | $2.00 (complex)
    - Market data collection
    - Fact-checking
    
-Model: web-search-pro
+Model: kimi-k2.5 (FREE on Moonshot)
 ```
 
 ### → DREAMI (creative copy & direction)
@@ -235,7 +235,7 @@ Image tool: NanoBanana (gemini-3-pro-image-preview)
    - OKR / KPI tracking
    - Complex multi-variable analysis
    
-Model: reasoning model
+Model: glm-5 ($0.80/$2.56/M)
 ```
 
 ### → HERMES (ads & pricing)
@@ -249,7 +249,7 @@ Model: reasoning model
    - Promotion mechanics
    - Budget allocation
    
-Model: reasoning model
+Model: glm-5 ($0.80/$2.56/M)
 Note: Changes >RM 500 impact require Jenn approval gate
 ```
 
