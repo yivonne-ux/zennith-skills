@@ -16,7 +16,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKILL_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-BRANDS_DIR="$SKILL_DIR/brands"
+BRANDS_DIR="$HOME/.openclaw/brands"
 DATA_DIR="$HOME/.openclaw/workspace/data"
 IMAGES_DIR="$DATA_DIR/images"
 CHARACTERS_DIR="$DATA_DIR/characters"
@@ -26,8 +26,8 @@ LOG_FILE="$HOME/.openclaw/logs/nanobanana.log"
 SEED_STORE="$HOME/.openclaw/skills/content-seed-bank/scripts/seed-store.sh"
 
 API_BASE="https://generativelanguage.googleapis.com/v1beta/models"
-MODEL_FLASH="gemini-2.5-flash-image"
-MODEL_PRO="gemini-3-pro-image-preview"
+MODEL_FLASH="gemini-3.1-flash-image-preview"  # NanoBanana 2 (launched 2026-02-26)
+MODEL_PRO="gemini-3-pro-image-preview"        # NanoBanana Pro
 
 # Rate limiting: track last request time
 RATE_FILE="/tmp/nanobanana-lastcall"
@@ -131,11 +131,11 @@ BRAND_PHOTO_STYLE="magazine editorial, lifestyle"
 
 load_brand_profile() {
   local brand_slug="$1"
-  local profile_path="$BRANDS_DIR/${brand_slug}.json"
+  local profile_path="$BRANDS_DIR/${brand_slug}/DNA.json"
 
   if [ -f "$profile_path" ]; then
     log "INFO" "Loading brand profile: $profile_path"
-    # Parse brand JSON with python3
+    # Parse brand DNA.json (v4 format: nested visual.colors, voice, etc.)
     eval "$(python3 -c "
 import json, sys
 
@@ -147,14 +147,15 @@ def sh_escape(s):
         return ''
     return str(s).replace(\"'\", \"'\\\"'\\\"'\")
 
-colors = b.get('colors', {})
-print(\"BRAND_NAME='%s'\" % sh_escape(b.get('brand_name', 'GAIA Eats')))
+visual = b.get('visual', {})
+colors = visual.get('colors', {})
+print(\"BRAND_NAME='%s'\" % sh_escape(b.get('display_name', b.get('brand', 'GAIA Eats'))))
 print(\"BRAND_COLOR_PRIMARY='%s'\" % sh_escape(colors.get('primary', '#8FBC8F')))
 print(\"BRAND_COLOR_SECONDARY='%s'\" % sh_escape(colors.get('secondary', '#DAA520')))
 print(\"BRAND_COLOR_BG='%s'\" % sh_escape(colors.get('background', '#FFFDD0')))
-print(\"BRAND_STYLE='%s'\" % sh_escape(b.get('style', 'warm, natural, appetizing, accessible')))
-print(\"BRAND_LIGHTING='%s'\" % sh_escape(b.get('lighting', 'warm natural light, soft shadows')))
-print(\"BRAND_PHOTO_STYLE='%s'\" % sh_escape(b.get('photography_style', 'magazine editorial, lifestyle')))
+print(\"BRAND_STYLE='%s'\" % sh_escape(visual.get('style', 'warm, natural, appetizing, accessible')))
+print(\"BRAND_LIGHTING='%s'\" % sh_escape(visual.get('lighting_default', 'warm natural light, soft shadows')))
+print(\"BRAND_PHOTO_STYLE='%s'\" % sh_escape(visual.get('photography', 'magazine editorial, lifestyle')))
 " "$profile_path" 2>/dev/null)" || warn "Could not parse brand profile: $profile_path"
   else
     log "INFO" "No brand profile at $profile_path, using defaults (GAIA Eats)"
@@ -969,15 +970,15 @@ USE CASE TYPES:
   beforeafter   Split image comparison
 
 MODELS:
-  flash         gemini-2.5-flash-image (fast, high-volume)
-  pro           gemini-3-pro-image-preview (quality, character consistency, 4K)
+  flash         gemini-3.1-flash-image-preview (NanoBanana 2 — Pro quality at Flash speed)
+  pro           gemini-3-pro-image-preview (NanoBanana Pro — max quality, reasoning)
 
 ENVIRONMENT:
   GEMINI_API_KEY  Required. Google Gemini API key.
 
 BRAND PROFILES:
-  Store brand JSON at ~/.openclaw/skills/nanobanana/brands/{brand}.json
-  See SKILL.md for the brand profile schema.
+  Brand DNA stored at ~/.openclaw/brands/{brand}/DNA.json
+  7 brands: pinxin-vegan, wholey-wonder, mirra, rasaya, dr-stan, serein, gaia-eats
 
 EXAMPLES:
   # Generate a single product image
