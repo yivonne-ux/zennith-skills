@@ -92,8 +92,9 @@ case "$JOB_ID" in
     ;;
 
   nightly-review)
-    LABEL="zenni-nightly-$(date +%s)"
-    RESULT=$(openclaw sessions spawn --label "$LABEL" --timeout 300 "You are Zenni. Read your SOUL.md. Run corp-os-compound nightly review. Scan all rooms from last 24h, extract patterns, detect gaps, update learning-log. Post summary to townhall room." 2>&1)
+    RESULT=$(openclaw agent --agent main \
+      --message "You are Zenni. Read your SOUL.md. Run corp-os-compound nightly review. Scan all rooms from last 24h, extract patterns, detect gaps, update learning-log. Post summary to townhall room." \
+      --json --timeout 300 2>&1)
     AGENT="zenni"
     ROOM="townhall"
     ;;

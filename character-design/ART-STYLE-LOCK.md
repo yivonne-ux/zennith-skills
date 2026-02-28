@@ -1,5 +1,5 @@
 # GAIA OS — Art Style Lock
-> Reverse-engineered from 5 confirmed characters (Zenni, Taoz, Dreami, Hermes, Artee)
+> Reverse-engineered from 5 confirmed characters (Zenni, Taoz, Dreami, Hermes, Iris)
 > This is the MASTER reference. ALL new characters must match this.
 
 ## THE STYLE IN ONE SENTENCE

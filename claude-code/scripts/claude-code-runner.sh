@@ -1,22 +1,18 @@
 #!/usr/bin/env bash
 # claude-code-runner.sh — Wraps claude CLI for OpenClaw skill invocation
-# Usage: claude-code-runner.sh <review|build> <prompt> [cwd] [budget]
+# Taoz = Claude Code CLI on Jenn's subscription ($0 per token)
+# Usage: claude-code-runner.sh <review|build|dispatch|inbox> <prompt> [cwd/from] [budget/room]
 
 set -euo pipefail
 
-# Load keys in a cron-safe way (single source of truth)
+# Load env (cron-safe)
 KEYFILE="$HOME/.openclaw/.env.keys"
 if [ -f "$KEYFILE" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "$KEYFILE"
-  set +a
+  set -a; source "$KEYFILE" 2>/dev/null || true; set +a
 fi
-
-# Optional: warn but do not crash
-if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
-  echo "[WARN] ANTHROPIC_API_KEY not set (check $KEYFILE)" >> "$HOME/.openclaw/logs/claude-code-runner.log" 2>/dev/null || true
-fi
+# Note: Claude Max subscription doesn't need ANTHROPIC_API_KEY — CLI auth is separate
+# Unset nesting guard — this script is always called from OpenClaw (non-Claude) context
+unset CLAUDECODE CLAUDE_CODE_ENTRYPOINT 2>/dev/null || true
 
 
 
@@ -32,7 +28,7 @@ case "$MODE" in
     echo "--- claude-code.review ---"
     echo "Budget: USD $BUDGET | Tools: none (read-only) | Model: opus"
     echo "---"
-    env -i PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" HOME="$HOME" claude -p --model opus --system-prompt "You are a Red Team Reviewer for GAIA CORP-OS. Analyze the request and output EXACTLY these sections: (1) Risk Register — key risks with severity and likelihood, (2) Failure Modes — what could go wrong, (3) Cost/ROI Critique — financial sanity check, (4) Counter-Options — alternatives considered, (5) Recommendation — approve / reject / modify with conditions. Be concise, structured, and direct." --tools "" "$PROMPT"
+    PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" HOME="$HOME" claude -p --model opus --system-prompt "You are a Red Team Reviewer for GAIA CORP-OS. Analyze the request and output EXACTLY these sections: (1) Risk Register — key risks with severity and likelihood, (2) Failure Modes — what could go wrong, (3) Cost/ROI Critique — financial sanity check, (4) Counter-Options — alternatives considered, (5) Recommendation — approve / reject / modify with conditions. Be concise, structured, and direct." --tools "" "$PROMPT"
     echo ""
     echo "--- claude-code.review complete ---"
     ;;
@@ -41,13 +37,14 @@ case "$MODE" in
     echo "--- claude-code.build ---"
     echo "Budget: USD $BUDGET | Tools: Bash,Edit,Read,Write,Glob,Grep | Dir: $CWD | Model: opus"
     echo "---"
-    env -i PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" HOME="$HOME" claude -p --model opus --system-prompt "You are a Skill Builder for GAIA CORP-OS. Write clean, tested code. Return EXACTLY these sections: (1) Result — what was built/changed (1-3 lines), (2) Proof — build logs or test output, (3) What changed — list of files, (4) Learning — 1 line on what to improve next time." --allowedTools "Bash,Edit,Read,Write,Glob,Grep" --add-dir "$CWD" "$PROMPT"
+    PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" HOME="$HOME" claude -p --model opus --system-prompt "You are a Skill Builder for GAIA CORP-OS. Write clean, tested code. Return EXACTLY these sections: (1) Result — what was built/changed (1-3 lines), (2) Proof — build logs or test output, (3) What changed — list of files, (4) Learning — 1 line on what to improve next time." --allowedTools "Bash,Edit,Read,Write,Glob,Grep" --add-dir "$CWD" "$PROMPT"
     echo ""
     echo "--- claude-code.build complete ---"
     ;;
   dispatch)
-    # Dispatch mode: receives tasks from other OpenClaw agents via dispatch.sh
-    # Queues to inbox, runs simple tasks via claude -p, posts results back to room
+    # Dispatch mode: receives tasks from OpenClaw agents via dispatch.sh
+    # ALL tasks get executed via Claude Code CLI ($0 subscription)
+    # No complexity gating — Claude Code handles everything
     FROM_AGENT="${CWD:-zenni}"  # Reuse CWD param for from_agent
     ROOM="${BUDGET:-build}"      # Reuse BUDGET param for room
 
@@ -60,69 +57,68 @@ case "$MODE" in
     TASK_ID="taoz-$(date +%s)-$$"
     TS_EPOCH=$(date +%s)
 
-    # Always queue to inbox
+    # Queue to inbox (audit trail)
     SAFE_MSG=$(printf '%s' "$PROMPT" | tr '\n' ' ' | sed 's/"/\\"/g' | head -c 2000)
-    printf '{"id":"%s","ts":%s000,"from":"%s","room":"%s","status":"pending","msg":"%s"}\n' \
+    printf '{"id":"%s","ts":%s000,"from":"%s","room":"%s","status":"running","msg":"%s"}\n' \
       "$TASK_ID" "$TS_EPOCH" "$FROM_AGENT" "$ROOM" "$SAFE_MSG" >> "$INBOX"
-    printf '[%s] Queued task %s from %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$TASK_ID" "$FROM_AGENT" >> "$RUNNER_LOG" 2>/dev/null
+    printf '[%s] Running task %s from %s via Claude Code CLI\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$TASK_ID" "$FROM_AGENT" >> "$RUNNER_LOG" 2>/dev/null
 
     # Post acknowledgment to room
-    printf '{"ts":%s000,"agent":"taoz","to":"%s","room":"%s","type":"taoz-ack","msg":"[Taoz] Task received (id=%s). Processing..."}\n' \
+    printf '{"ts":%s000,"agent":"taoz","to":"%s","room":"%s","type":"taoz-ack","msg":"[Taoz] Task received (id=%s). Running via Claude Code CLI..."}\n' \
       "$TS_EPOCH" "$FROM_AGENT" "$ROOM" "$TASK_ID" >> "$ROOMS_DIR/${ROOM}.jsonl" 2>/dev/null
 
-    # Determine complexity
-    IS_SIMPLE="true"
-    TASK_LOWER=$(printf '%s' "$PROMPT" | tr '[:upper:]' '[:lower:]')
-    case "$TASK_LOWER" in
-      *refactor*|*redesign*|*architect*|*migrate*|*overhaul*|*debug*|*investigate*) IS_SIMPLE="false" ;;
-    esac
-    [ ${#PROMPT} -gt 500 ] && IS_SIMPLE="false"
-
-    if [ "$IS_SIMPLE" = "false" ]; then
-      printf '[%s] Complex task %s — queued for interactive session\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$TASK_ID" >> "$RUNNER_LOG" 2>/dev/null
-      printf '{"ts":%s000,"agent":"taoz","to":"%s","room":"%s","type":"taoz-ack","msg":"[Taoz] Complex task queued (id=%s). Will handle in interactive session."}\n' \
-        "$(date +%s)" "$FROM_AGENT" "$ROOM" "$TASK_ID" >> "$ROOMS_DIR/${ROOM}.jsonl" 2>/dev/null
-      echo "{\"status\":\"queued\",\"task_id\":\"$TASK_ID\",\"reason\":\"complex\"}"
-      exit 0
-    fi
-
-# Run simple task via claude -p (clean env to avoid key conflicts)
-RESULT_FILE="$RESULTS_DIR/${TASK_ID}.txt"
-BUILD_PROMPT="You are Taoz, the builder agent for GAIA CORP-OS. Execute this task dispatched from $FROM_AGENT:
+    # Run task via Claude Code CLI ($0 subscription — no API cost)
+    RESULT_FILE="$RESULTS_DIR/${TASK_ID}.txt"
+    BUILD_PROMPT="You are Taoz, the builder agent for GAIA CORP-OS. Execute this task dispatched from $FROM_AGENT:
 
 $PROMPT
 
 After completing, summarize what you did in 2-3 sentences."
 
-printf '%s' "$BUILD_PROMPT" | env -i \
-  PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" \
-  HOME="$HOME" \
-  claude -p \
-    --model opus \
-    --system-prompt "You are Taoz, builder agent. Execute the task. Be concise." \
-    --allowedTools "Bash,Edit,Read,Write,Glob,Grep" \
-    --output-format text > "$RESULT_FILE" 2>&1 &
+    # Claude Max subscription — CLI auth stored in ~/.claude/
+    # Don't use env -i (strips auth). Just set PATH explicitly.
+    PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" \
+    HOME="$HOME" \
+    claude -p \
+      --model sonnet \
+      --system-prompt "You are Taoz, builder agent for GAIA CORP-OS. Execute the task efficiently. Be concise. Read relevant files before making changes." \
+      --allowedTools "Bash,Edit,Read,Write,Glob,Grep" \
+      --permission-mode bypassPermissions \
+      --output-format text \
+      "$BUILD_PROMPT" > "$RESULT_FILE" 2>&1 &
 
     BGPID=$!
     WAITED=0
-    while kill -0 "$BGPID" 2>/dev/null && [ "$WAITED" -lt 180 ]; do
+    MAX_WAIT=600  # 10 minutes for builds
+    while kill -0 "$BGPID" 2>/dev/null && [ "$WAITED" -lt "$MAX_WAIT" ]; do
       sleep 5
       WAITED=$((WAITED + 5))
     done
     if kill -0 "$BGPID" 2>/dev/null; then
       kill "$BGPID" 2>/dev/null || true
-      RESULT="[Taoz] Task timed out (180s) — queued for interactive session."
+      RESULT="[Taoz] Task timed out (${MAX_WAIT}s). Result may be partial — check $RESULT_FILE"
+      printf '[%s] TIMEOUT task %s after %ss\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$TASK_ID" "$MAX_WAIT" >> "$RUNNER_LOG" 2>/dev/null
     else
       RESULT=$(cat "$RESULT_FILE" 2>/dev/null | head -c 1500)
-      [ -z "$RESULT" ] && RESULT="[Taoz] Task completed (no output)."
+      [ -z "$RESULT" ] && RESULT="[Taoz] Task completed (no output captured)."
+      printf '[%s] Completed task %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$TASK_ID" >> "$RUNNER_LOG" 2>/dev/null
     fi
 
-    # Update inbox + post result
+    # Update inbox + post result to room
     printf '{"id":"%s","ts":%s000,"status":"completed","result_file":"%s"}\n' \
       "$TASK_ID" "$(date +%s)" "$RESULT_FILE" >> "$INBOX"
     SAFE_RESULT=$(printf '%s' "$RESULT" | tr '\n' ' ' | sed 's/"/\\"/g' | head -c 1500)
     printf '{"ts":%s000,"agent":"taoz","to":"%s","room":"%s","type":"taoz-result","task_id":"%s","msg":"[Taoz] %s"}\n' \
       "$(date +%s)" "$FROM_AGENT" "$ROOM" "$TASK_ID" "$SAFE_RESULT" >> "$ROOMS_DIR/${ROOM}.jsonl" 2>/dev/null
+
+    # Feed compound learning loop — write to daily log
+    TASK_COMPLETE_SH="$HOME/.openclaw/workspace/scripts/learning/task-complete.sh"
+    if [ -f "$TASK_COMPLETE_SH" ]; then
+      TASK_OUTCOME="success"
+      echo "$RESULT" | grep -qiE '(timeout|error|fail|not found|crash)' && TASK_OUTCOME="fail"
+      TASK_DESC=$(printf '%s' "$PROMPT" | tr '\n' ' ' | head -c 200)
+      bash "$TASK_COMPLETE_SH" "taoz" "task-complete" "$TASK_DESC" "$TASK_OUTCOME" > /dev/null 2>&1 || true
+    fi
 
     echo "{\"status\":\"completed\",\"task_id\":\"$TASK_ID\"}"
     ;;

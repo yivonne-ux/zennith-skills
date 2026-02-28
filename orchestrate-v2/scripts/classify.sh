@@ -31,15 +31,25 @@ ROUTER="$HOME/.openclaw/workspace/scripts/routing/route-task.py"
 classify_override() {
   local task="$1"
 
+  # CREATIVE PIPELINE: video production + character creation workflows route to Zennith (multi-step, multi-agent)
+  # These MUST be checked before individual agent rules to avoid partial routing
+  # Covers: intro videos, UGC, character creation/generation, video pipelines
+  if echo "$task" | grep -qiE '(intro.?video|self.?intro.?video|character.?intro|ugc.?video|product.?ugc|character.?lock|video.?pipeline|creative.?pipeline|make.*(intro|ugc).*(video|clip|reel)|do .*(ugc|intro|product).*(video|reel)|lock.*(character|face|avatar)|6.?sec.*(intro|video)|agent.*(intro|video)|brand.*(intro|ugc|video)|create.*(character|persona|avatar)|generate.*(character|persona)|character.*(gen|creat|produc|pipeline)|make.*(character|persona))'; then
+    echo "zennith-pipeline"
+    return 0
+  fi
+
   # MYRMIDONS: simple operations (check, list, git, file ops, format, ping, send)
   if echo "$task" | grep -qiE '(check if|is (up|down|live|running)|git (status|log|push|pull|commit|add)|^ping |health.?check|list files|move file|rename file|copy file|create dir|mkdir|reformat|convert (csv|json)|post (this|result|summary) to (room|exec|build|creative)|fetch (url|file)|read .*(file|md|json) and|what.?s in |summarize this)'; then
     echo "myrmidons"
     return 0
   fi
 
-  # TAOZ: code and builds
+  # TAOZ: code and builds → route through ZENNITH (Zennith briefs Taoz, not Zenni direct)
+  # Architectural principle: Zenni never dispatches to Taoz directly.
+  # Zennith understands architecture, briefs Taoz, sandboxes, diagnoses, learns, deploys.
   if echo "$task" | grep -qiE '(write|build|create|fix|debug|deploy|refactor|install|script|api integration|landing page|database schema|migration|skill|infrastructure|cloudflare|wrangler).*?(code|page|skill|script|bug|error|app|function|component)|(build|create|write|fix) (a |the |this )?(react|python|typescript|bash|js|html|css|sql|skill|script|app|tool|function)'; then
-    echo "taoz"
+    echo "zennith"
     return 0
   fi
 
@@ -55,8 +65,8 @@ classify_override() {
     return 0
   fi
 
-  # IRIS: visual and social
-  if echo "$task" | grep -qiE '(generate (image|photo|visual)|image generation|nanobanana|social (media )?post|instagram|tiktok|visual direction|mood board|community engagement)'; then
+  # IRIS: visual, social, character design, avatar, style references
+  if echo "$task" | grep -qiE '(generate .*(image|photo|visual|poster|banner|thumbnail)|image generation|nanobanana|social (media )?post|instagram|tiktok|visual direction|mood board|community engagement|character (design|sheet|concept)|avatar|art style|editorial style|style of|selfie|storyboard|reverse.?prompt|visual.?qa|brand.?visual|heyshiro|heysirio|ohneis|persona.?gen|product image|create .*(image|visual|graphic))'; then
     echo "iris"
     return 0
   fi
@@ -70,6 +80,18 @@ classify_override() {
   # HERMES: ads and pricing
   if echo "$task" | grep -qiE '(meta ads|ad (optimization|spend|budget)|pricing (strategy|model)|roas|shopee|lazada|revenue (campaign|optimization)|promotion mechanics|ad campaign)'; then
     echo "hermes"
+    return 0
+  fi
+
+  # BEE001: revenue, products, gumroad, info products, monetization
+  if echo "$task" | grep -qiE '(gumroad|info.?product|digital.?product|revenue.?stream|monetiz|tiktok.?shop|product.?launch|sales.?funnel|lead.?magnet|ebook|course|template.?pack)'; then
+    echo "bee001"
+    return 0
+  fi
+
+  # ARGUS: testing, QA, regression, verification
+  if echo "$task" | grep -qiE '(test|qa|quality.?assur|regression|verify|validate|check.?if.?work|e2e|end.?to.?end.?test|smoke.?test|sanity.?check)'; then
+    echo "argus"
     return 0
   fi
 
@@ -113,6 +135,7 @@ agent_to_cost() {
     hermes)    echo "🟡 medium (glm-5)" ;;
     argus)     echo "🟡 medium (glm-5)" ;;
     bee001)    echo "💚 cheapest (glm-4.7-flash)" ;;
+    zennith)   echo "🟡 medium (glm-5 — Layer 2 supervisor)" ;;
     *)         echo "unknown" ;;
   esac
 }
@@ -131,12 +154,107 @@ estimate_complexity() {
 
 COMPLEXITY=$(estimate_complexity "$TASK_LOWER")
 
+# ── ZENNITH ESCALATION CHECK ─────────────────────────────────────────────────
+# Multi-agent or sequential tasks escalate to Zennith (Layer 2 supervisor)
+check_zennith_escalation() {
+  local task="$1"
+
+  # Sequential connectors
+  if echo "$task" | grep -qiE '(then (write|create|generate|build|research|analyze|post|deploy|turn|convert|make)|once (done|complete|finished|ready|confirm|approved|happy)|after (research|analysis|artemis|dreami|athena|that|this)|followed by|next step|step [0-9]|turn (it |this )?(to|into) (video|image|post)|confirm.*(then|turn|convert|make))'; then
+    echo "sequential"; return 0
+  fi
+
+  # Vague umbrella requests
+  if echo "$task" | grep -qiE '(build (me )?(a |the )?campaign|run (a |the )?campaign|full campaign|content (series|calendar|plan) for|fix everything|make (this|it) work|end.?to.?end|launch (a |the )?(campaign|product|brand))'; then
+    echo "umbrella"; return 0
+  fi
+
+  # Multi-agent scope (2+ domain verbs)
+  local score=0
+  echo "$task" | grep -qiE '(research|scrape|competitor|market data|find info)' && score=$((score+1))
+  echo "$task" | grep -qiE '(write copy|caption|script|tagline|creative brief|copywriting)' && score=$((score+1))
+  echo "$task" | grep -qiE '(generate image|nanobanana|visual|mood board|instagram|tiktok post|character|avatar|art style|selfie|storyboard)' && score=$((score+1))
+  echo "$task" | grep -qiE '(video|animation|kling|wan|sora|self.?intro|6.?sec|reels|video.?pipeline|creative.?pipeline|ugc|intro.?video|character.?lock|product.?ugc|keyframe|post.?prod)' && score=$((score+1))
+  echo "$task" | grep -qiE '(build|deploy|code|fix bug|landing page|skill)' && score=$((score+1))
+  echo "$task" | grep -qiE '(analyz|strateg|forecast|report|kpi|performance)' && score=$((score+1))
+  echo "$task" | grep -qiE '(meta ads|pricing|roas|shopee|lazada|ad (spend|budget))' && score=$((score+1))
+  if [ "$score" -ge 2 ]; then
+    echo "multi-agent"; return 0
+  fi
+
+  # Word count > 80
+  local wc
+  wc=$(echo "$task" | wc -w | tr -d ' ')
+  if [ "$wc" -gt 80 ]; then
+    echo "long-context"; return 0
+  fi
+
+  echo "no"; return 0
+}
+
+ESCALATE=$(check_zennith_escalation "$TASK_LOWER")
+
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "🎯 TASK CLASSIFICATION"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "Task: $TASK"
 echo ""
+
+# Creative pipeline override — route through Zennith with creative-pipeline.sh hint
+if [[ "$OVERRIDE" = "zennith-pipeline" ]]; then
+  echo "🎬 CREATIVE PIPELINE detected (multi-step video production)"
+  echo "✅ AGENT:      ZENNITH (Layer 2 — orchestrates creative-pipeline.sh)"
+  echo "   Source:     creative pipeline keyword match"
+  echo "   Model:      openrouter/z-ai/glm-5 (reasoning)"
+  echo "   Cost tier:  🟡 medium (orchestration only — video gen costs tracked separately)"
+  echo "   Complexity: $COMPLEXITY"
+  echo ""
+  echo "📋 Dispatch (via Zennith orchestration):"
+  echo "   bash ~/.openclaw/skills/mission-control/scripts/dispatch.sh \\"
+  echo "     zenni zennith orchestrate \"$TASK\" creative"
+  echo ""
+  echo "🎬 Or run creative-pipeline.sh directly:"
+  echo "   bash ~/.openclaw/skills/creative-production/scripts/creative-pipeline.sh \\"
+  echo "     <intro|ugc|product-ugc|character-lock> <agent> <brand> \"<brief>\""
+  # Workflow lookup for pipeline routes
+  WORKFLOW_LOOKUP="$HOME/.openclaw/workspace/scripts/workflow-lookup.sh"
+  if [ -f "$WORKFLOW_LOOKUP" ]; then
+    WORKFLOW_RESULT=$(bash "$WORKFLOW_LOOKUP" "$TASK" 2>/dev/null || true)
+    if [ -n "$WORKFLOW_RESULT" ] && ! echo "$WORKFLOW_RESULT" | grep -q '"error"'; then
+      WF_ID=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || true)
+      WF_NAME=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('name',''))" 2>/dev/null || true)
+      WF_DOC=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('doc_path',''))" 2>/dev/null || true)
+      WF_CMD=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('entry_command',''))" 2>/dev/null || true)
+      if [ -n "$WF_ID" ]; then
+        echo ""
+        echo "📖 WORKFLOW:   $WF_ID ($WF_NAME)"
+        echo "   Doc:        $WF_DOC"
+        echo "   Command:    $WF_CMD"
+      fi
+    fi
+  fi
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  exit 0
+fi
+
+# Zennith escalation takes priority (except for myrmidons/argus/taoz explicit tasks)
+if [[ "$ESCALATE" != "no" ]] && [[ "$OVERRIDE" != "myrmidons" ]] && [[ "$OVERRIDE" != "argus" ]] && [[ "$OVERRIDE" != "taoz" ]]; then
+  echo "⚡ ESCALATE:   ZENNITH (Layer 2 — reason: $ESCALATE)"
+  echo "✅ AGENT:      ZENNITH"
+  echo "   Source:     complexity escalation gate"
+  echo "   Model:      openrouter/z-ai/glm-5 (reasoning)"
+  echo "   Cost tier:  🟡 medium (only for multi-step tasks)"
+  echo "   Complexity: $COMPLEXITY"
+  echo ""
+  echo "📋 Dispatch:"
+  echo "   bash ~/.openclaw/skills/mission-control/scripts/dispatch.sh \\"
+  echo "     zenni zennith orchestrate \"$TASK\" zennith"
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  exit 0
+fi
 
 if [[ "$OVERRIDE" != "auto" ]]; then
   # Hardcoded override matched
@@ -195,6 +313,25 @@ if results:
   echo "     \"$AGENT\" \\"
   echo "     \"$TASK\" \\"
   echo "     \"${AGENT}-$(date +%H%M)\""
+fi
+
+# ── WORKFLOW LOOKUP (enriches routing with workflow context) ─────────────────
+WORKFLOW_LOOKUP="$HOME/.openclaw/workspace/scripts/workflow-lookup.sh"
+if [ -f "$WORKFLOW_LOOKUP" ]; then
+  WORKFLOW_RESULT=$(bash "$WORKFLOW_LOOKUP" "$TASK" 2>/dev/null || true)
+  if [ -n "$WORKFLOW_RESULT" ] && ! echo "$WORKFLOW_RESULT" | grep -q '"error"'; then
+    WF_ID=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || true)
+    WF_NAME=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('name',''))" 2>/dev/null || true)
+    WF_DOC=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('doc_path',''))" 2>/dev/null || true)
+    WF_CMD=$(echo "$WORKFLOW_RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('entry_command',''))" 2>/dev/null || true)
+    if [ -n "$WF_ID" ]; then
+      echo ""
+      echo "📖 WORKFLOW:   $WF_ID ($WF_NAME)"
+      echo "   Doc:        $WF_DOC"
+      echo "   Command:    $WF_CMD"
+      echo "   Lookup:     bash workflow-lookup.sh --id $WF_ID"
+    fi
+  fi
 fi
 
 echo ""

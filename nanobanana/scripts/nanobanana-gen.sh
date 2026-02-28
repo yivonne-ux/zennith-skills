@@ -380,6 +380,7 @@ call_gemini_api() {
   local image_size="$4"
   local output_path="$5"
   local dry_run="${6:-false}"
+  local ref_images="${7:-}"  # comma-separated list of image paths for multi-image reference
 
   # Validate API key
   if [ -z "${GEMINI_API_KEY:-}" ]; then
@@ -402,21 +403,38 @@ call_gemini_api() {
   local escaped_prompt
   escaped_prompt=$(python3 -c "import json,sys; print(json.dumps(sys.argv[1]))" "$prompt")
 
-  # Build request body
+  # Build request body (with optional reference images)
   local body
   body=$(python3 -c "
-import json, sys
+import json, sys, base64, os
 
 prompt = sys.argv[1]
 ratio = sys.argv[2]
 size = sys.argv[3]
+ref_images_str = sys.argv[4] if len(sys.argv) > 4 else ''
+
+parts = []
+
+# Add reference images first (if any)
+if ref_images_str:
+    for img_path in ref_images_str.split(','):
+        img_path = img_path.strip()
+        if not img_path or not os.path.isfile(img_path):
+            continue
+        ext = img_path.rsplit('.', 1)[-1].lower()
+        mime_map = {'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'png': 'image/png', 'webp': 'image/webp'}
+        mime = mime_map.get(ext, 'image/jpeg')
+        with open(img_path, 'rb') as f:
+            b64 = base64.b64encode(f.read()).decode()
+        parts.append({'inlineData': {'mimeType': mime, 'data': b64}})
+
+# Add text prompt last
+parts.append({'text': prompt})
 
 payload = {
     'contents': [
         {
-            'parts': [
-                {'text': prompt}
-            ]
+            'parts': parts
         }
     ],
     'generationConfig': {
@@ -429,7 +447,7 @@ payload = {
 }
 
 print(json.dumps(payload))
-" "$prompt" "$aspect_ratio" "$image_size")
+" "$prompt" "$aspect_ratio" "$image_size" "$ref_images")
 
   if [ "$dry_run" = "true" ]; then
     echo ""
@@ -598,7 +616,7 @@ else:
 
 cmd_generate() {
   local brand="" use_case="product" prompt="" size="2K" ratio="1:1" model="flash" dry_run="false" raw="false" style_seed=""
-  local campaign="" funnel_stage=""
+  local campaign="" funnel_stage="" ref_image=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -611,6 +629,7 @@ cmd_generate() {
       --style-seed)    style_seed="$2";    shift 2 ;;
       --campaign)      campaign="$2";      shift 2 ;;
       --funnel-stage)  funnel_stage="$2";  shift 2 ;;
+      --ref-image)     ref_image="$2";     shift 2 ;;
       --dry-run)       dry_run="true";     shift ;;
       --raw)           raw="true";         shift ;;
       *) die "generate: unknown option: $1" ;;
@@ -636,44 +655,37 @@ cmd_generate() {
   local seed_ref_images=""
   if [ -n "$style_seed" ]; then
     log "INFO" "Loading style seed: $style_seed"
-    local seed_data
-    seed_data=$(python3 - "$HOME/.openclaw/workspace/rag/image-seed-bank.jsonl" "$style_seed" << 'PYEOF'
+    local seed_tmp
+    seed_tmp=$(mktemp /tmp/nanobanana-seed.XXXXXX)
+    python3 -c "
 import json, sys
-
 index_file = sys.argv[1]
 target_id = sys.argv[2]
-
 try:
     with open(index_file) as f:
         for line in f:
             line = line.strip()
-            if not line:
-                continue
+            if not line: continue
             try:
                 entry = json.loads(line)
-                if entry.get("type") == "style_seed" and entry.get("id") == target_id:
-                    # Output style_prompt on line 1, source_images (comma-joined) on line 2
-                    print(entry.get("style_prompt", ""))
-                    imgs = entry.get("source_images", [])
-                    print(",".join(imgs) if imgs else "")
+                if entry.get('type') == 'style_seed' and entry.get('id') == target_id:
+                    print(entry.get('style_prompt', ''))
+                    imgs = entry.get('source_images', [])
+                    print(','.join(imgs) if imgs else '')
                     sys.exit(0)
-            except:
-                continue
-except:
-    pass
-
-# Not found
+            except: continue
+except: pass
 sys.exit(1)
-PYEOF
-    )
-    if [ $? -eq 0 ] && [ -n "$seed_data" ]; then
-      seed_style_prompt=$(echo "$seed_data" | head -1)
-      seed_ref_images=$(echo "$seed_data" | tail -1)
+" "$HOME/.openclaw/workspace/rag/image-seed-bank.jsonl" "$style_seed" > "$seed_tmp" 2>/dev/null || true
+    if [ -s "$seed_tmp" ]; then
+      seed_style_prompt=$(head -1 "$seed_tmp")
+      seed_ref_images=$(tail -1 "$seed_tmp")
       log "INFO" "Style seed loaded: prompt=${seed_style_prompt:0:80}..."
       echo "  Style seed: $style_seed"
     else
       warn "Style seed not found: $style_seed"
     fi
+    rm -f "$seed_tmp"
   fi
 
   # Load campaign overrides if --campaign provided
@@ -736,8 +748,29 @@ PYEOF
     echo "  Funnel:   $funnel_stage"
   fi
 
+  # Reference images — Gemini 3.x image models DO support image input + image output
+  # (up to 14 ref images). Sources: --ref-image flag and/or style seed source_images.
+  local ref_images_arg=""
+  if [ -n "$ref_image" ]; then
+    ref_images_arg="$ref_image"
+    echo "  Ref image: $ref_image"
+  fi
+  if [ -n "$seed_ref_images" ]; then
+    if [ -n "$ref_images_arg" ]; then
+      ref_images_arg="${ref_images_arg},${seed_ref_images}"
+    else
+      ref_images_arg="$seed_ref_images"
+    fi
+    log "INFO" "Style seed has $(echo "$seed_ref_images" | tr ',' '\n' | wc -l | tr -d ' ') ref images (sending to API)"
+  fi
+  if [ -n "$ref_images_arg" ]; then
+    local ref_count
+    ref_count=$(echo "$ref_images_arg" | tr ',' '\n' | wc -l | tr -d ' ')
+    log "INFO" "Sending $ref_count reference image(s) to API"
+  fi
+
   local result
-  result=$(call_gemini_api "$model" "$full_prompt" "$ratio" "$size_upper" "$output_path" "$dry_run")
+  result=$(call_gemini_api "$model" "$full_prompt" "$ratio" "$size_upper" "$output_path" "$dry_run" "$ref_images_arg")
 
   if [ "$dry_run" = "true" ]; then
     echo "$result"
@@ -836,38 +869,112 @@ cmd_character_sheet() {
   local size_upper
   size_upper=$(echo "$size" | tr 'a-z' 'A-Z')
 
+  # PHASE 1: Generate reference pose (first pose — sequential, locks the character)
+  local first_pose=""
+  local remaining_poses=""
   for pose in "$@"; do
     pose_index=$((pose_index + 1))
     local pose_clean
     pose_clean=$(echo "$pose" | tr -d '[:space:]')
 
-    echo "  [$pose_index/$poses_count] Generating pose: $pose_clean"
-
-    local char_prompt
     if [ "$pose_index" -eq 1 ]; then
-      char_prompt="Character design sheet. ${description}. Pose: ${pose_clean}, full body visible. ${enrichment} White/clean background. Semi-realistic style, consistent proportions."
-    else
-      char_prompt="Same character (${description}). Maintain facial features, preserve proportions, keep identity. Pose: ${pose_clean}, full body visible. ${enrichment} White/clean background. Semi-realistic style, consistent with reference."
-    fi
+      first_pose="$pose_clean"
+      echo "  [1/$poses_count] Generating reference pose: $pose_clean (locking character)"
 
-    local pose_output="${output_dir}/${ts}_char_${pose_clean}.png"
+      local char_prompt="Character design sheet. ${description}. Pose: ${pose_clean}, full body visible. ${enrichment} White/clean background. Semi-realistic style, consistent proportions."
+      local pose_output="${output_dir}/${ts}_char_${pose_clean}.png"
 
-    local result
-    result=$(call_gemini_api "$model" "$char_prompt" "$ratio" "$size_upper" "$pose_output" "$dry_run")
+      local result
+      result=$(call_gemini_api "$model" "$char_prompt" "$ratio" "$size_upper" "$pose_output" "$dry_run")
 
-    if [ "$dry_run" = "true" ]; then
-      echo "$result"
-    elif [ -n "$result" ] && [ -f "$result" ]; then
-      echo "    Saved: $result"
-      if [ -n "$generated_files" ]; then
-        generated_files="${generated_files},${result}"
-      else
+      if [ "$dry_run" = "true" ]; then
+        echo "$result"
+      elif [ -n "$result" ] && [ -f "$result" ]; then
+        echo "    Saved: $result (REFERENCE LOCKED)"
         generated_files="$result"
+        register_seed "$result" "$brand" "character"
+        register_image_seed "$result" "$brand" "character" "" "" "" ""
       fi
-      register_seed "$result" "$brand" "character"
-      register_image_seed "$result" "$brand" "character" "" "" "" ""
+    else
+      if [ -n "$remaining_poses" ]; then
+        remaining_poses="${remaining_poses},${pose_clean}"
+      else
+        remaining_poses="$pose_clean"
+      fi
     fi
   done
+
+  # PHASE 2: Generate remaining poses CONCURRENTLY (reference is locked)
+  if [ -n "$remaining_poses" ] && [ "$dry_run" != "true" ]; then
+    echo ""
+    echo "  Reference locked. Generating remaining poses concurrently..."
+    local bg_pids=""
+    local bg_outputs=""
+    local remaining_index=1
+
+    local IFS_SAVE2="$IFS"
+    IFS=','
+    set -- $remaining_poses
+    IFS="$IFS_SAVE2"
+    local remaining_count=$#
+
+    for pose_clean in "$@"; do
+      remaining_index=$((remaining_index + 1))
+      local pose_output="${output_dir}/${ts}_char_${pose_clean}.png"
+      local char_prompt="Same character (${description}). Maintain facial features, preserve proportions, keep identity. Pose: ${pose_clean}, full body visible. ${enrichment} White/clean background. Semi-realistic style, consistent with reference."
+
+      echo "  [$remaining_index/$poses_count] Launching: $pose_clean (background)"
+
+      # Run in background, capture PID
+      (
+        local r
+        r=$(call_gemini_api "$model" "$char_prompt" "$ratio" "$size_upper" "$pose_output" "false")
+        if [ -n "$r" ] && [ -f "$r" ]; then
+          echo "$r" > "/tmp/nb-char-$$-${pose_clean}.done"
+        fi
+      ) &
+      bg_pids="$bg_pids $!"
+      bg_outputs="$bg_outputs $pose_clean"
+    done
+
+    # Wait for all background jobs
+    echo "  Waiting for $remaining_count concurrent generations..."
+    for pid in $bg_pids; do
+      wait "$pid" 2>/dev/null || true
+    done
+
+    # Collect results
+    for pose_clean in $bg_outputs; do
+      local done_file="/tmp/nb-char-$$-${pose_clean}.done"
+      if [ -f "$done_file" ]; then
+        local result
+        result=$(cat "$done_file")
+        rm -f "$done_file"
+        echo "    Saved: $result"
+        generated_files="${generated_files},${result}"
+        register_seed "$result" "$brand" "character"
+        register_image_seed "$result" "$brand" "character" "" "" "" ""
+      else
+        echo "    FAILED: $pose_clean"
+      fi
+    done
+  elif [ "$dry_run" = "true" ] && [ -n "$remaining_poses" ]; then
+    # Dry-run: still show prompts for remaining poses
+    local IFS_SAVE2="$IFS"
+    IFS=','
+    set -- $remaining_poses
+    IFS="$IFS_SAVE2"
+    local remaining_index=1
+    for pose_clean in "$@"; do
+      remaining_index=$((remaining_index + 1))
+      echo "  [$remaining_index/$poses_count] Generating pose: $pose_clean"
+      local char_prompt="Same character (${description}). Maintain facial features, preserve proportions, keep identity. Pose: ${pose_clean}, full body visible. ${enrichment} White/clean background. Semi-realistic style, consistent with reference."
+      local pose_output="${output_dir}/${ts}_char_${pose_clean}.png"
+      local result
+      result=$(call_gemini_api "$model" "$char_prompt" "$ratio" "$size_upper" "$pose_output" "$dry_run")
+      echo "$result"
+    done
+  fi
 
   # Create character metadata JSON
   if [ "$dry_run" != "true" ]; then
@@ -1161,6 +1268,171 @@ cmd_batch() {
 }
 
 # ---------------------------------------------------------------------------
+# Command: sheet (multi-panel single-image generation)
+# ---------------------------------------------------------------------------
+
+# Sheet type definitions — each returns a prompt fragment
+get_sheet_prompt() {
+  local sheet_type="$1"
+  local description="$2"
+
+  case "$sheet_type" in
+    turnaround|9-angle)
+      echo "Character turnaround sheet. Generate exactly 9 views of this SAME character arranged in a 3x3 grid:
+
+Row 1: Front view | 3/4 left view | Left side profile
+Row 2: 3/4 back left | Back view | 3/4 back right
+Row 3: Right side profile | 3/4 right view | Close-up face
+
+Every panel must show the IDENTICAL character from the reference image. Same face, same outfit, same proportions. Upper body framing. Clean background per panel. Small text label per angle."
+      ;;
+    scenes|12-scene)
+      echo "Character scene sheet. Generate exactly 12 scenes of this SAME character arranged in a 4x3 grid. Each scene shows the character in a DIFFERENT environment but looking IDENTICAL:
+
+Row 1: Neon city street at night | Futuristic laboratory | Zen garden
+Row 2: Floating in space | Glass bridge | Crystal cave
+Row 3: Holographic data streams | Rooftop at sunset | Misty forest
+Row 4: Spacecraft cockpit | Marketplace | Empty white room
+
+Same character in every panel. Small text label per scene."
+      ;;
+    camera|12-camera)
+      echo "Cinematic camera angle sheet. Generate exactly 12 camera angles of this SAME character arranged in a 4x3 grid:
+
+Row 1: Extreme close-up (eyes) | Medium close-up (face) | Medium shot (waist up)
+Row 2: Full body | Wide establishing | Low angle (looking up)
+Row 3: High angle (looking down) | Dutch angle (tilted) | Over-the-shoulder
+Row 4: Silhouette (backlit) | Reflection | Bird's eye (from above)
+
+Same character in every panel. Dark or studio background. Small text label per angle."
+      ;;
+    expressions|6-expression)
+      echo "Character expression sheet. Generate exactly 6 expressions of this SAME character arranged in a 3x2 grid:
+
+Row 1: Neutral / calm | Happy / warm smile | Serious / determined
+Row 2: Curious / interested | Surprised / amazed | Confident / powerful
+
+Same character in every panel — same outfit, same lighting. Close-up face framing. Clean background. Small text label per expression."
+      ;;
+    outfits|4-outfit)
+      echo "Character outfit variation sheet. Generate exactly 4 versions of this SAME character arranged in a 2x2 grid. Same face in every panel, different context clothing:
+
+Panel 1: Original outfit (as reference)
+Panel 2: Casual / relaxed version
+Panel 3: Formal / ceremonial version
+Panel 4: Action / dynamic version
+
+Same face and body proportions in every panel. Full body framing. Clean background. Small text label per outfit."
+      ;;
+    custom)
+      echo "$description"
+      ;;
+    *)
+      echo "Character sheet. Generate multiple views of this SAME character in a grid. $description"
+      ;;
+  esac
+}
+
+cmd_sheet() {
+  local brand="" sheet_type="turnaround" model="flash" size="1K" ratio="1:1" dry_run="false"
+  local ref_image="" description="" character_name=""
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --brand)      brand="$2";          shift 2 ;;
+      --type)       sheet_type="$2";     shift 2 ;;
+      --ref-image)  ref_image="$2";      shift 2 ;;
+      --model)      model="$2";          shift 2 ;;
+      --size)       size="$2";           shift 2 ;;
+      --ratio)      ratio="$2";          shift 2 ;;
+      --name)       character_name="$2"; shift 2 ;;
+      --description) description="$2";   shift 2 ;;
+      --dry-run)    dry_run="true";      shift ;;
+      *) die "sheet: unknown option: $1" ;;
+    esac
+  done
+
+  [ -z "$brand" ] && die "sheet: --brand is required"
+  [ -z "$ref_image" ] && die "sheet: --ref-image is required (path to locked character image)"
+  [ -f "$ref_image" ] || die "sheet: ref image not found: $ref_image"
+
+  # Default ratio based on sheet type
+  case "$sheet_type" in
+    turnaround|9-angle) ratio="${ratio:-1:1}" ;;
+    scenes|12-scene|camera|12-camera) ratio="3:4" ;;
+    expressions|6-expression) ratio="3:2" ;;
+    outfits|4-outfit) ratio="1:1" ;;
+  esac
+
+  local size_upper
+  size_upper=$(echo "$size" | tr 'a-z' 'A-Z')
+
+  # Build prompt
+  local sheet_prompt
+  sheet_prompt=$(get_sheet_prompt "$sheet_type" "$description")
+
+  # Output path
+  local ts
+  ts=$(timestamp_str)
+  local name_slug="${character_name:-character}"
+  local output_dir="${CHARACTERS_DIR}/${brand}"
+  mkdir -p "$output_dir"
+  local output_path="${output_dir}/${ts}_${name_slug}_${sheet_type}.png"
+
+  echo "Generating ${sheet_type} sheet (single image, multi-panel)..."
+  echo "  Brand:     $brand"
+  echo "  Type:      $sheet_type"
+  echo "  Ref image: $ref_image"
+  echo "  Model:     $model"
+  echo "  Size:      $size_upper (generate small, upscale later)"
+  echo "  Ratio:     $ratio"
+  echo ""
+
+  local result
+  result=$(call_gemini_api "$model" "$sheet_prompt" "$ratio" "$size_upper" "$output_path" "$dry_run" "$ref_image")
+
+  if [ "$dry_run" = "true" ]; then
+    echo "$result"
+    return 0
+  fi
+
+  if [ -n "$result" ] && [ -f "$result" ]; then
+    local file_kb
+    file_kb=$(du -k "$result" | cut -f1)
+    echo "  Output: $result (${file_kb} KB)"
+    log "INFO" "Sheet generated: $result (type=$sheet_type brand=$brand)"
+
+    # Register
+    register_image_seed "$result" "$brand" "character-sheet" "" "" "" "$sheet_prompt"
+
+    # Save metadata
+    local meta_file="${output_dir}/${ts}_${name_slug}_${sheet_type}.json"
+    python3 -c "
+import json, sys, os
+meta = {
+    'brand': sys.argv[1],
+    'character': sys.argv[2],
+    'sheet_type': sys.argv[3],
+    'ref_image': sys.argv[4],
+    'model': sys.argv[5],
+    'resolution': sys.argv[6],
+    'output': sys.argv[7],
+    'timestamp': sys.argv[8],
+    'verdict': None,
+    'tags': [],
+    'learnings': []
+}
+with open(sys.argv[9], 'w') as f:
+    json.dump(meta, f, indent=2)
+" "$brand" "$name_slug" "$sheet_type" "$ref_image" "$model" "$size_upper" "$result" "$ts" "$meta_file" 2>/dev/null
+
+    echo "  Metadata: $meta_file"
+    post_to_room "creative" "Sheet generated: ${sheet_type} for ${name_slug} (${brand}). Path: $result"
+    echo "Done."
+  fi
+}
+
+# ---------------------------------------------------------------------------
 # Usage
 # ---------------------------------------------------------------------------
 
@@ -1327,6 +1599,9 @@ case "$COMMAND" in
     ;;
   batch)
     cmd_batch "$@"
+    ;;
+  sheet)
+    cmd_sheet "$@"
     ;;
   --help|-h|help)
     usage

@@ -103,7 +103,7 @@ bash scripts/persona-gen.sh show Maya
 | Tool | Used For | Script |
 |------|----------|--------|
 | NanoBanana Pro | Character sheet generation | `~/.openclaw/skills/nanobanana/scripts/nanobanana-gen.sh` |
-| Kling AI 3.0 | Image-to-video animation | `~/.openclaw/skills/art-director/scripts/kling-video.sh` |
+| Kling AI 3.0 | Image-to-video animation | `~/.openclaw/skills/persona/scripts/kling-video.sh` |
 | ElevenLabs | Text-to-speech, voice cloning | Direct API calls (ELEVENLABS_API_KEY) |
 | Brand DNA | Visual style + voice tone | `~/.openclaw/brands/{brand}/DNA.json` |
 

@@ -30,9 +30,8 @@ M005|System Stability|ACTIVE|Taoz|P0|Check logs, processes, disk, memory
 - **Artemis** → Research, competitor analysis, trend scouting
 - **Athena** → Analytics, measurement, data analysis
 - **Iris** → Social content, lifestyle, persona work
-- **Calliope** → Creative direction, campaign strategy
-- **Daedalus** → Visual content, art direction
-- **Dreami** → Content creation, writing
+- **Dreami** → Creative direction, campaign strategy, content creation, writing
+- **Iris** → Visual content, art direction
 - **Hermes** → Commerce, product research
 
 ## Special Handling

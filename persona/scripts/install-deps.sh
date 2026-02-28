@@ -84,11 +84,11 @@ else
   check_fail "NanoBanana script not found at ~/.openclaw/skills/nanobanana/scripts/nanobanana-gen.sh"
 fi
 
-# --- Kling ---
-if [ -f "$HOME/.openclaw/skills/art-director/scripts/kling-video.sh" ]; then
-  check_pass "Kling video script found"
+# --- Kling (via video-gen.sh) ---
+if [ -f "$HOME/.openclaw/skills/video-gen/scripts/video-gen.sh" ]; then
+  check_pass "Video gen script found (includes Kling)"
 else
-  check_fail "Kling video script not found at ~/.openclaw/skills/art-director/scripts/kling-video.sh"
+  check_fail "Video gen script not found at ~/.openclaw/skills/video-gen/scripts/video-gen.sh"
 fi
 
 echo ""

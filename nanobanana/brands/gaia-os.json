@@ -40,13 +40,11 @@
   "character_archetypes": {
     "zenni": "The Orchestrator - central command, omniscient presence",
     "taoz": "The Builder - mechanical, construction, tools",
-    "dreami": "The Creative - flowing, artistic, ethereal",
-    "artee": "The Art Director - sharp, visual, golden",
+    "dreami": "The Creative Director - flowing, artistic, ethereal, brand voice",
+    "iris": "The Art Director + Social Voice - visual, rainbow, light refraction",
     "hermes": "The Merchant - swift, commerce, messaging",
     "artemis": "The Scout - huntress, tracker, lunar, bow/arrow motifs",
-    "apollo": "The Sun - light, truth, poetry, music, prophecy",
     "athena": "The Strategist - wisdom, owl, armor, strategic",
-    "iris": "The Messenger - rainbow, communication, light refraction",
     "myrmidons": "The Swarm - collective, ant-like, workers"
   },
   

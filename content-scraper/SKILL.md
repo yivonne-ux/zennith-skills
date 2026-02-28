@@ -125,6 +125,6 @@ Every scrape produces learnings:
 These learnings flow into the organism:
 - Artemis stores competitive intel in RAG memory
 - Iris stores engagement patterns
-- Calliope uses insights for next campaign brief
-- Daedalus adapts visual style based on trend data
+- Dreami uses insights for next campaign brief
+- Iris adapts visual style based on trend data
 - The whole team gets smarter about what works

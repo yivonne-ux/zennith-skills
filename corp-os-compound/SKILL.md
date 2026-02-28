@@ -283,7 +283,7 @@ Every night (cron at 2am), read rooms/feedback.jsonl and:
 
 3. **Update Agent SOUL.md**
    - Add learned behaviors to relevant agent's SOUL.md
-   - Example: If Apollo learns a winning hook format, add to his SOUL.md
+   - Example: If Dreami learns a winning hook format, add to her SOUL.md
 
 4. **Update MEMORY.md**
    - Add cross-agent insights to MEMORY.md

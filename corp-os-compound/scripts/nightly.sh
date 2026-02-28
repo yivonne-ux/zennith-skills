@@ -47,45 +47,81 @@ else:
     fi
 fi
 
-# ── 2. SCAN ROOMS (fast: last 200 lines per room, python does timestamp filter) ──
-log "Scanning rooms (last 24h)..."
+# ── 2. SCAN ROOMS + DAILY LOG (last 24h activity) ──
+log "Scanning rooms + daily log (last 24h)..."
 CUTOFF=$(( $(date +%s) - 86400 ))
+DAILY_LOG="${WORKSPACE}/log/${DATE}.jsonl"
 
 ROOM_SUMMARY=$(python3 << PYEOF
 import json, os, glob
 
 rooms_dir = "${ROOMS_DIR}"
+daily_log = "${DAILY_LOG}"
 cutoff = ${CUTOFF}
-complete = failed = signals = 0
+complete = failed = signals = dispatches = 0
 
+# Scan rooms for ACTUAL event types that exist in the system
 for f in glob.glob(f"{rooms_dir}/*.jsonl"):
     try:
-        # Read last 500 lines only for speed
         with open(f) as fh:
             lines = fh.readlines()[-500:]
         for line in lines:
             try:
                 d = json.loads(line.strip())
-                ts = int(d.get('ts', 0) / 1000)
+                # Handle both epoch-ms timestamps and ISO strings
+                ts_raw = d.get('ts', 0)
+                if isinstance(ts_raw, str):
+                    continue  # ISO timestamps in daily log handled below
+                ts = int(ts_raw / 1000) if ts_raw > 1000000000000 else int(ts_raw)
                 if ts < cutoff:
                     continue
                 t = d.get('type', '')
-                if t == 'task_complete': complete += 1
-                elif t in ('task_failed', 'failure'): failed += 1
-                elif t in ('signal', 'intel'): signals += 1
+                # Completion signals
+                if t in ('task-complete', 'taoz-result', 'dispatch-response',
+                         'regression-result', 'creative-pipeline'):
+                    complete += 1
+                # Failure signals
+                elif t in ('task-failed', 'failure', 'incident', 'error',
+                           'silent_completion'):
+                    failed += 1
+                # Intelligence signals
+                elif t in ('signal', 'intel', 'scout-report', 'cross-pollinate',
+                           'learning', 'crystallize-report', 'routing-audit',
+                           'nightly-review'):
+                    signals += 1
+                # Dispatch activity (counts volume)
+                elif t in ('dispatch', 'taoz-ack'):
+                    dispatches += 1
             except:
                 pass
     except:
         pass
 
-print(f"{complete}|{failed}|{signals}")
+# Also scan daily log (task-complete.sh writes here)
+if os.path.exists(daily_log):
+    try:
+        with open(daily_log) as fh:
+            for line in fh:
+                try:
+                    d = json.loads(line.strip())
+                    t = d.get('type', '')
+                    if t == 'task-complete': complete += 1
+                    elif t in ('error', 'task-failed'): failed += 1
+                    elif t in ('learning', 'win'): signals += 1
+                except:
+                    pass
+    except:
+        pass
+
+print(f"{complete}|{failed}|{signals}|{dispatches}")
 PYEOF
 )
 
 TASKS_COMPLETE=$(echo "${ROOM_SUMMARY}" | cut -d'|' -f1)
 TASKS_FAILED=$(echo "${ROOM_SUMMARY}" | cut -d'|' -f2)
 SIGNALS=$(echo "${ROOM_SUMMARY}" | cut -d'|' -f3)
-log "24h: ${TASKS_COMPLETE} complete, ${TASKS_FAILED} failed, ${SIGNALS} signals"
+DISPATCHES=$(echo "${ROOM_SUMMARY}" | cut -d'|' -f4)
+log "24h: ${TASKS_COMPLETE} complete, ${TASKS_FAILED} failed, ${SIGNALS} signals, ${DISPATCHES} dispatches"
 
 # ── 3. CHECK FEEDBACK ROOM ──
 UNRESOLVED=0
@@ -118,6 +154,7 @@ $([ -n "${SESSION_ALERTS}" ] && echo "${SESSION_ALERTS}" || echo "✅ All sessio
 - Tasks completed: ${TASKS_COMPLETE}
 - Tasks failed: ${TASKS_FAILED}
 - Signals captured: ${SIGNALS}
+- Dispatches: ${DISPATCHES}
 - Unresolved feedback: ${UNRESOLVED}
 
 ## Status
@@ -139,6 +176,7 @@ echo "24H ACTIVITY"
 echo "  ✅ Completed: ${TASKS_COMPLETE} tasks"
 [ "${TASKS_FAILED:-0}" -gt 0 ] && echo "  ⚠️  Failed: ${TASKS_FAILED} tasks" || echo "  ✅ Failed: 0"
 echo "  📡 Signals: ${SIGNALS}"
+echo "  📬 Dispatches: ${DISPATCHES}"
 echo "  📋 Unresolved: ${UNRESOLVED}"
 echo ""
 echo "Log saved: ${LEARNING_FILE}"

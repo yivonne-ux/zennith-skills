@@ -7,7 +7,7 @@ metadata:
     scope: knowledge-base
     guardrails:
       - Reference skill — provides frameworks, not execution
-      - All output must pass brand guidelines (art-director) before publishing
+      - All output must pass brand guidelines (brand-voice-check) before publishing
       - Performance data feeds back via content-tuner
 ---
 

@@ -56,7 +56,7 @@ Everything built for GAIA Eats is **replicable across all future brands:**
 1. **E-commerce playbooks** — Shopee/Lazada/TikTok listing optimization, pricing strategy, promotion calendars
 2. **Performance marketing loops** — Meta ads → landing page → conversion → retarget → LTV
 3. **AI agent workflows** — the Pantheon runs any brand, not just food
-4. **Content creation pipeline** — Apollo's brand voice system works for any vertical
+4. **Content creation pipeline** — Dreami's brand voice system works for any vertical
 5. **Analytics framework** — Athena's dashboards template to any product category
 6. **Customer engagement** — Iris's community management scales across brands
 
@@ -68,7 +68,7 @@ Each Pantheon agent is designed to eventually have social media presence:
 - **Personas already defined** with distinct voice, personality, visual identity
 - **Cross-promotion** — agents promote each other's brands, creating a network effect
 - **Platform targets:** Instagram, TikTok, Xiaohongshu
-- **When ready:** Iris manages profiles, Apollo creates content, Artemis researches optimal posting
+- **When ready:** Iris manages profiles, Dreami creates content, Artemis researches optimal posting
 
 ## Decision Framework
 

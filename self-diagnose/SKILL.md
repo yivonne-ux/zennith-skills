@@ -94,7 +94,7 @@ agent-health.sh (per-agent deep check)
 ## Diagnosis Log Format (JSONL)
 
 ```json
-{"ts":1707900000000,"type":"diagnosis","cmd":"diagnose","issues_found":3,"issues_fixed":2,"issues_escalated":1,"details":"session_bloat:apollo(fixed),gateway_timeout(fixed),cron_missing:improve(escalated)","duration_s":12}
+{"ts":1707900000000,"type":"diagnosis","cmd":"diagnose","issues_found":3,"issues_fixed":2,"issues_escalated":1,"details":"session_bloat:dreami(fixed),gateway_timeout(fixed),cron_missing:improve(escalated)","duration_s":12}
 ```
 
 ## Relationship to Other Skills

@@ -312,7 +312,7 @@ kling_text2video() {
     exit 1
   fi
 
-  local model="${OPT_MODEL:-kling-video-o1}"
+  local model="${OPT_MODEL:-kling-v1-6}"
   local duration="$OPT_DURATION"
   local ratio="$OPT_ASPECT_RATIO"
   local mode="$OPT_MODE"
@@ -447,18 +447,31 @@ kling_image2video() {
     exit 1
   fi
 
-  local model="${OPT_MODEL:-kling-video-o1}"
+  local model="${OPT_MODEL:-kling-v1-6}"
   local duration="$OPT_DURATION"
   local mode="$OPT_MODE"
   local output="$OPT_OUTPUT"
   local brand="$OPT_BRAND"
   local image_url="$OPT_IMAGE"
 
+  # Kling API ONLY accepts public URLs — NOT base64 data URIs (confirmed 2026-02-28)
+  # For local files: auto-fallback to Sora (which accepts local files via multipart)
+  local image_file_ref="/tmp/kling-image-ref-$$.txt"
+  if [ -f "$image_url" ]; then
+    echo "WARNING: Kling API requires a public image URL, not local files."
+    echo "Auto-falling back to Sora image2video..."
+    log "kling image2video: local file detected, auto-fallback to sora"
+    # Pass through to Sora with same params
+    sora_generate --image "$image_url" --prompt "${OPT_PROMPT:-}" --duration "$OPT_DURATION" --brand "$OPT_BRAND"
+    return $?
+  fi
+  echo -n "$image_url" > "$image_file_ref"
+
   local prompt
   prompt=$(enhance_prompt "${OPT_PROMPT:-}" "$brand")
 
   echo "=== Kling Image-to-Video ==="
-  echo "Image:    $image_url"
+  echo "Image:    ${OPT_IMAGE}"
   echo "Prompt:   ${prompt:-<none>}"
   echo "Duration: ${duration}s"
   echo "Est cost: ~\$0.30"
@@ -479,22 +492,31 @@ kling_image2video() {
   local token
   token=$(kling_auth)
 
-  local response
-  response=$(curl -s -X POST "${KLING_BASE_URL}/v1/videos/image2video" \
-    -H "Authorization: Bearer ${token}" \
-    -H "Content-Type: application/json" \
-    -d "$(python3 -c "
+  # Build payload via temp file (handles large base64 images without shell arg limit)
+  local tmp_payload="/tmp/kling-i2v-payload-$$.json"
+  python3 -c "
 import json, sys
+with open(sys.argv[4]) as f:
+    image_val = f.read()
 d = {
     'model_name': sys.argv[1],
     'duration': int(sys.argv[2]),
     'mode': sys.argv[3],
-    'image': sys.argv[4]
+    'image': image_val
 }
 if sys.argv[5]:
     d['prompt'] = sys.argv[5]
-print(json.dumps(d))
-" "$model" "$duration" "$mode" "$image_url" "$prompt")")
+with open(sys.argv[6], 'w') as f:
+    json.dump(d, f)
+" "$model" "$duration" "$mode" "$image_file_ref" "$prompt" "$tmp_payload"
+  rm -f "$image_file_ref"
+
+  local response
+  response=$(curl -s -X POST "${KLING_BASE_URL}/v1/videos/image2video" \
+    -H "Authorization: Bearer ${token}" \
+    -H "Content-Type: application/json" \
+    -d "@${tmp_payload}")
+  rm -f "$tmp_payload"
 
   local task_id
   task_id=$(echo "$response" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('data',{}).get('task_id',''))" 2>/dev/null)
@@ -1148,7 +1170,16 @@ sora_generate() {
   fi
 
   local model="${OPT_MODEL:-sora-2}"
+  # Sora only accepts 4, 8, or 12 seconds — snap to nearest valid value
   local seconds="$OPT_DURATION"
+  case "$seconds" in
+    1|2|3|4) seconds=4 ;;
+    5|6)     seconds=4 ;;
+    7|8)     seconds=8 ;;
+    9|10)    seconds=8 ;;
+    11|12)   seconds=12 ;;
+    *)       seconds=4 ;;
+  esac
   local output="$OPT_OUTPUT"
   local brand="$OPT_BRAND"
   local image_path="$OPT_IMAGE"
@@ -1156,7 +1187,28 @@ sora_generate() {
   # Map aspect ratio to size for Sora
   local size="$OPT_RESOLUTION"
   if [ "$size" = "720p" ] || [ -z "$size" ]; then
-    case "$OPT_ASPECT_RATIO" in
+    local auto_ratio="${OPT_ASPECT_RATIO:-}"
+    # Auto-detect from source image if no aspect ratio specified
+    if [ -z "$auto_ratio" ] && [ -n "$image_path" ] && [ -f "$image_path" ]; then
+      local img_dims
+      img_dims=$(python3 -c "from PIL import Image; i=Image.open('$image_path'); print(f'{i.width} {i.height}')" 2>/dev/null || echo "")
+      if [ -n "$img_dims" ]; then
+        local img_w img_h
+        img_w=$(echo "$img_dims" | cut -d' ' -f1)
+        img_h=$(echo "$img_dims" | cut -d' ' -f2)
+        if [ "$img_h" -gt "$img_w" ]; then
+          auto_ratio="9:16"
+          log "Auto-detected portrait source image (${img_w}x${img_h}) -> 9:16"
+        elif [ "$img_w" -gt "$img_h" ]; then
+          auto_ratio="16:9"
+          log "Auto-detected landscape source image (${img_w}x${img_h}) -> 16:9"
+        else
+          auto_ratio="1:1"
+          log "Auto-detected square source image (${img_w}x${img_h}) -> 1:1"
+        fi
+      fi
+    fi
+    case "$auto_ratio" in
       16:9)  size="1280x720" ;;
       9:16)  size="720x1280" ;;
       1:1)   size="720x720" ;;
@@ -1187,7 +1239,37 @@ sora_generate() {
 
   local response
   if [ -n "$image_path" ] && [ -f "$image_path" ]; then
-    # Image-to-video mode
+    # Image-to-video: Sora requires input image to match output dimensions exactly
+    local target_w target_h
+    target_w=$(echo "$size" | cut -d'x' -f1)
+    target_h=$(echo "$size" | cut -d'x' -f2)
+    local actual_dims
+    actual_dims=$(python3 -c "from PIL import Image; i=Image.open('$image_path'); print(f'{i.width}x{i.height}')" 2>/dev/null || echo "unknown")
+    if [ "$actual_dims" != "${target_w}x${target_h}" ] && [ "$actual_dims" != "unknown" ]; then
+      echo "Auto-resizing image from $actual_dims to ${target_w}x${target_h} (Sora requires exact match)..."
+      local resized="/tmp/sora-resized-$$.png"
+      python3 -c "
+from PIL import Image
+img = Image.open('$image_path')
+tw, th = $target_w, $target_h
+# Center crop to target aspect ratio, then resize
+ratio = tw / th
+cur_ratio = img.width / img.height
+if cur_ratio > ratio:
+    new_w = int(img.height * ratio)
+    left = (img.width - new_w) // 2
+    img = img.crop((left, 0, left + new_w, img.height))
+else:
+    new_h = int(img.width / ratio)
+    top = (img.height - new_h) // 2
+    img = img.crop((0, top, img.width, top + new_h))
+img = img.resize((tw, th), Image.LANCZOS)
+img.save('$resized')
+"
+      image_path="$resized"
+      log "Auto-resized image to ${target_w}x${target_h}"
+    fi
+
     echo "Submitting with input reference image..."
     response=$(curl -s -X POST "${SORA_BASE_URL}/v1/videos" \
       -H "Authorization: Bearer ${OPENAI_API_KEY}" \

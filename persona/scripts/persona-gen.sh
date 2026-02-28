@@ -41,7 +41,7 @@ ROOMS_DIR="$HOME/.openclaw/workspace/rooms"
 LOG_FILE="$HOME/.openclaw/logs/persona.log"
 
 NANOBANANA="$HOME/.openclaw/skills/nanobanana/scripts/nanobanana-gen.sh"
-KLING_VIDEO="$HOME/.openclaw/skills/art-director/scripts/kling-video.sh"
+KLING_VIDEO="$HOME/.openclaw/skills/video-gen/scripts/video-gen.sh"
 KLING_ENV="$HOME/.openclaw/workspace/ops/.kling-env"
 
 ELEVENLABS_BASE="https://api.elevenlabs.io/v1"

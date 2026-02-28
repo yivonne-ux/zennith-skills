@@ -111,7 +111,7 @@ python3 meta_ads_api.py --fatigue-check --days 14
 - **meta_capi_sender.py** — sends purchase events (already working)
 - **meta-ads-library** — scrapes competitor ads for creative inspiration
 - **content-intel** — provides ad creative templates and specs
-- **art-director** — validates creative against brand guidelines
+- **brand-voice-check** — validates creative against brand guidelines
 
 ## CHANGELOG
 

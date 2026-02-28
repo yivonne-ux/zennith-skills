@@ -98,7 +98,7 @@ ADD OPTIONS:
   --type <type>           hook|copy|image|video|ad|storyboard|template|headline|cta (required)
   --text <text>           Content text or file path (required)
   --tags <t1,t2,...>      Comma-separated tags
-  --source <agent>        Source agent name (e.g., artemis, apollo, iris)
+  --source <agent>        Source agent name (e.g., artemis, dreami, iris)
   --source-type <stype>   trend-scout|cso-pipeline|manual|winning-ad
   --campaign <id>         Campaign ID (e.g., cso-42)
   --channel <ch>          ig|tiktok|shopee|edm|facebook

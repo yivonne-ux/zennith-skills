@@ -18,7 +18,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LOG_FILE="$HOME/.openclaw/logs/video-forge.log"
 BRANDS_DIR="$HOME/.openclaw/brands"
 OUTPUT_TYPES_FILE="$HOME/.openclaw/workspace/data/output-types.json"
-AUDIT_SCRIPT="$HOME/.openclaw/skills/art-director/scripts/audit-visual.sh"
+AUDIT_SCRIPT="$HOME/.openclaw/skills/video-gen/scripts/video-gen.sh"
 
 mkdir -p "$(dirname "$LOG_FILE")"
 

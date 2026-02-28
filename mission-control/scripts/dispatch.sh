@@ -32,7 +32,7 @@ mkdir -p "$ROOMS_DIR" "$(dirname "$LOG_FILE")"
 
 # Validate action
 case "$ACTION" in
-  request|report|escalate|handoff|ping) ;;
+  request|report|escalate|handoff|ping|orchestrate) ;;
   *) echo "ERROR: Invalid action '$ACTION'. Use: request|report|escalate|handoff|ping"; exit 1 ;;
 esac
 
@@ -43,20 +43,38 @@ SAFE_MSG=$(echo "$MESSAGE" | tr '\n' ' ' | sed 's/"/\\"/g' | head -c 2000)
 ENTRY="{\"ts\":${TS_EPOCH}000,\"agent\":\"$FROM\",\"to\":\"$TO\",\"room\":\"$ROOM\",\"type\":\"dispatch\",\"action\":\"$ACTION\",\"msg\":\"$SAFE_MSG\"}"
 echo "$ENTRY" >> "$ROOMS_DIR/${ROOM}.jsonl"
 
+# Trace event (fire-and-forget, backward-compatible)
+TRACE_SH="$OPENCLAW_DIR/workspace/scripts/trace.sh"
+if [ -f "$TRACE_SH" ]; then
+  TRACE_TYPE="dispatch"
+  case "$ACTION" in
+    escalate) TRACE_TYPE="escalate" ;;
+    handoff)  TRACE_TYPE="handoff" ;;
+  esac
+  TRACE_DETAIL=$(echo "$MESSAGE" | tr '\n' ' ' | head -c 200)
+  bash "$TRACE_SH" log "$FROM" "$TRACE_TYPE" auto "$TRACE_DETAIL" \
+    --from "$FROM" --to "$TO" --tags "$ACTION,$ROOM" > /dev/null 2>&1 || true
+fi
+
 # Log
 echo "[$TS_ISO] $FROM -> $TO ($ACTION) [$ROOM] $MESSAGE" >> "$LOG_FILE"
 
 # If action is request or handoff, also invoke the target agent (if it's a real OpenClaw agent)
 INVOKE_RESULT=""
-if [ "$ACTION" = "request" ] || [ "$ACTION" = "handoff" ]; then
+if [ "$ACTION" = "request" ] || [ "$ACTION" = "handoff" ] || [ "$ACTION" = "orchestrate" ]; then
   # Alias mapping (rollback-safe: old names resolve to new)
   case "$TO" in
+    apollo) TO="dreami" ;;
+    artee) TO="iris" ;;
+    daedalus) TO="iris" ;;
     calliope) TO="dreami" ;;
+    foreman) TO="zennith" ;;
+    manager) TO="zennith" ;;
   esac
 
   # Check if target is a real agent (not taoz which uses claude-code-runner)
   case "$TO" in
-    artemis|hermes|athena|iris|dreami)
+    artemis|hermes|athena|iris|dreami|myrmidons|bee001|argus|zennith)
       PROMPT="[DISPATCH from $FROM — action: $ACTION]
 
 $MESSAGE
@@ -114,6 +132,15 @@ except:
 
         echo "[$TS_ISO] $TO replied to $FROM" >> "$LOG_FILE"
 
+        # Feed compound learning loop
+        TC_SH="$OPENCLAW_DIR/workspace/scripts/learning/task-complete.sh"
+        if [ -f "$TC_SH" ]; then
+          TC_OUTCOME="success"
+          echo "$RESPONSE" | grep -qiE '(error|fail|unable|cannot|timeout)' && TC_OUTCOME="fail"
+          TC_DESC=$(echo "$MESSAGE" | tr '\n' ' ' | head -c 200)
+          bash "$TC_SH" "$TO" "task-complete" "$TC_DESC" "$TC_OUTCOME" > /dev/null 2>&1 || true
+        fi
+
         # Bug 3 fix: Verify room was actually written to after dispatch
         ROOM_FILE="$ROOMS_DIR/${ROOM}.jsonl"
         if [ -f "$ROOM_FILE" ]; then
@@ -151,6 +178,16 @@ fi
 if [ "$ACTION" = "escalate" ] && [ "$ROOM" != "feedback" ]; then
   ESC_ENTRY="{\"ts\":${TS_EPOCH}000,\"agent\":\"$FROM\",\"to\":\"$TO\",\"room\":\"feedback\",\"type\":\"escalation\",\"action\":\"escalate\",\"msg\":\"ESCALATION from $FROM to $TO: $SAFE_MSG\"}"
   echo "$ESC_ENTRY" >> "$ROOMS_DIR/feedback.jsonl"
+fi
+
+# Mark agent busy in agent-status tracker (zero-LLM-cost, fire-and-forget)
+AGENT_STATUS_SH="$HOME/.openclaw/workspace/scripts/agent-status.sh"
+if [ -f "$AGENT_STATUS_SH" ]; then
+  case "$ACTION" in
+    request|handoff|orchestrate)
+      bash "$AGENT_STATUS_SH" busy "$TO" "$MESSAGE" > /dev/null 2>&1 || true
+      ;;
+  esac
 fi
 
 # Output result
