@@ -172,7 +172,7 @@ OPT_PROMPT=""
 OPT_IMAGE=""
 OPT_BRAND=""
 OPT_DURATION="5"
-OPT_ASPECT_RATIO="16:9"
+OPT_ASPECT_RATIO="9:16"
 OPT_OUTPUT_TYPE=""
 OPT_OUTPUT=""
 OPT_DRY_RUN=0
@@ -182,6 +182,8 @@ OPT_MODE="std"
 OPT_PRO=0
 OPT_PROVIDER="wan"
 OPT_SCENES=3
+OPT_AUTO_REF=0
+OPT_NO_FORGE=0
 
 parse_opts() {
   while [ $# -gt 0 ]; do
@@ -204,6 +206,8 @@ parse_opts() {
       --seconds)       OPT_DURATION="$2"; shift 2 ;;
       --size)          # Convert WxH to aspect ratio for Sora
                        OPT_RESOLUTION="$2"; shift 2 ;;
+      --auto-ref)      OPT_AUTO_REF=1; shift ;;
+      --no-forge)      OPT_NO_FORGE=1; shift ;;
       -*)              echo "Unknown option: $1"; exit 1 ;;
       *)               # Positional = prompt
                        if [ -z "$OPT_PROMPT" ]; then
@@ -221,6 +225,26 @@ duration_to_frames() {
 }
 
 # Encode local file as data URI for fal.ai
+# Upload local file to fal.ai CDN, returns public URL
+# Uses fal_client.upload_file() — official fal.ai solution
+upload_to_fal_cdn() {
+  local file="$1"
+  if [ ! -f "$file" ]; then
+    echo "" ; return 1
+  fi
+  python3 -c "
+import os, sys
+os.environ.setdefault('FAL_KEY', os.environ.get('FAL_API_KEY', ''))
+try:
+    import fal_client
+    url = fal_client.upload_file('$file')
+    print(url)
+except Exception as e:
+    print('', file=sys.stderr)
+    sys.exit(1)
+" 2>/dev/null
+}
+
 encode_image_for_fal() {
   local image_path="$1"
   local ext
@@ -235,6 +259,59 @@ encode_image_for_fal() {
   local b64
   b64=$(base64 < "$image_path" | tr -d '\n')
   echo "data:${mime};base64,${b64}"
+}
+
+# ============================================================
+# AUTO-REFERENCE IMAGE SELECTION
+# ============================================================
+# When --brand is specified, auto-find the best product photo to use as
+# reference image for image2video (instead of text-only generation).
+# Searches: brands/{brand}/references/products-flat/ (top-view bento photos)
+#           brands/{brand}/references/products/ (nested refs)
+
+auto_select_reference() {
+  local brand="$1"
+  local prompt_lower="$2"
+  local refs_dir="$BRANDS_DIR/$brand/references/products-flat"
+  local refs_nested="$BRANDS_DIR/$brand/references/products"
+
+  # Try to match product name from prompt to a specific photo
+  local match=""
+  if [ -d "$refs_dir" ]; then
+    # Keyword → filename mapping (Mirra bentos)
+    if echo "$prompt_lower" | grep -qiE 'fusilli|bolognese|pasta'; then
+      match=$(find "$refs_dir" -iname "*fusilli*" -o -iname "*bolognese*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'pad thai|padthai|konjac.*pad'; then
+      match=$(find "$refs_dir" -iname "*pad*thai*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'curry.*katsu|katsu'; then
+      match=$(find "$refs_dir" -iname "*katsu*" -o -iname "*curry*katsu*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'burrito|buritto'; then
+      match=$(find "$refs_dir" -iname "*burri*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'bbq|pita|mushroom.*wrap'; then
+      match=$(find "$refs_dir" -iname "*bbq*" -o -iname "*pita*" -o -iname "*mushroom*wrap*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'eryngii|golden.*rice|fragrant'; then
+      match=$(find "$refs_dir" -iname "*eryngii*" -o -iname "*golden*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'curry.*noodle|konjac.*noodle'; then
+      match=$(find "$refs_dir" -iname "*curry*noodle*" -o -iname "*konjac*noodle*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'nasi.*lemak'; then
+      # No specific nasi lemak photo yet — use group image
+      match=$(find "$refs_dir" -iname "group*" 2>/dev/null | head -1)
+    elif echo "$prompt_lower" | grep -qiE 'group|multiple|weekly|menu|collection|lineup|5.*bento|bento.*line'; then
+      match=$(find "$refs_dir" -iname "group*" 2>/dev/null | head -1)
+    fi
+
+    # Fallback: random top-view photo from refs dir
+    if [ -z "$match" ]; then
+      match=$(find "$refs_dir" -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" 2>/dev/null | head -1)
+    fi
+  fi
+
+  # Try nested refs if flat dir didn't match
+  if [ -z "$match" ] && [ -d "$refs_nested" ]; then
+    match=$(find "$refs_nested" -name "ref-*.png" -o -name "ref-*.jpg" 2>/dev/null | head -1)
+  fi
+
+  echo "$match"
 }
 
 # ============================================================
@@ -258,10 +335,36 @@ post_generate() {
 
   # Post to creative room
   if [ -x "$ROOM_WRITE" ]; then
-    bash "$ROOM_WRITE" creative "video-gen" "Video generated via $provider: $video_path" 2>/dev/null || true
+    bash "$ROOM_WRITE" creative "video-gen" "video-generated" "Video generated via $provider: $video_path" 2>/dev/null || true
+  fi
+
+  # AUTO-FORGE: Run video-forge produce if brand is specified
+  # Applies: captions, branding (logo/watermark), music, platform export
+  if [ -n "$brand" ] && [ -x "$VIDEO_FORGE" ] && [ "$OPT_NO_FORGE" != "1" ]; then
+    local forge_output="${video_path%.mp4}-produced.mp4"
+    log "Auto-forge: brand=$brand input=$video_path"
+    echo ""
+    echo "--- Auto Post-Production (video-forge) ---"
+    bash "$VIDEO_FORGE" brand --input "$video_path" --brand "$brand" --output "$forge_output" 2>&1 | tail -5 || {
+      log "WARNING: Auto-forge brand failed for $video_path"
+      echo "  WARNING: Auto-forge failed, raw video still saved"
+    }
+    if [ -f "$forge_output" ]; then
+      echo "  Produced: $forge_output"
+      log "Auto-forge complete: $forge_output"
+    fi
+  fi
+
+  # POST to Iris QA room for visual review
+  if [ -x "$ROOM_WRITE" ]; then
+    bash "$ROOM_WRITE" iris-qa "video-gen" "video-qa-request" \
+      "Please review video quality: $video_path (brand: ${brand:-none}, provider: $provider)" 2>/dev/null || true
   fi
 
   log "Generated: provider=$provider task=$task_id output=$video_path brand=$brand"
+  echo ""
+  echo "✅ Written to creative (JSONL + Supabase)"
+  echo "$video_path"
 }
 
 # ============================================================
@@ -308,11 +411,11 @@ kling_text2video() {
 
   if [ -z "$OPT_PROMPT" ]; then
     echo "ERROR: prompt is required"
-    echo "Usage: video-gen.sh kling text2video \"prompt\" [--duration 5] [--aspect-ratio 16:9] [--brand pinxin-vegan]"
+    echo "Usage: video-gen.sh kling text2video \"prompt\" [--duration 5] [--aspect-ratio 9:16] [--brand pinxin-vegan]"
     exit 1
   fi
 
-  local model="${OPT_MODEL:-kling-v1-6}"
+  local model="${OPT_MODEL:-kling-v3}"
   local duration="$OPT_DURATION"
   local ratio="$OPT_ASPECT_RATIO"
   local mode="$OPT_MODE"
@@ -355,13 +458,17 @@ kling_text2video() {
     -H "Content-Type: application/json" \
     -d "$(python3 -c "
 import json, sys
-print(json.dumps({
+d = {
     'model_name': sys.argv[1],
     'prompt': sys.argv[2],
     'duration': int(sys.argv[3]),
     'aspect_ratio': sys.argv[4],
     'mode': sys.argv[5]
-}))
+}
+# Kling v3.0+ supports native audio generation
+if 'v3' in sys.argv[1] or 'v2-6' in sys.argv[1] or 'v2-5' in sys.argv[1]:
+    d['enable_audio'] = True
+print(json.dumps(d))
 " "$model" "$prompt" "$duration" "$ratio" "$mode")")
 
   local task_id
@@ -447,23 +554,29 @@ kling_image2video() {
     exit 1
   fi
 
-  local model="${OPT_MODEL:-kling-v1-6}"
+  local model="${OPT_MODEL:-kling-v3}"
   local duration="$OPT_DURATION"
   local mode="$OPT_MODE"
   local output="$OPT_OUTPUT"
   local brand="$OPT_BRAND"
   local image_url="$OPT_IMAGE"
 
-  # Kling API ONLY accepts public URLs — NOT base64 data URIs (confirmed 2026-02-28)
-  # For local files: auto-fallback to Sora (which accepts local files via multipart)
+  # Kling direct API accepts both public URLs and base64 data URIs.
+  # For local files: upload to fal.ai CDN (preferred) or encode as base64 (fallback).
   local image_file_ref="/tmp/kling-image-ref-$$.txt"
   if [ -f "$image_url" ]; then
-    echo "WARNING: Kling API requires a public image URL, not local files."
-    echo "Auto-falling back to Sora image2video..."
-    log "kling image2video: local file detected, auto-fallback to sora"
-    # Pass through to Sora with same params
-    sora_generate --image "$image_url" --prompt "${OPT_PROMPT:-}" --duration "$OPT_DURATION" --brand "$OPT_BRAND"
-    return $?
+    echo "Local file detected — uploading to fal.ai CDN for Kling..."
+    log "kling image2video: local file, uploading to fal CDN"
+    local cdn_url
+    cdn_url=$(upload_to_fal_cdn "$image_url" 2>/dev/null)
+    if [ -n "$cdn_url" ] && [[ "$cdn_url" == http* ]]; then
+      echo "Uploaded: $cdn_url"
+      image_url="$cdn_url"
+    else
+      echo "fal CDN upload failed, falling back to base64 encoding..."
+      log "kling image2video: fal CDN failed, using base64"
+      image_url=$(encode_image_for_fal "$image_url")
+    fi
   fi
   echo -n "$image_url" > "$image_file_ref"
 
@@ -506,6 +619,9 @@ d = {
 }
 if sys.argv[5]:
     d['prompt'] = sys.argv[5]
+# Kling v3.0+ supports native audio
+if 'v3' in sys.argv[1] or 'v2-6' in sys.argv[1] or 'v2-5' in sys.argv[1]:
+    d['enable_audio'] = True
 with open(sys.argv[6], 'w') as f:
     json.dump(d, f)
 " "$model" "$duration" "$mode" "$image_file_ref" "$prompt" "$tmp_payload"
@@ -522,6 +638,54 @@ with open(sys.argv[6], 'w') as f:
   task_id=$(echo "$response" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('data',{}).get('task_id',''))" 2>/dev/null)
 
   if [ -z "$task_id" ]; then
+    # Check if balance error — auto-fallback to fal.ai Kling
+    local err_code
+    err_code=$(echo "$response" | python3 -c "import sys,json; print(json.load(sys.stdin).get('code',''))" 2>/dev/null)
+    if [ "$err_code" = "1102" ] && [ -n "${FAL_API_KEY:-}" ]; then
+      echo "Kling direct API has no balance — switching to fal.ai Kling..."
+      log "kling image2video: balance empty, fallback to fal.ai"
+      # Read image from ref file (URL or base64)
+      local fal_image
+      fal_image=$(cat "$image_file_ref" 2>/dev/null || echo "$image_url")
+      rm -f "$image_file_ref" "$tmp_payload"
+      local fal_result
+      fal_result=$(FAL_KEY="$FAL_API_KEY" python3 -c "
+import os, fal_client, json, sys
+result = fal_client.run(
+    'fal-ai/kling-video/v3/standard/image-to-video',
+    arguments={
+        'image_url': sys.argv[1],
+        'prompt': sys.argv[2],
+        'duration': sys.argv[3],
+        'aspect_ratio': sys.argv[4]
+    }
+)
+print(json.dumps(result, default=str))
+" "$fal_image" "$prompt" "$duration" "$OPT_ASPECT_RATIO" 2>&1)
+
+      local fal_video_url
+      fal_video_url=$(echo "$fal_result" | python3 -c "import sys,json; print(json.load(sys.stdin).get('video',{}).get('url',''))" 2>/dev/null)
+      if [ -n "$fal_video_url" ]; then
+        if [ -z "$output" ]; then
+          output="${OUTPUT_DIR}/kling-fal-$(date +%s).mp4"
+        fi
+        curl -s -o "$output" "$fal_video_url"
+        local file_size
+        file_size=$(wc -c < "$output" | tr -d ' ')
+        echo ""
+        echo "=== Complete (via fal.ai) ==="
+        echo "Video saved: $output"
+        echo "File size:   $file_size bytes"
+        echo "Cost:        ~\$0.28 (fal.ai standard)"
+        echo "$output"
+        return 0
+      else
+        echo "ERROR: fal.ai Kling also failed"
+        echo "$fal_result"
+        log "ERROR: fal.ai kling also failed — $fal_result"
+        exit 1
+      fi
+    fi
     echo "ERROR: Failed to create task"
     echo "$response"
     log "ERROR: kling image2video create failed — $response"
@@ -1165,8 +1329,25 @@ sora_generate() {
 
   if [ -z "$OPT_PROMPT" ]; then
     echo "ERROR: prompt is required"
-    echo "Usage: video-gen.sh sora generate \"prompt\" [--duration 5] [--aspect-ratio 16:9] [--brand pinxin-vegan]"
+    echo "Usage: video-gen.sh sora generate \"prompt\" [--duration 5] [--aspect-ratio 9:16] [--brand pinxin-vegan] [--auto-ref]"
     exit 1
+  fi
+
+  # AUTO-REF: If brand is specified but no image, auto-select a reference product photo
+  # This switches from text-to-video (generic AI hallucination) to image-to-video (brand-consistent)
+  if [ -n "$OPT_BRAND" ] && [ -z "$OPT_IMAGE" ]; then
+    local prompt_lower
+    prompt_lower=$(echo "$OPT_PROMPT" | tr '[:upper:]' '[:lower:]')
+    local auto_ref
+    auto_ref=$(auto_select_reference "$OPT_BRAND" "$prompt_lower")
+    if [ -n "$auto_ref" ] && [ -f "$auto_ref" ]; then
+      OPT_IMAGE="$auto_ref"
+      echo "📸 Auto-ref: Using product photo as reference image"
+      echo "   $auto_ref"
+      log "Auto-ref selected: $auto_ref (brand=$OPT_BRAND)"
+    else
+      log "Auto-ref: No matching product photo found for brand=$OPT_BRAND — falling back to text-only"
+    fi
   fi
 
   local model="${OPT_MODEL:-sora-2}"
@@ -1212,12 +1393,42 @@ sora_generate() {
       16:9)  size="1280x720" ;;
       9:16)  size="720x1280" ;;
       1:1)   size="720x720" ;;
-      *)     size="1280x720" ;;
+      *)     size="720x1280" ;;
     esac
+  fi
+
+  # ============================================================
+  # SKU REFERENCE VALIDATION & ENHANCEMENT
+  # ============================================================
+  # Validate SKU image exists
+  if [ -n "$image_path" ] && [ ! -f "$image_path" ]; then
+    echo "ERROR: SKU reference image not found: $image_path"
+    echo "Please provide a valid image path."
+    exit 1
   fi
 
   local prompt
   prompt=$(enhance_prompt "$OPT_PROMPT" "$brand")
+
+  # If SKU reference image is provided, explicitly reference it in the prompt
+  if [ -n "$image_path" ] && [ -f "$image_path" ]; then
+    local img_dims
+    img_dims=$(python3 -c "from PIL import Image; i=Image.open('$image_path'); print(f'{i.width}x{i.height}')" 2>/dev/null || echo "unknown")
+    
+    prompt="[SKU REFERENCE: Product image shown throughout — maintain consistent visual style. Image: $image_path ($img_dims)]. ${prompt}"
+    
+    # For MIRRA brand, add bento-specific visual instructions
+    if [ "$brand" = "mirra" ]; then
+      prompt="${prompt}\n[MIRRA BRAND DNA] Top-down bento box in white container, vibrant fresh ingredients, salmon pink + cream background, calorie badge at corner, MIRRA logo placement."
+      prompt="${prompt}\n[MOTION STYLE] Top-down bento reveal, steam rising from fresh bento, gentle handheld sway, warm natural lighting."
+      prompt="${prompt}\n[CAMERA STYLE] UGC authentic casual, soft natural daylight, slight handheld movement, shallow depth of field for food focus."
+      log "MIRRA bento SKU reference applied: $image_path ($img_dims)"
+    else
+      log "SKU reference applied: $image_path ($img_dims)"
+    fi
+  else
+    log "No SKU reference provided — using prompt-only mode"
+  fi
 
   echo "=== Sora Video Generation ==="
   echo "Prompt:   $prompt"
@@ -1465,9 +1676,23 @@ pipeline() {
     nb_args="$nb_args --output $scene_image"
     nb_args="$nb_args --ratio $ratio"
 
+    # Auto-ref: Find brand product photo to use as NanoBanana reference
+    local scene_ref=""
+    if [ -n "$brand" ]; then
+      local scene_prompt_lower
+      scene_prompt_lower=$(echo "$scene_prompt" | tr '[:upper:]' '[:lower:]')
+      scene_ref=$(auto_select_reference "$brand" "$scene_prompt_lower")
+      if [ -n "$scene_ref" ] && [ -f "$scene_ref" ]; then
+        echo "    📸 Using product ref: $(basename "$scene_ref")"
+      fi
+    fi
+
     # NanoBanana call — capture output for the image path
     local nb_output
-    nb_output=$(bash "$NANOBANANA" --prompt "$scene_prompt" --output "$scene_image" --ratio "$ratio" 2>&1) || true
+    local nb_cmd="bash $NANOBANANA --prompt \"$scene_prompt\" --output $scene_image --ratio $ratio"
+    if [ -n "$brand" ]; then nb_cmd="$nb_cmd --brand $brand"; fi
+    if [ -n "$scene_ref" ] && [ -f "$scene_ref" ]; then nb_cmd="$nb_cmd --ref-image $scene_ref"; fi
+    nb_output=$(eval "$nb_cmd" 2>&1) || true
 
     # Check if image was created
     if [ ! -f "$scene_image" ]; then
@@ -1785,6 +2010,274 @@ auto_status() {
 }
 
 # ============================================================
+# SORA UGC PIPELINE — Full workflow for UGC video creation
+# ============================================================
+
+sora_ugc_pipeline() {
+  parse_opts "$@"
+
+  local brand="$OPT_BRAND"
+  local concept="$OPT_PROMPT"
+  local duration="${OPT_DURATION:-8}"
+  local ratio="${OPT_ASPECT_RATIO:-9:16}"
+  local reference="$OPT_IMAGE"
+  local output="$OPT_OUTPUT"
+
+  if [ -z "$concept" ]; then
+    echo "ERROR: --prompt/concept required"
+    echo "Usage: video-gen.sh sora-ugc --prompt \"concept\" --brand <brand> [--image ref.png] [--duration 8] [--aspect-ratio 9:16]"
+    echo ""
+    echo "Full Sora 2 UGC workflow: reverse-prompt → smart prompt → generate → post-prod → export"
+    echo "See: skills/video-gen/workflows/SORA-UGC-WORKFLOW.md"
+    exit 1
+  fi
+
+  local ugc_dir
+  ugc_dir="${OUTPUT_DIR}/sora-ugc-$(date '+%Y%m%d_%H%M%S')"
+  mkdir -p "$ugc_dir"
+
+  echo "=== Sora UGC Pipeline ==="
+  echo "Concept:   $concept"
+  echo "Brand:     ${brand:-<none>}"
+  echo "Duration:  ${duration}s"
+  echo "Ratio:     $ratio"
+  echo "Reference: ${reference:-<none>}"
+  echo "Output:    $ugc_dir/"
+  echo ""
+
+  log "sora-ugc: brand=$brand concept='$concept' duration=$duration ratio=$ratio"
+
+  # Step 1: Reverse prompt (if reference provided)
+  local visual_dna=""
+  if [ -n "$reference" ] && [ -f "$reference" ]; then
+    echo "--- Step 1: Reverse Prompt (reference analysis) ---"
+    visual_dna=$(reverse_prompt "$reference" 2>/dev/null | tail -1)
+    echo "  Visual DNA extracted: $(echo "$visual_dna" | head -c 200)..."
+    echo "$visual_dna" > "$ugc_dir/visual-dna.txt"
+    echo ""
+  else
+    echo "--- Step 1: Reverse Prompt — skipped (no reference) ---"
+    echo ""
+  fi
+
+  # Step 2: Smart prompt generation (brand-enhanced)
+  echo "--- Step 2: Smart Prompt Generation ---"
+  local smart_prompt
+  if [ -n "$visual_dna" ]; then
+    smart_prompt=$(enhance_prompt "$concept. Match this visual style: $visual_dna" "$brand")
+  else
+    smart_prompt=$(enhance_prompt "$concept. Style: UGC authentic casual, handheld camera, natural lighting" "$brand")
+  fi
+  echo "  Smart prompt: $smart_prompt"
+  echo "$smart_prompt" > "$ugc_dir/smart-prompt.txt"
+  echo ""
+
+  # Step 3: Generate via Sora 2 (Storyboard 6 Approach — 4 Scenes for 8-Second Video)
+  echo "--- Step 3: Sora 2 Generation (Storyboard Approach) ---"
+  
+  # Storyboard 6: Break 8-second video into 4 scenes
+  local scene_duration=2  # 8s total / 4 scenes = 2s each
+  local clip_list=""
+  
+  # For MIRRA bento videos, use scene-specific prompts
+  if [ "$brand" = "mirra" ]; then
+    echo "  Using MIRRA bento storyboard scenes..."
+    
+    # Scene 1: Bento Reveal (0-2s)
+    local scene1_prompt="Scene 1/4: Top-down bento reveal shot in white container on salmon pink background, vibrant fresh ingredients visible, slight steam rising from hot food, UGC authentic casual camera, handheld gentle sway."
+    if [ -n "$reference" ] && [ -f "$reference" ]; then
+      scene1_prompt="[SKU REF: Bento box in frame]. ${scene1_prompt}"
+    fi
+    
+    echo "  [Scene 1/4] Generating bento reveal..."
+    local clip1="${ugc_dir}/clip_1_reveal.mp4"
+    sora_generate --prompt "${smart_prompt}. ${scene1_prompt}" \
+      --image "${reference:-}" --duration "$scene_duration" \
+      --aspect-ratio "$ratio" --output "$clip1" \
+      ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "      $line"; done || true
+    
+    if [ -f "$clip1" ]; then
+      clip_list="$clip_list$clip1,"
+      log "Scene 1/4 complete: $clip1"
+    fi
+    
+    # Scene 2: Hands Placing Ingredients (2-4s)
+    local scene2_prompt="Scene 2/4: Medium handheld shot of hands placing colorful ingredients into bento box, slow motion pour animation, ingredient details clearly visible, soft natural lighting from left, warm tones."
+    
+    echo "  [Scene 2/4] Generating ingredient placement..."
+    local clip2="${ugc_dir}/clip_2_ingredients.mp4"
+    sora_generate --prompt "${smart_prompt}. ${scene2_prompt}" \
+      --image "${reference:-}" --duration "$scene_duration" --aspect-ratio "$ratio" \
+      --output "$clip2" \
+      ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "      $line"; done || true
+    
+    if [ -f "$clip2" ]; then
+      clip_list="$clip_list$clip2,"
+      log "Scene 2/4 complete: $clip2"
+    fi
+    
+    # Scene 3: Completed Bento with Steam (4-6s)
+    local scene3_prompt="Scene 3/4: Wide shot of completed bento with steam still rising, slight slow zoom toward food, soft natural lighting, black calorie badge at top-right corner, MIRRA branding visible, UGC style."
+    
+    echo "  [Scene 3/4] Generating completed bento..."
+    local clip3="${ugc_dir}/clip_3_complete.mp4"
+    sora_generate --prompt "${smart_prompt}. ${scene3_prompt}" \
+      --image "${reference:-}" --duration "$scene_duration" --aspect-ratio "$ratio" \
+      --output "$clip3" \
+      ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "      $line"; done || true
+    
+    if [ -f "$clip3" ]; then
+      clip_list="$clip_list$clip3,"
+      log "Scene 3/4 complete: $clip3"
+    fi
+    
+    # Scene 4: Ingredient Detail + Callout (6-8s)
+    local scene4_prompt="Scene 4/4: Close-up of ingredients, macro shots of fresh food texture, bright kitchen background, authentic UGC style, slight handheld movement, food looks appetizing and fresh."
+    
+    echo "  [Scene 4/4] Generating ingredient details..."
+    local clip4="${ugc_dir}/clip_4_detail.mp4"
+    sora_generate --prompt "${smart_prompt}. ${scene4_prompt}" \
+      --image "${reference:-}" --duration "$scene_duration" --aspect-ratio "$ratio" \
+      --output "$clip4" \
+      ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "      $line"; done || true
+    
+    if [ -f "$clip4" ]; then
+      clip_list="$clip_list$clip4,"
+      log "Scene 4/4 complete: $clip4"
+    fi
+    
+  else
+    # Non-MIRRA: generate single video
+    echo "  Standard mode: single video (no storyboard)"
+    local sora_output="${ugc_dir}/sora-raw.mp4"
+
+    if [ -n "$reference" ] && [ -f "$reference" ]; then
+      # Image-to-video mode
+      echo "  Mode: image-to-video (from reference)"
+      sora_generate --prompt "$smart_prompt" --image "$reference" \
+        --duration "$duration" --aspect-ratio "$ratio" --output "$sora_output" \
+        ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "    $line"; done || true
+    else
+      # Text-to-video mode
+      echo "  Mode: text-to-video"
+      sora_generate --prompt "$smart_prompt" \
+        --duration "$duration" --aspect-ratio "$ratio" --output "$sora_output" \
+        ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "    $line"; done || true
+    fi
+
+    if [ ! -f "$sora_output" ]; then
+      echo "ERROR: Sora generation failed"
+      log "ERROR: sora-ugc generation failed"
+      exit 1
+    fi
+    
+    clip_list="$sora_output"
+  fi
+  
+  # Remove trailing comma if any
+  clip_list="${clip_list%,}"
+  
+  # Check if any clips were generated
+  if [ -z "$clip_list" ]; then
+    echo "ERROR: No video clips were generated"
+    log "ERROR: sora-ugc no clips generated"
+    exit 1
+  fi
+  
+  echo ""
+  
+  # Step 3b: Assemble clips if storyboard mode
+  local sora_output="${ugc_dir}/sora-raw.mp4"
+  if [ "$brand" = "mirra" ]; then
+    echo "--- Step 3b: Assembling Storyboard Clips ---"
+    
+    # Count clips
+    local clip_count
+    clip_count=$(echo "$clip_list" | tr ',' '\n' | wc -l | tr -d ' ')
+    echo "  Generated $clip_count/4 clips"
+    
+    # If we have multiple clips, assemble them
+    if [ "$clip_count" -gt 1 ]; then
+      echo "  Assembling clips with ffmpeg..."
+      
+      # Create concat file
+      local concat_file="${ugc_dir}/concat.txt"
+      echo "$clip_list" | tr ',' '\n' | while IFS= read -r clip; do
+        echo "file '$clip'"
+      done > "$concat_file"
+      
+      # Assemble with ffmpeg (all clips should be same resolution)
+      ffmpeg -y -f concat -safe 0 -i "$concat_file" \
+        -c:v libx264 -preset fast -crf 22 \
+        -c:a aac -b:a 128k \
+        "$sora_output" 2>&1 | grep -v "^\[" || true
+      
+      if [ -f "$sora_output" ]; then
+        echo "  ✓ Assembly complete: $sora_output"
+        log "Storyboard assembly complete: $sora_output ($clip_count clips)"
+      else
+        echo "  ⚠ Assembly failed, using first clip"
+        local first_clip
+        first_clip=$(echo "$clip_list" | cut -d',' -f1)
+        cp "$first_clip" "$sora_output"
+      fi
+    else
+      echo "  Only 1 clip generated, using as-is"
+      cp "$clip_list" "$sora_output"
+    fi
+    
+    echo ""
+  fi
+
+  # Step 4: Post-production via VideoForge
+  echo "--- Step 4: Post-Production (VideoForge) ---"
+  local final_output="${output:-${ugc_dir}/final.mp4}"
+
+  if [ -x "$VIDEO_FORGE" ]; then
+    bash "$VIDEO_FORGE" produce "$sora_output" \
+      --type ugc \
+      ${brand:+--brand "$brand"} \
+      --grain light \
+      --caption \
+      --output "$final_output" 2>&1 | while IFS= read -r line; do echo "    $line"; done || true
+
+    if [ ! -f "$final_output" ]; then
+      echo "  VideoForge failed, using raw Sora output"
+      cp "$sora_output" "$final_output"
+    fi
+  else
+    echo "  VideoForge not found, using raw Sora output"
+    cp "$sora_output" "$final_output"
+  fi
+  echo ""
+
+  # Step 5: Brand voice check
+  echo "--- Step 5: QA ---"
+  local bvc="$HOME/.openclaw/skills/brand-voice-check/scripts/brand-voice-check.sh"
+  if [ -n "$brand" ] && [ -f "$bvc" ]; then
+    echo "  Running brand voice check on prompt..."
+    bash "$bvc" --brand "$brand" --text "$concept" 2>/dev/null | head -3 | while IFS= read -r line; do echo "    $line"; done || echo "    (check skipped)"
+  else
+    echo "  Brand voice check: skipped (no brand or script)"
+  fi
+  echo ""
+
+  # Summary
+  echo "=== Sora UGC Pipeline Complete ==="
+  echo "Raw:    $sora_output"
+  echo "Final:  $final_output"
+  echo "Prompt: $ugc_dir/smart-prompt.txt"
+  [ -f "$ugc_dir/visual-dna.txt" ] && echo "DNA:    $ugc_dir/visual-dna.txt"
+  echo "Cost:   ~\$0.50"
+  echo ""
+
+  log "sora-ugc complete: $final_output"
+
+  post_generate "sora" "ugc-pipeline" "$final_output" "$brand" "$concept"
+  echo "$final_output"
+}
+
+# ============================================================
 # USAGE
 # ============================================================
 
@@ -1798,12 +2291,13 @@ PROVIDERS:
   sora     Sora 2 via OpenAI (generate, image2video, status, download)
 
 COMMANDS:
+  sora-ugc        Full UGC workflow: reverse-prompt -> smart prompt -> Sora 2 -> post-prod
   pipeline        Chain: NanoBanana images -> video gen -> video-forge assembly
   reverse-prompt  Extract frames from video -> Gemini Vision analysis
   status          Auto-detect provider from task ID and check status
 
 USAGE — Provider:
-  video-gen.sh kling text2video "prompt" [--duration 5] [--aspect-ratio 16:9] [--brand pinxin-vegan]
+  video-gen.sh kling text2video "prompt" [--duration 5] [--aspect-ratio 9:16] [--brand pinxin-vegan]
   video-gen.sh kling image2video --image "url" [--prompt "..."] [--duration 5]
   video-gen.sh kling status <task_id>
   video-gen.sh kling download <task_id> [--output path.mp4]
@@ -1814,7 +2308,7 @@ USAGE — Provider:
   video-gen.sh wan status <request_id> [--model text2video]
   video-gen.sh wan download <request_id> [--model text2video] [--output path.mp4]
 
-  video-gen.sh sora generate "prompt" [--duration 5] [--aspect-ratio 16:9]
+  video-gen.sh sora generate "prompt" [--duration 5] [--aspect-ratio 9:16]
   video-gen.sh sora image2video --image path.jpg [--prompt "..."] [--duration 5]
   video-gen.sh sora status <video_id>
   video-gen.sh sora download <video_id> [--output path.mp4]
@@ -1823,15 +2317,26 @@ USAGE — Pipeline:
   video-gen.sh pipeline --prompt "Brand story for Pinxin Vegan" --brand pinxin-vegan \
     --provider wan --scenes 3 --duration 5 --aspect-ratio 9:16
 
+USAGE — Sora UGC (Storyboard 6 Approach):
+  video-gen.sh sora-ugc --prompt "Healthy bento box for working professionals" \
+    --brand mirra --image /path/to/bento-sku.jpg \
+    --duration 8 --aspect-ratio 9:16
+  
+  For MIRRA brand, automatically generates 4 storyboard scenes:
+  - Scene 1: Bento reveal (0-2s)
+  - Scene 2: Hands placing ingredients (2-4s)
+  - Scene 3: Completed bento with steam (4-6s)
+  - Scene 4: Ingredient details (6-8s)
+
 USAGE — Reverse Prompt:
   video-gen.sh reverse-prompt /path/to/video.mp4
 
 COMMON OPTIONS:
   --prompt "..."         Generation prompt
-  --image <path|url>     Input image for image2video
+  --image <path|url>     SKU reference image (MIRRA: validates bento image)
   --brand <slug>         Brand slug (loads DNA.json for motion_language)
-  --duration <seconds>   Target duration (default: 5)
-  --aspect-ratio <ratio> 16:9, 9:16, 1:1 (default: 16:9)
+  --duration <seconds>   Target duration (Sora: 4, 8, or 12 only; default: 5)
+  --aspect-ratio <ratio> 9:16, 16:9, 1:1 (default: 9:16)
   --output <path>        Output file path
   --dry-run              Show request without submitting
 
@@ -1890,6 +2395,7 @@ main() {
         *) echo "Usage: video-gen.sh sora generate|image2video|status|download"; exit 1 ;;
       esac
       ;;
+    sora-ugc)       shift; sora_ugc_pipeline "$@" ;;
     pipeline)       shift; pipeline "$@" ;;
     reverse-prompt) shift; reverse_prompt "$@" ;;
     status)         shift; auto_status "$@" ;;
