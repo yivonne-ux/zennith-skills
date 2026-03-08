@@ -60,29 +60,14 @@ phase_scout() {
   local scout_file="$DATA/$TODAY/scout-report.json"
   local findings=0
 
-  # 1a. Check for new AI models / tools (via web search)
-  log "Scouting new AI models and tools..."
-  if [ -f "$SKILLS/web-search-pro/SKILL.md" ]; then
-    # Use Gemini for free scouting
-    local gemini_bin="$HOME/local/bin/gemini"
-    if [ -x "$gemini_bin" ]; then
-      "$gemini_bin" -p "List the top 3 AI model releases or updates in the last 7 days (March 2026). Focus on: image generation, video generation, LLM models, agent frameworks. Format as JSON array with fields: name, type, date, significance (1-10), url. Only include confirmed releases, not rumors." \
-        --approval-mode yolo -o text \
-        > "$DATA/$TODAY/new-models.txt" 2>/dev/null &
-      local SCOUT_PID=$!
-    fi
-  fi
-
-  # 1b. Check Meta Ad Library for top competitors (if token available)
-  if [ -f "$SKILLS/meta-ads-library/scripts/scrape_meta_library.py" ]; then
-    log "Scanning Meta Ad Library for top food advertisers..."
-    python3 "$SKILLS/meta-ads-library/scripts/scrape_meta_library.py" \
-      --keyword "healthy food Malaysia" --country MY --limit 10 \
-      > "$DATA/$TODAY/meta-ads-scan.json" 2>/dev/null || true
+  # 1a. Full Artemis scout via Gemini CLI (trends + competitors + ads + new models)
+  if [ -f "$SKILLS/gemini-cli/scripts/artemis-scout.sh" ]; then
+    log "Running Artemis daily scout (Gemini CLI, \$0)..."
+    bash "$SKILLS/gemini-cli/scripts/artemis-scout.sh" daily --brand mirra >> "$LOG" 2>&1 || true
     findings=$((findings + 1))
   fi
 
-  # 1c. Check seed bank health
+  # 1b. Check seed bank health
   if [ -f "$SKILLS/content-seed-bank/scripts/seed-store.sh" ]; then
     for brand in mirra pinxin-vegan wholey-wonder; do
       local count
@@ -90,17 +75,6 @@ phase_scout() {
       log "  Seed bank $brand: $count seeds"
     done
     findings=$((findings + 1))
-  fi
-
-  # Wait for Gemini scout
-  if [ -n "${SCOUT_PID:-}" ]; then
-    wait "$SCOUT_PID" 2>/dev/null || true
-    if [ -f "$DATA/$TODAY/new-models.txt" ]; then
-      local model_count
-      model_count=$(wc -l < "$DATA/$TODAY/new-models.txt" | tr -d ' ')
-      log "  New models scouted: $model_count lines"
-      findings=$((findings + 1))
-    fi
   fi
 
   log "Scout complete: $findings data sources checked"
@@ -252,10 +226,10 @@ phase_learn() {
     bash "$SKILLS/content-tuner/scripts/ab-framework.sh" evaluate 2>/dev/null || true
   fi
 
-  # 3c. Publish to EvoMap (weekly on Mondays)
-  if [ "$dow" -eq 1 ] && [ -f "$SKILLS/evomap/scripts/evomap-gaia.sh" ]; then
+  # 3c. Publish to EvoMap (daily — we ship fast, reputation compounds daily)
+  if [ -f "$SKILLS/evomap/scripts/evomap-gaia.sh" ]; then
     log "Publishing to EvoMap..."
-    bash "$SKILLS/evomap/scripts/evomap-gaia.sh" publish --type skill --name "gaia-os-weekly" --version "$TODAY" 2>/dev/null || true
+    bash "$SKILLS/evomap/scripts/evomap-gaia.sh" publish --type skill --name "gaia-os-daily" --version "$TODAY" 2>/dev/null || true
   fi
 
   # 3d. Store scout findings in vault.db
