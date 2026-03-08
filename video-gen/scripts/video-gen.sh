@@ -363,7 +363,7 @@ post_generate() {
 
   log "Generated: provider=$provider task=$task_id output=$video_path brand=$brand"
   echo ""
-  echo "✅ Written to creative (JSONL + Supabase)"
+  echo "✅ Written to creative (JSONL)"
   echo "$video_path"
 }
 
