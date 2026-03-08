@@ -126,6 +126,12 @@ classify_override() {
     return 0
   fi
 
+  # CONTENT SUPPLY CHAIN: full content loop / supply chain cycle → HERMES (orchestrates all agents)
+  if echo "$task" | grep -qiE '(content.?supply.?chain|supply.?chain.*(cycle|run|status|loop)|content.?(loop|cycle).*(run|start|full)|run.*(content|creative).*(loop|cycle|pipeline|chain))'; then
+    echo "hermes"
+    return 0
+  fi
+
   # CAMPAIGN ORCHESTRATION: full campaign / batch campaign / 30+ ads → HERMES (not individual ad gen)
   # Hermes plans the campaign, then spawns Iris + Dreami in parallel
   if echo "$task" | grep -qiE '(full.?campaign|campaign.*(plan|brief|all|full|batch|launch|start|run)|launch.*(campaign|all.*(ad|type))|run.*(campaign|all)|[0-9][0-9]+.*(ads?|images?|visuals?).*(campaign|all|full|type|mix|includ|with)|campaign.*[0-9][0-9]+|all.*(ad|ads).*(type|format|kind)|campaign.*(with|includ).*(video|sora|kling))'; then
