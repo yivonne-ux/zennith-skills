@@ -64,7 +64,7 @@ classify_override() {
 
   # EXPLICIT CLAUDE CODE / TAOZ REQUEST: "use claude code", "ask taoz to", "tell taoz to" → taoz (auto-upgrades to CODE tier)
   # Catches user explicitly requesting Taoz or Claude Code CLI — MUST be before any other pattern
-  if echo "$task" | grep -qiE '(use claude.?code|ask taoz|tell taoz|get taoz|have taoz|let taoz|make taoz|taoz (should|can|will|needs? to)|via claude.?code|through claude.?code|with claude.?code)'; then
+  if echo "$task" | grep -qiE '(use claude.?code|ask taoz|tell taoz|get taoz|have taoz|let taoz|make taoz|taoz (should|can|will|needs? to)|via claude.?code|through claude.?code|with claude.?code|^thinker )'; then
     echo "taoz"
     return 0
   fi
