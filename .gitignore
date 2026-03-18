@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Secrets — NEVER commit
+.env
+*.key
+secrets/
+
+# User data — per-VPS, not shared
+**/users/*.json
+
+# Generated readings — ephemeral
+**/readings/reading-*.json
+**/readings/order-*.json
+**/readings/params-*.sh
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Archives (too large for git)
+_archive/

@@ -1,0 +1,303 @@
+{
+  "version": "1.0",
+  "system_name": "The Jade Oracle",
+  "concept": "Custom oracle card system mapping QMDJ symbols to Western-friendly archetypes. QMDJ engine runs in backend, customer sees energy archetypes and oracle cards.",
+  "design_principle": "Every card maps 1:1 to a real QMDJ symbol. The reading is REAL divination dressed in accessible language.",
+
+  "archetype_cards": {
+    "description": "9 cards representing core energies (mapped from 九星 Nine Stars)",
+    "cards": [
+      {
+        "card_name": "The Drifter",
+        "qmdj_symbol": "天蓬",
+        "qmdj_palace": 1,
+        "element": "Water",
+        "keywords": ["mystery", "depth", "hidden currents", "the unseen", "risk"],
+        "light": "Deep intuition, ability to navigate chaos, street-smart, resourceful",
+        "shadow": "Deception, addiction, getting lost in the dark, manipulation",
+        "career": "Unconventional paths, nightlife, underground markets, intelligence, investigation",
+        "wealth": "Hidden wealth, unexpected windfalls, high-risk investments",
+        "relationships": "Intense, secretive bonds; attracted to danger or forbidden connections"
+      },
+      {
+        "card_name": "The Healer",
+        "qmdj_symbol": "天芮",
+        "qmdj_palace": 2,
+        "element": "Earth",
+        "keywords": ["illness", "nurture", "patience", "slow growth", "the body"],
+        "light": "Deep empathy, healing abilities, patience, nurturing presence",
+        "shadow": "Illness, stagnation, being drained by others, hypochondria",
+        "career": "Healthcare, wellness, counseling, social work, agriculture",
+        "wealth": "Slow and steady accumulation, real estate, land-based wealth",
+        "relationships": "Caretaker role, co-dependency risk, needs to set boundaries"
+      },
+      {
+        "card_name": "The Warrior",
+        "qmdj_symbol": "天冲",
+        "qmdj_palace": 3,
+        "element": "Wood",
+        "keywords": ["action", "decisiveness", "speed", "breakthrough", "courage"],
+        "light": "Bold leadership, quick execution, competitive edge, pioneer spirit",
+        "shadow": "Recklessness, anger, impatience, burning bridges",
+        "career": "Startups, sports, military, tech, anything requiring speed and courage",
+        "wealth": "Fast money through bold action, first-mover advantage",
+        "relationships": "Passionate but volatile; needs a partner who can match their energy"
+      },
+      {
+        "card_name": "The Sage",
+        "qmdj_symbol": "天辅",
+        "qmdj_palace": 4,
+        "element": "Wood",
+        "keywords": ["wisdom", "teaching", "culture", "refinement", "study"],
+        "light": "Deep knowledge, academic success, mentorship, cultural refinement",
+        "shadow": "Overthinking, indecision, ivory tower detachment, elitism",
+        "career": "Education, consulting, writing, research, arts, spiritual teaching",
+        "wealth": "Wealth through knowledge and intellectual property",
+        "relationships": "Values intellectual connection; needs mental stimulation"
+      },
+      {
+        "card_name": "The Emperor",
+        "qmdj_symbol": "天禽",
+        "qmdj_palace": 5,
+        "element": "Earth",
+        "keywords": ["center", "stability", "integration", "balance", "the pivot"],
+        "light": "Natural mediator, integrates all forces, unshakeable core, adaptability",
+        "shadow": "Indecision from seeing all sides, lack of identity, being everyone's everything",
+        "career": "Management, coordination, platform businesses, hub roles",
+        "wealth": "Wealth through connecting others, platform economics, middleman advantage",
+        "relationships": "The glue in any group; risk of losing self in service to others"
+      },
+      {
+        "card_name": "The Architect",
+        "qmdj_symbol": "天心",
+        "qmdj_palace": 6,
+        "element": "Metal",
+        "keywords": ["strategy", "precision", "authority", "structure", "justice"],
+        "light": "Master strategist, organizational genius, fair judgment, strong leadership",
+        "shadow": "Controlling, cold, overly rigid, authoritarian",
+        "career": "Law, engineering, finance, executive leadership, government",
+        "wealth": "Systematic wealth building, structured investments, corporate success",
+        "relationships": "Loyal but emotionally reserved; shows love through structure and provision"
+      },
+      {
+        "card_name": "The Blade",
+        "qmdj_symbol": "天柱",
+        "qmdj_palace": 7,
+        "element": "Metal",
+        "keywords": ["precision", "critique", "destruction", "truth", "cutting"],
+        "light": "Sharp insight, ability to cut through BS, truth-telling, surgical precision",
+        "shadow": "Destructive criticism, self-sabotage, tearing things down without rebuilding",
+        "career": "Critic, editor, surgeon, demolition, reformation, investigative journalism",
+        "wealth": "Wealth through eliminating waste, restructuring, turnaround situations",
+        "relationships": "Brutally honest; can wound with words; needs to learn gentleness"
+      },
+      {
+        "card_name": "The Mountain",
+        "qmdj_symbol": "天任",
+        "qmdj_palace": 8,
+        "element": "Earth",
+        "keywords": ["stability", "endurance", "loyalty", "patience", "foundation"],
+        "light": "Unshakeable reliability, long-term vision, generosity, quiet strength",
+        "shadow": "Stubbornness, resistance to change, being taken for granted",
+        "career": "Real estate, construction, long-term investments, charitable work",
+        "wealth": "Slow but massive accumulation, generational wealth, property",
+        "relationships": "The rock in any relationship; loyal to a fault; needs appreciation"
+      },
+      {
+        "card_name": "The Phoenix",
+        "qmdj_symbol": "天英",
+        "qmdj_palace": 9,
+        "element": "Fire",
+        "keywords": ["brilliance", "visibility", "transformation", "fame", "passion"],
+        "light": "Charisma, creative genius, ability to inspire, magnetic presence",
+        "shadow": "Vanity, burnout, drama, attention addiction, volatility",
+        "career": "Entertainment, marketing, design, social media, public speaking",
+        "wealth": "Wealth through personal brand, visibility, and creative output",
+        "relationships": "Magnetic but high-maintenance; needs constant admiration and spark"
+      }
+    ]
+  },
+
+  "pathway_cards": {
+    "description": "8 cards representing life pathways and doors of opportunity (mapped from 八门 Eight Doors)",
+    "cards": [
+      {
+        "card_name": "The Rest",
+        "qmdj_symbol": "休门",
+        "element": "Water",
+        "keywords": ["rest", "recovery", "noble help", "blessings", "ease"],
+        "meaning": "A time of ease and support. Help comes naturally. Rest and receive.",
+        "advice": "Don't force it. Good things are flowing to you. Accept help gracefully."
+      },
+      {
+        "card_name": "The Tomb",
+        "qmdj_symbol": "死门",
+        "element": "Earth",
+        "keywords": ["endings", "closure", "letting go", "stillness", "ancestors"],
+        "meaning": "Something must end for the new to begin. A cycle is closing.",
+        "advice": "Release what no longer serves you. Honor the past, then walk forward."
+      },
+      {
+        "card_name": "The Strike",
+        "qmdj_symbol": "伤门",
+        "element": "Wood",
+        "keywords": ["action", "competition", "conflict", "speed", "execution"],
+        "meaning": "Time to act decisively. Competition is fierce. Strike first.",
+        "advice": "Move fast but don't be reckless. Channel aggression into action."
+      },
+      {
+        "card_name": "The Veil",
+        "qmdj_symbol": "杜门",
+        "element": "Wood",
+        "keywords": ["hiding", "protection", "secrecy", "retreat", "strategy"],
+        "meaning": "Not everything should be revealed. Protect your plans. Work in silence.",
+        "advice": "Keep your cards close. Now is for preparation, not declaration."
+      },
+      {
+        "card_name": "The Stage",
+        "qmdj_symbol": "景门",
+        "element": "Fire",
+        "keywords": ["visibility", "beauty", "art", "expression", "spotlight"],
+        "meaning": "Step into the light. Your work is ready to be seen.",
+        "advice": "Express yourself boldly. Beauty and truth attract abundance now."
+      },
+      {
+        "card_name": "The Open Road",
+        "qmdj_symbol": "开门",
+        "element": "Metal",
+        "keywords": ["opportunity", "career", "leadership", "new beginnings", "authority"],
+        "meaning": "Doors are opening. Career and leadership opportunities appear.",
+        "advice": "Step through with confidence. This is your moment to lead."
+      },
+      {
+        "card_name": "The Alarm",
+        "qmdj_symbol": "惊门",
+        "element": "Metal",
+        "keywords": ["shock", "legal matters", "arguments", "wake-up call", "alertness"],
+        "meaning": "Unexpected disruption. Legal or verbal conflict. Stay sharp.",
+        "advice": "Don't react emotionally. Think before you speak. Prepare for surprises."
+      },
+      {
+        "card_name": "The Garden",
+        "qmdj_symbol": "生门",
+        "element": "Earth",
+        "keywords": ["growth", "wealth", "fertility", "new life", "prosperity"],
+        "meaning": "Abundance is growing. Investments bear fruit. New life emerges.",
+        "advice": "Plant seeds now. Nurture what you've started. Wealth is coming."
+      }
+    ]
+  },
+
+  "guardian_cards": {
+    "description": "8 cards representing spiritual guardians and cosmic forces (mapped from 八神 Eight Deities)",
+    "cards": [
+      {
+        "card_name": "The Crown",
+        "qmdj_symbol": "值符",
+        "keywords": ["divine protection", "highest authority", "noble support", "destiny"],
+        "meaning": "You are divinely protected. The highest forces are aligned in your favor."
+      },
+      {
+        "card_name": "The Serpent",
+        "qmdj_symbol": "腾蛇",
+        "keywords": ["illusion", "dreams", "anxiety", "transformation", "the unexpected"],
+        "meaning": "Things are not what they seem. Trust your intuition over appearances."
+      },
+      {
+        "card_name": "The Moon Mother",
+        "qmdj_symbol": "太阴",
+        "keywords": ["feminine wisdom", "secrecy", "patience", "hidden help", "yin energy"],
+        "meaning": "Quiet, invisible support surrounds you. A woman or yin force is helping."
+      },
+      {
+        "card_name": "The Union",
+        "qmdj_symbol": "六合",
+        "keywords": ["partnership", "harmony", "marriage", "collaboration", "agreement"],
+        "meaning": "Partnerships and collaborations are blessed. Seek union and agreement."
+      },
+      {
+        "card_name": "The White Tiger",
+        "qmdj_symbol": "白虎",
+        "keywords": ["power", "danger", "authority", "death/rebirth", "blood"],
+        "meaning": "Raw power is present. Respect the danger. Surgical precision needed."
+      },
+      {
+        "card_name": "The Dark Warrior",
+        "qmdj_symbol": "玄武",
+        "keywords": ["deception", "theft", "hidden enemies", "intuition", "the shadow"],
+        "meaning": "Beware of hidden agendas. Someone may not be truthful. Trust your gut."
+      },
+      {
+        "card_name": "The Earth Mother",
+        "qmdj_symbol": "九地",
+        "keywords": ["grounding", "patience", "humility", "storage", "foundations"],
+        "meaning": "Build your foundation quietly. Now is for grounding, not flying."
+      },
+      {
+        "card_name": "The Sky Father",
+        "qmdj_symbol": "九天",
+        "keywords": ["expansion", "ambition", "heaven's blessing", "bold action", "ascension"],
+        "meaning": "Think big. The sky supports your ambition. Expand boldly."
+      }
+    ]
+  },
+
+  "energy_interactions": {
+    "description": "How stem pairs (天盘+地盘) translate to energy dynamics. This is the 十干克应 in oracle language.",
+    "note": "To be expanded with full 十干克应 research. Below are key patterns.",
+    "patterns": {
+      "same_element_meeting": "Your energy is doubled — pure expression of this force. Intense but one-dimensional.",
+      "generating_cycle": "One energy feeds the other. Flow and support. Natural growth.",
+      "controlling_cycle": "Tension between forces. Challenge that builds strength if handled well.",
+      "clash": "Direct conflict. Something must give. Transformation through crisis.",
+      "harmony": "Two forces dance together. Effortless synergy. Blessed combination."
+    }
+  },
+
+  "reading_types": {
+    "destiny_reading": {
+      "qmdj_mode": "命盘",
+      "customer_name": "Life Blueprint Reading",
+      "description": "Your core energy signature — who you are at the deepest level.",
+      "focus": ["Core archetype", "Life purpose", "Strengths & shadows", "Wealth capacity", "Relationship style", "Career direction"],
+      "uses_birth_data": true
+    },
+    "moment_reading": {
+      "qmdj_mode": "时盘",
+      "customer_name": "Energy Snapshot Reading",
+      "description": "The energy of this exact moment — what forces are at play right now.",
+      "focus": ["Current energy", "Opportunities", "Warnings", "Best action", "Timing"],
+      "uses_birth_data": false
+    },
+    "question_reading": {
+      "qmdj_mode": "时盘 + question mapping",
+      "customer_name": "Oracle Question Reading",
+      "description": "Ask the Oracle a specific question and receive guidance.",
+      "focus": ["Answer to question", "Hidden factors", "Best path forward", "Timeline"],
+      "uses_birth_data": false
+    },
+    "compatibility_reading": {
+      "qmdj_mode": "双命盘",
+      "customer_name": "Soul Connection Reading",
+      "description": "How two energies interact — in love, business, or friendship.",
+      "focus": ["Energy dynamics", "Strengths together", "Friction points", "Growth potential"],
+      "uses_birth_data": true
+    },
+    "year_ahead": {
+      "qmdj_mode": "年盘 + 大运",
+      "customer_name": "Year Ahead Oracle",
+      "description": "Your energy forecast for the coming year.",
+      "focus": ["Major themes", "Best months", "Watch-out periods", "Key opportunities"],
+      "uses_birth_data": true
+    }
+  },
+
+  "presentation_format": {
+    "card_reveal": "Show 3 cards: Archetype (star) + Pathway (door) + Guardian (deity)",
+    "energy_narrative": "Weave the 3 cards into a cohesive story using 十干克应 as the underlying logic",
+    "visual_style": "Mystical, jade-green palette, Eastern-meets-Western aesthetic",
+    "tone": "Wise, warm, direct. Like a trusted spiritual advisor. Not fluffy or vague.",
+    "no_chinese_characters": "NEVER show 汉字 to the customer. All QMDJ terms are translated to oracle language.",
+    "authenticity_note": "Always hint that this is 'powered by an ancient Eastern divination system' without getting technical"
+  }
+}

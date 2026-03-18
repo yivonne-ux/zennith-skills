@@ -1,0 +1,590 @@
+{
+  "meta": {
+    "created": "2026-03-18",
+    "purpose": "Competitive research + product/pricing design for The Jade Oracle",
+    "sources": [
+      "psychicsamira.com (direct product pages)",
+      "adfox.ai/goodsfox business model analysis",
+      "trustpilot.com/review/psychicsamira.com",
+      "rankmyai.com AI tarot tool rankings",
+      "skywork.ai Tarotoo review",
+      "App Store / Google Play (Co-Star, The Pattern, Sanctuary, Lumi, Tarotoo)",
+      "verifiedmarketresearch.com market reports",
+      "persistencemarketresearch.com US market data",
+      "fiverr.com QMDJ reading pricing",
+      "screensdesign.com Pocket Insight analysis"
+    ]
+  },
+
+  "market_overview": {
+    "us_online_psychic_market_2025_usd": 364100000,
+    "us_online_psychic_market_2032_usd": 549000000,
+    "us_market_cagr": 0.0604,
+    "global_psychic_service_market_2025_usd": 3700000000,
+    "global_psychic_service_market_2034_usd": 6500000000,
+    "global_market_cagr": 0.0644,
+    "astrology_apps_market_2025_usd": 1160000000,
+    "astrology_apps_market_2026_usd": 1260000000,
+    "spiritual_services_market_2025_usd": 392460800000,
+    "key_trends": [
+      "30% of psychic consultations will involve AI tools by 2028",
+      "Live chat holds 45% share of paid interactions (younger demographic preference)",
+      "72% of paid interactions are microtransactions + subscription upgrades",
+      "65% of leading apps use multi-tier monetization",
+      "AI-generated persona businesses (Samira model) scaling fastest with zero human labor"
+    ]
+  },
+
+  "competitors": {
+    "psychic_samira": {
+      "url": "psychicsamira.com",
+      "platform": "Shopify",
+      "estimated_monthly_revenue": "500000+",
+      "ad_reach": "89M+ views across 58 countries",
+      "reviews": "11000+ 5-star reviews (Trustpilot 4.0 avg, 2490 reviews — polarized)",
+      "persona": "AI-generated pink-haired figure, Fairycore/Witchcore aesthetic, culturally neutral",
+      "delivery_method": "Email (text + PDF), digital downloads",
+      "reading_turnaround": "24-48hr standard, 2-6hr priority",
+      "is_ai_generated": true,
+      "product_ladder": [
+        {
+          "name": "$1 Psychic Reading (First Customer Offer)",
+          "price_usd": 1.00,
+          "description": "Entry hook. Customer submits up to 3 questions. Reading delivered via email in 2-3 days. 30 days of free follow-up readings included.",
+          "purpose": "Psychological commitment device — once invested, users upsell themselves"
+        },
+        {
+          "name": "Ask An Additional Question",
+          "price_usd": 29.99,
+          "original_price_usd": 59.99,
+          "description": "Follow-up question after initial reading",
+          "purpose": "Low-friction upsell for customers wanting more clarity"
+        },
+        {
+          "name": "Full Psychic Reading by Samira",
+          "price_usd": 59.99,
+          "original_price_usd": 79.99,
+          "description": "Comprehensive reading. Unlimited access for 30 days. Detailed readings within 24 hours.",
+          "purpose": "Core revenue product"
+        },
+        {
+          "name": "Enhanced Reading",
+          "price_usd": 59.99,
+          "description": "More comprehensive version of the full reading",
+          "purpose": "Upsell from standard full reading"
+        },
+        {
+          "name": "Unlimited Psychic Readings (Monthly)",
+          "price_usd": 59.99,
+          "description": "Unlimited access for 30 days. Ask as many questions as desired.",
+          "purpose": "Monthly recurring revenue"
+        },
+        {
+          "name": "Relationship Analysis PDF",
+          "price_usd": 79.99,
+          "description": "Digital PDF analyzing relationship dynamics",
+          "purpose": "Niche digital product for love-focused customers"
+        },
+        {
+          "name": "Yearly Astrology Reading",
+          "price_usd": 99.99,
+          "original_price_usd": 133.99,
+          "description": "Year-ahead astrological forecast",
+          "purpose": "Seasonal product (sells heavily in Jan/New Year)"
+        },
+        {
+          "name": "Samira Prime Yearly Membership",
+          "price_usd": 99.00,
+          "original_price_usd": 396.00,
+          "description": "40% off future readings, priority 2-6 hour delivery, free birthday reading, VIP bonuses",
+          "purpose": "Annual lock-in, LTV maximizer"
+        },
+        {
+          "name": "Premium/Luxury Reading",
+          "price_usd": 279.99,
+          "description": "High-end comprehensive reading package",
+          "purpose": "High-ticket for serious customers"
+        },
+        {
+          "name": "Unlimited Priority Readings — 1 Year",
+          "price_usd": 994.00,
+          "original_price_usd": 3182.00,
+          "description": "Gift card code for unlimited readings with Enhanced + Priority 12hr delivery for 1 year",
+          "purpose": "Whale product — maximum LTV extraction"
+        },
+        {
+          "name": "Digital Aura Poster",
+          "price_usd": 11.99,
+          "description": "Personalized digital aura art",
+          "purpose": "Low-cost impulse buy, viral shareability"
+        },
+        {
+          "name": "Framed Spiritual Wall Art",
+          "price_usd": 79.99,
+          "description": "Physical spiritual decor product",
+          "purpose": "Physical product for higher AOV"
+        }
+      ],
+      "funnel_structure": {
+        "traffic_sources": ["TikTok Ads (primary)", "Instagram", "Facebook", "Affiliate army"],
+        "ad_strategy": "AI face-swap + voice modulation = endless ad variations. Emotionally-driven creative mimicking personal notes, text messages, success stories.",
+        "hook": "$1 reading as psychological commitment device",
+        "post_purchase_upsell_1": "Additional question ($29.99)",
+        "post_purchase_upsell_2": "Full reading ($59.99)",
+        "post_purchase_upsell_3": "Membership ($59.99/mo or $99/yr)",
+        "email_nurture": "Automated sequences driving repeat purchases",
+        "affiliate_program": true,
+        "discount_codes": "Heavy use of 100% OFF codes (as lead magnets / viral hooks)"
+      },
+      "key_insights": [
+        "ALL digital — zero inventory, zero shipping",
+        "Readings likely AI-generated (multiple Trustpilot reviews confirm generic/template feel)",
+        "Persona is entirely AI — face changes between ad cycles",
+        "Heavy anchoring with crossed-out 'original' prices (50-75% discounts displayed)",
+        "Free unlimited readings as hook product converts to paid upgrades",
+        "Affiliate army drives significant traffic via discount codes"
+      ]
+    },
+
+    "co_star": {
+      "url": "costarastrology.com",
+      "platform": "iOS/Android app",
+      "monthly_revenue_est_usd": 400000,
+      "monthly_downloads": 100000,
+      "total_users": "30M+ global",
+      "model": "Freemium subscription",
+      "free_tier": "Daily horoscope, basic chart, friend compatibility",
+      "paid_tier": "Co-Star+, premium insights, detailed transit analysis",
+      "pricing": "Subscription (exact price varies, estimated $3-5/mo)",
+      "key_insight": "AI-driven personalization increases engagement 20-35%. App-first, social-sharing drives virality."
+    },
+
+    "the_pattern": {
+      "url": "thepattern.com",
+      "platform": "iOS/Android app",
+      "model": "Freemium with Go Deeper+ subscription",
+      "free_tier": "Basic patterns and timing insights (very limited)",
+      "paid_tier": "Go Deeper+ — $14.99/mo",
+      "key_insight": "Most insights locked behind paywall. No free trial. High monthly price justified by depth of personality analysis."
+    },
+
+    "sanctuary": {
+      "url": "sanctuaryworld.co",
+      "platform": "iOS/Android app + web",
+      "model": "Freemium + live readings marketplace",
+      "free_tier": "Daily horoscopes, astrology guides",
+      "paid_tier": "Live readings with professional astrologers, $0.99-5.99/min",
+      "in_app_purchases": "$5-$30 range",
+      "intro_offer": "$0.99/min for first 5 minutes",
+      "key_insight": "First app to offer live on-demand readings. Combines free content with per-minute live sessions."
+    },
+
+    "tarotoo": {
+      "url": "tarotoo.com",
+      "platform": "Web + iOS/Android",
+      "model": "Freemium",
+      "free_tier": "Core tarot readings, basic AI psychic chat, no registration required",
+      "paid_tier": "Premium subscription ~$60/year — advanced spreads, unlimited AI psychic chat, expanded deck access, ad-free",
+      "key_insight": "Free web readings drive massive traffic. Mobile app monetizes via subscriptions. AI psychic chat is the stickiest feature."
+    },
+
+    "lumi_tarot": {
+      "url": "App Store / Google Play",
+      "platform": "iOS/Android app",
+      "model": "Freemium with daily limits",
+      "free_tier": "5 readings/day (burns through quickly — functions as trial)",
+      "paid_tier": "Premium for unlimited readings + deeper interpretations",
+      "key_insight": "Daily limit creates urgency. Users who are genuinely curious hit the wall fast and convert."
+    },
+
+    "pocket_insight": {
+      "url": "App Store",
+      "platform": "iOS app",
+      "model": "Credit-based (no subscription required)",
+      "pricing": "Buy credits, spend on: pay-per-minute live chat, fixed-price text readings, premium rituals",
+      "key_insight": "No subscription pressure. Credits feel like a wallet, not a commitment. Premium services (candle rituals, reiki) command higher credit cost."
+    },
+
+    "qmdj_practitioners_fiverr": {
+      "platform": "Fiverr",
+      "price_range": "$30-100 per reading",
+      "delivery": "PDF report within 2 days",
+      "key_insight": "Very few English-speaking QMDJ practitioners exist. $30 is budget tier. Professional consultants in Singapore/Malaysia charge $200-500+ per session. Massive supply gap = pricing power."
+    }
+  },
+
+  "pricing_analysis": {
+    "monetization_models_ranked_by_effectiveness": [
+      {
+        "rank": 1,
+        "model": "Low-ticket hook → upsell funnel (Samira model)",
+        "description": "$1 entry, post-purchase upsells to $30-100 products, email nurture to membership",
+        "avg_customer_value": "$8-15 on first purchase",
+        "pros": "Highest conversion rate, removes all friction, builds email list fast",
+        "cons": "Requires ad spend to drive traffic, high volume needed",
+        "best_for": "Shopify stores with paid traffic"
+      },
+      {
+        "rank": 2,
+        "model": "Freemium app → subscription",
+        "description": "Free daily readings, paywall for advanced features, $5-15/mo subscription",
+        "avg_customer_value": "$60-180/year for subscribers",
+        "pros": "Predictable MRR, high retention if product is sticky, scales with word-of-mouth",
+        "cons": "Requires app development, app store fees (30%), long payback period",
+        "best_for": "App-first products (Co-Star, The Pattern)"
+      },
+      {
+        "rank": 3,
+        "model": "Credit/token system",
+        "description": "Buy credits, spend on readings/chat. No subscription commitment.",
+        "avg_customer_value": "Varies widely, whales spend 10x+ average",
+        "pros": "No subscription fatigue, whales subsidize casual users, flexible pricing",
+        "cons": "Harder to predict revenue, requires constant re-engagement",
+        "best_for": "Chat-based services, marketplaces"
+      },
+      {
+        "rank": 4,
+        "model": "Per-minute live readings",
+        "description": "$1-25/min for live phone/video/chat readings",
+        "avg_customer_value": "$20-100 per session",
+        "pros": "High revenue per session, urgency drives spend",
+        "cons": "Requires human readers (or very good AI), harder to scale, scheduling complexity",
+        "best_for": "Platforms with professional readers (Keen, Sanctuary)"
+      }
+    ],
+
+    "price_points_that_work": {
+      "hook_tier": {
+        "range": "$0-1",
+        "psychology": "Removes ALL friction. $1 creates psychological commitment (sunk cost). Free gets more sign-ups but lower quality leads.",
+        "samira_uses": "$1",
+        "recommendation": "$1 (proven by Samira at $500K+/mo scale)"
+      },
+      "entry_tier": {
+        "range": "$5-15",
+        "psychology": "Impulse purchase territory. Under $10 feels trivial. Under $20 requires no justification.",
+        "samira_uses": "N/A (jumps to $29.99)",
+        "recommendation": "$8.88 (auspicious number in Chinese culture, memorable, under $10)"
+      },
+      "core_tier": {
+        "range": "$25-60",
+        "psychology": "Considered purchase but not major. Anchored against premium to feel like a deal.",
+        "samira_uses": "$59.99",
+        "recommendation": "$28.88 (under $30, auspicious, anchored vs $49.99 premium)"
+      },
+      "premium_tier": {
+        "range": "$50-100",
+        "psychology": "Signals quality and depth. Named 'analysis' or 'session' not 'reading'. Odd numbers ($97) feel calculated.",
+        "samira_uses": "$99.99 (year ahead), $279.99 (luxury)",
+        "recommendation": "$88 (auspicious, under $100, signals premium in Asian market)"
+      },
+      "high_ticket": {
+        "range": "$100-500",
+        "psychology": "Investment framing. Payment plans essential. Scarcity/exclusivity required.",
+        "samira_uses": "$497 (mentorship), $994 (unlimited yearly)",
+        "recommendation": "$188 (QMDJ session) or $388 (mentorship/package)"
+      },
+      "subscription": {
+        "range": "$10-30/mo",
+        "psychology": "Under $30/mo = 'Netflix for spiritual guidance'. First month discount (67% off) critical for conversion.",
+        "samira_uses": "$59.99/mo unlimited, $99/yr Prime",
+        "recommendation": "$18.88/mo (under $20, auspicious) or $88.88/yr"
+      }
+    }
+  },
+
+  "delivery_format_analysis": {
+    "email_pdf": {
+      "customer_preference": "HIGH — most popular for paid readings",
+      "pros": "Customers can re-read, no scheduling, private, works globally across timezones, low ops cost",
+      "cons": "No real-time interaction, feels less 'personal' than live",
+      "samira_uses": true,
+      "recommendation": "PRIMARY delivery for all tiers below $100"
+    },
+    "telegram_bot": {
+      "customer_preference": "MEDIUM — growing, especially in Asian markets",
+      "pros": "Instant delivery, conversational feel, already built (@Jade4134bot), free to operate, re-engagement via notifications",
+      "cons": "Requires user to have Telegram, less premium feel for high-ticket",
+      "jade_oracle_status": "LIVE on jade-os.fly.dev",
+      "recommendation": "FREE tier and daily readings. Also as delivery notification channel."
+    },
+    "live_chat_web": {
+      "customer_preference": "HIGH for younger demographic (45% of paid interactions)",
+      "pros": "Immediate gratification, back-and-forth dialogue, higher engagement",
+      "cons": "Requires real-time AI, session management, higher server costs",
+      "recommendation": "FUTURE phase — add to Shopify store as premium feature"
+    },
+    "live_video_zoom": {
+      "customer_preference": "MEDIUM — high-ticket only",
+      "pros": "Most personal, justifies premium pricing, builds deep trust",
+      "cons": "Requires human practitioner (Jenn), scheduling, not scalable",
+      "recommendation": "HIGH-TICKET only ($188+ QMDJ sessions). Jenn delivers personally."
+    },
+    "shopify_digital_download": {
+      "customer_preference": "MEDIUM",
+      "pros": "Automated fulfillment, Shopify native, professional",
+      "cons": "Requires PDF generation pipeline",
+      "recommendation": "CORE delivery for paid products ($8.88+). Automated PDF generation from QMDJ engine."
+    }
+  },
+
+  "recommended_jade_oracle_product_lineup": {
+    "positioning": "The only AI oracle powered by REAL Qi Men Dun Jia (奇门遁甲) — the 5000-year-old Chinese imperial divination system. Not generic AI, not tarot — a genuine metaphysical engine that reads the energy of THIS MOMENT.",
+    "differentiator_vs_samira": "Samira sells generic AI-generated readings dressed as psychic intuition. Jade Oracle sells readings from a REAL system with verifiable calculations. The QMDJ chart is shown — customers can see the math behind the magic.",
+    "auspicious_pricing_rationale": "All prices use 8 (八 = prosperity in Chinese numerology). This is on-brand for a Chinese metaphysical product and memorable.",
+
+    "products": [
+      {
+        "tier": "FREE",
+        "name": "Daily Energy Reading (每日能量)",
+        "price_usd": 0,
+        "qmdj_mode": "时盘 (Moment Reading)",
+        "description": "Free daily energy reading based on today's QMDJ chart. No user input needed — the chart captures the energy of THIS DAY. Shows: dominant energy, best action to take, what to avoid.",
+        "delivery": "Telegram bot (@Jade4134bot) + Shopify landing page widget",
+        "purpose": "Traffic magnet and habit formation. Users come back daily. Builds email/Telegram list.",
+        "automation": "100% automated. QMDJ engine generates daily chart at midnight UTC. Telegram bot sends push notification. Website auto-updates.",
+        "what_customer_gets": [
+          "Today's dominant energy (element + stem + door)",
+          "One-sentence guidance for the day",
+          "Lucky direction and timing",
+          "Emoji-style energy meter (e.g. 🔥🔥🔥 Energy: Fire dominant)"
+        ]
+      },
+      {
+        "tier": "HOOK",
+        "name": "$1 Moment Reading (此刻天机)",
+        "price_usd": 1.00,
+        "qmdj_mode": "时盘 (Moment Reading)",
+        "description": "Ask ONE question. The QMDJ chart for THIS MOMENT reveals the answer. Uses current date/time — the customer's question activates the reading at the exact moment of asking.",
+        "delivery": "Email (within 24hr) — beautifully formatted with QMDJ chart visual",
+        "purpose": "Psychological commitment device. $1 → email capture → upsell funnel.",
+        "what_customer_gets": [
+          "Full moment QMDJ chart (visual — 9 palaces with stars, doors, deities)",
+          "Interpretation of their question through the chart",
+          "Recommended action + timing",
+          "One follow-up clarification via email"
+        ],
+        "form_fields": ["name", "email", "question", "question_category"],
+        "automation": "Semi-automated. QMDJ engine generates chart + base interpretation. AI enriches with personalized narrative. Human review optional."
+      },
+      {
+        "tier": "ENTRY",
+        "name": "Quick Clarity Reading (速答三问)",
+        "price_usd": 8.88,
+        "qmdj_mode": "时盘 (Moment Reading)",
+        "description": "Ask up to 3 questions. Each gets a focused QMDJ moment reading. Perfect for specific decisions: Should I take this job? Is this person right for me? When should I act?",
+        "delivery": "Email PDF (within 24hr)",
+        "purpose": "First real revenue product. Under $10 = impulse purchase from $1 customers.",
+        "what_customer_gets": [
+          "3 separate moment charts (one per question)",
+          "Focused interpretation for each question",
+          "Overall energy synthesis across all 3 questions",
+          "3-page PDF report with chart visuals",
+          "7-day follow-up email support"
+        ],
+        "form_fields": ["name", "email", "question_1", "question_2", "question_3", "context"],
+        "automation": "Semi-automated. QMDJ engine generates 3 charts. AI writes interpretations. Formatted into branded PDF template."
+      },
+      {
+        "tier": "CORE",
+        "name": "Deep Insight Reading (深度洞察)",
+        "price_usd": 28.88,
+        "original_price_usd": 48.88,
+        "qmdj_mode": "时盘 (Moment Reading) + partial 命盘 elements",
+        "description": "Comprehensive reading combining moment energy with birth date elements. Up to 3 detailed questions with deep QMDJ analysis including all 9 palaces, doors, stars, and deity interpretations.",
+        "delivery": "Email PDF (within 48hr) — 5-7 page report",
+        "purpose": "Primary revenue driver. Anchored against $88 Destiny Reading to feel like a deal.",
+        "what_customer_gets": [
+          "Full 9-palace QMDJ chart with detailed annotations",
+          "3 in-depth question analyses",
+          "Birth element compatibility check (basic 命盘 reference)",
+          "Personalized affirmation based on dominant energy",
+          "Optimal timing recommendations for the next 30 days",
+          "5-7 page branded PDF report",
+          "30-day follow-up email support"
+        ],
+        "form_fields": ["name", "email", "date_of_birth", "question_1", "question_2", "question_3", "context"],
+        "automation": "Semi-automated. QMDJ engine + birth element cross-reference. AI narrative. PDF generation."
+      },
+      {
+        "tier": "PREMIUM",
+        "name": "Destiny Blueprint (命盘天书)",
+        "price_usd": 88.00,
+        "qmdj_mode": "命盘 (Destiny Reading)",
+        "description": "Full destiny reading using birth date/time/location. Reveals life path, innate strengths, hidden challenges, and optimal life direction through the complete QMDJ destiny chart.",
+        "delivery": "Email PDF (within 72hr) — 10-15 page report",
+        "purpose": "High-value product that uses birth data (命盘 mode). Unique to Jade Oracle — no competitor offers QMDJ destiny readings at scale.",
+        "what_customer_gets": [
+          "Complete QMDJ destiny chart based on birth data",
+          "Life path analysis (天命 reading)",
+          "Innate strengths and hidden talents",
+          "Challenges and growth areas with specific guidance",
+          "Relationship compatibility profile",
+          "Career alignment analysis",
+          "Health tendencies and body constitution",
+          "Optimal life direction and timing windows",
+          "10-15 page premium PDF report with full chart visuals",
+          "60-day follow-up email support"
+        ],
+        "form_fields": ["name", "email", "date_of_birth", "time_of_birth", "city_of_birth", "specific_questions"],
+        "automation": "Semi-automated. QMDJ engine computes full destiny chart. AI generates comprehensive narrative. Premium PDF template."
+      },
+      {
+        "tier": "HIGH_TICKET",
+        "name": "QMDJ Strategic Session (奇门策略会)",
+        "price_usd": 188.00,
+        "qmdj_mode": "时盘 + 命盘 combined",
+        "description": "Live 45-minute video session with a QMDJ practitioner. Combines your destiny chart with real-time moment analysis for strategic life/business decisions. The imperial advisor experience.",
+        "delivery": "Live Zoom/Google Meet (scheduled) + session recording + PDF summary",
+        "purpose": "High-ticket conversion. Positions Jade Oracle as legitimate practitioner, not just AI. Jenn delivers personally (limited availability creates scarcity).",
+        "what_customer_gets": [
+          "45-minute live video session (not 30 — differentiate from Samira's $97)",
+          "Pre-session destiny chart preparation",
+          "Real-time QMDJ chart cast during session",
+          "Strategic timing analysis for specific decisions",
+          "Direction and positioning recommendations",
+          "Session recording (MP4)",
+          "Follow-up PDF summary with key insights and action items",
+          "90-day email support"
+        ],
+        "form_fields": ["name", "email", "date_of_birth", "time_of_birth", "primary_question", "background_context", "timezone"],
+        "automation": "Manual. Jenn conducts live. QMDJ engine pre-generates charts. AI drafts follow-up PDF.",
+        "capacity": "Max 10 sessions/month (scarcity positioning)"
+      },
+      {
+        "tier": "SUBSCRIPTION",
+        "name": "Jade Circle Monthly (翡翠圈)",
+        "price_usd_monthly": 18.88,
+        "price_usd_yearly": 88.88,
+        "first_month_usd": 8.88,
+        "qmdj_mode": "时盘 (automated daily/weekly)",
+        "description": "Monthly subscription for ongoing spiritual guidance. Weekly energy forecasts, monthly personal reading, member-only Telegram group, discounts on all products.",
+        "delivery": "Telegram group + email + Shopify member portal",
+        "purpose": "Predictable MRR. Retention engine. Community builds loyalty and reduces churn.",
+        "what_customer_gets": [
+          "Weekly QMDJ energy forecast (automated, delivered every Monday)",
+          "Monthly personal mini-reading (1 question, delivered via email)",
+          "Access to private Jade Circle Telegram group",
+          "20% discount on all paid readings",
+          "Priority booking for QMDJ Strategic Sessions",
+          "Monthly full/new moon energy readings",
+          "Exclusive content: QMDJ education, Chinese metaphysics basics"
+        ],
+        "automation": "90% automated. Weekly forecasts from QMDJ engine. Monthly reading semi-automated. Telegram group moderated by AI + Jenn."
+      },
+      {
+        "tier": "ULTRA_PREMIUM",
+        "name": "Year of Jade (翡翠之年)",
+        "price_usd": 388.00,
+        "original_price_usd": 688.00,
+        "qmdj_mode": "命盘 + 12 monthly 时盘 readings",
+        "description": "Annual package: Full destiny blueprint + monthly moment readings for an entire year. The complete Jade Oracle experience.",
+        "delivery": "Email PDF (destiny report in 72hr) + monthly email readings + priority Telegram access",
+        "purpose": "Whale product. Maximum LTV. Competes with Samira's $994 yearly but at lower price with more value.",
+        "what_customer_gets": [
+          "Full Destiny Blueprint (命盘天书) — the $88 product",
+          "12 monthly personal readings (one per month, timed to new moon)",
+          "Quarterly deep-dive readings (4x per year, timed to solstices/equinoxes)",
+          "Jade Circle membership included for the full year",
+          "2 priority QMDJ Strategic Session bookings (normally $188 each)",
+          "Personalized annual energy calendar",
+          "Direct Telegram access to Jade Oracle team"
+        ],
+        "automation": "Mix. Destiny report semi-automated. Monthly readings automated. Sessions manual."
+      }
+    ],
+
+    "upsell_funnel": {
+      "step_1_traffic": {
+        "sources": ["TikTok Ads (Jade persona videos)", "Instagram Reels", "Pinterest (qimen board)", "Telegram organic", "SEO (QMDJ keywords — very low competition in English)"],
+        "hook": "Daily free reading on landing page + Telegram bot"
+      },
+      "step_2_conversion": {
+        "landing_page": "$1 Moment Reading — 'Ask the Oracle anything. Just $1.'",
+        "form": "Name, email, one question",
+        "order_bump": "+$5 for Rush Delivery (12hr instead of 24hr)"
+      },
+      "step_3_post_purchase_upsell_1": {
+        "offer": "Quick Clarity Reading — 3 questions for $8.88 (normally $18.88)",
+        "trigger": "Immediately after $1 purchase on thank-you page"
+      },
+      "step_4_post_purchase_upsell_2": {
+        "offer": "Deep Insight Reading — $28.88 (normally $48.88)",
+        "trigger": "After upsell 1 acceptance or decline"
+      },
+      "step_5_post_purchase_upsell_3": {
+        "offer": "Jade Circle first month $8.88 (normally $18.88)",
+        "trigger": "Final upsell on thank-you page"
+      },
+      "step_6_email_nurture": {
+        "sequence": [
+          {"day": 0, "email": "Order confirmation + what to expect"},
+          {"day": 0.04, "email": "Free daily reading link + Telegram invite (1hr after)"},
+          {"day": 1, "email": "Your reading is being prepared (anticipation builder)"},
+          {"day": 2, "email": "Reading delivered + feedback request"},
+          {"day": 4, "email": "Educational content: What is QMDJ? (builds authority)"},
+          {"day": 7, "email": "Deep Insight Reading offer (20% off code)"},
+          {"day": 14, "email": "Jade Circle membership pitch"},
+          {"day": 21, "email": "Destiny Blueprint offer (命盘 = life changing)"},
+          {"day": 30, "email": "Re-engagement + testimonial request + 50% off next reading"}
+        ]
+      },
+      "projected_economics": {
+        "per_100_dollar_one_customers": {
+          "base_revenue": 100,
+          "rush_delivery_bump_15pct": 75,
+          "upsell_1_quick_reading_25pct": 222,
+          "upsell_2_deep_reading_12pct": 347,
+          "upsell_3_membership_8pct": 71,
+          "total_first_purchase": 815,
+          "avg_customer_value_first_purchase": 8.15,
+          "email_nurture_30day_additional": 250,
+          "total_30day_value_per_100": 1065,
+          "avg_30day_customer_value": 10.65
+        }
+      }
+    },
+
+    "unique_jade_oracle_advantages": [
+      "REAL SYSTEM: QMDJ is a verifiable mathematical system — charts can be shown, calculations are real. Samira has zero verifiable methodology.",
+      "CULTURAL AUTHENTICITY: Jenn studies under 长卿 (Chang Qing). Genuine lineage, not invented persona.",
+      "TWO MODES: 时盘 (moment) for instant questions + 命盘 (destiny) for deep life readings. No competitor offers both.",
+      "AUTOMATION: QMDJ engine (qmdj-calc.py) generates charts programmatically. Near-zero marginal cost per reading.",
+      "NICHE POSITIONING: 'AI + ancient Chinese divination' has almost zero competition in English market. QMDJ keywords are blue ocean SEO.",
+      "VISUAL DIFFERENTIATION: 9-palace QMDJ chart is visually distinct from tarot cards or birth charts. Instantly recognizable.",
+      "BILINGUAL: Chinese + English capability opens both Western seekers AND diaspora Chinese market.",
+      "EXISTING INFRASTRUCTURE: Telegram bot live, QMDJ engine built, Shopify store in progress, content pipeline operational."
+    ]
+  },
+
+  "implementation_priorities": {
+    "phase_1_mvp": {
+      "timeline": "Week 1-2",
+      "products_to_launch": ["Daily Energy Reading (free)", "$1 Moment Reading"],
+      "channels": ["Telegram bot (already live)", "Shopify landing page"],
+      "automation_needed": "QMDJ engine → formatted reading text → email delivery",
+      "revenue_target": "$0 (list building phase)"
+    },
+    "phase_2_monetize": {
+      "timeline": "Week 3-4",
+      "products_to_launch": ["Quick Clarity ($8.88)", "Deep Insight ($28.88)"],
+      "channels": ["Shopify store + post-purchase upsells", "Email sequences via Klaviyo"],
+      "automation_needed": "PDF generation pipeline, upsell page, email automation",
+      "revenue_target": "$500-1000/mo"
+    },
+    "phase_3_scale": {
+      "timeline": "Month 2-3",
+      "products_to_launch": ["Destiny Blueprint ($88)", "Jade Circle subscription ($18.88/mo)"],
+      "channels": ["TikTok ads (Jade persona videos)", "SEO content"],
+      "automation_needed": "命盘 mode full automation, subscription billing, Telegram group",
+      "revenue_target": "$2000-5000/mo"
+    },
+    "phase_4_premium": {
+      "timeline": "Month 4+",
+      "products_to_launch": ["QMDJ Strategic Session ($188)", "Year of Jade ($388)"],
+      "channels": ["Referrals from existing customers", "Pinterest", "YouTube"],
+      "automation_needed": "Booking system, session prep automation",
+      "revenue_target": "$5000-15000/mo"
+    }
+  }
+}

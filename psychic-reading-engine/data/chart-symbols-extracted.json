@@ -1,0 +1,897 @@
+{
+  "source": "chart-images-and-64symbols-pdf",
+  "extracted_date": "2026-03-17",
+  "extractor": "Claude Code (Sonnet 4.6)",
+  "source_files": [
+    "709dc89a53ce427bf5364246bdeb43b8.JPG (Ba Gua / Nine Palaces trigram layout)",
+    "ab4030a0e5ebc07ca860a82473af3c62.JPG (2026 丙午年九宫飞星图)",
+    "风生水起_奇门64个符号资料.pdf (7 real-content pages extracted from 217-page document)"
+  ],
+  "notes": "PDF contained 217 pages but only 7 had real image content (pages 1, 23, 87, 109, 131, 153, 175). Pages 2-22 and most others were 5953-byte placeholder images. All 7 real pages were visually read and fully transcribed.",
+
+  "ba_gua_nine_palaces": {
+    "description": "八卦九宫 — Eight Trigrams mapped to Nine Palaces with elements, Lo Shu numbers, and family members",
+    "source_image": "Image 1 (709dc89a)",
+    "layout": "Standard Hou Tian (Later Heaven) Ba Gua arrangement",
+    "entries": [
+      {
+        "trigram_zh": "巽",
+        "trigram_pinyin": "Xun",
+        "trigram_en": "Wind/Wood",
+        "palace_number": 4,
+        "element": "木 / Wood",
+        "family_member_zh": "大女",
+        "family_member_en": "Eldest Daughter",
+        "direction": "东南 / Southeast"
+      },
+      {
+        "trigram_zh": "离",
+        "trigram_pinyin": "Li",
+        "trigram_en": "Fire",
+        "palace_number": 9,
+        "element": "火 / Fire",
+        "family_member_zh": "中女",
+        "family_member_en": "Middle Daughter",
+        "direction": "南 / South"
+      },
+      {
+        "trigram_zh": "坤",
+        "trigram_pinyin": "Kun",
+        "trigram_en": "Earth",
+        "palace_number": 2,
+        "element": "土 / Earth",
+        "family_member_zh": "母",
+        "family_member_en": "Mother",
+        "direction": "西南 / Southwest"
+      },
+      {
+        "trigram_zh": "震",
+        "trigram_pinyin": "Zhen",
+        "trigram_en": "Thunder/Wood",
+        "palace_number": 3,
+        "element": "木 / Wood",
+        "family_member_zh": "大子",
+        "family_member_en": "Eldest Son",
+        "direction": "东 / East"
+      },
+      {
+        "trigram_zh": "中宫",
+        "trigram_pinyin": "Zhong Gong",
+        "trigram_en": "Center Palace",
+        "palace_number": 5,
+        "element": "土 / Earth",
+        "family_member_zh": "无 (center)",
+        "family_member_en": "Center (no family member)",
+        "direction": "中央 / Center"
+      },
+      {
+        "trigram_zh": "兑",
+        "trigram_pinyin": "Dui",
+        "trigram_en": "Lake/Metal",
+        "palace_number": 7,
+        "element": "金 / Metal",
+        "family_member_zh": "幼女",
+        "family_member_en": "Youngest Daughter",
+        "direction": "西 / West"
+      },
+      {
+        "trigram_zh": "艮",
+        "trigram_pinyin": "Gen",
+        "trigram_en": "Mountain/Earth",
+        "palace_number": 8,
+        "element": "土 / Earth",
+        "family_member_zh": "幼男",
+        "family_member_en": "Youngest Son",
+        "direction": "东北 / Northeast"
+      },
+      {
+        "trigram_zh": "坎",
+        "trigram_pinyin": "Kan",
+        "trigram_en": "Water",
+        "palace_number": 1,
+        "element": "水 / Water",
+        "family_member_zh": "中男",
+        "family_member_en": "Middle Son",
+        "direction": "北 / North"
+      },
+      {
+        "trigram_zh": "乾",
+        "trigram_pinyin": "Qian",
+        "trigram_en": "Heaven/Metal",
+        "palace_number": 6,
+        "element": "金 / Metal",
+        "family_member_zh": "父",
+        "family_member_en": "Father",
+        "direction": "西北 / Northwest"
+      }
+    ]
+  },
+
+  "flying_stars_2026": {
+    "description": "2026 丙午年九宫飞星图 — 2026 Year of Bing Wu Annual Flying Stars Chart",
+    "source_image": "Image 2 (ab4030a0)",
+    "year": "2026 丙午年",
+    "entries": [
+      {
+        "direction_zh": "东南方",
+        "direction_en": "Southeast",
+        "annual_position_zh": "流年喜神位",
+        "annual_position_en": "Annual Happiness/Joy Position",
+        "star_zh": "九紫右弼星",
+        "star_en": "Nine Purple You Bi Star",
+        "star_number": 9,
+        "governs_zh": "主姻缘、感情",
+        "governs_en": "Governs romance, relationships"
+      },
+      {
+        "direction_zh": "正南方",
+        "direction_en": "South",
+        "annual_position_zh": "流年五黄位",
+        "annual_position_en": "Annual Wu Huang (Five Yellow) Position",
+        "star_zh": "五黄廉贞星",
+        "star_en": "Five Yellow Lian Zhen Star",
+        "star_number": 5,
+        "governs_zh": "主凶灾、祸患",
+        "governs_en": "Governs disasters, calamities — AVOID",
+        "auspicious": false
+      },
+      {
+        "direction_zh": "西南方",
+        "direction_en": "Southwest",
+        "annual_position_zh": "流年破财位",
+        "annual_position_en": "Annual Wealth-Breaking Position",
+        "star_zh": "七赤破军星",
+        "star_en": "Seven Red Po Jun Star",
+        "star_number": 7,
+        "governs_zh": "主破财、盗贼",
+        "governs_en": "Governs financial loss, theft",
+        "auspicious": false
+      },
+      {
+        "direction_zh": "正东方",
+        "direction_en": "East",
+        "annual_position_zh": "流年正财位",
+        "annual_position_en": "Annual Primary Wealth Position",
+        "star_zh": "八白左辅星",
+        "star_en": "Eight White Zuo Fu Star",
+        "star_number": 8,
+        "governs_zh": "主财运、事业",
+        "governs_en": "Governs wealth luck, career",
+        "auspicious": true
+      },
+      {
+        "direction_zh": "中宫",
+        "direction_en": "Center",
+        "annual_position_zh": "流年桃花位",
+        "annual_position_en": "Annual Peach Blossom (Romance) Position",
+        "star_zh": "一白贪狼星",
+        "star_en": "One White Tan Lang Star",
+        "star_number": 1,
+        "governs_zh": "主感情、人缘",
+        "governs_en": "Governs love, social connections",
+        "auspicious": true
+      },
+      {
+        "direction_zh": "正西方",
+        "direction_en": "West",
+        "annual_position_zh": "流年小人位",
+        "annual_position_en": "Annual Petty Person/Conflict Position",
+        "star_zh": "三碧禄存星",
+        "star_en": "Three Jade Lu Cun Star",
+        "star_number": 3,
+        "governs_zh": "主是非、官灾",
+        "governs_en": "Governs disputes, official disasters",
+        "auspicious": false
+      },
+      {
+        "direction_zh": "东北方",
+        "direction_en": "Northeast",
+        "annual_position_zh": "流年文昌位",
+        "annual_position_en": "Annual Academic/Career Position",
+        "star_zh": "四绿文曲星",
+        "star_en": "Four Green Wen Qu Star",
+        "star_number": 4,
+        "governs_zh": "主学业、官位",
+        "governs_en": "Governs studies, official rank",
+        "auspicious": true
+      },
+      {
+        "direction_zh": "正北方",
+        "direction_en": "North",
+        "annual_position_zh": "流年偏财位",
+        "annual_position_en": "Annual Windfall/Side Wealth Position",
+        "star_zh": "六白武曲星",
+        "star_en": "Six White Wu Qu Star",
+        "star_number": 6,
+        "governs_zh": "主横财、贵人",
+        "governs_en": "Governs unexpected wealth, benefactors",
+        "auspicious": true
+      },
+      {
+        "direction_zh": "西北方",
+        "direction_en": "Northwest",
+        "annual_position_zh": "流年病符位",
+        "annual_position_en": "Annual Illness/Sickness Position",
+        "star_zh": "二黑巨门星",
+        "star_en": "Two Black Ju Men Star",
+        "star_number": 2,
+        "governs_zh": "主疾病、伤痛",
+        "governs_en": "Governs illness, injury — AVOID",
+        "auspicious": false
+      }
+    ]
+  },
+
+  "nine_palaces_characteristics": {
+    "description": "九宫特性 — Characteristics and meanings of each of the Nine Palaces",
+    "source": "PDF page 1",
+    "entries": [
+      {
+        "palace_zh": "巽宫",
+        "palace_en": "Xun Palace",
+        "number": 4,
+        "direction": "东南 / Southeast",
+        "element": "木 / Wood",
+        "keywords_zh": ["柔和", "摇摆不定", "徘徊", "终身学习"],
+        "keywords_en": ["Gentle/soft", "Swaying/unstable", "Wandering/hesitant", "Lifelong learning"]
+      },
+      {
+        "palace_zh": "离宫",
+        "palace_en": "Li Palace",
+        "number": 9,
+        "direction": "南 / South",
+        "element": "火 / Fire",
+        "keywords_zh": ["光明", "美丽", "空虚", "艺术"],
+        "keywords_en": ["Bright/illuminated", "Beautiful", "Empty/hollow", "Art"]
+      },
+      {
+        "palace_zh": "坤宫",
+        "palace_en": "Kun Palace",
+        "number": 2,
+        "direction": "西南 / Southwest",
+        "element": "土 / Earth",
+        "keywords_zh": ["包容", "大地", "踏实", "谦虚"],
+        "keywords_en": ["Inclusive/tolerant", "Earth/grounded", "Practical/solid", "Humble"]
+      },
+      {
+        "palace_zh": "震宫",
+        "palace_en": "Zhen Palace",
+        "number": 3,
+        "direction": "东 / East",
+        "element": "木 / Wood",
+        "keywords_zh": ["震动", "上升", "争论"],
+        "keywords_en": ["Shaking/vibration", "Rising/ascending", "Argument/debate"]
+      },
+      {
+        "palace_zh": "中宫",
+        "palace_en": "Center Palace",
+        "number": 5,
+        "direction": "中央 / Center",
+        "element": "土 / Earth",
+        "keywords_zh": ["中正"],
+        "keywords_en": ["Centered/upright/impartial"]
+      },
+      {
+        "palace_zh": "兑宫",
+        "palace_en": "Dui Palace",
+        "number": 7,
+        "direction": "西 / West",
+        "element": "金 / Metal",
+        "keywords_zh": ["口舌", "娱乐", "饮食"],
+        "keywords_en": ["Speech/gossip", "Entertainment", "Food and drink"]
+      },
+      {
+        "palace_zh": "艮宫",
+        "palace_en": "Gen Palace",
+        "number": 8,
+        "direction": "东北 / Northeast",
+        "element": "土 / Earth",
+        "keywords_zh": ["等待", "慎重", "改革"],
+        "keywords_en": ["Waiting/patience", "Caution/prudence", "Reform/change"]
+      },
+      {
+        "palace_zh": "坎宫",
+        "palace_en": "Kan Palace",
+        "number": 1,
+        "direction": "北 / North",
+        "element": "水 / Water",
+        "keywords_zh": ["险阻", "诱惑", "泌尿系统", "足智多谋"],
+        "keywords_en": ["Obstacles/danger", "Temptation/allure", "Urinary system", "Full of wisdom/resourceful"]
+      },
+      {
+        "palace_zh": "乾宫",
+        "palace_en": "Qian Palace",
+        "number": 6,
+        "direction": "西北 / Northwest",
+        "element": "金 / Metal",
+        "keywords_zh": ["领导", "长辈", "权力"],
+        "keywords_en": ["Leadership", "Elders/seniors", "Power/authority"]
+      }
+    ]
+  },
+
+  "nine_palaces_careers": {
+    "description": "九宫对应的职业 — Career/profession associations for each palace",
+    "source": "PDF page 23",
+    "entries": [
+      {
+        "palace_zh": "巽宫",
+        "palace_en": "Xun Palace",
+        "direction": "东南 / Southeast",
+        "careers_zh": ["经商", "广告", "传媒公关", "旅游", "自由职业"],
+        "careers_en": ["Business/commerce", "Advertising", "Media/PR", "Tourism", "Freelancing"]
+      },
+      {
+        "palace_zh": "离宫",
+        "palace_en": "Li Palace",
+        "direction": "南 / South",
+        "careers_zh": ["文化", "电子娱乐", "餐饮美容", "美发", "新能源"],
+        "careers_en": ["Culture", "Electronic entertainment", "F&B/beauty", "Hair styling", "New energy"]
+      },
+      {
+        "palace_zh": "坤宫",
+        "palace_en": "Kun Palace",
+        "direction": "西南 / Southwest",
+        "careers_zh": ["养殖业", "种植业", "房地产", "环保物流"],
+        "careers_en": ["Livestock farming", "Crop farming/planting", "Real estate", "Environmental logistics"]
+      },
+      {
+        "palace_zh": "震宫",
+        "palace_en": "Zhen Palace",
+        "direction": "东 / East",
+        "careers_zh": ["警察", "消防员", "电力", "通信", "运动员", "工厂", "司机"],
+        "careers_en": ["Police", "Firefighters", "Power/electricity", "Communications", "Athletes", "Factory work", "Drivers"]
+      },
+      {
+        "palace_zh": "兑宫",
+        "palace_en": "Dui Palace",
+        "direction": "西 / West",
+        "careers_zh": ["主播", "主持", "教师", "律师", "社区服务", "以口为业"],
+        "careers_en": ["Broadcaster", "Host/MC", "Teacher", "Lawyer", "Community service", "Speech-based professions"]
+      },
+      {
+        "palace_zh": "艮宫",
+        "palace_en": "Gen Palace",
+        "direction": "东北 / Northeast",
+        "careers_zh": ["矿业", "科研", "医疗", "保险", "法律", "教育"],
+        "careers_en": ["Mining", "Scientific research", "Medical", "Insurance", "Law", "Education"]
+      },
+      {
+        "palace_zh": "坎宫",
+        "palace_en": "Kan Palace",
+        "direction": "北 / North",
+        "careers_zh": ["军人", "黑社会", "水利", "海事", "渔业", "物流", "船舶", "休闲行业"],
+        "careers_en": ["Military", "Organized crime (shadow economy)", "Water conservancy", "Maritime", "Fishing", "Logistics", "Shipping", "Leisure industry"]
+      },
+      {
+        "palace_zh": "乾宫",
+        "palace_en": "Qian Palace",
+        "direction": "西北 / Northwest",
+        "careers_zh": ["航空航天", "金融", "银行", "科技", "总裁", "政治家", "将领"],
+        "careers_en": ["Aviation/aerospace", "Finance", "Banking", "Technology", "CEO/president", "Politicians", "Military commanders"]
+      }
+    ]
+  },
+
+  "earthly_branches_palace_map": {
+    "description": "地支宫位图 — Earthly Branches mapped to Nine Palace positions",
+    "source": "PDF page 87",
+    "layout_note": "Standard Lo Shu/Nine Palace directional arrangement",
+    "entries": [
+      {
+        "palace_direction": "东南 / Southeast",
+        "branches": ["巳", "辰"],
+        "note": "巳 (upper), 辰 (lower)"
+      },
+      {
+        "palace_direction": "南 / South",
+        "branches": ["午"],
+        "note": "午 at south position"
+      },
+      {
+        "palace_direction": "西南 / Southwest",
+        "branches": ["未", "申"],
+        "note": "未 (upper), 申 (lower)"
+      },
+      {
+        "palace_direction": "东 / East",
+        "branches": ["卯"],
+        "note": "卯 at east position"
+      },
+      {
+        "palace_direction": "西 / West",
+        "branches": ["酉"],
+        "note": "酉 at west position"
+      },
+      {
+        "palace_direction": "东北 / Northeast",
+        "branches": ["寅", "丑"],
+        "note": "寅 (upper), 丑 (lower)"
+      },
+      {
+        "palace_direction": "北 / North",
+        "branches": ["子"],
+        "note": "子 at north position"
+      },
+      {
+        "palace_direction": "西北 / Northwest",
+        "branches": ["戌", "亥"],
+        "note": "戌 (upper), 亥 (lower)"
+      }
+    ]
+  },
+
+  "jiu_xing": {
+    "description": "九星 — Nine Stars: character keywords, elements, and mytho-symbolic associations",
+    "source": "PDF pages 109 and 131",
+    "entries": [
+      {
+        "name_zh": "天辅星",
+        "name_pinyin": "Tian Fu",
+        "name_en": "Heavenly Assistant Star",
+        "number": 4,
+        "palace": "巽四宫 / Xun 4th Palace",
+        "element_zh": "木",
+        "element_en": "Wood",
+        "keywords_zh": ["文昌", "文化", "老师"],
+        "keywords_en": ["Literary brilliance", "Culture", "Teacher"],
+        "mythic_character": null,
+        "auspicious": true,
+        "auspicious_note": "四吉星之一 / One of the Four Auspicious Stars",
+        "career_zh": "做文化教育、服装鞋帽、工艺美术、设计规划、科技攻关、木材加工、园林设计、装饰装修",
+        "career_en": "Cultural education, clothing/shoes/hats, arts & crafts, design planning, technology research, wood processing, landscape design, decoration"
+      },
+      {
+        "name_zh": "天英星",
+        "name_pinyin": "Tian Ying",
+        "name_en": "Heavenly Hero Star",
+        "number": 9,
+        "palace": "离九宫 / Li 9th Palace",
+        "element_zh": "火",
+        "element_en": "Fire",
+        "keywords_zh": ["英雄"],
+        "keywords_en": ["Hero/heroic"],
+        "mythic_character": null,
+        "auspicious": "neutral",
+        "auspicious_note": "中平之星 / Neutral star",
+        "career_zh": "做电子电器、音响灯具、表演艺术、音像出版、美术美工",
+        "career_en": "Electronics/appliances, audio/lighting equipment, performing arts, audio-visual publishing, graphic arts"
+      },
+      {
+        "name_zh": "天芮星",
+        "name_pinyin": "Tian Rui",
+        "name_en": "Heavenly Baneful Star",
+        "number": 2,
+        "palace": "坤二宫 / Kun 2nd Palace",
+        "element_zh": "土",
+        "element_en": "Earth",
+        "keywords_zh": ["文昌"],
+        "keywords_en": ["Literary prominence (in this context: knowledge/study)"],
+        "mythic_character": null,
+        "auspicious": false,
+        "auspicious_note": "三凶星之一，病的象征 / One of Three Inauspicious Stars, symbol of illness",
+        "career_zh": "做教育办学、文化用品、医疗设备、宗教用品、农贸产品、土地资源、农林牧渔、禽畜养殖",
+        "career_en": "Education, cultural products, medical equipment, religious goods, agricultural products, land resources, farming/forestry/fishing, animal husbandry"
+      },
+      {
+        "name_zh": "天冲星",
+        "name_pinyin": "Tian Chong",
+        "name_en": "Heavenly Rushing Star",
+        "number": 3,
+        "palace": "震三宫 / Zhen 3rd Palace",
+        "element_zh": "木",
+        "element_en": "Wood",
+        "keywords_zh": ["孙悟空", "冲的快"],
+        "keywords_en": ["Sun Wukong (Monkey King) archetype", "Fast-charging/impulsive"],
+        "mythic_character": "孙悟空 (Sun Wukong / Monkey King)",
+        "auspicious": "secondary",
+        "auspicious_note": "次吉之星 / Secondary auspicious star",
+        "career_zh": "做营销、体育、竞技、电器、机械制造、木器加工、娱乐设施、电器设备、邮电系统",
+        "career_en": "Marketing, sports, competition, electronics, machine manufacturing, woodworking, entertainment facilities, electrical equipment, postal/telecom systems"
+      },
+      {
+        "name_zh": "天禽星",
+        "name_pinyin": "Tian Qin",
+        "name_en": "Heavenly Bird Star",
+        "number": 5,
+        "palace": "中五宫 / Center 5th Palace",
+        "element_zh": "土",
+        "element_en": "Earth",
+        "keywords_zh": ["中正", "吉星", "领袖"],
+        "keywords_en": ["Centered/upright", "Auspicious star", "Leader"],
+        "mythic_character": null,
+        "auspicious": true,
+        "auspicious_note": "四吉星之一，百事皆宜，四时皆吉 / One of Four Auspicious Stars, suitable for all matters",
+        "career_zh": null,
+        "career_en": null
+      },
+      {
+        "name_zh": "天柱星",
+        "name_pinyin": "Tian Zhu",
+        "name_en": "Heavenly Pillar Star",
+        "number": 7,
+        "palace": "兑七宫 / Dui 7th Palace",
+        "element_zh": "金",
+        "element_en": "Metal",
+        "keywords_zh": ["口才", "口舌"],
+        "keywords_en": ["Eloquence/oratory", "Speech/gossip"],
+        "mythic_character": null,
+        "auspicious": false,
+        "auspicious_note": "三凶星之一 / One of Three Inauspicious Stars",
+        "career_zh": "做律师、老师、歌唱表演、音响器材、说教咨询、或在人声鼎沸、机器喧闹的环境中从事事业或求财",
+        "career_en": "Lawyers, teachers, singing/performing, audio equipment, counseling/consulting, or professions in noisy/bustling environments"
+      },
+      {
+        "name_zh": "天任星",
+        "name_pinyin": "Tian Ren",
+        "name_en": "Heavenly Duty Star",
+        "number": 8,
+        "palace": "艮八宫 / Gen 8th Palace",
+        "element_zh": "土",
+        "element_en": "Earth",
+        "keywords_zh": ["任劳任怨", "沙和尚"],
+        "keywords_en": ["Hardworking and uncomplaining", "Sha Wujing (Sand Monk) archetype"],
+        "mythic_character": "沙和尚 (Sha Wujing / Sandy from Journey to the West)",
+        "auspicious": true,
+        "auspicious_note": "四吉星之一，百事皆吉，四时皆宜 / One of Four Auspicious Stars",
+        "career_zh": "做农产、矿产、土地资源开发利用、建筑、贸易法律、利益、教育",
+        "career_en": "Agricultural products, mining, land resource development, construction, trade law, financial interests, education"
+      },
+      {
+        "name_zh": "天蓬星",
+        "name_pinyin": "Tian Peng",
+        "name_en": "Heavenly Canopy Star",
+        "number": 1,
+        "palace": "坎一宫 / Kan 1st Palace",
+        "element_zh": "水",
+        "element_en": "Water",
+        "keywords_zh": ["猪八戒", "天蓬元帅"],
+        "keywords_en": ["Zhu Bajie (Pigsy) archetype", "Marshal Tian Peng"],
+        "mythic_character": "猪八戒 (Zhu Bajie / Pigsy from Journey to the West)",
+        "auspicious": false,
+        "auspicious_note": "三凶星之一，凶星、盗星、破财之星 / One of Three Inauspicious Stars",
+        "career_zh": "做建筑、外贸、水产、养殖、运输、酿造、餐饮、娱乐、洗浴、酒吧、美容美体",
+        "career_en": "Construction, foreign trade, aquatic products, livestock, transportation, brewing, F&B, entertainment, bathhouses, bars, beauty"
+      },
+      {
+        "name_zh": "天心星",
+        "name_pinyin": "Tian Xin",
+        "name_en": "Heavenly Heart Star",
+        "number": 6,
+        "palace": "乾六宫 / Qian 6th Palace",
+        "element_zh": "金",
+        "element_en": "Metal",
+        "keywords_zh": ["领导人心"],
+        "keywords_en": ["Leader who wins hearts/minds"],
+        "mythic_character": null,
+        "auspicious": true,
+        "auspicious_note": "四吉星之一，管理者，主才华能施展 / One of Four Auspicious Stars, manager, talents shine",
+        "career_zh": "做技术管理、政治指导、组织策划、医药卫生、宗教哲学、金融机构、交通运输",
+        "career_en": "Technical management, political guidance, organizational planning, medicine/health, religious philosophy, financial institutions, transportation"
+      }
+    ],
+    "auspicious_classification": {
+      "four_auspicious_四吉星": ["天心星", "天禽星", "天辅星", "天任星"],
+      "secondary_auspicious_次吉": ["天冲星"],
+      "neutral_中平": ["天英星"],
+      "three_inauspicious_三凶星": ["天蓬星", "天芮星", "天柱星"]
+    },
+    "journey_to_west_archetypes": {
+      "note": "Three stars are associated with Journey to the West character archetypes",
+      "天禽星": "唐僧 (Tang Seng / Monk Tripitaka) — leader, upright",
+      "天冲星": "孙悟空 (Sun Wukong / Monkey King) — fast, impulsive, clever",
+      "天任星": "沙和尚 (Sha Wujing / Sandy) — hardworking, loyal, uncomplaining",
+      "天蓬星": "猪八戒 (Zhu Bajie / Pigsy) — greedy, sensual, lazy yet capable"
+    }
+  },
+
+  "ba_men": {
+    "description": "八门 — Eight Gates/Doors: positions, characteristics, and career associations",
+    "source": "PDF pages 153 and 175",
+    "entries": [
+      {
+        "name_zh": "休门",
+        "name_pinyin": "Xiu Men",
+        "name_en": "Rest Gate",
+        "number": 1,
+        "palace": "坎一宫 / Kan 1st Palace",
+        "direction": "北 / North",
+        "element": "水 / Water",
+        "auspicious": true,
+        "auspicious_level": "吉 / Auspicious",
+        "keywords_zh": ["躺赢", "休息", "修行"],
+        "keywords_en": ["Effortless winning/lying flat", "Rest/relaxation", "Cultivation/spiritual practice"],
+        "career_zh": "主机械修理、物流储运、休闲娱乐、宾馆设施修行",
+        "career_en": "Mechanical repair, logistics/warehousing, leisure entertainment, hotel facilities, spiritual practice"
+      },
+      {
+        "name_zh": "生门",
+        "name_pinyin": "Sheng Men",
+        "name_en": "Life Gate",
+        "number": 2,
+        "palace": "艮八宫 / Gen 8th Palace",
+        "direction": "东北 / Northeast",
+        "element": "土 / Earth",
+        "auspicious": true,
+        "auspicious_level": "大吉 / Very Auspicious",
+        "keywords_zh": ["生意兴隆", "生龙活虎"],
+        "keywords_en": ["Thriving business", "Full of vitality/dynamic"],
+        "career_zh": "主买卖交易、种植养殖、地产开发、朝阳企业、生产制造",
+        "career_en": "Trade/commerce, farming/livestock, real estate development, sunrise industries, manufacturing"
+      },
+      {
+        "name_zh": "伤门",
+        "name_pinyin": "Shang Men",
+        "name_en": "Injury Gate",
+        "number": 3,
+        "palace": "震三宫 / Zhen 3rd Palace",
+        "direction": "东 / East",
+        "element": "木 / Wood",
+        "auspicious": false,
+        "auspicious_level": "凶 / Inauspicious",
+        "keywords_zh": ["四处奔波", "才华横溢"],
+        "keywords_en": ["Running around everywhere", "Overflowing with talent"],
+        "career_zh": "主车船交易、驾驶培训、体育竞技、博彩、渔猎",
+        "career_en": "Vehicle/boat trading, driving training, sports competition, gambling, fishing/hunting"
+      },
+      {
+        "name_zh": "杜门",
+        "name_pinyin": "Du Men",
+        "name_en": "Obstruction Gate",
+        "number": 4,
+        "palace": "巽四宫 / Xun 4th Palace",
+        "direction": "东南 / Southeast",
+        "element": "木 / Wood",
+        "auspicious": false,
+        "auspicious_level": "凶 / Inauspicious",
+        "keywords_zh": ["堵塞不通", "持续学习", "利于隐藏"],
+        "keywords_en": ["Blocked/impassable", "Continuous learning", "Favorable for concealment"],
+        "career_zh": "主技术应用、软件开发、公检法司",
+        "career_en": "Technical applications, software development, law enforcement/judiciary"
+      },
+      {
+        "name_zh": "景门",
+        "name_pinyin": "Jing Men",
+        "name_en": "Scenery/Display Gate",
+        "number": 5,
+        "palace": "离九宫 / Li 9th Palace",
+        "direction": "南 / South",
+        "element": "火 / Fire",
+        "auspicious": "neutral",
+        "auspicious_level": "中平 / Neutral (can be auspicious for display/media)",
+        "keywords_zh": ["展示自己", "出谋划策", "公开形象"],
+        "keywords_en": ["Displaying oneself", "Strategizing and planning", "Public image/brand"],
+        "career_zh": "美容美发、装饰装修、化妆用品、影视传媒、信息业、文艺文化",
+        "career_en": "Beauty/hair, decoration/renovation, cosmetics, film/media, information industry, arts & culture"
+      },
+      {
+        "name_zh": "死门",
+        "name_pinyin": "Si Men",
+        "name_en": "Death Gate",
+        "number": 6,
+        "palace": "坤二宫 / Kun 2nd Palace",
+        "direction": "西南 / Southwest",
+        "element": "土 / Earth",
+        "auspicious": false,
+        "auspicious_level": "大凶 / Very Inauspicious",
+        "keywords_zh": ["凉凉", "固执", "死磕", "蛮不讲理"],
+        "keywords_en": ["Cold/finished", "Stubborn", "Grinding/tenacious to extreme", "Unreasonable"],
+        "career_zh": "主宗教用品、丧葬行业、屠宰行业、肉类加工、锁具、地皮交易",
+        "career_en": "Religious goods, funeral industry, slaughtering, meat processing, locks/security, land/plot trading"
+      },
+      {
+        "name_zh": "惊门",
+        "name_pinyin": "Jing Men",
+        "name_en": "Fright/Shock Gate",
+        "number": 7,
+        "palace": "兑七宫 / Dui 7th Palace",
+        "direction": "西 / West",
+        "element": "金 / Metal",
+        "auspicious": false,
+        "auspicious_level": "凶 / Inauspicious",
+        "keywords_zh": ["争执", "口才"],
+        "keywords_en": ["Arguments/disputes", "Eloquence/oratory"],
+        "career_zh": "主口、说唱艺术、诉讼律师、乐器制造、热闹场所",
+        "career_en": "Speech-based work, rap/vocal arts, litigation lawyers, musical instrument manufacturing, lively/noisy venues"
+      },
+      {
+        "name_zh": "开门",
+        "name_pinyin": "Kai Men",
+        "name_en": "Opening Gate",
+        "number": 8,
+        "palace": "乾六宫 / Qian 6th Palace",
+        "direction": "西北 / Northwest",
+        "element": "金 / Metal",
+        "auspicious": true,
+        "auspicious_level": "大吉 / Very Auspicious",
+        "keywords_zh": ["好的开始", "万物复苏", "为父", "为尊", "为领导"],
+        "keywords_en": ["Good beginning", "All things reviving/renewal", "Father figure", "Honored/revered", "Leadership"],
+        "career_zh": "主公司工厂、店铺商店、五金行业、产品营销",
+        "career_en": "Companies/factories, retail shops/stores, hardware industry, product marketing"
+      }
+    ],
+    "auspicious_classification": {
+      "auspicious_吉门": ["开门", "休门", "生门"],
+      "neutral_中平": ["景门"],
+      "inauspicious_凶门": ["死门", "伤门", "杜门", "惊门"]
+    },
+    "fengshui_remedies_门迫": {
+      "惊门": "摆黑色物品 (修行智慧)",
+      "休门": "摆绿色物品 (生生不息，多吃绿色食物)",
+      "伤门/杜门": "摆紫色物品 (增加热情)",
+      "景门": "摆黄色物品 (养好信用)",
+      "生门/死门": "摆白色物品 (讲义气)",
+      "开门": "摆黑色物品 (持续学习)"
+    }
+  },
+
+  "ba_shen": {
+    "description": "八神 — Eight Deities/Spirits: roles, attributes, career associations, and interactions",
+    "source": "qmdj-pdfs-extracted.json (风生水起 Day 1 PM source)",
+    "note": "This section consolidates existing knowledge base data on the Eight Deities with additional structuring",
+    "entries": [
+      {
+        "name_zh": "值符",
+        "name_pinyin": "Zhi Fu",
+        "name_en": "Duty Talisman / Value Symbol",
+        "role_zh": "领导、钱、官印、长者",
+        "role_en": "Leader, money, official seal, elder",
+        "auspicious": true,
+        "judgment_zh": "最吉 — 领导者、正统、权威",
+        "judgment_en": "Most auspicious — leaders, orthodox authority",
+        "career_zh": "高档物品、高级产品、质高价高、名牌正宗",
+        "career_en": "High-end goods, premium products, high quality-high price, genuine brands"
+      },
+      {
+        "name_zh": "腾蛇",
+        "name_pinyin": "Teng She",
+        "name_en": "Soaring Serpent",
+        "role_zh": "拐弯、电线、长寿、花衣服、精神病",
+        "role_en": "Curves/bends, wires, longevity, patterned clothes, mental illness",
+        "auspicious": false,
+        "judgment_zh": "变化、曲折、媒体、精神问题",
+        "judgment_en": "Changes, twists, media, mental issues",
+        "career_zh": "影视产品、光电设备、电信传媒、绸缎丝麻",
+        "career_en": "Film/TV products, optoelectronics, telecom/media, silk and linen"
+      },
+      {
+        "name_zh": "太阴",
+        "name_pinyin": "Tai Yin",
+        "name_en": "Great Yin",
+        "role_zh": "钱、首饰、谋略、隐私",
+        "role_en": "Money, jewelry, strategy, privacy",
+        "auspicious": "neutral",
+        "judgment_zh": "暗谋 — 隐秘、财富、女性谋略",
+        "judgment_en": "Hidden schemes — secrecy, wealth, female strategy",
+        "career_zh": "玉器珠宝、木雕石刻、印章制作、剪裁艺术、手术医疗、策划公司",
+        "career_en": "Jade/jewelry, wood/stone carving, seal making, tailoring arts, surgical medicine, planning/strategy companies"
+      },
+      {
+        "name_zh": "六合",
+        "name_pinyin": "Liu He",
+        "name_en": "Six Harmonies",
+        "role_zh": "合作、婚姻",
+        "role_en": "Cooperation, marriage",
+        "auspicious": true,
+        "judgment_zh": "合作 — 合伙、婚姻、多人项目",
+        "judgment_en": "Cooperation — partnerships, marriage, multi-person projects",
+        "career_zh": "文化教育、俱乐部组装焊接、多人合作工作",
+        "career_en": "Cultural education, clubs/assembly/welding, collaborative multi-person work"
+      },
+      {
+        "name_zh": "白虎",
+        "name_pinyin": "Bai Hu",
+        "name_en": "White Tiger",
+        "role_zh": "阻碍、危害、病灾、威严",
+        "role_en": "Obstacles, harm, illness/disaster, authority",
+        "auspicious": false,
+        "judgment_zh": "阻碍 — 疾病、金属、强权",
+        "judgment_en": "Obstruction — illness, metal, forceful power",
+        "career_zh": "机械制造、金属加工、兵工企业、道路建设、矿山开发、竞技产品",
+        "career_en": "Machine manufacturing, metalwork, defense industries, road construction, mining, competitive products"
+      },
+      {
+        "name_zh": "玄武",
+        "name_pinyin": "Xuan Wu",
+        "name_en": "Dark Warrior",
+        "role_zh": "黑脸、小、阴谋",
+        "role_en": "Dark face, small, conspiracy/scheming",
+        "auspicious": false,
+        "judgment_zh": "阴谋 — 欺骗、隐秘、小人",
+        "judgment_en": "Conspiracy — deception, secrecy, petty people",
+        "career_zh": "文学艺术、演艺策划、哲学研究、宗教行业、心理咨询、美容行业",
+        "career_en": "Literary arts, entertainment planning, philosophical research, religious industry, psychological counseling, beauty industry"
+      },
+      {
+        "name_zh": "九地",
+        "name_pinyin": "Jiu Di",
+        "name_en": "Nine Earth",
+        "role_zh": "脚踏实地、柔和、毕恭毕敬、积累",
+        "role_en": "Grounded, gentle, respectful, accumulation",
+        "auspicious": true,
+        "judgment_zh": "稳固 — 房地产、农业、积累",
+        "judgment_en": "Stability — real estate, agriculture, accumulation",
+        "career_zh": "地产开发、农田水利、农产品交易、地表地下能源开发",
+        "career_en": "Real estate development, farmland/water conservancy, agricultural product trading, surface/underground energy development"
+      },
+      {
+        "name_zh": "九天",
+        "name_pinyin": "Jiu Tian",
+        "name_en": "Nine Heaven",
+        "role_zh": "格局、高塔、高空、理想高远",
+        "role_en": "Grand pattern, high towers, high altitude, lofty ideals",
+        "auspicious": true,
+        "judgment_zh": "高远 — 航天、国际、格局大",
+        "judgment_en": "Lofty — aerospace, international, grand scale",
+        "career_zh": "高空作业、航天事业、国际贸易、中外合资企业、金属加工",
+        "career_en": "High-altitude work, aerospace, international trade, Sino-foreign joint ventures, metalworking"
+      }
+    ]
+  },
+
+  "tian_gan": {
+    "description": "天干 — Ten Heavenly Stems: summary reference (detailed data in qmdj-knowledge.json and qmdj-pdfs-extracted.json)",
+    "source": "Consolidated from both existing files + chart materials",
+    "note": "Full detailed entries exist in qmdj-knowledge.json (heavenly_stems) and qmdj-pdfs-extracted.json (heavenly_stems_extended). This section provides a quick-reference summary.",
+    "three_marvelous_san_qi": {
+      "note": "三奇 — The Three Marvels (most auspicious stems in QMDJ)",
+      "乙": {"role": "日奇 / Sun Marvel", "nature": "Yin Wood, Moon"},
+      "丙": {"role": "月奇 / Moon Marvel", "nature": "Yang Fire, Sun"},
+      "丁": {"role": "星奇 / Star Marvel", "nature": "Yin Fire, Stars"}
+    },
+    "six_standards_liu_yi": {
+      "note": "六仪 — The Six Standards",
+      "戊": {"role": "天武 / Heavenly Warrior", "nature": "Yang Earth, wealth/capital"},
+      "己": {"role": "明堂 / Bright Hall", "nature": "Yin Earth, strategy/planning"},
+      "庚": {"role": "天刑/天狱 / Heavenly Punishment-Prison", "nature": "Yang Metal, obstacles/enemies"},
+      "辛": {"role": "天庭 / Heavenly Court", "nature": "Yin Metal, reform/errors"},
+      "壬": {"role": "天牢 / Heavenly Jail", "nature": "Yang Water, instability/flow"},
+      "癸": {"role": "天网 / Heavenly Net", "nature": "Yin Water, sexuality/hidden matters"}
+    },
+    "hidden_stem": {
+      "甲": {
+        "role": "值符 / Duty Talisman (hidden)",
+        "note": "甲 is always hidden within 戊 in QMDJ. 甲 represents the leader/sun/cosmic core."
+      }
+    },
+    "quick_reference": [
+      {"stem": "甲", "element": "阳木", "qmdj_role": "值符/天福", "represents": "领导/首领/太阳", "marriage_symbol": "主要领导人"},
+      {"stem": "乙", "element": "阴木", "qmdj_role": "日奇/天德", "represents": "女人/妻子/月亮", "marriage_symbol": "妻子"},
+      {"stem": "丙", "element": "阳火", "qmdj_role": "月奇/天威", "represents": "权威之人/情夫/太阳", "marriage_symbol": "女性第三者"},
+      {"stem": "丁", "element": "阴火", "qmdj_role": "星奇/玉女太阴", "represents": "情妇/第三者女人/星星", "marriage_symbol": "男性第三者"},
+      {"stem": "戊", "element": "阳土", "qmdj_role": "天武/天门", "represents": "资本/钱财/土地", "key": "钱财资金的代表符号"},
+      {"stem": "己", "element": "阴土", "qmdj_role": "六合/明堂", "represents": "坟地/策划/创意", "key": "旺则有创意，衰则有私欲"},
+      {"stem": "庚", "element": "阳金", "qmdj_role": "天狱/天刑", "represents": "仇人/丈夫/障碍", "marriage_symbol": "丈夫"},
+      {"stem": "辛", "element": "阴金", "qmdj_role": "天庭", "represents": "罪人/变革/错误", "key": "旺则变革创新，衰则犯错"},
+      {"stem": "壬", "element": "阳水", "qmdj_role": "天牢", "represents": "不稳定/流动/道路", "key": "旺则智慧勇敢，衰则任性"},
+      {"stem": "癸", "element": "阴水", "qmdj_role": "天网", "represents": "隐私/性/小水饮料", "key": "旺则有灵性，衰则淫荡"}
+    ]
+  },
+
+  "symbols_64": {
+    "description": "奇门64个符号 — 64 QMDJ Symbols Reference Material",
+    "source": "风生水起_奇门64个符号资料.pdf",
+    "extraction_note": "The PDF contained 217 pages but only 7 pages had real image content. The remaining 210 pages were identical placeholder images (5953 bytes each). The 7 real pages covered: Ba Gua/palace layout, palace characteristics, career associations, earthly branches map, nine stars chart, nine stars career table, eight gates chart, and eight gates career table. No dedicated 64-symbol listing page was found among the real content pages.",
+    "real_pages_found": [1, 23, 87, 109, 131, 153, 175],
+    "content_per_page": {
+      "page_1": "九宫特性 — Nine Palace characteristics (巽/离/坤/震/中/兑/艮/坎/乾)",
+      "page_23": "九宫对应职业 — Career associations for each of the Nine Palaces",
+      "page_87": "地支宫位图 — Earthly Branches mapped to Nine Palace positions",
+      "page_109": "九星特性图 — Nine Stars characteristics with elements and mythic archetypes",
+      "page_131": "九星所主事业信息 — Nine Stars career/business domain information",
+      "page_153": "八门特性图 — Eight Gates characteristics and keywords",
+      "page_175": "八门所主事业信息 — Eight Gates career/business domain information"
+    },
+    "inference": "The '64 symbols' likely refers to the 64 possible combinations of the core QMDJ elements (8 gates × 8 deities = 64, or other combinatorial systems). The PDF title suggests a reference card document, and the actual symbol data is distributed across the palace/star/gate sections above rather than as a standalone symbol list.",
+    "core_symbol_sets": {
+      "total_primary_symbols": 36,
+      "breakdown": {
+        "九星_nine_stars": 9,
+        "八门_eight_gates": 8,
+        "八神_eight_deities": 8,
+        "天干_heavenly_stems_active": 10,
+        "note": "In QMDJ charts: 9 stars + 8 gates + 8 deities + 10 stems on 9 palaces = the full symbol set"
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "products": [
+    {
+      "title": "Intro Psychic Reading",
+      "body_html": "<p>Your first step into ancient wisdom. Get a quick overview reading powered by <strong>Qi Men Dun Jia (奇門遁甲)</strong> — a 4,000-year-old Chinese divination system used by emperors and military strategists.</p><p>Includes: Overview + Guidance</p><p><em>Delivered to your email within minutes.</em></p>",
+      "vendor": "The Jade Oracle",
+      "product_type": "Digital Reading",
+      "tags": ["reading", "intro", "qmdj", "digital"],
+      "variants": [
+        {
+          "title": "Intro Reading",
+          "price": "1.00",
+          "sku": "JO-INTRO-001",
+          "requires_shipping": false,
+          "taxable": false
+        }
+      ],
+      "images": [],
+      "status": "active"
+    },
+    {
+      "title": "Love & Relationships Reading",
+      "body_html": "<p>Deep insights into your love life using <strong>three ancient systems</strong>:</p><ul><li>🔮 <strong>QMDJ</strong> — Qi Men Dun Jia destiny analysis for relationship timing</li><li>⭐ <strong>Western Astrology</strong> — Venus placement, 7th house analysis</li><li>🃏 <strong>Tarot</strong> — Relationship spread with Celtic Cross</li></ul><p>A comprehensive PDF report with timing guidance for your love journey.</p><p><em>Delivered to your email within minutes.</em></p>",
+      "vendor": "The Jade Oracle",
+      "product_type": "Digital Reading",
+      "tags": ["reading", "love", "relationships", "qmdj", "tarot", "astrology", "digital"],
+      "variants": [
+        {
+          "title": "Love Reading",
+          "price": "29.00",
+          "sku": "JO-LOVE-001",
+          "requires_shipping": false,
+          "taxable": false
+        }
+      ],
+      "images": [],
+      "status": "active"
+    },
+    {
+      "title": "Career & Purpose Reading",
+      "body_html": "<p>Strategic guidance for your career path using <strong>the same system Chinese emperors used for military strategy</strong>:</p><ul><li>🔮 <strong>QMDJ</strong> — Strategic timing analysis, favorable directions, career palace reading</li><li>⭐ <strong>Western Astrology</strong> — Midheaven, 10th house, Saturn return analysis</li><li>🃏 <strong>Tarot</strong> — Career spread with decision guidance</li></ul><p>Includes optimal timing windows for career moves, negotiations, and launches.</p><p><em>Delivered to your email within minutes.</em></p>",
+      "vendor": "The Jade Oracle",
+      "product_type": "Digital Reading",
+      "tags": ["reading", "career", "purpose", "strategy", "qmdj", "tarot", "astrology", "digital"],
+      "variants": [
+        {
+          "title": "Career Reading",
+          "price": "47.00",
+          "sku": "JO-CAREER-001",
+          "requires_shipping": false,
+          "taxable": false
+        }
+      ],
+      "images": [],
+      "status": "active"
+    },
+    {
+      "title": "Full Destiny Chart",
+      "body_html": "<p><strong>The complete picture.</strong> Your full destiny chart analyzed across all three systems:</p><ul><li>🔮 <strong>QMDJ Full Destiny Plate (命盤)</strong> — All 9 palaces, 8 doors, 9 stars, Three Wonders & Six Instruments</li><li>⭐ <strong>Complete Birth Chart</strong> — 10 planets, 12 houses, major aspects, dignities</li><li>🃏 <strong>Full Tarot Spread</strong> — 10-card Celtic Cross with Jungian archetypes</li></ul><p>Covers: Love, Career, Health, Spiritual Growth, Timing Windows, and Actionable Guidance.</p><p>Cross-system theme analysis with confidence scoring.</p><p><em>Comprehensive PDF report delivered to your email within minutes.</em></p>",
+      "vendor": "The Jade Oracle",
+      "product_type": "Digital Reading",
+      "tags": ["reading", "destiny", "full", "premium", "qmdj", "tarot", "astrology", "digital"],
+      "variants": [
+        {
+          "title": "Full Destiny Chart",
+          "price": "97.00",
+          "sku": "JO-DESTINY-001",
+          "requires_shipping": false,
+          "taxable": false
+        }
+      ],
+      "images": [],
+      "status": "active"
+    },
+    {
+      "title": "Monthly Mentorship with Jade",
+      "body_html": "<p><strong>Personal guidance from Jade, every month.</strong></p><ul><li>📊 Monthly QMDJ forecast with strategic timing</li><li>🔮 Weekly mini-readings tailored to your chart</li><li>💬 Direct access via Telegram for quick questions</li><li>📅 Quarterly deep-dive destiny chart update</li><li>🎯 Personalized action plans based on your goals</li></ul><p>Like having a wise spiritual advisor on speed dial.</p>",
+      "vendor": "The Jade Oracle",
+      "product_type": "Subscription",
+      "tags": ["mentorship", "subscription", "premium", "monthly", "digital"],
+      "variants": [
+        {
+          "title": "Monthly Mentorship",
+          "price": "497.00",
+          "sku": "JO-MENTOR-001",
+          "requires_shipping": false,
+          "taxable": false
+        }
+      ],
+      "images": [],
+      "status": "draft"
+    }
+  ],
+  "note": "Import via Shopify Admin API or manually create. SKUs used by webhook handler to determine reading type."
+}

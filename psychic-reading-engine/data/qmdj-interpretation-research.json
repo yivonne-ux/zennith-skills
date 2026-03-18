@@ -1,0 +1,1030 @@
+{
+  "version": "1.0",
+  "created": "2026-03-18",
+  "purpose": "Deep research on 阴盘奇门遁甲 (Yin Plate QMDJ) interpretation methods for The Jade Oracle reading engine",
+  "school": "长卿 (Chang Qing) lineage, 阴盘奇门",
+  "note": "Research-only artifact. Focuses on ACTIONABLE interpretation rules codeable into a reading engine.",
+
+  "section_1_ten_stems_interactions": {
+    "title": "十干克应 (Ten Stems Interactions)",
+    "description": "The CORE interpretation method. When 天盘干 (heaven plate stem) meets 地盘干 (earth plate stem), each of the 81 combinations (9x9) produces a named formation with specific meaning. 天盘 generally represents the matter itself; 地盘 represents external factors affecting the matter.",
+    "principle": "甲 is hidden (遁), leaving 9 stems: 乙丙丁 (三奇/Three Marvels) + 戊己庚辛壬癸 (六仪/Six Rites). Each pair creates a 格局 (formation) with a classical name and prediction.",
+    "sources": [
+      "https://www.sohu.com/a/969956247_121123831",
+      "https://www.sioho.com/?p=1070",
+      "https://www.guoyi360.com/qmdj/gj/2876.html",
+      "https://zhuanlan.zhihu.com/p/104299480",
+      "https://zhuanlan.zhihu.com/p/630058816"
+    ],
+    "yin_plate_note": "阴盘 approach de-emphasizes rigid formation names and focuses on 取象 (image-taking) — reading the ENERGY STATE of the stem pairing rather than memorizing 81 fixed meanings. However, the classical names remain useful as shorthand.",
+
+    "formations_81": {
+      "jia_group": {
+        "note": "甲 is hidden, represented by 戊. 甲+X = 戊+X in practice.",
+        "甲加甲_戊加戊": {"name": "伏吟", "nature": "凶", "meaning": "Stagnation. Nothing should move. Stay quiet and hidden — movement brings misfortune.", "cn": "百事不顺，道路闭塞，以守为好"},
+        "甲加乙_戊加乙": {"name": "青龙和会", "nature": "中", "meaning": "Neutral meeting. Outcome depends entirely on the door — auspicious door = good, inauspicious door = bad.", "cn": "门吉事吉，门凶事凶"},
+        "甲加丙_戊加丙": {"name": "青龙返首", "nature": "吉", "meaning": "Green Dragon turns back — great fortune. All plans succeed greatly. But if tomb/punishment present, fortune turns to disaster.", "cn": "所谋大利，逢迫墓击刑吉事成凶"},
+        "甲加丁_戊加丁": {"name": "青龙耀明", "nature": "吉", "meaning": "Green Dragon shines bright. Meet noble people, seek fame and position. If tomb-pressed, invites gossip.", "cn": "宜见贵人求功名，迫墓则招是非"},
+        "甲加己_戊加己": {"name": "贵人入狱", "nature": "凶", "meaning": "Noble person imprisoned. Both public and private matters fail. Like a puppet controlled by others.", "cn": "公私皆不利，傀儡受制"},
+        "甲加庚_戊加庚": {"name": "值符飞宫", "nature": "凶", "meaning": "Value Symbol flies away. Good things become bad, bad things get worse. Must relocate/change position.", "cn": "吉不吉凶更凶，易地安身"},
+        "甲加辛_戊加辛": {"name": "青龙折足", "nature": "中", "meaning": "Green Dragon breaks its leg. Auspicious door allows planning, inauspicious door brings disaster and financial loss.", "cn": "吉门可谋，凶门招灾失财"},
+        "甲加壬_戊加壬": {"name": "青龙入天牢", "nature": "凶", "meaning": "Green Dragon enters heaven's prison. Neither yin nor yang matters go well. Isolated and friendless.", "cn": "阴阳事皆不吉，落落寡合"},
+        "甲加癸_戊加癸": {"name": "青龙华盖", "nature": "中", "meaning": "Green Dragon under canopy. Can hide from disaster with auspicious door. Inauspicious door means problems.", "cn": "吉门为吉招福，凶门事多不利"}
+      },
+      "yi_group": {
+        "乙加甲_乙加戊": {"name": "藤罗系甲", "nature": "吉", "meaning": "Vine wraps the armor tree — icing on the cake. Gain powerful support, matters proceed smoothly.", "cn": "锦上添花，得助力人事圆满"},
+        "乙加乙": {"name": "日奇伏吟", "nature": "凶", "meaning": "Sun Marvel stagnates. Do NOT seek audiences with nobles or pursue fame/wealth. Stay in your lane.", "cn": "忌谒贵求名，只宜安分守己"},
+        "乙加丙": {"name": "奇仪顺遂", "nature": "吉", "meaning": "Marvels flow smoothly. With auspicious star: promotion. With inauspicious star: marital discord.", "cn": "吉星迁官晋职，凶星夫妻反目"},
+        "乙加丁": {"name": "奇仪相佐", "nature": "吉", "meaning": "Marvels assist each other. BEST for documents, exams, studies. All things favorable.", "cn": "最利文书、考试，百事可为"},
+        "乙加己": {"name": "日奇入墓", "nature": "凶", "meaning": "Sun Marvel enters tomb. Buried in darkness. If door is also inauspicious, matter is certainly bad.", "cn": "被土暗昧，门凶事必凶"},
+        "乙加庚": {"name": "日奇被刑", "nature": "凶", "meaning": "Sun Marvel punished. Property disputes, spouse harbors secrets.", "cn": "争讼财产，夫妻怀私意"},
+        "乙加辛": {"name": "青龙逃走", "nature": "凶", "meaning": "Green Dragon flees. People die, wealth scatters, servants betray, livestock perish.", "cn": "人亡财破，奴仆拐带，六畜皆伤"},
+        "乙加壬": {"name": "日奇入地", "nature": "凶", "meaning": "Sun Marvel sinks underground. Social hierarchy collapses, lawsuits, someone plots harm.", "cn": "尊卑悖乱，官讼是非有人谋害"},
+        "乙加癸": {"name": "华盖逢星", "nature": "吉", "meaning": "Canopy meets star. Good for spiritual retreat, hiding, avoiding disaster.", "cn": "遁迹修道，隐匿藏形躲灾避难"}
+      },
+      "bing_group": {
+        "丙加甲_丙加戊": {"name": "飞鸟跌穴", "nature": "吉", "meaning": "Bird falls into perfect nest. All things auspicious, great for career and major plans.", "cn": "百事吉，事业可为谋大事"},
+        "丙加乙": {"name": "日月并行", "nature": "吉", "meaning": "Sun and Moon travel together. Both public and private matters go well.", "cn": "公私皆吉"},
+        "丙加丙": {"name": "月奇悖师", "nature": "凶", "meaning": "Moon Marvel rebels. Documents pressure you, things break and get lost.", "cn": "文书逼迫，破耗遗失"},
+        "丙加丁": {"name": "月奇朱雀", "nature": "吉", "meaning": "Moon Marvel meets Vermillion Bird. Noble people and documents both favorable. With Life Gate = 天遁 (Heaven Escape).", "cn": "贵人文书皆吉，得生门为天遁"},
+        "丙加己": {"name": "火悖入刑", "nature": "凶", "meaning": "Fire rebels into punishment. Imprisonment, corporal punishment, documents unfavorable.", "cn": "囚人刑杖文书不利"},
+        "丙加庚": {"name": "荧入太白", "nature": "凶", "meaning": "Mars enters Venus — gates and doors broken, thieves steal, wealth drains.", "cn": "门户破败，盗贼耗失"},
+        "丙加辛": {"name": "谋事能成", "nature": "吉", "meaning": "Plans can succeed (丙辛 combine). Sick people not in danger.", "cn": "因丙辛相合，病人不凶"},
+        "丙加壬": {"name": "火入天罗", "nature": "凶", "meaning": "Fire enters heaven's net. Unfavorable for the guest/outsider. Much conflict.", "cn": "客不利，是非颇多"},
+        "丙加癸": {"name": "华盖悖师", "nature": "凶", "meaning": "Canopy rebels. Women cause problems, disasters multiply.", "cn": "阴人害事，灾祸频生"}
+      },
+      "ding_group": {
+        "丁加甲_丁加戊": {"name": "青龙转光", "nature": "吉", "meaning": "Green Dragon turns its radiance. Officials get promoted, common people gain prestige.", "cn": "官人升迁，常人威昌"},
+        "丁加乙": {"name": "人遁吉格", "nature": "吉", "meaning": "Human Escape — auspicious formation. Nobles advance, marriages and wealth blessed.", "cn": "贵人加官晋爵，婚姻财喜"},
+        "丁加丙": {"name": "星随月转", "nature": "吉", "meaning": "Stars follow the Moon. Nobles leap ranks. Common people should be patient.", "cn": "贵人越级高升，常人要忍"},
+        "丁加丁": {"name": "星奇伏吟", "nature": "吉", "meaning": "Star Marvel stagnates but positively. Documents arrive, all wishes fulfilled.", "cn": "文书证件即至，万事如意"},
+        "丁加己": {"name": "火入勾陈", "nature": "凶", "meaning": "Fire enters Hook Formation. Secret affairs, vendettas — problem caused by a woman.", "cn": "奸私仇冤，事因女人"},
+        "丁加庚": {"name": "文书阻隔", "nature": "凶", "meaning": "Documents blocked. Traveler will return but communication is cut.", "cn": "行人必归，隔音讯"},
+        "丁加辛": {"name": "朱雀入狱", "nature": "凶", "meaning": "Vermillion Bird imprisoned. Criminals released but officials lose position.", "cn": "罪人释囚，官人失位"},
+        "丁加壬": {"name": "五神互合", "nature": "中", "meaning": "Five Spirits mutually combine (丁壬合). Noble's decree resolves lawsuits. But implies illicit relationships.", "cn": "贵人恩诏讼狱平，淫荡合婚"},
+        "丁加癸": {"name": "朱雀投江", "nature": "凶", "meaning": "Vermillion Bird drowns. Documents, verbal disputes, lawsuits — all unfavorable.", "cn": "文书口舌是非，词讼不利"}
+      },
+      "ji_group": {
+        "己加甲_己加戊": {"name": "犬遇青龙", "nature": "中", "meaning": "Dog meets Green Dragon. Auspicious door = all goes well; inauspicious door = wasted effort.", "cn": "门吉诸事遂，门凶枉费心机"},
+        "己加乙": {"name": "墓神不明", "nature": "凶", "meaning": "Tomb spirit unclear. Years wasted, everything murky and unclear.", "cn": "岁月蹉跎，凡事隐晦暗昧"},
+        "己加丙": {"name": "火悖地户", "nature": "凶", "meaning": "Fire rebels at Earth Gate. Men suffer injustice, women face scandal.", "cn": "阳人冤害，阴人淫污"},
+        "己加丁": {"name": "朱雀入墓", "nature": "凶", "meaning": "Vermillion Bird enters tomb. Hidden luck within misfortune — turbulence first, then smooth.", "cn": "朱雀入墓凶中藏吉，先波折后顺利"},
+        "己加己": {"name": "地户伏吟", "nature": "凶", "meaning": "Earth Gate stagnates. Worry, dissatisfaction, feeling powerless.", "cn": "做事忧愁不满，力不从心"},
+        "己加庚": {"name": "刑格反名", "nature": "凶", "meaning": "Punishment reverses its name. Looks simple but is complicated. Awkward and uncomfortable.", "cn": "看似简单实驳杂，彆扭难受"},
+        "己加辛": {"name": "游魂入墓", "nature": "凶", "meaning": "Wandering soul enters tomb. Private desires cause mistakes, vulnerable to dark influences.", "cn": "因私欲造成错误，容易遭阴邪"},
+        "己加壬": {"name": "地网高张", "nature": "凶", "meaning": "Earth net spread wide. Surface calm hides disputes and conflict underneath.", "cn": "表面平和存在分争冲突"},
+        "己加癸": {"name": "地刑玄武", "nature": "凶", "meaning": "Earth punishes Black Tortoise. Vulnerable to petty people, false accusations.", "cn": "易犯小人，官非背黑锅"}
+      },
+      "geng_group": {
+        "note": "庚 (Geng Metal) represents obstacles, enemies, the 七杀 (Seven Killings). ALL Geng combinations lean inauspicious.",
+        "庚加甲_庚加戊": {"name": "太乙伏宫", "nature": "凶", "meaning": "Great Unity hides in palace. Kindness repaid with betrayal, allies become enemies.", "cn": "恩反成仇，众叛亲离官商不利"},
+        "庚加乙": {"name": "太白逢星", "nature": "中", "meaning": "Venus meets a star. Advance = danger, retreat = safety. Don't force plans.", "cn": "进凶退吉，谋划莫强求"},
+        "庚加丙": {"name": "太白入荧", "nature": "凶", "meaning": "Venus enters Mars. Robbed, property lost. Host loses, guest gains.", "cn": "被盗不羁，为主破财为客进利"},
+        "庚加丁": {"name": "亭亭之格", "nature": "凶", "meaning": "Pavilion Formation. Private affairs lead to legal trouble. If stars align, lawsuit may not proceed.", "cn": "因私情招官事，门星合吉官司不成"},
+        "庚加己": {"name": "刑格", "nature": "凶", "meaning": "Punishment Formation. Lawsuits, legal disasters.", "cn": "官府刑格，有官非诉讼灾"},
+        "庚加庚": {"name": "战格", "nature": "凶", "meaning": "Battle Formation. Official disasters, unexpected calamity. Brothers fight without hierarchy.", "cn": "官灾横祸，兄弟雷攻不分大小"},
+        "庚加辛": {"name": "白虎干格", "nature": "凶", "meaning": "White Tiger attacks. Long-distance travel extremely dangerous. Stay still.", "cn": "远行大凶，要以静制动"},
+        "庚加壬": {"name": "小格", "nature": "凶", "meaning": "Small Formation. Frequent forced transfers. Unfavorable for travel.", "cn": "单位调动频仍，不利远行"},
+        "庚加癸": {"name": "大格", "nature": "凶", "meaning": "Great Formation. Everything shifts unpredictably. Crisis lurks everywhere.", "cn": "处处变化多端，危机四伏"}
+      },
+      "xin_group": {
+        "辛加甲_辛加戊": {"name": "困龙被伤", "nature": "凶", "meaning": "Trapped Dragon wounded. Lawsuits fail. Keep your head down.", "cn": "官司破败，屈守本分"},
+        "辛加乙": {"name": "白虎猖狂", "nature": "凶", "meaning": "White Tiger rampages. Family ruined, people perish. Travel brings many disasters.", "cn": "人亡家败，远行多殃"},
+        "辛加丙": {"name": "干合悖师", "nature": "中", "meaning": "Stem combination rebels. Rain prediction works but not fair weather. Wealth leads to lawsuits.", "cn": "占雨无占晴旱，因财致讼"},
+        "辛加丁": {"name": "狱神得奇", "nature": "吉", "meaning": "Prison God gains Marvel. Business profits! Prisoners pardoned.", "cn": "经商获利，囚人逢赦"},
+        "辛加己": {"name": "入狱自刑", "nature": "凶", "meaning": "Enter prison, self-punishment. Servants betray master, lawsuits go nowhere.", "cn": "奴欺背主，讼诉难伸"},
+        "辛加庚": {"name": "白虎出力", "nature": "凶", "meaning": "White Tiger exerts force. Two tigers fight — head-to-head conflict.", "cn": "两虎相争，针锋相对"},
+        "辛加辛": {"name": "伏吟天庭", "nature": "凶", "meaning": "Heavenly Court stagnates. Sacrifice public duty for private gain. Repeat mistakes.", "cn": "公废私就，自己一错再错"},
+        "辛加壬": {"name": "凶蛇入狱", "nature": "凶", "meaning": "Vicious Snake enters prison. Two men fight over a woman. Endless lawsuits.", "cn": "两男争女，讼狱不息"},
+        "辛加癸": {"name": "天牢华盖", "nature": "凶", "meaning": "Heaven's Prison under canopy. Sun and Moon lose light — trapped in the net.", "cn": "日月失明，误入天网"}
+      },
+      "ren_group": {
+        "壬加甲_壬加戊": {"name": "小蛇化龙", "nature": "吉", "meaning": "Small Snake becomes Dragon. Men succeed brilliantly. Pregnant women bear sons.", "cn": "男人发达，女产婴童"},
+        "壬加乙": {"name": "小蛇得势", "nature": "吉", "meaning": "Small Snake gains power. Women become gentle, men prosper. Pregnancy = son.", "cn": "女子柔顺男人发达，占孕生子"},
+        "壬加丙": {"name": "水蛇入火", "nature": "凶", "meaning": "Water Snake enters fire. Official disasters and imprisonment, endlessly.", "cn": "官灾刑禁，络绎不绝"},
+        "壬加丁": {"name": "干合蛇刑", "nature": "中", "meaning": "Stem combines with Snake Punishment (丁壬合). Documents involve nobles. Good for men, bad for women.", "cn": "文书牵连贵人现，男吉女凶"},
+        "壬加己": {"name": "凶蛇入狱", "nature": "凶", "meaning": "Vicious Snake imprisoned. Great disaster approaches. Husband-wife discord.", "cn": "大祸将至，夫妻不睦"},
+        "壬加庚": {"name": "太白擒蛇", "nature": "吉", "meaning": "Venus captures Snake. Justice prevails — lawsuits decided fairly.", "cn": "刑狱公平，立剖邪正"},
+        "壬加辛": {"name": "腾蛇相缠", "nature": "凶", "meaning": "Soaring Serpent entangles. Even with auspicious door, no peace. Being deceived.", "cn": "纵得奇门也不安，被人欺瞒"},
+        "壬加壬": {"name": "蛇入地罗", "nature": "中", "meaning": "Snake enters Earth Net. External entanglements, internal difficulties. Auspicious door + star = escape.", "cn": "外人缠绕内事索索，吉门吉星免"},
+        "壬加癸": {"name": "幼女奸淫", "nature": "凶", "meaning": "Family scandals exposed. Even auspicious door + inauspicious star = hidden disaster.", "cn": "家丑外扬，门吉星凶反祸"}
+      },
+      "gui_group": {
+        "癸加甲_癸加戊": {"name": "天乙会合", "nature": "中", "meaning": "Heavenly Unity gathers. Auspicious door = wealth and marriage joy. Pressed/inauspicious = lawsuits.", "cn": "吉门财婚喜凶迫祸非"},
+        "癸加乙": {"name": "华盖逢星", "nature": "吉", "meaning": "Canopy meets Star. Nobles gain fortune, common people stay average.", "cn": "贵人有禄常人平平"},
+        "癸加丙": {"name": "华盖悖师", "nature": "凶", "meaning": "Canopy rebels against teacher. Neither noble nor common people benefit.", "cn": "贵贱不利上人行"},
+        "癸加丁": {"name": "螣蛇夭矫", "nature": "凶", "meaning": "Soaring Serpent writhes. Women face document-related lawsuits, financial loss.", "cn": "女人文书官司失财"},
+        "癸加己": {"name": "华盖地户", "nature": "中", "meaning": "Canopy over Earth Gate. Wasted effort, but good for seeking fame or lawsuits.", "cn": "罔费心力宜求名官讼"},
+        "癸加庚": {"name": "太白入网", "nature": "凶", "meaning": "Venus enters net. Violent disputes, lawsuits with equal force.", "cn": "暴力争讼罪力平"},
+        "癸加辛": {"name": "网盖天牢", "nature": "凶", "meaning": "Net covers Heaven's Prison. Lose lawsuits, face death sentence.", "cn": "官司败诉死罪刑"},
+        "癸加壬": {"name": "复见螣蛇", "nature": "凶", "meaning": "Soaring Serpent appears again. Remarriage, second wife bears no children.", "cn": "嫁娶重婚后嫁无子"},
+        "癸加癸": {"name": "天网四张", "nature": "凶", "meaning": "Heaven's Net spread in all four directions. Travelers lose companions. Sick people and lawsuits — regret. Any rash action invites disaster.", "cn": "行人失伴病讼悔，妄动招灾"}
+      }
+    }
+  },
+
+  "section_2_use_case_differences": {
+    "title": "Different Chart Types & How Energy Reads Differently",
+    "description": "The SAME symbols mean different things depending on chart type. This is critical for the reading engine.",
+    "sources": [
+      "https://d1peixun.com/m/view.php?aid=3075",
+      "https://zhuanlan.zhihu.com/p/667558926",
+      "https://www.guoyi360.com/qmdj/rm/9946.html",
+      "https://zhuanlan.zhihu.com/p/2022197005"
+    ],
+
+    "shi_pan_hourly": {
+      "title": "时盘 (Hourly Chart) — Event Prediction",
+      "description": "Most common chart type. Uses the current hour to answer a specific question.",
+      "method": "Chart cast for the exact hour of the question (时家奇门). Four plates rotate based on the hour.",
+      "interpretation_focus": [
+        "日干 (Day Stem) = the querent (person asking)",
+        "时干 (Hour Stem) = the matter being asked about / the other party",
+        "用神 (Use God) = specific symbol for the topic (see use_gods section)",
+        "Relationship between 日干 palace and 用神 palace determines outcome",
+        "天盘干+地盘干 in relevant palace = 十干克应 reading",
+        "Door + Star + Deity in the palace = layered interpretation"
+      ],
+      "key_principle": "时盘 reads like a snapshot — it captures the energy of THIS moment for THIS question."
+    },
+
+    "ming_pan_destiny": {
+      "title": "命盘 (Destiny Chart) — Life Reading",
+      "description": "Cast using birth date/time. Reveals personality, life path, career, wealth potential.",
+      "method": "Chart cast for the person's birth hour. The Day Stem palace becomes the 命宫 (Life Palace).",
+      "interpretation_differences": [
+        "日干落宫 = Life Palace (命宫) — person's core nature, health baseline",
+        "年干 = parents, elders, inherited traits",
+        "月干 = siblings, peers, social circle",
+        "时干 = children, subordinates, later life",
+        "Symbols describe PERSONALITY traits rather than events",
+        "天芮星 in Life Palace = chronic health issues, NOT acute illness",
+        "开门 in Life Palace = leadership nature, authority figure",
+        "生门 = wealth-accumulating nature, good at making money"
+      ],
+      "major_periods_da_yun": {
+        "description": "120-year life cycle mapped across 8 palaces, 15 years per palace",
+        "method": "Start from birth year's Earthly Branch palace, move clockwise",
+        "within_each_palace": {
+          "first_5_years": "Read through the Nine Star in that palace",
+          "middle_5_years": "Read through the Eight Door in that palace",
+          "last_5_years": "Read through the 十干克应 (stem interaction) in that palace"
+        }
+      },
+      "annual_fortune_liu_nian": {
+        "description": "Each year maps to a Heavenly Stem + Earthly Branch",
+        "method": "Find the year's stem in the chart, analyze its palace relative to the Life Palace",
+        "甲_years": "Since 甲 is hidden, look at the stem it hides under (e.g., 甲申 year → look at 庚 + also check 申)",
+        "key": "Heavenly Stem = spatial energy, Earthly Branch = temporal energy. TIME is the biggest force in destiny charts."
+      }
+    },
+
+    "nian_pan_annual": {
+      "title": "年盘 (Annual Chart) — Year-Ahead Predictions",
+      "description": "Uses year-level QMDJ. All annual charts use 阴遁 (Yin Escape) only.",
+      "method": "60-year cycle, one chart per year. Six Rites placed in reverse, Three Marvels placed forward.",
+      "interpretation_focus": [
+        "Macro-level: national/global events, industry trends",
+        "Personal: overlay with destiny chart to see how the year's energy affects your life palace",
+        "Each palace represents a sector of life or geographic region"
+      ]
+    },
+
+    "feng_shui_chart": {
+      "title": "风水盘 (Feng Shui Chart) — Property Analysis",
+      "description": "Maps the QMDJ nine-palace grid onto a physical space.",
+      "sources": [
+        "https://www.163.com/dy/article/JJ9D27VO0521C9T8.html",
+        "https://www.rrxhn.com/qm/11.html"
+      ],
+      "method_steps": [
+        "Step 1: 值符 (Value Symbol) = macro environment quality. If thriving + good formation → good neighborhood.",
+        "Step 2: 值使门 (Duty Door) = main entrance of the residence. Its palace determines door energy.",
+        "Step 3: Querent's 年命 (year stem) palace = their bedroom's energy.",
+        "Step 4: 壬 palace = water/kitchen (water governs wealth). 丙 palace = people/family growth.",
+        "Step 5: Each palace direction maps to the corresponding area of the house.",
+        "Step 6: 时干生日干 = house supports person (吉). 时干克日干 = house harms person (凶)."
+      ],
+      "palace_to_house_mapping": {
+        "坎宫_north": "Back of house / bathroom area",
+        "坤宫_southwest": "Master bedroom / mother's area",
+        "震宫_east": "East neighbor / eldest son",
+        "巽宫_southeast": "Eldest daughter / study",
+        "中宫": "Center of house / core energy",
+        "乾宫_northwest": "Father / front door area",
+        "兑宫_west": "West neighbor / youngest daughter",
+        "艮宫_northeast": "Youngest son / storage",
+        "离宫_south": "Front of house / opposite neighbor"
+      },
+      "symbol_meanings_feng_shui": {
+        "癸": "Bathroom, drainage, sewage",
+        "壬": "Running water, taps, kitchen water",
+        "丙": "Stove, fire, electrical systems",
+        "天芮星": "Sick energy in that area — avoid placing bedroom there"
+      }
+    }
+  },
+
+  "section_3_eight_doors": {
+    "title": "八门 (Eight Doors) Interpretation",
+    "description": "The Eight Doors represent the HUMAN layer — actions, relationships, social dynamics. They are the most intuitive layer for reading.",
+    "sources": [
+      "https://www.chanweitang.com/post/192.html",
+      "https://www.yixiansheng.com/article/1479.html",
+      "https://zhuanlan.zhihu.com/p/690114358"
+    ],
+
+    "classification": {
+      "三吉门_three_auspicious": ["开门", "休门", "生门"],
+      "三凶门_three_inauspicious": ["死门", "惊门", "伤门"],
+      "二平门_two_neutral": ["杜门", "景门"]
+    },
+
+    "doors": {
+      "开门": {
+        "pinyin": "kai men",
+        "english": "Open Door",
+        "element": "金 Metal",
+        "palace": "乾六宫 (Qian, Northwest)",
+        "season": "秋 Autumn (戌亥月)",
+        "nature": "吉 Auspicious",
+        "core_meaning": "Opening, beginning, authority, leadership, formal institutions",
+        "career": "Government offices, courts, banks, large corporations. Official career, promotions, starting businesses.",
+        "wealth": "Favorable for large-scale business, formal commerce, investments through proper channels.",
+        "health": "Hospitals (Western medicine), surgery. As use god for workplace = the company itself.",
+        "relationships": "Formal relationships, marriage. Open and public connections.",
+        "objects": "Official documents, contracts, seals, keys, gates",
+        "people": "Leaders, officials, managers, judges, CEOs",
+        "body": "Head, lungs, large intestine",
+        "actions": "Opening business, signing contracts, starting campaigns, military expeditions, traveling far"
+      },
+      "休门": {
+        "pinyin": "xiu men",
+        "english": "Rest Door",
+        "element": "水 Water",
+        "palace": "坎一宫 (Kan, North)",
+        "season": "冬 Winter (子月)",
+        "nature": "吉 Auspicious",
+        "core_meaning": "Rest, leisure, ease, government connections, blessings",
+        "career": "Government service, civil service, public sector. Smooth career without much struggle.",
+        "wealth": "Wealth from prestigious sources, inherited wealth, noble people's money.",
+        "health": "Recovery, rest, recuperation. Good for healing.",
+        "relationships": "Harmonious family, meeting influential people. Good for seeking favors.",
+        "objects": "Rest areas, beds, vacation spots, government buildings",
+        "people": "Government officials, nobles, family members, the resting/retired",
+        "body": "Kidneys, ears, blood, reproductive system",
+        "actions": "Meeting nobles/leaders, seeking appointments, marriage, relocation, business"
+      },
+      "生门": {
+        "pinyin": "sheng men",
+        "english": "Life Door",
+        "element": "土 Earth",
+        "palace": "艮八宫 (Gen, Northeast)",
+        "season": "四季土 (丑寅月)",
+        "nature": "吉 Auspicious — THE wealth door",
+        "core_meaning": "Growth, vitality, profit, real estate, new beginnings",
+        "career": "Entrepreneurship, real estate, agriculture, finance. Creating something from nothing.",
+        "wealth": "STRONGEST wealth indicator. Profits, salary, investments, property income. Land wealth.",
+        "health": "Vitality, life force. Recovery from illness. Pregnancy.",
+        "relationships": "Growth in relationships, new connections, fruitful unions.",
+        "objects": "Real estate, farmland, livestock, profits, wages, money",
+        "people": "Entrepreneurs, farmers, real estate agents, bankers",
+        "body": "Stomach, spleen, muscles, hands",
+        "actions": "Seeking wealth, trading, real estate deals, marriage, childbirth, planting, raising livestock"
+      },
+      "伤门": {
+        "pinyin": "shang men",
+        "english": "Injury Door",
+        "element": "木 Wood",
+        "palace": "震三宫 (Zhen, East)",
+        "season": "春 Spring",
+        "nature": "凶 Inauspicious",
+        "core_meaning": "Injury, damage, aggression, vehicles, movement",
+        "career": "Competitive environments, fighting industries. Law enforcement, debt collection.",
+        "wealth": "Gambling gains, aggressive collection. Unfavorable for normal business.",
+        "health": "Physical injuries, accidents, surgery complications, limb injuries.",
+        "relationships": "Arguments, domestic violence, separation. Breaking relationships.",
+        "objects": "Vehicles, weapons, sports equipment, mechanical tools",
+        "people": "Criminal police, debt collectors, hunters, athletes, aggressors",
+        "body": "Liver, gallbladder, limbs, tendons",
+        "actions": "Debt collection, hunting, catching thieves, competitive sports, demolition"
+      },
+      "杜门": {
+        "pinyin": "du men",
+        "english": "Block/Hide Door",
+        "element": "木 Wood",
+        "palace": "巽四宫 (Xun, Southeast)",
+        "season": "春 Spring",
+        "nature": "平 Neutral (slightly negative)",
+        "core_meaning": "Blockage, concealment, secrecy, military/security",
+        "career": "Military, police, security, intelligence, covert operations.",
+        "wealth": "Blocked wealth flow. Hidden income sources. Underground economy.",
+        "health": "Chronic conditions that are hidden. Mental health issues, depression.",
+        "relationships": "Secret relationships, hidden affairs. Communication blocks.",
+        "objects": "Locks, walls, barriers, security systems, military installations",
+        "people": "Military personnel, police, security guards, spies, hermits",
+        "body": "Bile ducts, intestinal blockages, immune system",
+        "actions": "Hiding, fleeing, covert operations, flood prevention, secret imprisonment"
+      },
+      "景门": {
+        "pinyin": "jing men",
+        "english": "Scenery/View Door",
+        "element": "火 Fire",
+        "palace": "离九宫 (Li, South)",
+        "season": "夏 Summer",
+        "nature": "平 Neutral (good for specific uses)",
+        "core_meaning": "Visibility, beauty, documents, culture, light, appearance",
+        "career": "Arts, culture, education, media, entertainment, strategy, consulting.",
+        "wealth": "Wealth from knowledge, consulting, arts. Appearance-based income.",
+        "health": "Eye problems, heart issues, blood pressure. Skin/beauty.",
+        "relationships": "Passionate but potentially superficial. Good appearance but may lack substance.",
+        "objects": "Documents, books, paintings, screens, lights, awards",
+        "people": "Artists, writers, consultants, strategists, scholars, celebrities",
+        "body": "Eyes, heart, blood circulation, complexion",
+        "actions": "Strategic planning, talent selection, games, drinking gatherings, performing"
+      },
+      "死门": {
+        "pinyin": "si men",
+        "english": "Death Door",
+        "element": "土 Earth",
+        "palace": "坤二宫 (Kun, Southwest)",
+        "season": "四季土 (未申月)",
+        "nature": "凶 Inauspicious",
+        "core_meaning": "Death, endings, stillness, land, graves, finality",
+        "career": "Funeral industry, cemetery work, real estate (land), mining.",
+        "wealth": "Dead money — investments that cannot be recovered. Land/property that sits unused.",
+        "health": "Serious illness, terminal conditions, death-related issues.",
+        "relationships": "Ending relationships, divorce, permanent separation.",
+        "objects": "Graves, coffins, unused land, dead stock inventory",
+        "people": "The deceased, funeral directors, gravediggers, the elderly/sick",
+        "body": "Abdomen, digestive system shutdown, reproductive issues",
+        "actions": "Funerals, mourning, warfare, hunting, execution, demolition of old structures"
+      },
+      "惊门": {
+        "pinyin": "jing men",
+        "english": "Shock/Alarm Door",
+        "element": "金 Metal",
+        "palace": "兑七宫 (Dui, West)",
+        "season": "秋 Autumn",
+        "nature": "凶 Inauspicious",
+        "core_meaning": "Shock, alarm, verbal conflict, lawsuits, performance, eloquence",
+        "career": "Law, performance arts, speaking, debate, comedy, sales. Anything using the mouth.",
+        "wealth": "Wealth through lawsuits, verbal deals, negotiation. Unstable.",
+        "health": "Anxiety, panic attacks, throat/mouth problems, dental issues.",
+        "relationships": "Frightening arguments, legal disputes between partners, shocking revelations.",
+        "objects": "Legal documents, microphones, stages, bells, alarms",
+        "people": "Lawyers, performers, comedians, debaters, singers, salespeople",
+        "body": "Mouth, throat, teeth, respiratory, tongue",
+        "actions": "Lawsuits, arrests, setting traps/ambushes, gambling, creating chaos"
+      }
+    }
+  },
+
+  "section_4_nine_stars": {
+    "title": "九星 (Nine Stars) Interpretation",
+    "description": "The Nine Stars represent the HEAVEN layer — timing, environmental factors, the 'weather' of a situation. They indicate the quality of timing and cosmic support.",
+    "sources": [
+      "https://www.yixiansheng.com/article/569.html",
+      "https://zhuanlan.zhihu.com/p/100122423",
+      "https://wap.guoyi360.com/qmdj/gj/1517.html"
+    ],
+
+    "classification": {
+      "吉星_auspicious": ["天心", "天辅", "天禽", "天任", "天冲"],
+      "凶星_inauspicious": ["天蓬", "天英", "天柱", "天芮"]
+    },
+
+    "stars": {
+      "天蓬星": {
+        "pinyin": "tian peng",
+        "english": "Heaven Canopy Star",
+        "alternate": "贪狼星 (Greedy Wolf)",
+        "element": "水 Water (阳)",
+        "palace": "坎一宫 (Kan, North)",
+        "nature": "凶 Inauspicious — the bandit/thief star",
+        "personality": "Bold, reckless, loves darkness and secrecy. Risk-taker.",
+        "career": "Military border defense, risk ventures, speculation, smuggling, gambling.",
+        "wealth": "Wealth through risky/unconventional means. High risk, high reward.",
+        "health": "Kidney problems, sexual diseases, reproductive issues, alcoholism.",
+        "relationships": "Secretive affairs, unstable relationships, attraction to danger.",
+        "people": "Criminals, generals, gamblers, risk-takers, those who work in darkness",
+        "feng_shui": "Near water features, dark areas, basement energy",
+        "suitable_actions": "Border defense, city fortification, flood control",
+        "unsuitable_actions": "Marriage, business, construction, burial"
+      },
+      "天芮星": {
+        "pinyin": "tian rui",
+        "english": "Heaven Reed Star",
+        "alternate": "巨门星 (Giant Gate)",
+        "element": "土 Earth (阴)",
+        "palace": "坤二宫 (Kun, Southwest)",
+        "nature": "凶 Inauspicious — the DISEASE star",
+        "personality": "Patient, enduring, but associated with illness and drain.",
+        "career": "Agriculture, apprenticeship, women's work, nursing, elderly care.",
+        "wealth": "Wealth drains, medical expenses, financial illness.",
+        "health": "THE primary disease indicator. Where 天芮 falls = location of disease. Use god for all health readings.",
+        "relationships": "Draining relationships, codependency, caretaking burden.",
+        "people": "Patients, farmers, apprentices, women, the frail",
+        "feng_shui": "Sick energy zone — NEVER place bedroom where 天芮 falls",
+        "suitable_actions": "Education, apprenticeship, making friends",
+        "unsuitable_actions": "Major decisions, important ventures"
+      },
+      "天冲星": {
+        "pinyin": "tian chong",
+        "english": "Heaven Charge Star",
+        "alternate": "禄存星 (Stored Fortune)",
+        "element": "木 Wood (阳)",
+        "palace": "震三宫 (Zhen, East)",
+        "nature": "吉 Auspicious — the warrior star",
+        "personality": "Decisive, aggressive, swift action. Lightning-fast execution.",
+        "career": "Market pioneering, sports, military, startups, sales.",
+        "wealth": "Wealth through bold action, first-mover advantage.",
+        "health": "Liver energy, anger management, high blood pressure from stress.",
+        "relationships": "Passionate but impatient. Quick to start, quick to end.",
+        "people": "Warriors, athletes, pioneers, sales champions, startup founders",
+        "suitable_actions": "Military campaigns, revenge missions, spring/summer battles",
+        "unsuitable_actions": "Marriage, relocation, appointments, business"
+      },
+      "天辅星": {
+        "pinyin": "tian fu",
+        "english": "Heaven Assistant Star",
+        "alternate": "文曲星 (Literary Star)",
+        "element": "木 Wood (阳)",
+        "palace": "巽四宫 (Xun, Southeast)",
+        "nature": "吉 Auspicious — the scholar/teacher star",
+        "personality": "Elegant, literary, cultured, loves reading and learning.",
+        "career": "Education, culture, arts, advisory, mentoring, consulting.",
+        "wealth": "Wealth through knowledge, teaching, intellectual property.",
+        "health": "Good mental health, but may neglect physical body.",
+        "relationships": "Cultured, refined partnerships. Values intellectual connection.",
+        "people": "Teachers, scholars, examiners, advisors, mentors",
+        "suitable_actions": "Exams, education development, ALL things — universally auspicious",
+        "unsuitable_actions": "None specifically"
+      },
+      "天禽星": {
+        "pinyin": "tian qin",
+        "english": "Heaven Bird Star",
+        "alternate": "廉贞星 (Integrity Star)",
+        "element": "土 Earth (阳)",
+        "palace": "中五宫 (Center, lodges in 坤二宫)",
+        "nature": "吉 Auspicious — universally favorable",
+        "personality": "Loyal, honest, reliable. Earth center energy — supports everything.",
+        "career": "Government service, central administration, land management, mining.",
+        "wealth": "Stable, reliable wealth accumulation. Real estate, agriculture.",
+        "health": "Spleen/stomach issues, but generally protective energy.",
+        "relationships": "Loyal, dependable. The most trustworthy partner.",
+        "people": "Loyal servants, administrators, stable earners",
+        "suitable_actions": "Prayers, military, ALL things — four seasons auspicious",
+        "unsuitable_actions": "War, marriage, relocation, construction (conflicting sources)"
+      },
+      "天心星": {
+        "pinyin": "tian xin",
+        "english": "Heaven Heart Star",
+        "alternate": "武曲星 (Military Star)",
+        "element": "金 Metal (阴)",
+        "palace": "乾六宫 (Qian, Northwest)",
+        "nature": "吉 Auspicious — the healer/leader star",
+        "personality": "Strategic, intelligent, good at managing, healing ability.",
+        "career": "Leadership, medicine (Western), management, philosophy, psychology.",
+        "wealth": "Wealth through strategy, medicine, management positions.",
+        "health": "THE healing star. Best indicator for medical treatment success. Good doctors.",
+        "relationships": "Wise counsel in relationships. Strategic partnerships.",
+        "people": "Leaders, doctors, strategists, philosophers, psychologists",
+        "suitable_actions": "Medical diagnosis, finding prescriptions, autumn/winter battles",
+        "unsuitable_actions": "Spring/summer battles, marriage, business"
+      },
+      "天柱星": {
+        "pinyin": "tian zhu",
+        "english": "Heaven Pillar Star",
+        "alternate": "破军星 (Army Destroyer)",
+        "element": "金 Metal (阴)",
+        "palace": "兑七宫 (Dui, West)",
+        "nature": "凶 Inauspicious — the destroyer star",
+        "personality": "Eloquent, sharp-tongued, destructive, but can be stabilizing force.",
+        "career": "Military, police, law, teaching, acting, diplomacy, eloquence-based work.",
+        "wealth": "Destructive to wealth. Breaking apart existing structures.",
+        "health": "Respiratory issues, oral/dental problems, injury from metal.",
+        "relationships": "Sharp-tongued arguments, verbal abuse, relationship destruction.",
+        "people": "Military police, teachers, lawyers, actors, diplomats",
+        "suitable_actions": "Defense, hiding, fortification, holding ground",
+        "unsuitable_actions": "Military campaigns, relocation, travel, business"
+      },
+      "天任星": {
+        "pinyin": "tian ren",
+        "english": "Heaven Responsibility Star",
+        "alternate": "左辅星 (Left Assistant)",
+        "element": "土 Earth (阳)",
+        "palace": "艮八宫 (Gen, Northeast)",
+        "nature": "吉 Auspicious — the benevolent star",
+        "personality": "Hardworking, patient, benevolent, nurturing. Bears responsibility willingly.",
+        "career": "Mining, agriculture, land management, civil service, education.",
+        "wealth": "Steady wealth from hard work, land, minerals. Not flashy but reliable.",
+        "health": "Stomach/spleen related, but generally protective energy.",
+        "relationships": "Loyal, nurturing, long-term partnerships. Marriage-friendly.",
+        "people": "Farmers, miners, civil servants, educators, nurturers",
+        "suitable_actions": "Business, meeting officials, military, marriage — universally good",
+        "unsuitable_actions": "Relocation, construction"
+      },
+      "天英星": {
+        "pinyin": "tian ying",
+        "english": "Heaven Hero Star",
+        "alternate": "右弼星 (Right Assistant)",
+        "element": "火 Fire (阴)",
+        "palace": "离九宫 (Li, South)",
+        "nature": "凶 Inauspicious — the fire/blood star",
+        "personality": "Temperamental, fiery, dramatic, emotionally volatile.",
+        "career": "Fire-related, media, internet, entertainment, film, electricity.",
+        "wealth": "Volatile wealth — easy come, easy go. Blood-money.",
+        "health": "Heart problems, blood disorders, eye issues, burns.",
+        "relationships": "Passionate but unstable. Dramatic, possibly violent.",
+        "people": "Media personalities, entertainers, firefighters, IT workers",
+        "suitable_actions": "Social gatherings, travel, entertainment, hosting",
+        "unsuitable_actions": "Marriage, military deployment, relocation"
+      }
+    }
+  },
+
+  "section_5_eight_deities": {
+    "title": "八神 (Eight Deities) Interpretation",
+    "description": "The Eight Deities represent the SPIRIT layer — unseen forces, luck, karmic influence, the 'invisible hand' affecting outcomes.",
+    "sources": [
+      "https://www.chanweitang.com/post/204.html",
+      "https://zhuanlan.zhihu.com/p/150310772",
+      "https://www.yixiansheng.com/article/70.html",
+      "https://blog.csdn.net/qq_42971998/article/details/136295750"
+    ],
+
+    "classification": {
+      "四吉神_four_auspicious": ["值符", "太阴", "六合", "九天"],
+      "四凶神_four_inauspicious": ["腾蛇", "白虎", "玄武", "九地"],
+      "hidden_deities": {
+        "勾陈": "Hidden under 白虎, Earth element, 凶 — entanglement/delays",
+        "朱雀": "Hidden under 玄武, Fire element, 凶 — verbal disputes/gossip"
+      }
+    },
+
+    "deities": {
+      "值符": {
+        "pinyin": "zhi fu",
+        "english": "Value Symbol / Chief Deity",
+        "element": "土 Earth",
+        "nature": "吉 Auspicious — MOST auspicious of all deities",
+        "core_meaning": "Supreme authority, divine protection, justice, leadership",
+        "description": "The chief of all eight deities. Wherever 值符 goes, all evil disperses. Even the fierce 庚 metal is neutralized.",
+        "reading_meaning": "Smooth progress, divine protection, authority backing you",
+        "feng_shui": "Overall macro environment of the property",
+        "career": "Boss, top leader, the ultimate authority figure"
+      },
+      "腾蛇": {
+        "pinyin": "teng she",
+        "english": "Soaring Serpent",
+        "element": "火 Fire",
+        "nature": "凶 Inauspicious",
+        "core_meaning": "Illusion, deception, shapeshifting, unreality, nightmares",
+        "description": "The deity of falsehood and illusion. Nothing is what it seems. Causes confusion, fear, and deception.",
+        "reading_meaning": "Hidden crisis, deception, things are not what they appear",
+        "health": "Mental illness, nightmares, anxiety, hallucinations",
+        "relationships": "Deceptive partner, false appearances, illusions about love"
+      },
+      "太阴": {
+        "pinyin": "tai yin",
+        "english": "Great Yin / Moon Deity",
+        "element": "金 Metal",
+        "nature": "吉 Auspicious",
+        "core_meaning": "Secrecy, strategy, feminine wisdom, hidden protection, covert aid",
+        "description": "The protector in shadows. Best for hiding soldiers and avoiding disaster. Represents feminine, yin-type assistance.",
+        "reading_meaning": "Strategic approach needed, help comes from behind the scenes, women help you",
+        "career": "Covert operations, strategic planning, behind-the-scenes power",
+        "relationships": "Help from women, secretive but genuine support"
+      },
+      "六合": {
+        "pinyin": "liu he",
+        "english": "Six Harmony",
+        "element": "木 Wood",
+        "nature": "吉 Auspicious",
+        "core_meaning": "Harmony, cooperation, matchmaking, marriage, partnerships",
+        "description": "The deity of coming together. Represents all forms of union — marriage, business partnerships, alliances.",
+        "reading_meaning": "Cooperation succeeds, partnerships form, harmony in relationships",
+        "career": "Joint ventures, partnerships, M&A, collaborative projects",
+        "relationships": "THE marriage/matchmaking deity. When 六合 appears, union is favored"
+      },
+      "白虎": {
+        "pinyin": "bai hu",
+        "english": "White Tiger",
+        "element": "金 Metal",
+        "nature": "凶 Inauspicious",
+        "core_meaning": "Violence, conflict, blood, warfare, legal force",
+        "description": "The fierce warrior deity. Brings fighting, disease, blood, and death. Associated with military and law enforcement.",
+        "reading_meaning": "Danger of violence, accident, surgery, forced legal action",
+        "health": "Surgery, blood loss, physical injuries, violent illness",
+        "career": "Military/police matters, forced separations, hostile takeovers",
+        "hidden_deity": "勾陈 (Hook Formation) hides beneath — represents delays, entanglement, bureaucratic stalling"
+      },
+      "玄武": {
+        "pinyin": "xuan wu",
+        "english": "Black Tortoise / Dark Warrior",
+        "element": "水 Water",
+        "nature": "凶 Inauspicious",
+        "core_meaning": "Theft, betrayal, deception, hiding, escape, running away",
+        "description": "The deity of concealment and theft. Represents those who steal, betray, run away, and hide.",
+        "reading_meaning": "Beware of theft, betrayal, hidden enemies, people running from responsibility",
+        "career": "Embezzlement, corporate espionage, trust violations",
+        "relationships": "Cheating partner, secret betrayal, hidden affairs",
+        "hidden_deity": "朱雀 (Vermillion Bird) hides beneath — represents verbal attacks, gossip, slander, document disputes"
+      },
+      "九地": {
+        "pinyin": "jiu di",
+        "english": "Nine Earths",
+        "element": "土 Earth",
+        "nature": "Traditionally 凶 but practically 吉 for defense",
+        "core_meaning": "Stability, grounding, defense, fortification, patience",
+        "description": "The solid ground deity. Best for defensive positioning, holding territory, and long-term stability.",
+        "reading_meaning": "Hold your ground, be patient, defensive strategy wins, stability",
+        "career": "Consolidation, defense of position, long-term holding",
+        "feng_shui": "Excellent for property stability, grounding energy"
+      },
+      "九天": {
+        "pinyin": "jiu tian",
+        "english": "Nine Heavens",
+        "element": "金 Metal (乾金 nature)",
+        "nature": "吉 Auspicious",
+        "core_meaning": "Expansion, elevation, ambition, long-distance, heavenly power",
+        "description": "The deity of upward movement and expansion. Suited for grand ambitions, travel, and military deployment.",
+        "reading_meaning": "Aim high, expand, travel far, major advancement possible",
+        "career": "International expansion, ambitious projects, going public, big moves",
+        "relationships": "Long-distance relationships, grand gestures, elevated partnerships"
+      }
+    }
+  },
+
+  "section_6_formations": {
+    "title": "格局 (Formations/Patterns)",
+    "description": "Standard QMDJ formation patterns that have specific interpretive meanings beyond individual symbol readings.",
+    "sources": [
+      "https://www.sohu.com/a/435739206_120203927",
+      "https://zhuanlan.zhihu.com/p/608463078",
+      "https://zhuanlan.zhihu.com/p/660422144",
+      "https://www.yixiansheng.com/article/2134.html",
+      "https://zhuanlan.zhihu.com/p/620317168"
+    ],
+
+    "九遁_nine_escapes": {
+      "description": "Nine special auspicious formations where energy 'hides' in favorable configurations. These are the highest-level auspicious patterns.",
+      "formations": {
+        "天遁_heavenly_escape": {
+          "condition": "天盘丙奇 + 地盘丁奇 + 人盘生门 in 坎一宫",
+          "meaning": "Celestial transformation. Tangible obstacles dissolve into nothing.",
+          "application": "Lost things recovered, ventures gain momentum without resistance.",
+          "timing": "Occurs seasonally at solstices and equinoxes"
+        },
+        "地遁_earthly_escape": {
+          "condition": "开门 + 乙奇 + 地盘六己",
+          "meaning": "Earth's concealment — dormant forces activate for regeneration.",
+          "application": "Commerce flourishes, products gain supernatural appeal. Favorable for site selection.",
+          "timing": "When earth's magnetic forces strengthen"
+        },
+        "人遁_human_escape": {
+          "condition": "天盘丁奇 + 人盘休门 + 神盘太阴",
+          "meaning": "Human potential elevates from mundane to divine capability.",
+          "application": "Career advancement, scholarly success, wealth generation. Personal talent shines.",
+          "timing": "Approximately every 100 days"
+        },
+        "风遁_wind_escape": {
+          "condition": "Spiral/curved energy transformation pattern",
+          "meaning": "Wind energy — proactive initiative overcomes obstacles.",
+          "application": "Contract modifications favorable, personnel changes resolve stagnation.",
+          "timing": "30-day cycle"
+        },
+        "云遁_cloud_escape": {
+          "condition": "天盘乙奇 + 开/休/生三吉门 + 地盘六辛",
+          "meaning": "Dark clouds dissipate — adverse conditions fade but instability remains.",
+          "application": "Stabilize positions, maintain existing gains, avoid hasty decisions.",
+          "timing": "14-day cycle"
+        },
+        "龙遁_dragon_escape": {
+          "condition": "天盘乙奇 + 开/休/生三吉门之一 + 坎一宫 or 地盘六癸",
+          "meaning": "Dormant dragon rises — sleeping potential awakens for greatness.",
+          "application": "Foundation-setting for major success. Career advancement, migration.",
+          "timing": "Every 100 days"
+        },
+        "虎遁_tiger_escape": {
+          "condition": "乙奇 + 休门(或生门) + 地盘六辛 + 艮宫",
+          "meaning": "Hidden threats intensify — danger shifts from obvious to concealed.",
+          "application": "Requires vigilance, protect reputation, avoid financial risks.",
+          "timing": "Every 36 days, lasting 2 hours"
+        },
+        "神遁_divine_escape": {
+          "condition": "天盘六丙 + 九天 + 丙合生门",
+          "meaning": "Divine power appears ordinary — reality obscured by illusion.",
+          "application": "Avoid major moves. Focus on negotiation and learning.",
+          "timing": "100-day cycle"
+        },
+        "鬼遁_ghost_escape": {
+          "condition": "杜门 + 六乙 + 九地",
+          "meaning": "Ghost concealment — deception paired with lethal intent.",
+          "application": "Direct methods fail. Success through cunning and decisiveness only.",
+          "timing": "Monthly occurrence"
+        }
+      }
+    },
+
+    "三诈_three_deceptions": {
+      "description": "Three strategic formations using deception for advantage. Requires: 三奇 (乙丙丁) + 三吉门 (开休生) + specific deity.",
+      "formations": {
+        "真诈_true_deception": {
+          "condition": "乙/丙/丁三奇 + 开/休/生三吉门 + 太阴",
+          "meaning": "True deception — favorable for secret praise, blessings, prayer, spiritual practices, and hiding.",
+          "application": "利于表彰、招福、求仙、祈祷、隐遁"
+        },
+        "重诈_heavy_deception": {
+          "condition": "乙/丙/丁三奇 + 开/休/生三吉门 + 九地",
+          "meaning": "Heavy deception — favorable for seeking wealth, promotion, gaining people, expeditions, conferring titles.",
+          "application": "适合求财、升迁、进人口、出征、授爵授衔"
+        },
+        "休诈_rest_deception": {
+          "condition": "乙/丙/丁三奇 + 开/休/生三吉门 + 六合",
+          "meaning": "Rest deception — favorable for prayer, healing illness, and ritualistic ceremonies.",
+          "application": "宜祈福、治病、祭祀"
+        }
+      },
+      "marriage_warning": "三诈五假填房客 — In marriage readings, 三诈 indicates second marriage / remarriage."
+    },
+
+    "五假_five_feints": {
+      "description": "Five formations for 'borrowing' energy — hiding true intentions to achieve goals through false appearances.",
+      "warning": "If door is tomb-pressed (门迫) or stems enter tomb (奇仪入墓), feint turns inauspicious.",
+      "formations": {
+        "天假_heaven_feint": {
+          "condition": "景门 + 乙/丙/丁三奇之一 + 九天",
+          "meaning": "Borrow heavenly timing. Fire + light + upward expansion.",
+          "application": "Favorable for advancing, petitioning, presenting your case."
+        },
+        "地假_earth_feint": {
+          "condition": "杜门 + 丁/己/癸 + 九地",
+          "meaning": "Borrow earthly advantage. Concealment + earth + grounding.",
+          "application": "Favorable for hiding, ambush. With 太阴: send spies. With 六合: retreat/escape."
+        },
+        "人假_human_feint": {
+          "condition": "惊门 + 六壬 + 九天",
+          "meaning": "Borrow human force. Shock + water + expansion.",
+          "application": "Favorable for pursuing fugitives and capturing escapees."
+        },
+        "神假_divine_feint": {
+          "condition": "伤门 + 丁/己/癸 + 九地",
+          "meaning": "Borrow spiritual power.",
+          "application": "Favorable for burial and memorial services."
+        },
+        "鬼假_ghost_feint": {
+          "condition": "死门 + 丁/己/癸 + 九地",
+          "meaning": "Borrow yin/ghostly energy.",
+          "application": "Favorable for funeral rites, exorcism, tomb repair, appeasing spirits, hunting."
+        }
+      }
+    },
+
+    "吉格_auspicious_formations": {
+      "三奇升殿": {
+        "condition": "乙 in 震宫 (临官), 丙 in 离宫 (帝旺), 丁 in 兑宫 (长生)",
+        "meaning": "Three Marvels ascend to their throne — each Marvel in its most powerful palace. Peak authority."
+      },
+      "三奇得使": {
+        "condition": "三奇 + 值使门 in same palace",
+        "meaning": "Three Marvels gain a messenger — inauspicious turns to minor auspicious. Danger becomes opportunity."
+      },
+      "玉女守门": {
+        "condition": "地盘丁奇 + 值使门 in same palace",
+        "meaning": "Jade Maiden guards the gate — protective and auspicious."
+      },
+      "青龙返首": {
+        "condition": "戊加丙",
+        "meaning": "Green Dragon turns back — great fortune in all endeavors."
+      },
+      "飞鸟跌穴": {
+        "condition": "丙加戊",
+        "meaning": "Bird falls into perfect nest — everything lands perfectly."
+      },
+      "小蛇化龙": {
+        "condition": "壬加戊",
+        "meaning": "Small snake transforms into dragon — dramatic positive transformation."
+      }
+    },
+
+    "凶格_inauspicious_formations": {
+      "伏吟": {
+        "condition": "Stars/doors/stems return to their original palace",
+        "meaning": "Stagnation — things are stuck, cannot move, tangled. WAIT."
+      },
+      "反吟": {
+        "condition": "Stars/doors/stems move to their opposite palace",
+        "meaning": "Rapid reversal — everything changes quickly, multiple flip-flops."
+      },
+      "六仪击刑": {
+        "condition": "地盘六仪互相刑克",
+        "meaning": "Especially dangerous — severe conflicts, punishments, legal disasters."
+      },
+      "五不遇时": {
+        "condition": "Five specific unfavorable hour combinations",
+        "meaning": "Critical decisions MUST NOT be made during these times."
+      },
+      "荧入太白": {
+        "condition": "丙加庚",
+        "meaning": "Mars enters Venus — property destroyed, thieves steal."
+      },
+      "太白入荧": {
+        "condition": "庚加丙",
+        "meaning": "Venus enters Mars — guard against thieves and raiders."
+      },
+      "白虎猖狂": {
+        "condition": "辛加乙",
+        "meaning": "White Tiger rampages — family destruction, travel disasters."
+      },
+      "青龙逃走": {
+        "condition": "乙加辛",
+        "meaning": "Green Dragon flees — people die, wealth scatters, betrayal."
+      },
+      "朱雀投江": {
+        "condition": "丁加癸",
+        "meaning": "Vermillion Bird drowns — document disputes, lawsuits, verbal attacks."
+      },
+      "天网四张": {
+        "condition": "癸加癸",
+        "meaning": "Heaven's Net spread everywhere — trapped with no escape."
+      }
+    }
+  },
+
+  "section_7_yin_plate_specifics": {
+    "title": "阴盘 (Yin Plate) vs 阳盘 (Yang Plate) Differences & Chang Qing School",
+    "description": "Critical distinctions that affect how The Jade Oracle should interpret charts.",
+    "sources": [
+      "https://zhuanlan.zhihu.com/p/720033785",
+      "https://m.k366.com/bazi/77851.htm",
+      "https://www.d1peixun.com/m/view.php?aid=2852",
+      "https://zhuanlan.zhihu.com/p/590778602",
+      "https://c.m.163.com/news/a/FEA9SQMT0545B5KH.html"
+    ],
+
+    "charting_differences": {
+      "yang_plate": {
+        "basis": "Solar calendar (太阳历). Uses 24 solar terms + 60 甲子.",
+        "局数_method": "Divide each solar term's 15 days into upper/middle/lower 元 (5 days each), each mapped to a specific 局 number.",
+        "stem_placement": "Standard forward/reverse placement based on Yin/Yang Escape."
+      },
+      "yin_plate": {
+        "basis": "Lunar calendar (太阴历). Uses moon phase cycles.",
+        "局数_method": "Add year/month/day/hour 太阴数, divide by 9, remainder = 局 number.",
+        "stem_placement": "Reverse five elements (反五行) interpretation.",
+        "note": "The Jade Oracle engine uses 阴盘 method as per 长卿 lineage."
+      }
+    },
+
+    "interpretation_differences": {
+      "yang_plate_approach": {
+        "method": "技法 (Technique-based)",
+        "focus": "格局 (Formations) — must memorize all 81 stem combinations and their fixed meanings",
+        "philosophy": "论吉凶 — symbols are inherently auspicious or inauspicious",
+        "readings": "More rigid, formula-based interpretation"
+      },
+      "yin_plate_approach": {
+        "method": "心法 (Heart method / intuitive)",
+        "focus": "取象 (Image-taking) — understand each symbol's ENERGY, then read combinations intuitively",
+        "philosophy": "无吉凶 — symbols have no inherent good/bad, they describe ENERGY STATES",
+        "readings": "More flexible, context-dependent interpretation",
+        "key_principle": "临事而审情 — examine the situation at hand, then deeply analyze around the 用神 (use god)"
+      }
+    },
+
+    "yin_plate_unique_features": {
+      "调理手段_remediation": {
+        "description": "阴盘 has built-in remediation methods that 阳盘 lacks",
+        "methods": [
+          "拆补移 — Dismantle, supplement, and move energy",
+          "移星换斗 — Shift stars, swap constellations (repositioning energy)",
+          "山向奇门 — Mountain direction QMDJ (geographic orientation remediation)"
+        ],
+        "purpose": "After identifying problems in a chart, use these methods to CHANGE the outcome rather than merely predicting it"
+      },
+      "symbol_reading": {
+        "description": "In 阴盘, you only need to know each symbol's meaning, then combine them based on the specific context and person",
+        "no_memorization": "Unlike 阳盘, you do NOT need to memorize all 81 formation names — understand the energy dynamics instead",
+        "context_dependent": "The same symbol combination means different things based on: (1) what you're asking, (2) who you're asking about, (3) the surrounding palace context"
+      }
+    },
+
+    "chang_qing_school": {
+      "teacher": "长卿 (Chang Qing)",
+      "note_on_naming": "User studies under 长卿, NOT 翁向宏. These are different teachers in the 阴盘 tradition.",
+      "lineage": "道家阴盘奇门 (Daoist Yin Plate QMDJ)",
+      "search_results": "Limited specific online content about 长卿's unique methods — most 阴盘 content is general. The school's specific techniques are likely transmitted privately through course materials (风生水起, 富贵花开, 易商智慧 series).",
+      "known_characteristics": [
+        "Emphasizes 取象 over 格局",
+        "Uses 阴盘 charting method (lunar-based)",
+        "Includes 调理/remediation techniques",
+        "Energy-state reading rather than fixed fortune/misfortune labels",
+        "Practical business and wealth application (易商智慧 = Business Wisdom)",
+        "Feng shui applications (风生水起 = Wind and Water Rising)"
+      ]
+    }
+  },
+
+  "section_8_use_gods_by_topic": {
+    "title": "用神 (Use Gods) — Focus Symbols by Reading Topic",
+    "description": "When reading for different life areas, different symbols serve as the PRIMARY focus. This is essential for the reading engine to know WHAT to look at.",
+    "sources": [
+      "https://www.sioho.com/?p=6924",
+      "https://www.fengshuirm.com/qimendunjia/caiyun.html",
+      "https://zhuanlan.zhihu.com/p/670115753"
+    ],
+
+    "identity": {
+      "日干_day_stem": "The querent (person asking). PRIMARY identity marker.",
+      "年命_year_stem": "Alternative self-representation (birth year's heavenly stem).",
+      "年干_year_stem_of_chart": "Parents, elders, superiors, inherited conditions.",
+      "月干_month_stem": "Peers, siblings, classmates, colleagues, friends.",
+      "时干_hour_stem": "Children, subordinates, later life, the other party in a question."
+    },
+
+    "wealth_and_career": {
+      "戊": "Capital, investments, main wealth indicator. 戊's palace strength = financial strength.",
+      "生门": "Profits, salary, income flow. THE wealth door.",
+      "开门": "The workplace/company itself. Official career.",
+      "值符": "Top boss, CEO, ultimate authority. Also overall direction.",
+      "天蓬星": "Financial star (坎水 = flowing money). Direction to seek money.",
+      "杜门": "Military/armed forces career.",
+      "开门_direction": "Northwest = noble people's wealth.",
+      "休门_direction": "North = wealthy family's wealth.",
+      "生门_direction": "Northeast = land/real estate wealth."
+    },
+
+    "relationships_and_marriage": {
+      "乙": "Wife, girlfriend, feminine partner.",
+      "庚": "Husband, boyfriend, masculine partner.",
+      "丁": "Mistress, secret lover, affair.",
+      "六合": "Relationship harmony indicator. Marriage matchmaking deity.",
+      "日干_vs_乙_or_庚": "Compare querent's palace with partner symbol's palace for compatibility."
+    },
+
+    "health_and_illness": {
+      "天芮星": "THE disease indicator. Where it falls = disease location/nature.",
+      "天心星": "THE healing indicator. Doctor quality, treatment success.",
+      "值符": "Disease cause, origin, direction of illness.",
+      "乙": "Chinese medicine, traditional remedies.",
+      "开门": "Hospital (Western medicine), surgery.",
+      "九宫_body_mapping": {
+        "坎一宫": "Kidneys, ears, reproductive, blood",
+        "坤二宫": "Abdomen, stomach, spleen, digestive",
+        "震三宫": "Liver, gallbladder, limbs, tendons",
+        "巽四宫": "Bile, intestines, thighs, nerves",
+        "中五宫": "Spleen, central organs",
+        "乾六宫": "Head, lungs, large intestine, bones",
+        "兑七宫": "Mouth, throat, teeth, respiratory",
+        "艮八宫": "Hands, back, nose, stomach",
+        "离九宫": "Eyes, heart, blood, complexion"
+      }
+    },
+
+    "legal_and_conflict": {
+      "庚": "Opponent, enemy, obstacle, the thing blocking you.",
+      "白虎": "Law enforcement, police, violent force.",
+      "天蓬星": "Major criminal, serious crime.",
+      "玄武": "Thief, minor crime, petty criminal.",
+      "惊门": "Lawsuits, verbal disputes, legal proceedings.",
+      "辛": "Prison, punishment, reform, legal consequences."
+    },
+
+    "travel_and_movement": {
+      "日干": "The traveler.",
+      "时干": "The destination.",
+      "开门": "Starting gate — favorable opening.",
+      "九天": "Long distance, expansion, going far.",
+      "杜门": "Blocked road, delayed travel.",
+      "伤门": "Accidents during travel, vehicle problems."
+    },
+
+    "feng_shui": {
+      "值符": "Macro environment quality (neighborhood, area).",
+      "值使门": "Main entrance of the property.",
+      "年命落宫": "Bedroom quality for the specific person.",
+      "壬": "Water features, kitchen water, plumbing (governs wealth).",
+      "丙": "Fire, stove, electrical (governs people/family growth).",
+      "癸": "Bathroom, drainage, sewage.",
+      "时干_vs_日干": "时干生日干 = house supports person. 时干克日干 = house harms person."
+    }
+  },
+
+  "implementation_notes": {
+    "title": "Notes for Reading Engine Implementation",
+    "items": [
+      "CRITICAL: The same symbols mean different things per chart type. The engine MUST branch on chart_type (时盘/命盘/年盘/风水) before interpreting.",
+      "For 阴盘 approach: present interpretations as ENERGY DESCRIPTIONS, not fixed fortunes. Say 'the energy suggests...' not 'you will...'",
+      "十干克应 is the foundation — every palace reading should start with the stem interaction name and meaning.",
+      "Layer the reading: Stem interaction → Door meaning → Star meaning → Deity meaning → Palace element interaction.",
+      "For wealth readings: always check 戊 palace AND 生门 palace. Cross-reference with 日干 palace.",
+      "For health: 天芮 location = disease site, 天心 location = treatment quality, body part = from nine palace mapping.",
+      "门迫 (door pressed) = when door's element is overcome by palace's element. This weakens the door's meaning significantly.",
+      "入墓 (entering tomb) = when a stem enters its tomb palace. This 'buries' the stem's energy — very negative.",
+      "旺衰 (thriving/declining) = check if symbols are in their season. Spring = Wood thrives, Metal declines, etc.",
+      "The 81 formation names are useful as LABELS for the AI reading, but the actual interpretation should follow 阴盘 取象 method — contextual, not rigid."
+    ]
+  }
+}
