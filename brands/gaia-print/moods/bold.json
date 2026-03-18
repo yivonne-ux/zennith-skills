@@ -1,0 +1,16 @@
+{
+  "name": "bold",
+  "description": "Streetwear energy against urban graffiti walls with high contrast styling and unapologetic confidence. This mood makes GAIA Print feel like a movement — bold designs for bold people who wear their values on their sleeve, literally.",
+  "output_types": ["hero", "promotion", "ugc", "broll"],
+  "style": {
+    "lighting": "hard directional street light | high contrast flash | dramatic urban shadows",
+    "color_grade": "high contrast green and gold | deep shadows with punchy highlights | urban grit",
+    "camera": "low angle power pose | wide urban establishing | dynamic movement capture",
+    "composition": "person vs urban backdrop | bold graphic tee as focal point | street culture framing",
+    "props": "graffiti wall, urban architecture, skateboard, bold accessories, street signage",
+    "atmosphere": "confident, rebellious, urban, powerful, statement-making"
+  },
+  "copy_tone": "Bold and direct. Short punchy declarations. 'Wear it loud.' 'This is not fast fashion.' Makes a statement without over-explaining. Street credibility in every word.",
+  "music": { "mood": "hip-hop beats, urban electronic, bass-heavy confidence", "bpm": "90-110" },
+  "example_prompt_fragment": "A confident person standing against a colorful graffiti wall wearing a bold GAIA Print graphic hoodie in forest green, low angle shot conveying power, hard directional street lighting creating dramatic shadows, high contrast color grade with deep greens and gold accents, urban streetwear photography, statement fashion editorial"
+}

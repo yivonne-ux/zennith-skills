@@ -1,0 +1,16 @@
+{
+  "name": "cozy",
+  "description": "Warm kitchen mornings with the smell of fresh baking, flour-dusted hands shaping dough, and the quiet satisfaction of creating something from scratch. This mood makes cooking feel like a meditative, comforting ritual.",
+  "output_types": ["broll", "aroll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm morning window light | soft diffused kitchen glow | golden backlighting on steam",
+    "color_grade": "warm cream and peach tones | soft focus edges | gentle highlights",
+    "camera": "close-up hands working dough | medium shot kitchen activity | slow overhead pan",
+    "composition": "flour-dusted surfaces as texture | hands as main subject | cozy kitchen clutter",
+    "props": "flour, rolling pin, mixing bowls, apron, wooden spoon, morning tea, recipe card",
+    "atmosphere": "comforting, peaceful, intimate, nurturing, homey"
+  },
+  "copy_tone": "Gentle and nurturing, like a warm hug in word form. Uses sensory language — the feel of dough, the scent of spices. Invites the reader into a quiet, satisfying cooking moment.",
+  "music": { "mood": "soft acoustic, gentle piano, kitchen ambiance sounds", "bpm": "65-85" },
+  "example_prompt_fragment": "Warm morning kitchen scene, flour-dusted hands gently kneading dough on a wooden board, soft golden window light illuminating floating flour particles, mixing bowls and a worn recipe card nearby, shallow depth of field, warm cream and peach tones, cozy editorial food photography"
+}

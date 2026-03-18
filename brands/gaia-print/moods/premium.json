@@ -1,0 +1,16 @@
+{
+  "name": "premium",
+  "description": "Luxury packaging and clean studio presentation with gold foil details and elevated merch presentation. This mood makes GAIA Print products feel like collectibles — premium sustainable goods worth displaying, not just wearing.",
+  "output_types": ["hero", "promotion", "carousel", "aroll"],
+  "style": {
+    "lighting": "clean studio three-point | subtle gold accent lighting | soft even product light",
+    "color_grade": "clean neutrals with gold accents | deep forest green and cream | premium matte finish",
+    "camera": "clean product hero shot | detail macro on foil and texture | slow reveal unboxing",
+    "composition": "centered product with breathing room | premium flat lay arrangement | unboxing sequence",
+    "props": "tissue paper wrapping, gold foil stickers, branded box, premium hangtag, kraft paper, wax seal",
+    "atmosphere": "luxurious, collectible, elevated, refined, gift-worthy"
+  },
+  "copy_tone": "Elevated and intentional. Every word feels considered. Uses language like 'crafted,' 'limited,' 'curated collection.' Signals value through restraint. Less is more.",
+  "music": { "mood": "minimal electronic, luxury brand ambient, clean beats", "bpm": "75-95" },
+  "example_prompt_fragment": "A premium flat lay product shot of a folded GAIA Print tee in deep forest green on kraft tissue paper, gold foil brand sticker, clean studio lighting on a cream marble surface, branded box partially open revealing the product, gold accent details catching the light, premium neutral color palette, luxury product photography"
+}

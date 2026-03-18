@@ -1,0 +1,16 @@
+{
+  "name": "bold",
+  "description": "Vibrant market scene energy with colorful ingredients piled high and wok fire blazing. This mood captures the raw, exciting chaos of Malaysian food culture — hawker stalls, pasar malam, and the sizzle of street cooking.",
+  "output_types": ["broll", "promotion", "ugc", "hero"],
+  "style": {
+    "lighting": "high contrast natural market light | wok fire glow | neon signage accents",
+    "color_grade": "saturated warm tones | deep reds and golds | punchy contrast",
+    "camera": "dynamic handheld | close-up sizzle shots | wide establishing market shot",
+    "composition": "ingredient hero stacks | action cooking moments | crowded market energy",
+    "props": "wok, fresh chili piles, turmeric roots, market baskets, hawker stall setup, gas flame",
+    "atmosphere": "vibrant, exciting, energetic, colorful, alive"
+  },
+  "copy_tone": "Punchy and confident, with exclamation-worthy flavor descriptions. Uses power words — sizzling, bursting, bold. Makes you want to grab a plate immediately.",
+  "music": { "mood": "upbeat percussion, world music fusion, energetic", "bpm": "110-130" },
+  "example_prompt_fragment": "A vibrant Malaysian market stall scene, piles of bright red chilies and golden turmeric in the foreground, wok flames leaping high in the background, a hawker cooking with confident motion, colorful signage, saturated warm tones, dynamic handheld camera feel, editorial lifestyle food photography"
+}

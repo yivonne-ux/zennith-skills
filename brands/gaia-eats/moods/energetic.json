@@ -1,0 +1,16 @@
+{
+  "name": "energetic",
+  "description": "Action cooking with sizzling woks, fast cuts, and the raw street food energy of Malaysian night markets. This mood captures the adrenaline of cooking at speed — tossing, flipping, plating — with the urgency and excitement of hawker culture.",
+  "output_types": ["broll", "ugc", "promotion", "hero"],
+  "style": {
+    "lighting": "dramatic fire glow | high contrast street lighting | fast-moving light sources",
+    "color_grade": "high contrast warm | fiery orange and red accents | deep shadows",
+    "camera": "fast whip pans | slow-motion sizzle | dynamic angles and movement",
+    "composition": "action-first framing | ingredients mid-air | toss and catch moments",
+    "props": "blazing wok, tossing spatula, street food cart, ingredient mise en place, fire flame",
+    "atmosphere": "adrenaline, exciting, fast-paced, raw, powerful"
+  },
+  "copy_tone": "High-energy and punchy. Short sentences. Action verbs. Sizzle. Flip. Serve. Creates urgency and excitement. Reads like sports commentary for cooking.",
+  "music": { "mood": "electronic-world fusion, driving percussion, bass-heavy", "bpm": "120-140" },
+  "example_prompt_fragment": "A dynamic street food cooking action shot, wok tossed ingredients frozen mid-air with visible flames beneath, high contrast dramatic lighting, fast-motion blur on the chef's hands, night market background with bokeh lights, deep shadows with fiery orange highlights, close-up sizzling oil splatter, editorial street food photography style"
+}

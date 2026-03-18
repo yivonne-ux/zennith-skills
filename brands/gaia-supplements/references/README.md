@@ -1,0 +1,1 @@
+Store GAIA Supplements reference images here: mood boards, approved product photography, color palettes, logo variations, and packaging design samples. These references are used by the Art Director and NanoBanana for visual consistency.

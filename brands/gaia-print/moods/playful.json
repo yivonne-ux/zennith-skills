@@ -1,0 +1,16 @@
+{
+  "name": "playful",
+  "description": "Quirky designs with bright patterns, pop art influences, and fun poses that make you smile. This mood makes GAIA Print feel like wearable art — designs that spark conversations and bring joy to everyday outfits.",
+  "output_types": ["ugc", "carousel", "promotion", "broll"],
+  "style": {
+    "lighting": "bright flat lighting | colorful gel accents | fun shadow play",
+    "color_grade": "bright pop art palette | saturated primary colors with green base | high key fun",
+    "camera": "fun posed portrait | overhead sticker scatter | dynamic model movement",
+    "composition": "pop art inspired framing | sticker and design detail shots | playful model poses",
+    "props": "bright stickers, quirky accessories, colorful backdrop, fun sunglasses, patterned socks",
+    "atmosphere": "quirky, joyful, colorful, conversation-starting, youthful"
+  },
+  "copy_tone": "Fun and quirky with personality. Uses wordplay, unexpected descriptions, and cheeky humor. 'Your tote bag has more personality than most people.' Makes fashion feel like self-expression play.",
+  "music": { "mood": "funky pop, retro synth, quirky indie", "bpm": "105-125" },
+  "example_prompt_fragment": "A fun lifestyle shot of a person laughing while holding up a colorful GAIA Print tote bag with a quirky plant-based design, bright pop art inspired background with green and gold patterns, playful pose, bright flat lighting with colorful gel accents, scattered stickers on the ground, high key saturated color palette, joyful pop art fashion photography"
+}

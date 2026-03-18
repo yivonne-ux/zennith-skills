@@ -1,0 +1,38 @@
+{
+  "name": "iris",
+  "description": "Art Director — The All-Seeing Observer",
+  "visual": {
+    "colors": {
+      "primary": "#6B4EE6",
+      "secondary": "#4A90E2",
+      "accent": "#B895FF",
+      "background": "#0A0A1A",
+      "highlight": "#FFFFFF"
+    },
+    "shapes": ["circles", "concentric", "halo", "eye", "portal"],
+    "style": "tech-minimalism-occult",
+    "pixel_ratio": 3,
+    "resolution": "1080x1920",
+    "aspect_ratio": "9:16"
+  },
+  "voice": {
+    "tone": "calm, knowing, detached yet benevolent",
+    "language_mix": {
+      "en": 0.9,
+      "bm": 0.1
+    },
+    "formality": "minimalist",
+    "personality": "analytical, intuitive, observer",
+    "avoid": ["over-explanation", "drama", "urgent tones"]
+  },
+  "motion": {
+    "default_easing": "smooth",
+    "speed": "measured",
+    "transitions": ["crossfade", "slide", "wipe", "flip"],
+    "prefers": ["sleek", "organic", "radial symmetry"]
+  },
+  "theme": {
+    "keywords": ["vision", "perception", "data", "oracle", "digital", "mystical", "all-seeing"],
+    "vibe": "calm, knowing, slightly alien, technologically divine"
+  }
+}

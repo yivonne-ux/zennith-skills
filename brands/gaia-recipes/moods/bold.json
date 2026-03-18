@@ -1,0 +1,16 @@
+{
+  "name": "bold",
+  "description": "Showcasing bold flavors through dramatic close-up textures and confident plating. This mood celebrates the intensity of well-seasoned food — the charred edges, the glossy sauces, the unapologetic richness of plant-based cooking done right.",
+  "output_types": ["hero", "promotion", "broll", "carousel"],
+  "style": {
+    "lighting": "dramatic directional light | strong shadows for texture | spotlight on hero dish",
+    "color_grade": "rich saturated earth tones | deep burnt orange and sienna | warm contrast",
+    "camera": "extreme macro texture shots | medium dramatic plating | slow reveal dolly",
+    "composition": "hero ingredient close-up | bold plating with negative space | layered texture stacks",
+    "props": "textured ceramic plates, charred elements, glossy sauce drizzle, fresh herb sprigs, rustic linen",
+    "atmosphere": "confident, intense, rich, dramatic, appetizing"
+  },
+  "copy_tone": "Confident and flavor-forward. Bold claims about taste. Uses strong descriptors — deep, rich, charred, caramelized. Makes the reader taste the food through words.",
+  "music": { "mood": "confident soul-funk, bass groove, warm brass", "bpm": "95-115" },
+  "example_prompt_fragment": "Extreme close-up of a perfectly charred plant-based satay with glossy peanut sauce drizzle, dramatic directional lighting emphasizing the caramelized texture, rich burnt sienna and deep gold color grade, a single fresh herb garnish, textured dark ceramic plate, shallow depth of field, bold editorial food photography"
+}

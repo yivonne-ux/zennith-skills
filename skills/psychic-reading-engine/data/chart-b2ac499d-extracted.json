@@ -1,0 +1,369 @@
+{
+  "chart_meta": {
+    "date": "2026-03-17 20:46",
+    "lunar_date": "一月廿九",
+    "solar_term": "惊蛰2026.03.05 21:58 ~ 春分2026.03.20 22:45",
+    "plate_type": "时盘",
+    "ju_type": "阳遁",
+    "ju_number": 3,
+    "monthly_general": "亥",
+    "jia_cycle": "甲申庚",
+    "duty_symbol": "天禽",
+    "duty_door": "死门",
+    "horse_star": "申",
+    "void_branches": "午未",
+    "si_zhu": {
+      "year": "丙午",
+      "month": "辛卯",
+      "day": "庚寅",
+      "hour": "丙戌"
+    }
+  },
+  "direction_stems": {
+    "N": "戊",
+    "S": "壬",
+    "E": "丁",
+    "W": "丙",
+    "SE": "乙庚",
+    "SW": "辛",
+    "NE": "己",
+    "NW": "癸"
+  },
+  "palaces": {
+    "4": {
+      "palace": 4,
+      "direction": "SE",
+      "deity": "六合",
+      "star": "蓬",
+      "door": "伤",
+      "tian_gan": [
+        "丙",
+        "己"
+      ],
+      "life_states": [
+        "冠",
+        "临",
+        "旺",
+        "衰"
+      ],
+      "void": false,
+      "notes": "六合+天蓬+伤门 in SE palace",
+      "trigram": "巽",
+      "deity_data": {
+        "name_en": "Liu He",
+        "element": "Wood",
+        "quality": "auspicious"
+      },
+      "star_data": {
+        "full": "天蓬",
+        "name_en": "Tian Peng",
+        "element": "Water",
+        "quality": "inauspicious"
+      },
+      "door_data": {
+        "name_en": "Injury Door",
+        "element": "Wood",
+        "palace": 3,
+        "quality": "neutral"
+      }
+    },
+    "9": {
+      "palace": 9,
+      "direction": "S",
+      "deity": "白虎",
+      "star": "任",
+      "door": "杜",
+      "tian_gan": [
+        "癸",
+        "丁"
+      ],
+      "life_states": [
+        "绝",
+        "临"
+      ],
+      "void": true,
+      "notes": "白虎+天任+杜门 in S palace — 空亡(void)",
+      "trigram": "离",
+      "deity_data": {
+        "name_en": "Bai Hu",
+        "element": "Metal",
+        "quality": "inauspicious"
+      },
+      "star_data": {
+        "full": "天任",
+        "name_en": "Tian Ren",
+        "element": "Earth",
+        "quality": "auspicious"
+      },
+      "door_data": {
+        "name_en": "Obstruct Door",
+        "element": "Wood",
+        "palace": 4,
+        "quality": "neutral"
+      }
+    },
+    "2": {
+      "palace": 2,
+      "direction": "SW",
+      "deity": "玄武",
+      "star": "冲",
+      "door": "景",
+      "tian_gan": [
+        "戊",
+        "乙庚"
+      ],
+      "life_states": [
+        "衰",
+        "病",
+        "胎",
+        "养",
+        "冠",
+        "临"
+      ],
+      "void": true,
+      "notes": "玄武+天冲+景门 in SW palace — 空亡(void)",
+      "trigram": "坤",
+      "deity_data": {
+        "name_en": "Xuan Wu",
+        "element": "Water",
+        "quality": "inauspicious"
+      },
+      "star_data": {
+        "full": "天冲",
+        "name_en": "Tian Chong",
+        "element": "Wood",
+        "quality": "neutral"
+      },
+      "door_data": {
+        "name_en": "View Door",
+        "element": "Fire",
+        "palace": 9,
+        "quality": "neutral"
+      }
+    },
+    "3": {
+      "palace": 3,
+      "direction": "E",
+      "deity": "太阴",
+      "star": "心",
+      "door": "生",
+      "tian_gan": [
+        "辛",
+        "戊"
+      ],
+      "life_states": [
+        "绝",
+        "沐"
+      ],
+      "void": false,
+      "notes": "太阴+天心+生门 in E palace — 戊 highlighted (大格?)",
+      "trigram": "震",
+      "deity_data": {
+        "name_en": "Tai Yin",
+        "element": "Metal",
+        "quality": "auspicious"
+      },
+      "star_data": {
+        "full": "天心",
+        "name_en": "Tian Xin",
+        "element": "Metal",
+        "quality": "very_auspicious"
+      },
+      "door_data": {
+        "name_en": "Life Door",
+        "element": "Earth",
+        "palace": 8,
+        "quality": "very_auspicious"
+      }
+    },
+    "5": {
+      "palace": 5,
+      "direction": "C",
+      "deity": null,
+      "star": "禽",
+      "door": null,
+      "tian_gan": [],
+      "life_states": [],
+      "void": false,
+      "notes": "Center palace (寄宫 — 天禽 rests here; active 天禽 follows 天芮)",
+      "trigram": "中",
+      "star_data": {
+        "full": "天禽",
+        "name_en": "Tian Qin",
+        "element": "Earth",
+        "quality": "neutral"
+      }
+    },
+    "7": {
+      "palace": 7,
+      "direction": "W",
+      "deity": "九地",
+      "star": "辅",
+      "door": "死",
+      "tian_gan": [
+        "己",
+        "壬"
+      ],
+      "life_states": [
+        "生",
+        "沐"
+      ],
+      "void": false,
+      "notes": "九地+天辅+死门 in W palace",
+      "trigram": "兑",
+      "deity_data": {
+        "name_en": "Jiu Di",
+        "element": "Earth",
+        "quality": "auspicious"
+      },
+      "star_data": {
+        "full": "天Fu",
+        "name_en": "Tian Fu",
+        "element": "Wood",
+        "quality": "auspicious"
+      },
+      "door_data": {
+        "name_en": "Death Door",
+        "element": "Earth",
+        "palace": 2,
+        "quality": "inauspicious"
+      }
+    },
+    "8": {
+      "palace": 8,
+      "direction": "NE",
+      "deity": "腾蛇",
+      "star": "柱",
+      "door": "休",
+      "tian_gan": [
+        "壬",
+        "癸"
+      ],
+      "life_states": [
+        "衰",
+        "病",
+        "沐",
+        "冠"
+      ],
+      "void": false,
+      "notes": "腾蛇+天柱+休门 in NE palace",
+      "trigram": "艮",
+      "deity_data": {
+        "name_en": "Teng She",
+        "element": "Fire",
+        "quality": "inauspicious"
+      },
+      "star_data": {
+        "full": "天柱",
+        "name_en": "Tian Zhu",
+        "element": "Metal",
+        "quality": "inauspicious"
+      },
+      "door_data": {
+        "name_en": "Rest Door",
+        "element": "Water",
+        "palace": 1,
+        "quality": "auspicious"
+      }
+    },
+    "1": {
+      "palace": 1,
+      "direction": "N",
+      "deity": "值符",
+      "star": "芮",
+      "door": "开",
+      "tian_gan": [
+        "乙庚",
+        "丙"
+      ],
+      "life_states": [
+        "病",
+        "死",
+        "胎"
+      ],
+      "void": false,
+      "notes": "值符+天芮+开门 in N palace — 病死 (inauspicious life states, red)",
+      "trigram": "坎",
+      "deity_data": {
+        "name_en": "Zhi Fu",
+        "element": "Earth",
+        "quality": "very_auspicious"
+      },
+      "star_data": {
+        "full": "天芮",
+        "name_en": "Tian Rui",
+        "element": "Earth",
+        "quality": "inauspicious"
+      },
+      "door_data": {
+        "name_en": "Open Door",
+        "element": "Metal",
+        "palace": 6,
+        "quality": "auspicious"
+      }
+    },
+    "6": {
+      "palace": 6,
+      "direction": "NW",
+      "deity": "九天",
+      "star": "英",
+      "door": "惊",
+      "tian_gan": [
+        "丁",
+        "辛"
+      ],
+      "life_states": [
+        "胎",
+        "养",
+        "沐",
+        "冠"
+      ],
+      "void": false,
+      "notes": "九天+天英+惊门 in NW palace",
+      "trigram": "乾",
+      "deity_data": {
+        "name_en": "Jiu Tian",
+        "element": "Metal",
+        "quality": "auspicious"
+      },
+      "star_data": {
+        "full": "天英",
+        "name_en": "Tian Ying",
+        "element": "Fire",
+        "quality": "neutral"
+      },
+      "door_data": {
+        "name_en": "Shock Door",
+        "element": "Metal",
+        "palace": 7,
+        "quality": "inauspicious"
+      }
+    }
+  },
+  "summary": {
+    "auspicious_palaces": [
+      3
+    ],
+    "inauspicious_palaces": [
+      2,
+      8
+    ],
+    "void_palaces": [
+      9,
+      2
+    ],
+    "key_formations": [
+      {
+        "palace": 1,
+        "type": "吉格",
+        "description": "Palace 1: 开门+值符 — opportunity and expansion"
+      }
+    ]
+  },
+  "_meta": {
+    "extracted_at": "2026-03-17T20:51:38.946951",
+    "image_path": "media/inbound/b2ac499d-f763-43d7-905a-071f402c0ccd.jpg",
+    "mode": "manual",
+    "extractor": "qmdj-chart-extract.py v1.0"
+  }
+}

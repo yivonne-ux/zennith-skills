@@ -1,0 +1,16 @@
+{
+  "name": "bold",
+  "description": "Conference stage energy with thought leadership presence and impactful knowledge sharing. This mood captures the electricity of a keynote moment — big ideas, commanding presence, and the power of knowledge to transform lives.",
+  "output_types": ["hero", "promotion", "aroll", "broll"],
+  "style": {
+    "lighting": "dramatic stage spotlight | bold rim lighting | high contrast key light",
+    "color_grade": "deep teal and white contrast | bold accent pops | cinematic depth",
+    "camera": "low angle authority shot | wide stage establishing | dramatic close-up portrait",
+    "composition": "speaker as hero | bold text overlay space | audience reaction framing",
+    "props": "stage setup, presentation screen, microphone, podium, audience silhouettes, confidence posture",
+    "atmosphere": "powerful, inspiring, commanding, transformative, electric"
+  },
+  "copy_tone": "Authoritative and inspiring. Makes bold claims backed by evidence. Uses power statements — 'The future of wellness starts here.' Calls the audience to action. Thought leadership energy.",
+  "music": { "mood": "epic motivational, building orchestral, cinematic", "bpm": "100-120" },
+  "example_prompt_fragment": "A confident speaker on a modern conference stage with dramatic teal-tinted spotlight, low angle shot conveying authority, presentation screen glowing behind with clean infographic, audience silhouettes in foreground, bold rim lighting on speaker's profile, deep teal and white cinematic color grade, professional keynote photography"
+}

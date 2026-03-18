@@ -1,0 +1,47 @@
+{
+  "id": "elem-mirra-graphic-20260302162635-b40fcf",
+  "type": "graphic",
+  "brand": "mirra",
+  "name": "MIRRA Logo (Black)",
+  "created_at": "2026-03-02T16:26:41+0800",
+  "created_by": "jenn",
+  "files": [
+    "logo-black.png"
+  ],
+  "tags": [
+    "logo",
+    "identity",
+    "black",
+    "Logo",
+    "Typography",
+    "Serif",
+    "Black and white",
+    "Minimalist",
+    "Elegant",
+    "Branding",
+    "Text",
+    "Classic",
+    "Modern classic"
+  ],
+  "auto_tags": {
+    "lighting": "Flat, studio-like, high-key background",
+    "palette": [
+      "#FFFFFF",
+      "#000000"
+    ],
+    "mood": "Elegant, classic, sophisticated, clean, professional",
+    "composition": "Centered text, minimalist",
+    "objects": [
+      "Text",
+      "Word 'MIRRA'",
+      "Serif typography"
+    ],
+    "scene": "Graphic design element, logo",
+    "style": "Minimalist, classic, elegant, serif typography, branding"
+  },
+  "notes": "Official MIRRA logo on black/transparent",
+  "source_url": "",
+  "pinned_by": "",
+  "performance": {},
+  "status": "active"
+}

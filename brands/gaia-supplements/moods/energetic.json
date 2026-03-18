@@ -1,0 +1,16 @@
+{
+  "name": "energetic",
+  "description": "Active lifestyle fuel with outdoor adventures, workout energy, and the vitality of a body in motion. This mood captures the supplement as the invisible engine behind an active life — hiking, cycling, running, living fully.",
+  "output_types": ["broll", "ugc", "promotion", "hero"],
+  "style": {
+    "lighting": "bright outdoor natural | dynamic action sport light | golden hour adventure glow",
+    "color_grade": "vivid greens and sky blue | golden sun accents | high energy natural palette",
+    "camera": "dynamic action tracking | wide adventure establishing | close-up supplement mid-adventure",
+    "composition": "supplement in adventure context | athlete-nature pairing | movement-first framing",
+    "props": "water bottle, trail running shoes, backpack, bike helmet, supplement packet, outdoor gear",
+    "atmosphere": "vital, adventurous, active, unstoppable, alive"
+  },
+  "copy_tone": "Energizing and action-oriented. Pairs supplement benefits with real activities. 'Fuel your trail.' 'Recovery starts at the summit.' Active voice, present tense, movement in every sentence.",
+  "music": { "mood": "upbeat adventure rock, driving outdoor energy, positive adrenaline", "bpm": "120-140" },
+  "example_prompt_fragment": "A dynamic outdoor scene of a trail runner pausing on a scenic Malaysian hillside, pulling a GAIA Supplements wellness pack from a backpack, bright golden hour sunlight, lush green jungle canopy in background, vivid natural greens with golden sun accents, action sport wide angle, energetic active lifestyle supplement photography"
+}

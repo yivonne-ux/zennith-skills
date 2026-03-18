@@ -1,0 +1,56 @@
+{
+  "id": "elem-mirra-graphic-20260302162625-38cf7d",
+  "type": "graphic",
+  "brand": "mirra",
+  "name": "MIRRA Brand Guide",
+  "created_at": "2026-03-02T16:26:35+0800",
+  "created_by": "jenn",
+  "files": [
+    "brand-guide.jpg"
+  ],
+  "tags": [
+    "brand-guide",
+    "identity",
+    "layout",
+    "brand guidelines",
+    "style guide",
+    "corporate identity",
+    "logo design",
+    "typography",
+    "color palette",
+    "flat illustration",
+    "minimalist",
+    "elegant",
+    "modern branding",
+    "retro aesthetic",
+    "graphic design",
+    "icons",
+    "character illustration"
+  ],
+  "auto_tags": {
+    "lighting": "Soft, even studio lighting",
+    "palette": [
+      "#F7AB9F",
+      "#252525",
+      "#FFF9EB",
+      "#D28C7D",
+      "#7B453A"
+    ],
+    "mood": "Professional, elegant, inviting, clean, modern",
+    "composition": "Structured grid layout with distinct sections for branding elements, typography, and illustration.",
+    "objects": [
+      "text",
+      "logo (MIRRA)",
+      "color swatches",
+      "illustration of a woman",
+      "icons (leaf, stars, flame, lips, carrot, sun)"
+    ],
+    "scene": "Brand guidelines document or style guide presentation",
+    "style": "Minimalist graphic design, flat illustration, retro-modern aesthetic, clean typography"
+  },
+  "notes": "From Tricia - official brand guide page",
+  "source_url": "",
+  "pinned_by": "",
+  "performance": {},
+  "status": "active"
+}

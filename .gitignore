@@ -1,27 +1,82 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
+# ══════════════════════════════════════════════
+# Zennith OS — .gitignore
+# Shared: skills, brands, workspace scripts, config
+# Local: media, sessions, secrets, browser data
+# ══════════════════════════════════════════════
 
-# Node
-node_modules/
+# ── Heavy media (stays local per machine) ──
+workspace/data/images/
+workspace/data/videos/
+workspace/data/characters/
+workspace/data/output/
+workspace/data/video-blocks/
+workspace/data/video-eye/
+workspace/data/video-regress/
+materials/
 
-# Secrets — NEVER commit
-.env
-*.key
+# ── Machine-specific / private ──
+credentials/
 secrets/
+browser-profiles/
+browser/
+devices/
+identity/
+logs/
+completions/
+backups/
+_config-archive/
+delivery-queue/
+canvas/
 
-# User data — per-VPS, not shared
+# ── Agent sessions & runtime (per-machine) ──
+workspace-*/sessions/
+workspace-*/memory/
+agents/*/agent/sessions/
+gaiaos/
+
+# ── User data (per-VPS, not shared) ──
 **/users/*.json
 
-# Generated readings — ephemeral
+# ── Generated readings (ephemeral) ──
 **/readings/reading-*.json
 **/readings/order-*.json
 **/readings/params-*.sh
 
-# OS junk
+# ── Build artifacts ──
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+*.log
+
+# ── OS junk ──
 .DS_Store
 Thumbs.db
 
-# Archives (too large for git)
-_archive/
+# ── Skills archive (too large) ──
+skills/_archive/
+
+# ── Extensions & cron (machine-specific) ──
+extensions/
+cron/
+
+# ── Campaigns (large generated content) ──
+campaigns/
+
+# ── Large media in brands (stay local, sync via cloud storage) ──
+brands/*/output/
+brands/*/references/tricia-*
+brands/*/references/products*/
+brands/*/references/styles/
+brands/*/assets/*.png
+brands/*/assets/*.jpg
+brands/*/assets/*.mp4
+brands/*/product-images/
+*.mp4
+*.mov
+*.avi
+
+# ── Secrets ──
+.env
+*.key
+openclaw.json

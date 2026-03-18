@@ -1,0 +1,77 @@
+{
+  "chart_type": "liu_yao_na_jia",
+  "chart_type_note": "This is a Liu Yao (六爻) Na Jia reference table, NOT a Qi Men Dun Jia nine-palace chart. It contains the Ganzhi (干支 Heavenly Stem + Earthly Branch) assignments for each of the six yao lines across the 10 Heavenly Stems.",
+  "chart_meta": {
+    "title": "六爻纳甲参考表 (Liu Yao Na Jia Reference Table)",
+    "system": "六爻 (Liu Yao / Six Lines Divination)",
+    "purpose": "Na Jia (纳甲) — assignment of Heavenly Stems and Earthly Branches to the six yao lines of a hexagram"
+  },
+  "na_jia_table": {
+    "columns": ["一爻", "二爻", "三爻", "四爻", "五爻", "六爻"],
+    "rows": [
+      ["甲子", "甲寅", "甲辰", "甲午", "甲申", "甲戌"],
+      ["乙未", "乙巳", "乙卯", "乙丑", "乙亥", "乙酉"],
+      ["丙辰", "丙午", "丙申", "丙戌", "丙子", "丙寅"],
+      ["丁巳", "丁卯", "丁丑", "丁亥", "丁酉", "丁未"],
+      ["戊寅", "戊辰", "戊辰", "戊申", "戊戌", "戊子"],
+      ["己卯", "己丑", "己亥", "己酉", "己未", "己巳"],
+      ["庚子", "庚寅", "庚寅", "庚午", "庚申", "庚戌"],
+      ["辛丑", "辛亥", "辛酉", "辛未", "辛巳", "辛卯"],
+      ["壬寅", "壬寅", "壬卯", "壬丑", "壬申", "壬戌"],
+      ["癸丑", "癸巳", "癸卯", "癸丑", "癸亥", "癸酉"]
+    ]
+  },
+  "yao_archetypes": {
+    "一爻": {
+      "archetype": "平民",
+      "qualities": ["善良", "简单", "低调"],
+      "description": "Commoner — kind, simple, low-key"
+    },
+    "二爻": {
+      "archetype": "商贾",
+      "qualities": ["有钱", "聪明", "商务", "情商"],
+      "description": "Merchant — wealthy, intelligent, business-minded, emotionally intelligent"
+    },
+    "三爻": {
+      "archetype": "庙",
+      "qualities": ["扎实", "厚重"],
+      "description": "Temple — solid, profound"
+    },
+    "四爻": {
+      "archetype": "宰相",
+      "qualities": ["踏实", "钻研"],
+      "description": "Prime Minister — down-to-earth, studious"
+    },
+    "五爻": {
+      "archetype": "帝王",
+      "qualities": ["格局", "傲气"],
+      "description": "Emperor — grand structure, commanding spirit"
+    },
+    "六爻": {
+      "archetype": "神仙",
+      "qualities": ["神性", "怜悯"],
+      "description": "Immortal — divine nature, compassion"
+    }
+  },
+  "cooperation_rules": {
+    "pairs": [
+      ["六爻", "三爻"],
+      ["五爻", "二爻"],
+      ["四爻", "一爻"]
+    ],
+    "raw": "六爻找三爻，三爻找六爻，五找二，二找五，四找一，一找四"
+  },
+  "governance_cycle": {
+    "order": ["六爻", "五爻", "四爻", "三爻", "二爻", "一爻"],
+    "rule": "Each yao governs the next in descending order, with 一爻 cycling back to govern 六爻",
+    "raw": "六爻治五爻，五爻治四爻，四爻治三爻，三爻治二爻，二爻治一爻，一爻治六爻"
+  },
+  "_meta": {
+    "extracted_at": "2026-03-17T22:00:00",
+    "image_path": "media/inbound/277bd5fcbd4559fd97cbc0110bf5207e.JPG---028078df-ab39-49ac-a5ac-593fd043f44f",
+    "mode": "vision",
+    "model": "gemini-2.5-flash",
+    "extractor": "qmdj-chart-extract.py v1.0 (Taoz manual verification)",
+    "note": "Image identified as Liu Yao Na Jia table. Task originally requested QMDJ extraction — image does not contain a QMDJ nine-palace grid."
+  }
+}

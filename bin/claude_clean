@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Load keys (single source of truth)
+KEYFILE="$HOME/.openclaw/.env.keys"
+if [ -f "$KEYFILE" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$KEYFILE"
+  set +a
+fi
+
+exec env -i \
+  PATH="/Users/jennwoeiloh/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin" \
+  HOME="$HOME" \
+  ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}" \
+  claude "$@"

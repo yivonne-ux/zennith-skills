@@ -1,0 +1,16 @@
+{
+  "name": "nostalgic",
+  "description": "Grandma's kitchen with traditional recipes passed down through generations, warm film grain texture, and the unmistakable feel of heritage cooking. This mood taps into deep Malaysian food memories — kampung kitchens, family gatherings, and recipes that tell stories.",
+  "output_types": ["aroll", "broll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm tungsten indoor | faded natural window light | soft diffused afternoon glow",
+    "color_grade": "warm film grain | desaturated earth tones | vintage amber cast",
+    "camera": "static observational | slow zoom on hands working | medium shot kitchen activity",
+    "composition": "generational cooking hands | traditional utensils as heroes | cluttered authentic kitchen",
+    "props": "stone mortar and pestle, traditional lesung, old recipe book, worn cutting board, enamel pots, rattan basket",
+    "atmosphere": "sentimental, warm, authentic, heritage, timeless"
+  },
+  "copy_tone": "Storytelling and sentimental, weaving in memories and heritage. Uses phrases like 'the way Mak used to make it' and 'recipes that remember.' Warm, reflective, deeply personal.",
+  "music": { "mood": "traditional gamelan softened, nostalgic acoustic, vinyl warmth", "bpm": "60-80" },
+  "example_prompt_fragment": "An elderly Malaysian woman's hands grinding spices in a traditional stone mortar and pestle, warm tungsten kitchen light, vintage film grain texture, old enamel pot simmering on stove in background, worn wooden table with scattered pandan leaves, desaturated warm tones, authentic kampung kitchen setting, documentary-style food photography"
+}

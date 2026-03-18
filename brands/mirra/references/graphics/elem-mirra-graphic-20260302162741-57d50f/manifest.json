@@ -1,0 +1,45 @@
+{
+  "id": "elem-mirra-graphic-20260302162741-57d50f",
+  "type": "graphic",
+  "brand": "mirra",
+  "name": "MIRRA Logo Reels (Black)",
+  "created_at": "2026-03-02T16:27:48+0800",
+  "created_by": "jenn",
+  "files": [
+    "logo-reels-black.png"
+  ],
+  "tags": [
+    "logo",
+    "reels",
+    "black",
+    "vertical",
+    "branding",
+    "typography",
+    "minimalist",
+    "clean",
+    "simple",
+    "title",
+    "white background"
+  ],
+  "auto_tags": {
+    "lighting": "Bright, even, high-key",
+    "palette": [
+      "#FFFFFF",
+      "#3B3B3B"
+    ],
+    "mood": "Minimalist, clean, elegant, stark",
+    "composition": "Centered text on a blank background",
+    "objects": [
+      "text",
+      "logo",
+      "typography"
+    ],
+    "scene": "Abstract, studio, branding presentation",
+    "style": "Minimalist, typographic, clean"
+  },
+  "notes": "Vertical format logo for Reels/Stories",
+  "source_url": "",
+  "pinned_by": "",
+  "performance": {},
+  "status": "active"
+}

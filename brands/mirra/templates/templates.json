@@ -1,0 +1,222 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "source": "Tricia Foong ChatGPT sessions + Template Bulk Format CSV",
+    "created": "2026-03-02",
+    "total_templates": 119,
+    "note": "M_ = MOFU only, B_ = BOFU only"
+  },
+  "template_types": {
+    "M1": {
+      "name": "Faces/KOL/Persona",
+      "funnel": "MOFU",
+      "description": "Templates featuring people/faces — persona-based visual storytelling",
+      "recommended_variants": 5,
+      "test_logic": "Persona x Emotional Hook",
+      "formats": ["single_image", "video", "ugc_reel"],
+      "char_limits": {
+        "headline": {"min": 25, "max": 50},
+        "subcopy": {"min": 40, "max": 90},
+        "usp_points": {"count": 3, "max_per": 30},
+        "cta": {"max": 20}
+      },
+      "visual_specs": {
+        "style": "Person-led, face-forward, relatable lifestyle",
+        "layouts": ["UGC talking head", "face + product", "persona lifestyle shot"],
+        "must_have": ["clear face visibility", "brand-aligned setting"],
+        "avoid": ["stock photo look", "overly polished"]
+      }
+    },
+    "M2": {
+      "name": "Product/Benefit/Ingredients",
+      "funnel": "MOFU",
+      "description": "Product-focused templates highlighting benefits — clean, USP-forward",
+      "recommended_variants": 5,
+      "test_logic": "USP + Headline test",
+      "formats": ["single_image", "carousel"],
+      "char_limits": {
+        "headline": {"min": 20, "max": 50},
+        "subcopy": {"min": 30, "max": 80},
+        "usp_points": {"count": 3, "max_per": 35},
+        "cta": {"max": 20}
+      },
+      "visual_specs": {
+        "style": "Clean product shot, benefit callouts, ingredient highlight",
+        "layouts": ["hero bento shot", "benefit breakdown", "ingredient spotlight"],
+        "must_have": ["calorie badge", "nutritionist badge", "clean background"],
+        "avoid": ["cluttered layout", "too many badges (max 3)"]
+      },
+      "template_ids": ["T010", "T025", "T029", "T032", "T034"]
+    },
+    "M3": {
+      "name": "Group/Album/Compilation",
+      "funnel": "MOFU",
+      "description": "Multiple product showcases — menu variety, bundle focus",
+      "recommended_variants": 3,
+      "test_logic": "Product variety storytelling",
+      "formats": ["carousel", "grid_image"],
+      "char_limits": {
+        "headline": {"min": 20, "max": 45},
+        "subcopy": {"min": 30, "max": 70},
+        "usp_points": {"count": 2, "max_per": 30},
+        "cta": {"max": 20}
+      },
+      "visual_specs": {
+        "style": "Multi-product grid or carousel, menu variety showcase",
+        "layouts": ["3-4 bento grid", "weekly menu carousel", "bundle showcase"],
+        "must_have": ["variety visible", "menu names labeled"],
+        "avoid": ["too crowded", "inconsistent photography"]
+      }
+    },
+    "M4": {
+      "name": "VS/BeforeAfter",
+      "funnel": "MOFU",
+      "description": "Comparison templates — visual transformation, this vs that",
+      "recommended_variants": 4,
+      "test_logic": "Before/after transformation logic",
+      "formats": ["single_image", "carousel"],
+      "char_limits": {
+        "headline": {"min": 20, "max": 50},
+        "subcopy": {"min": 30, "max": 80},
+        "usp_points": {"count": 3, "max_per": 30},
+        "cta": {"max": 20}
+      },
+      "visual_specs": {
+        "style": "Split-screen comparison, before/after, grab vs mirra",
+        "layouts": ["left-right split", "top-bottom comparison", "price overlay comparison"],
+        "must_have": ["clear contrast", "calorie numbers visible", "price comparison"],
+        "avoid": ["misleading comparisons", "negative competitor imagery"]
+      }
+    },
+    "M5": {
+      "name": "Testimonial/EGC",
+      "funnel": "MOFU",
+      "description": "Customer testimonial templates — real people, quote cards, UGC",
+      "recommended_variants": 4,
+      "test_logic": "Social proof from past customers",
+      "formats": ["single_image", "video", "quote_card"],
+      "char_limits": {
+        "headline": {"min": 20, "max": 45},
+        "subcopy": {"min": 40, "max": 100},
+        "usp_points": {"count": 2, "max_per": 40},
+        "cta": {"max": 20}
+      },
+      "visual_specs": {
+        "style": "UGC-style, testimonial overlay, real faces",
+        "layouts": ["quote card with photo", "screenshot chat style", "video testimonial"],
+        "must_have": ["real customer reference", "specific result numbers"],
+        "avoid": ["fake-looking quotes", "generic stock images"]
+      }
+    },
+    "B1": {
+      "name": "Sales Boom Boom",
+      "funnel": "BOFU",
+      "description": "High-energy sales templates — bold, flashy, festive promo",
+      "recommended_variants": 5,
+      "test_logic": "Promo type: bundle vs % off vs free gift",
+      "formats": ["single_image", "video", "animated"],
+      "char_limits": {
+        "headline": {"min": 15, "max": 40},
+        "subcopy": {"min": 30, "max": 70},
+        "usp_points": {"count": 3, "max_per": 25},
+        "cta": {"max": 25}
+      },
+      "visual_specs": {
+        "style": "Bold, energetic, festive promo feel",
+        "layouts": ["big offer banner", "countdown + product", "flash sale layout"],
+        "must_have": ["clear price/offer", "urgency element", "strong CTA"],
+        "avoid": ["cheap clipart", "too many competing offers"]
+      },
+      "copywriting_frameworks": ["FOMO", "Bandwagon", "Urgency_Stacking", "Repeat_Order_Frenzy"]
+    },
+    "B2": {
+      "name": "Last Call/Limited Time",
+      "funnel": "BOFU",
+      "description": "Urgency-based templates — countdown, scarcity messaging",
+      "recommended_variants": 3,
+      "test_logic": "Scarcity messaging variation",
+      "formats": ["single_image", "animated"],
+      "char_limits": {
+        "headline": {"min": 15, "max": 40},
+        "subcopy": {"min": 25, "max": 60},
+        "usp_points": {"count": 2, "max_per": 25},
+        "cta": {"max": 25}
+      },
+      "visual_specs": {
+        "style": "Countdown urgency, time-pressure, limited availability",
+        "layouts": ["countdown timer", "last slots banner", "expiring offer"],
+        "must_have": ["time element", "specific number of spots", "clear deadline"],
+        "avoid": ["fake urgency", "overused countdown"]
+      }
+    },
+    "B3": {
+      "name": "Raw",
+      "funnel": "BOFU",
+      "description": "Raw/authentic style — lo-fi, sticker style, unpolished authenticity",
+      "recommended_variants": 4,
+      "test_logic": "Authentic CTA test (WhatsApp / price hook)",
+      "formats": ["single_image", "screenshot_style"],
+      "char_limits": {
+        "headline": {"min": 15, "max": 40},
+        "subcopy": {"min": 20, "max": 60},
+        "usp_points": {"count": 2, "max_per": 25},
+        "cta": {"max": 20}
+      },
+      "visual_specs": {
+        "style": "Unpolished, screenshot-like, sticker/meme aesthetic",
+        "layouts": ["phone screenshot", "WhatsApp chat style", "raw photo + text overlay"],
+        "must_have": ["authenticity feel", "relatable casual tone"],
+        "avoid": ["overly designed", "corporate feel"]
+      }
+    },
+    "B4": {
+      "name": "Prices/COD/Delivery",
+      "funnel": "BOFU",
+      "description": "Price and delivery focused — value stack, COD, free delivery",
+      "recommended_variants": 4,
+      "test_logic": "COD vs Free Delivery vs Value Stack",
+      "formats": ["single_image", "carousel"],
+      "char_limits": {
+        "headline": {"min": 15, "max": 40},
+        "subcopy": {"min": 25, "max": 60},
+        "usp_points": {"count": 3, "max_per": 25},
+        "cta": {"max": 25}
+      },
+      "visual_specs": {
+        "style": "Price-forward, delivery info, value proposition",
+        "layouts": ["price breakdown", "package deal", "delivery zones map"],
+        "must_have": ["clear price", "delivery info", "value comparison"],
+        "avoid": ["hidden fees feel", "too much small print"]
+      }
+    }
+  },
+  "meta_ads_structure": {
+    "mofu": {
+      "sets": ["M1", "M2", "M3", "M4", "M5"],
+      "total_variants": 20,
+      "budget_per_set_rm": {"min": 25, "max": 40},
+      "note": "Can open multiple sets of same type per direction (e.g. M2a for Office Girls, M2b for New Mums)"
+    },
+    "bofu": {
+      "sets": ["B1", "B2", "B3", "B4"],
+      "total_variants": 14,
+      "budget_per_set_rm": {"min": 30, "max": 50},
+      "note": "Higher urgency = higher budget allocation"
+    },
+    "testing_rules": {
+      "variants_per_set": "3-5 (single variable testing)",
+      "learning_phase": "5-8 creatives per ad set optimal for Meta learning",
+      "kill_switch": "ROAS < 1.0x for 24h = pause",
+      "winner_criteria": "CTR >2% MOFU, ROAS >3x BOFU"
+    }
+  },
+  "template_index": [
+    {"id": "T001", "type": "M2", "lang": "CN", "format": "single_image", "headline_slot": "比抽脂还快！更健康！"},
+    {"id": "T005", "type": "M2", "lang": "EN", "format": "single_image", "headline_slot": "Say Goodbye To Constipation"},
+    {"id": "T010", "type": "M2", "lang": "EN", "format": "single_image", "headline_slot": "More than sugary cranberry juice", "char_count_headline": "31-35", "visual_style": "Product in use, lifestyle angle"},
+    {"id": "T025", "type": "M2", "lang": "EN", "format": "single_image", "headline_slot": "want to fit into old jeans again?", "char_count_headline": "33-37", "visual_style": "Focus on emotional benefit"},
+    {"id": "T029", "type": "M2", "lang": "EN", "format": "single_image", "headline_slot": "WEIGHT GOALS?", "char_count_headline": "11-15", "visual_style": "Studio product shot with big headline"},
+    {"id": "T032", "type": "M2", "lang": "EN", "format": "single_image", "headline_slot": "", "char_count_headline": "19-23", "visual_style": "Multi-product lineup"},
+    {"id": "T034", "type": "M2", "lang": "EN", "format": "single_image", "headline_slot": "", "char_count_headline": "41-50", "visual_style": "Benefit breakdown layout (text-forward)"}
+  ]
+}

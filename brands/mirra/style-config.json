@@ -1,0 +1,95 @@
+{
+  "brand": "mirra",
+  "version": "1.0",
+  "active_profile": "v1-warmfeminine",
+  "last_updated": "2026-03-03T16:00:00+0800",
+  "profiles": {
+    "v1-warmfeminine": {
+      "name": "Warm Feminine (Production)",
+      "status": "production",
+      "description": "Clean food photography, warm tones, salmon pink styling. Default MIRRA look.",
+      "locked_refs": {
+        "product_sku": {
+          "source": "brands/mirra/march-campaign/drive-assets/My product bento/",
+          "items": [
+            {"dish": "bbq-pita-mushroom-wrap", "views": ["top-view", "angle-view"]},
+            {"dish": "dry-classic-curry-konjac-noodle", "views": ["top-view", "angle-view"]},
+            {"dish": "fierry-buritto-bowl", "views": ["top-view", "angle-view"]},
+            {"dish": "fusilli-bolognese", "views": ["top-view", "angle-view"]},
+            {"dish": "golden-eryngii-fragrant-rice", "views": ["top-view", "angle-view"]},
+            {"dish": "japanese-curry-katsu", "views": ["top-view", "angle-view"]},
+            {"dish": "konjac-pad-thai", "views": ["top-view", "angle-view"]}
+          ],
+          "rules": "NEVER swap for AI-generated food. Always use real product photos."
+        },
+        "logo": {
+          "primary": "brands/mirra/assets/logo-black.png",
+          "reels": "brands/mirra/assets/logo-reels-black.png",
+          "rules": "Black serif MIRRA wordmark. Top-right placement. Never distort."
+        },
+        "color_palette": {
+          "primary": "#F7AB9F",
+          "secondary": "#252525",
+          "background": "#FFF9EB",
+          "rules": "Salmon pink dominant. NEVER teal, fuchsia, or neon."
+        }
+      },
+      "unlocked_style": {
+        "photography": {
+          "primary": "top-view-overhead",
+          "secondary": ["angle-view-3quarter", "lifestyle-context"],
+          "avoid": ["editorial-beauty", "moody-dark", "film-grain"],
+          "notes": "Clean, bright, appetizing. Food should look fresh and real."
+        },
+        "lighting": {
+          "type": "natural-daylight-warm",
+          "intensity": "bright",
+          "shadows": "soft-minimal",
+          "avoid": ["harsh-clinical", "dramatic-dark", "neon"],
+          "notes": "Slightly warm natural light. No heavy shadows."
+        },
+        "composition": {
+          "patterns": ["comparison-split", "hero-single", "grid-4up", "lifestyle-scene"],
+          "decorative": {
+            "blob_shapes": "moderate",
+            "notes": "Organic blob/cloud shapes are part of brand but should NOT dominate. Use sparingly — max 2-3 small shapes, never competing with product."
+          }
+        },
+        "color_grading": {
+          "tone": "warm",
+          "saturation": "vibrant",
+          "contrast": "clean-modern",
+          "grain": "none",
+          "notes": "Warm creamy tones. Vibrant food colors. No film grain. No vintage filter."
+        },
+        "mood": {
+          "primary": "fresh-healthy",
+          "secondary": ["feminine", "aspirational-but-attainable", "wholesome"],
+          "avoid": ["clinical", "cold", "guilt-trip", "pretentious"],
+          "notes": "Feel-good food — aspirational but not unreachable."
+        }
+      },
+      "style_rules": {
+        "blob_vector_limit": "Use 0-3 small organic shapes per image. NEVER let blob shapes compete with or obscure the product. Blobs are accent, not feature.",
+        "food_consistency": "For grid/squad ads with multiple products, each product MUST be a different dish. Never repeat the same food.",
+        "lifestyle_blending": "For lifestyle scenes, use angle-view (3/4 perspective) SKU photos, NOT top-view. Top-view is for flat-lay/hero only.",
+        "comparison_layout": "Left = competitor/regular food (slightly less appealing angle). Right = MIRRA product (hero angle, vibrant)."
+      },
+      "testing": {
+        "last_tested": "2026-03-03T14:30:00+0800",
+        "ads_tested": 24,
+        "avg_score": 9.8,
+        "pass_rate": 0.958,
+        "notes": "23/24 passed. 1 failure = content policy (auto-retried now)."
+      }
+    }
+  },
+  "style_override_history": [
+    {
+      "date": "2026-03-03T16:00:00+0800",
+      "change": "Created style-config.json with v1-warmfeminine profile. Added blob limit rule, food dedup rule, lifestyle blending rule.",
+      "changed_by": "taoz",
+      "reason": "User feedback: blob shapes overused, foods duplicating in grid, wrong view angle in lifestyle"
+    }
+  ]
+}

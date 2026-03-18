@@ -1,0 +1,1 @@
+Store GAIA Learn reference images here: mood boards, approved graphics, color palettes, logo variations, and educational content layout samples. These references are used by the Art Director and NanoBanana for visual consistency.

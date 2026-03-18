@@ -1,0 +1,105 @@
+{
+  "brand": "serein",
+  "display_name": "Serein",
+  "tagline": "Be still, be whole",
+  "visual": {
+    "colors": {
+      "primary": "#BCE3C5",
+      "secondary": "#FFE4E1",
+      "background": "#FEFEFA",
+      "accent": "#A8D5BA"
+    },
+    "typography": {
+      "heading": "Light serif, gentle and calming",
+      "body": "Soft sans-serif, airy and breathable"
+    },
+    "photography": "Soft lifestyle photography, spa textures, natural elements, mindful moments",
+    "lighting_default": "Soft diffused light, warm whites, gentle shadows, candlelit ambience",
+    "style": "Tranquil, mindful, soft-spoken luxury, nature-inspired serenity",
+    "avoid": [
+      "Loud or high-energy aesthetics",
+      "Harsh lighting or sharp contrasts",
+      "Cluttered or busy layouts",
+      "Commercial or salesy visuals",
+      "Artificial or synthetic-looking imagery"
+    ]
+  },
+  "voice": {
+    "tone": "Tranquil, mindful, soft-spoken luxury",
+    "language_mix": "English 80% + Bahasa Malaysia 20%, gentle and unhurried",
+    "formality": "Gentle-elevated",
+    "personality": [
+      "Tranquil",
+      "Mindful",
+      "Nurturing",
+      "Softly luxurious",
+      "Deeply calming"
+    ],
+    "avoid": [
+      "Loud or urgent language",
+      "Pushy sales or FOMO tactics",
+      "Overly clinical wellness jargon",
+      "Fast-paced or hyper tone",
+      "Superficial self-care cliches"
+    ]
+  },
+  "audience": {
+    "primary": "Urban professionals 28-50, stress-relief seekers, self-care enthusiasts",
+    "personas": [
+      "Burnt-out professional seeking meaningful relaxation rituals",
+      "Mindfulness practitioner building a home sanctuary",
+      "Self-care enthusiast who values quality over quantity",
+      "Gift buyer seeking thoughtful, calming wellness gifts"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Mindfulness",
+    "Inner peace",
+    "Natural ingredients",
+    "Intentional living",
+    "Quiet luxury"
+  ],
+  "products": [
+    "Essential oils",
+    "Bath salts",
+    "Candles",
+    "Meditation accessories",
+    "Wellness retreats"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "Still Waters",
+    "vibe": "Deep calm, like a forest lake at dawn",
+    "audio": "Water droplets, candle flicker crackle, deep breath sounds, ambient nature, distant birdsong",
+    "motion": "Single water drop ripple in slow-mo, candle flame gentle sway, bath salt dissolving, steam curling upward from essential oil diffuser",
+    "language": "Whispered calm — every frame invites a deep breath, every sound slows the heartbeat",
+    "mood": "Serene, meditative, deeply calming, gently luxurious"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "60",
+      "camera_movement": "Slow macro on water droplet, gentle pan across candlelit setup, soft focus breathing cue",
+      "typical_use": "ASMR relaxation clips, bedtime routine rituals, calming visual loops"
+    },
+    "instagram": {
+      "stories": "Guided breathing moments, product ritual step-by-step, soft ambient mood boards",
+      "feed_carousel": "9:16 portrait images, soft sage and blush tones, mindful flat lays with natural elements",
+      "reels_carousel": "9:16 portrait motion clips, candle-lighting rituals, bath preparation sequences"
+    },
+    "youtube_shorts": {
+      "format": "Vertical 9:16",
+      "fps": "60",
+      "camera_movement": "Slow drift across spa setup, macro on dissolving bath salts, candlelight to wide reveal",
+      "typical_use": "Evening wind-down rituals, meditation space setup, sensory ASMR content"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "energetic",
+  "description": "Workshop energy with hands-on demos, fast-paced collaborative learning, and the buzz of a room full of motivated people building something together. This mood captures the electric feeling of active, engaged education.",
+  "output_types": ["broll", "ugc", "education", "promotion"],
+  "style": {
+    "lighting": "bright workshop lighting | dynamic mixed natural and artificial | energetic fill light",
+    "color_grade": "crisp teal highlights | high energy contrast | clean with vivid accents",
+    "camera": "dynamic handheld workshop | fast cuts between activities | group energy wide shots",
+    "composition": "collaborative group framing | hands-on activity close-ups | whiteboard brainstorming",
+    "props": "whiteboards with diagrams, laptops, sticky note walls, group workstations, timer display",
+    "atmosphere": "buzzing, collaborative, hands-on, motivated, momentum"
+  },
+  "copy_tone": "Action-driven and motivating. Uses time-based urgency and collaborative language. 'Let's build this together,' 'hands on in 3, 2, 1.' Creates momentum and excitement about learning by doing.",
+  "music": { "mood": "driving electronic, upbeat motivational, workshop energy", "bpm": "115-135" },
+  "example_prompt_fragment": "A dynamic workshop scene with participants gathered around a whiteboard covered in colorful diagrams and sticky notes, laptops open on collaborative workstations, bright energetic lighting, one person gesturing enthusiastically while explaining, teal and green accent colors, fast-paced documentary style, hands-on collaborative education photography"
+}

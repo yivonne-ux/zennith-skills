@@ -1,0 +1,22 @@
+{
+  "brand": "gaia-os",
+  "display_name": "GAIA OS",
+  "tagline": "The Living Operating System",
+  "visual": {
+    "colors": {
+      "primary": "#0A0A0F",
+      "secondary": "#DAA520",
+      "background": "#1A1A24",
+      "accent": "#00FFFF"
+    },
+    "style": "sacred futurism, transhumanist baroque, hyper-realistic digital couture",
+    "lighting_default": "dramatic rim lighting, volumetric atmosphere, dual lighting grammar",
+    "photography": "cinematic CG portraiture, editorial fashion, Hasselblad medium format"
+  },
+  "voice": {
+    "tone": "contemplative, transcendent, quietly powerful",
+    "personality": "digital deity, system avatar"
+  },
+  "category": "technology",
+  "notes": "NOT food brand. Character/agent visual identity system. Sacred geometry, crystal, iridescent materials."
+}

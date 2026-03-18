@@ -1,0 +1,317 @@
+{
+  "brand": "mirra",
+  "display_name": "MIRRA",
+  "tagline": "Same delicious local flavours, no compromises",
+  "visual": {
+    "colors": {
+      "primary": "#F8BECD",
+      "secondary": "#EBAABD",
+      "accent": "#AC374B",
+      "primary_blush": "#F8BECD",
+      "dusty_rose": "#EBAABD",
+      "crimson_accent": "#AC374B",
+      "warm_cream": "#FFF5EE",
+      "overlay_bg": "#F5DCD2",
+      "hot_glitter": "#E8638A",
+      "neutral_base": "#FAF6F1"
+    },
+    "typography": {
+      "heading": "Bold serif, warm and elegant \u2014 black on pink/cream",
+      "body": "Clean serif, refined and readable"
+    },
+    "photography": "Real food photography \u2014 top-view bento box shots in white containers, vibrant natural ingredients, comparison layouts (This vs That)",
+    "lighting_default": "Clean natural daylight, slightly warm, no heavy shadows \u2014 food looks fresh and appetizing",
+    "style": "Warm, feminine, clean \u2014 salmon pink and cream backgrounds with organic blob shapes, split-comparison layouts, calorie badges, nutritionist-approved badges",
+    "logo_placement": "Top-right corner, black serif MIRRA logotype",
+    "layout_patterns": [
+      "Split comparison: regular food vs MIRRA (left/right, calorie callout)",
+      "Single hero bento: top-view shot with pink background, calorie + macro badge",
+      "Carousel: weekly menu preview, each slide = 1 bento",
+      "Lifestyle: woman with bento box, warm tones, relatable"
+    ],
+    "badges": [
+      "Nutritionist Designed",
+      "No MSG",
+      "Plant-Based Perfection",
+      "Calorie callout (black or pink badge)"
+    ],
+    "avoid": [
+      "Teal or fuchsia colors",
+      "Studio/ring light photography (use natural window light)",
+      "Dark moody food photography",
+      "AI-generated food (use real product photos via Pipeline B)",
+      "Cheap promotional clip-art layouts",
+      "Harsh clinical lighting",
+      "Post-compositing food after generation (food must be INPUT)"
+    ],
+    "reference_images": [
+      "~/Desktop/DESIGNS/Mirra Brand Guide image.jpg",
+      "~/Desktop/DESIGNS/M4A-MOFU-en-Calorie Conscious Cheat day-Comparison-Img-a541454f/v1.jpg",
+      "~/Desktop/DESIGNS/M4C-MOFU-en-Calorie Conscious Cheat day Comparison-Img-5fcdc505/T128__2025-07-28+17_23_59.jpg"
+    ]
+  },
+  "voice": {
+    "tone": "Warm, relatable, confident \u2014 like a friend who eats well",
+    "language_mix": "English 60% + Bahasa Malaysia 40%, casual-warm with local food slang",
+    "formality": "Casual-warm",
+    "personality": [
+      "Relatable",
+      "Warm",
+      "Confident",
+      "Food-savvy",
+      "Health-conscious but never preachy",
+      "Malaysian at heart"
+    ],
+    "avoid": [
+      "Diet culture shame language",
+      "Overly clinical nutrition jargon",
+      "Luxury/pretentious skincare vibes",
+      "Cold corporate tone",
+      "Pushy hard-sell language"
+    ]
+  },
+  "audience": {
+    "primary": "Women 25-45, KL urban professionals, health-conscious but love good food",
+    "personas": [
+      "Working woman who wants healthy lunch without cooking",
+      "Fitness-conscious professional tracking macros/calories",
+      "Mom who wants nutritious meals for the family",
+      "Young professional tired of unhealthy mamak/fast food lunches"
+    ],
+    "market": "Malaysia (KL: Taman Desa, Mont Kiara, Mitraditia, KLCC)",
+    "delivery_areas": "Taman Desa, Mont Kiara, Mitraditia, KLCC"
+  },
+  "values": [
+    "Calorie-conscious without sacrifice",
+    "Plant-based perfection",
+    "Nutritionist-designed meals",
+    "No MSG, real ingredients",
+    "Malaysian local flavours made healthy",
+    "50+ menu variety, no repeats"
+  ],
+  "products": [
+    "Calorie-conscious bento boxes (400-600 kcal)",
+    "Plant-based meals",
+    "Weekly meal plans (5-day, 6-day)",
+    "Malaysian fusion bentos (nasi lemak, fried rice, laksa, rendang \u2014 made healthy)",
+    "Wraps, soups, grain bowls"
+  ],
+  "content_pillars": {
+    "RECIPE_REBELS": {
+      "weight": 0.3,
+      "description": "Hero bento shots, macro callouts, menu reveals \u2014 the food is the star",
+      "format": "Single hero or comparison, calorie badge"
+    },
+    "BEYOND_THE_FOOD": {
+      "weight": 0.25,
+      "description": "Self-care, wellness mindset, lifestyle beyond calories",
+      "format": "Lifestyle imagery, warm illustration style, quote-forward"
+    },
+    "WOMEN_WHO_GET_IT": {
+      "weight": 0.25,
+      "description": "KOL content, testimonials, real women real stories",
+      "format": "UGC-style, testimonial overlays, real faces"
+    },
+    "MIRRA_MAGIC": {
+      "weight": 0.2,
+      "description": "Behind-the-scenes, ingredient sourcing, chef process, brand story",
+      "format": "BTS photos, process shots, team content"
+    }
+  },
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "Fresh & Warm",
+    "vibe": "Wholesome meal moment \u2014 feel-good, not guilt-trip",
+    "audio": "Gentle utensil sounds, fresh ingredients being placed, warm ambient music",
+    "motion": "Top-view bento reveal, side-by-side calorie comparison animation, steam rising from fresh bento, hands opening meal box",
+    "language": "Feel-good food content \u2014 aspirational but attainable, warm not cold",
+    "mood": "Warm, fresh, wholesome, feminine, Malaysian"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "30",
+      "camera_movement": "Top-down bento reveal, side-by-side comparison swipe, unboxing POV",
+      "typical_use": "This vs That calorie comparison, bento unboxing, weekly menu reveal, KOL reviews"
+    },
+    "instagram": {
+      "stories": "Poll stickers (which bento?), calorie quiz, behind-the-scenes kitchen",
+      "feed": "1:1 or 4:5, hero bento shots, comparison posts, testimonial cards",
+      "reels": "9:16, bento reveal, KOL content, recipe process"
+    },
+    "whatsapp": {
+      "format": "Weekly menu PDF, bento of the day image, order confirmation",
+      "typical_use": "Direct ordering, menu sharing, customer support"
+    }
+  },
+  "kol_roster": [
+    "davinadavegan",
+    "ZiQianPoh",
+    "Kochiki",
+    "fatihahhd",
+    "Carolyn",
+    "Jovin",
+    "Yumiko",
+    "Kate",
+    "Celine",
+    "Erycaa",
+    "Aurelia",
+    "lula",
+    "LowKiaMin",
+    "LiTheng",
+    "Lecey",
+    "Krissyaly",
+    "VeggieEats"
+  ],
+  "system_docs": {
+    "workflow": "system/WORKFLOW.md",
+    "visual_dna": "system/VISUAL-DNA.md",
+    "system_brief": "system/SYSTEM-BRIEF.md",
+    "note": "Yvonne (Yi-Vonne) built these — the definitive Mirra content production system. All agents MUST read these before producing Mirra content."
+  },
+  "content_categories": {
+    "cat02": "Glitter Billboard Quote (M-batch, done)",
+    "cat04": "Pure Vibe Sparkle (V4, done)",
+    "cat06": "Graphic Brand Design (Q-batch v8, 16 templates)",
+    "cat08": "Typographic Quote (L-batch, done)"
+  },
+  "generation_pipeline": {
+    "pipeline_a": "Text/surface swap only (no food photo) — NANO or FLUX",
+    "pipeline_b": "Food photo as INPUT to generation — treat + NANO multi-image",
+    "pipeline_b_two_pass": "FLUX surface + NANO food placement",
+    "pipeline_c": "Food IS the background — treat as full-bleed bg + NANO overlay",
+    "post_processing": "fit_45 → mirra_filter → stamp_logo → add_grain (ALWAYS this order)",
+    "audit": "8-dimension vision audit (watermark, palette, logo, text, crop, layout, food_real, brand_voice)"
+  },
+  "templates_ref": "templates/templates.json",
+  "directions_ref": "campaigns/directions.json",
+  "style_config_ref": "style-config.json",
+  "competitor_intel": {
+    "hishin_xslim": {
+      "type": "direct_competitor",
+      "format": "meal_replacement",
+      "price_range": "RM80-120/box",
+      "audience": "Women 25-45, weight loss focused",
+      "strengths": [
+        "Strong KOL network",
+        "Established brand"
+      ],
+      "weaknesses": [
+        "Not real food",
+        "Shake-based only"
+      ]
+    },
+    "taiso": {
+      "type": "direct_competitor",
+      "format": "meal_delivery",
+      "price_range": "RM15-25/meal",
+      "audience": "Health-conscious professionals",
+      "strengths": [
+        "Video content",
+        "Community"
+      ],
+      "weaknesses": [
+        "Limited variety",
+        "Higher price point"
+      ]
+    },
+    "hong_jue_tang": {
+      "type": "indirect_competitor",
+      "format": "TCM_wellness",
+      "note": "Traditional Chinese medicine approach to weight management"
+    }
+  },
+  "reply_sop_ref": "campaigns/reply-sop.md",
+  "menu_nutrition_ref": "brand-knowledge.md",
+  "creative_learnings": {
+    "best_templates": [
+      {
+        "template": "comparison",
+        "avg_score": 10.0,
+        "pass_rate": 1.0
+      },
+      {
+        "template": "grid",
+        "avg_score": 10.0,
+        "pass_rate": 1.0
+      },
+      {
+        "template": "hero",
+        "avg_score": 10.0,
+        "pass_rate": 1.0
+      }
+    ],
+    "weak_templates": [],
+    "winning_headlines": {
+      "comparison": [
+        {
+          "template": "comparison",
+          "headline": "Swap This For This",
+          "score": 10.0
+        },
+        {
+          "template": "comparison",
+          "headline": "This or That",
+          "score": 10.0
+        }
+      ],
+      "grid": [
+        {
+          "template": "grid",
+          "headline": "Counting Calories at Work?",
+          "score": 10.0
+        }
+      ],
+      "hero": [
+        {
+          "template": "hero",
+          "headline": "Finally, Healthy That Tastes Good",
+          "score": 10.0
+        }
+      ]
+    },
+    "blocked_headlines": [],
+    "curator_runs": [
+      {
+        "run_id": "curator-20260302-034150",
+        "timestamp": "2026-03-01T19:50:29.570935Z",
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "avg_score": 10.0
+      },
+      {
+        "run_id": "curator-20260302-035024",
+        "timestamp": "2026-03-01T19:53:29.473358Z",
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "avg_score": 10.0
+      }
+    ],
+    "total_generated": 5,
+    "total_passed": 5,
+    "last_updated": "2026-03-01T19:53:29.473978Z"
+  },
+  "status": "production",
+  "onboarding": {
+    "step": 7,
+    "steps_complete": [
+      "identity",
+      "products",
+      "personas",
+      "directions",
+      "templates",
+      "references",
+      "competitors"
+    ],
+    "completed_at": "2026-03-02T16:30:04.730173"
+  }
+}

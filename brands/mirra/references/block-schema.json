@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "description": "Universal AIDA Video Block Taxonomy. Block codes are product-agnostic anchors. Categories and subtypes are defined per brand.",
+  "naming_format": "{block_code}_{category}_{subtype}_v{version}",
+  "aida_phases": {
+    "attention": {
+      "description": "Stop scrolling — grab attention immediately",
+      "code_prefix": "A",
+      "block_codes": {
+        "A1": {
+          "name": "ProductShowcase",
+          "description": "Hero product beauty shot or slideshow"
+        },
+        "A2": {
+          "name": "ProductCollage",
+          "description": "Multi-product grid or collage layout"
+        },
+        "A3": {
+          "name": "PositiveReactions",
+          "description": "Compilation of approving, surprised, or excited reactions"
+        },
+        "A4": {
+          "name": "SocialProofGrid",
+          "description": "Multiple faces or testimonial grid for social proof"
+        },
+        "A5": {
+          "name": "PainScenario",
+          "description": "Relatable problem situation the audience identifies with"
+        },
+        "A6": {
+          "name": "ResultsTransform",
+          "description": "Before/after or transformation reveal"
+        }
+      }
+    },
+    "interest": {
+      "description": "Build trust — show why this product is worth attention",
+      "code_prefix": "I",
+      "block_codes": {
+        "I1": {
+          "name": "BehindTheScenes",
+          "description": "Production, preparation, or behind-the-scenes process"
+        },
+        "I2": {
+          "name": "ProcessMethod",
+          "description": "How the product is made, applied, or used"
+        },
+        "I3": {
+          "name": "PremiumMaterials",
+          "description": "Quality ingredients, materials, or components closeup"
+        },
+        "I4": {
+          "name": "ProductionLine",
+          "description": "Manufacturing, packing, or assembly process"
+        },
+        "I5": {
+          "name": "RawReviews",
+          "description": "Unedited review screenshots, messages, or clips"
+        }
+      }
+    },
+    "desire": {
+      "description": "Create want — show the experience and outcome",
+      "code_prefix": "D",
+      "block_codes": {
+        "D1": {
+          "name": "UsageScene",
+          "description": "Person using, enjoying, or experiencing the product"
+        },
+        "D2": {
+          "name": "ReceiveScene",
+          "description": "Delivery received, package at door, handover moment"
+        },
+        "D3": {
+          "name": "UnboxReveal",
+          "description": "Unboxing and first product reveal"
+        },
+        "D4": {
+          "name": "BeforeAfter",
+          "description": "Side-by-side transformation or comparison"
+        },
+        "D5": {
+          "name": "LifestyleShot",
+          "description": "Product in aspirational, aesthetic, or lifestyle context"
+        },
+        "D6": {
+          "name": "ComparisonDemo",
+          "description": "Versus competitor, old way, or alternative product"
+        }
+      }
+    },
+    "action": {
+      "description": "Close — drive the viewer to act",
+      "code_prefix": "Act",
+      "block_codes": {
+        "Act1": {
+          "name": "PackagingShot",
+          "description": "Product packaging beauty shot or switch reveal"
+        },
+        "Act2": {
+          "name": "BundleGroup",
+          "description": "Bundle, gift set, or multi-item pop-out"
+        },
+        "Act3": {
+          "name": "PromoVisual",
+          "description": "Promotional image, offer card, or combo deal visual"
+        },
+        "Act6": {
+          "name": "EndCard",
+          "description": "CTA freeze, closing card with logo, PM link, or QR"
+        }
+      }
+    }
+  },
+  "phase_order": ["attention", "interest", "desire", "action"],
+  "phase_order_note": "Sequences must follow strict A-I-D-Act ordering. Repeats within a phase are allowed but phase order is never violated."
+}

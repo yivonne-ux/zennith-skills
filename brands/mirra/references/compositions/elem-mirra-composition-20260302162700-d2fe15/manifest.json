@@ -1,0 +1,69 @@
+{
+  "id": "elem-mirra-composition-20260302162700-d2fe15",
+  "type": "composition",
+  "brand": "mirra",
+  "name": "Comparison Layout Template",
+  "created_at": "2026-03-02T16:27:11+0800",
+  "created_by": "jenn",
+  "files": [
+    "ref-comparison-template.jpg"
+  ],
+  "tags": [
+    "comparison",
+    "template",
+    "layout",
+    "this-vs-that",
+    "healthy food",
+    "meal prep",
+    "calorie comparison",
+    "nutrition",
+    "food advertisement",
+    "bento box",
+    "poke bowl",
+    "clean eating",
+    "diet plan",
+    "infographic",
+    "food photography",
+    "promotional content"
+  ],
+  "auto_tags": {
+    "lighting": "Soft, even studio lighting with minimal shadows, creating a bright and clean appearance.",
+    "palette": [
+      "#F9E0D8",
+      "#F4EEDF",
+      "#000000",
+      "#D25260",
+      "#7FB15C",
+      "#FFC107",
+      "#FFFFFF"
+    ],
+    "mood": "Informative, healthy, clean, comparative, appealing, and educational.",
+    "composition": "The image uses a vertical split-screen layout to compare two distinct food presentations. On the left, three identical poke bowls are stacked vertically. On the right, three multi-compartment meal prep containers are arranged diagonally. Text overlays at the top and bottom frame the comparison, with logos placed in the bottom right, creating an asymmetrical but balanced composition.",
+    "objects": [
+      "three poke bowls",
+      "rice",
+      "salmon",
+      "mango cubes",
+      "sliced cucumber",
+      "pickled red onions",
+      "greens (seaweed/lettuce)",
+      "three multi-compartment meal prep containers",
+      "pasta salad",
+      "cooked vegetables (peppers, corn, peas)",
+      "meat/chicken dish",
+      "fruit cubes (pineapple, cantaloupe)",
+      "stew/curry",
+      "tortilla wraps",
+      "lettuce leaves",
+      "stickers/logos ('Nutritionist Approved', 'MSG', 'Plant-Based Perfection')",
+      "text ('Headline 1', 'Headline 2', 'MIRRA', '1600kcal', 'Same calories, but totally different')"
+    ],
+    "scene": "A clean studio or advertisement setting, focused entirely on the food items and comparative information.",
+    "style": "Clean, modern, infographic, food photography, promotional, illustrative graphic design."
+  },
+  "notes": "This vs That comparison ad layout from Tricia",
+  "source_url": "",
+  "pinned_by": "",
+  "performance": {},
+  "status": "active"
+}

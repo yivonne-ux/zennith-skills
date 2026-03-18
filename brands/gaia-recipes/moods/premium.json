@@ -1,0 +1,16 @@
+{
+  "name": "premium",
+  "description": "Cookbook-quality photography with elegant styling, perfect composition, and the kind of images you would frame on a wall. This mood positions GAIA Recipes as a premium culinary brand with content that rivals published cookbooks.",
+  "output_types": ["hero", "carousel", "aroll", "promotion"],
+  "style": {
+    "lighting": "soft diffused studio light | gentle fill from below | even professional lighting",
+    "color_grade": "neutral warm tones | clean whites | muted earthy accents",
+    "camera": "perfectly composed overhead | 45-degree hero angle | detail macro with precision",
+    "composition": "rule of thirds precision | curated prop styling | intentional negative space",
+    "props": "marble surface, linen napkins, artisan ceramics, fresh herbs as garnish, copper measuring cups",
+    "atmosphere": "polished, aspirational, beautiful, curated, editorial"
+  },
+  "copy_tone": "Polished and editorial, like a cookbook foreword. Measured, intentional word choices. Descriptors feel curated — artisan, hand-selected, lovingly prepared. Quality over quantity in every phrase.",
+  "music": { "mood": "elegant classical guitar, ambient sophistication", "bpm": "70-90" },
+  "example_prompt_fragment": "A perfectly styled overhead shot of a complete plant-based laksa bowl on a marble surface, artisan ceramic bowl, precisely placed garnishes of fresh coriander and lime wedge, linen napkin folded beside it, soft diffused studio lighting, clean warm neutral tones, cookbook-quality food photography with intentional negative space"
+}

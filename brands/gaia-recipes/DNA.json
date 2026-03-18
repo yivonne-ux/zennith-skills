@@ -1,0 +1,76 @@
+{
+  "brand": "gaia-recipes",
+  "display_name": "GAIA Recipes",
+  "tagline": "Cook with confidence, eat with joy",
+  "visual": {
+    "colors": {
+      "primary": "#E8A87C",
+      "secondary": "#D4A574",
+      "background": "#FFF8F0",
+      "accent": "#C85A17"
+    },
+    "typography": {
+      "heading": "Friendly rounded sans-serif, warm and welcoming",
+      "body": "Clean serif or sans-serif, easy to read in recipe format"
+    },
+    "photography": "Step-by-step recipe shots, overhead angles, ingredient flat lays",
+    "lighting_default": "Bright natural kitchen light, clean, well-lit workspace",
+    "style": "Warm, instructional, inviting, home-kitchen feel",
+    "avoid": [
+      "Dark or moody food photography",
+      "Restaurant-style plating that intimidates",
+      "Overly stylized or unrealistic setups",
+      "Cluttered backgrounds",
+      "Stock photo kitchens"
+    ]
+  },
+  "voice": {
+    "tone": "Encouraging, instructional, fun",
+    "language_mix": "English 60% + Bahasa Malaysia 40%, natural switching",
+    "formality": "Friendly teacher vibe",
+    "personality": [
+      "Encouraging",
+      "Patient",
+      "Fun-loving",
+      "Knowledgeable",
+      "Like a friend in the kitchen"
+    ],
+    "avoid": [
+      "Condescending or patronizing tone",
+      "Overly technical chef jargon",
+      "Intimidating complexity",
+      "Judgmental about skill level",
+      "Dry or boring instructions"
+    ]
+  },
+  "audience": {
+    "primary": "Home cooks and cooking enthusiasts, 20-50",
+    "personas": [
+      "Beginner cook building confidence",
+      "Busy parent needing quick healthy meals",
+      "Cooking hobbyist exploring plant-based recipes",
+      "Young adult learning to cook from scratch"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Simplicity",
+    "Confidence",
+    "Joy",
+    "Plant-based living",
+    "Shared meals"
+  ],
+  "products": [
+    "Recipe ebooks",
+    "Cooking guides",
+    "Meal planners",
+    "Video courses"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  }
+}

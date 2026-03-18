@@ -1,0 +1,16 @@
+{
+  "name": "playful",
+  "description": "Fun cooking moments including happy mistakes, colorful ingredient explosions, and the messy joy of getting creative in the kitchen. This mood says: cooking is play, not performance — and the best meals come from having fun.",
+  "output_types": ["ugc", "broll", "carousel", "education"],
+  "style": {
+    "lighting": "bright cheerful daylight | even shadowless fill | pop of color lighting",
+    "color_grade": "bright pastels | saturated primary colors | high key warmth",
+    "camera": "overhead ingredient scatter | reaction shots | freeze-frame splashes",
+    "composition": "organized ingredient chaos | rainbow color arrangements | hands-in-frame action",
+    "props": "colorful silicone spatulas, bright bowls, scattered ingredients, fun apron, quirky timer",
+    "atmosphere": "joyful, messy, fun, experimental, lighthearted"
+  },
+  "copy_tone": "Bubbly and encouraging, celebrating kitchen experiments. Uses casual language, rhetorical questions, and gentle humor. Makes cooking mistakes feel like part of the adventure.",
+  "music": { "mood": "cheerful indie pop, playful xylophone, upbeat", "bpm": "105-125" },
+  "example_prompt_fragment": "A fun overhead shot of a bright kitchen counter with colorful ingredients scattered in a rainbow arrangement, a pair of hands tossing fresh vegetables into a bright red mixing bowl, flour puff mid-air, cheerful bright lighting, saturated pastel color palette, playful and joyful food photography, approachable and fun editorial style"
+}

@@ -1,0 +1,105 @@
+{
+  "brand": "dr-stan",
+  "display_name": "Dr Stan",
+  "tagline": "Science you can trust, health you can feel",
+  "visual": {
+    "colors": {
+      "primary": "#1A237E",
+      "secondary": "#FFFFFF",
+      "background": "#F5F7FA",
+      "accent": "#00C853"
+    },
+    "typography": {
+      "heading": "Clean geometric sans-serif, authoritative and modern",
+      "body": "Neutral sans-serif, high readability, data-friendly"
+    },
+    "photography": "Clean product photography, science-meets-lifestyle, infographic-ready layouts",
+    "lighting_default": "Clean white light with subtle blue tones, sharp product definition, modern studio",
+    "style": "Authoritative, clean, science-backed, modern, trustworthy without being sterile",
+    "avoid": [
+      "Overly warm or rustic aesthetics",
+      "Unsubstantiated health claims visuals",
+      "Cheap supplement brand look",
+      "Cluttered or noisy layouts",
+      "Pseudoscience or alternative medicine imagery"
+    ]
+  },
+  "voice": {
+    "tone": "Authoritative but approachable, science-first, trustworthy",
+    "language_mix": "English 85% + Bahasa Malaysia 15%, clear and precise",
+    "formality": "Professional-approachable",
+    "personality": [
+      "Authoritative",
+      "Evidence-based",
+      "Approachable",
+      "Trustworthy",
+      "Educational"
+    ],
+    "avoid": [
+      "Miracle cure language",
+      "Unsubstantiated health claims",
+      "Overly casual or flippant tone",
+      "Fear-based marketing",
+      "Pseudoscience or woo-woo language"
+    ]
+  },
+  "audience": {
+    "primary": "Health-aware adults 30-55, evidence-based decision makers",
+    "personas": [
+      "Professional who researches supplements before buying",
+      "Health-conscious parent seeking evidence-based nutrition",
+      "Fitness enthusiast who trusts science over trends",
+      "Doctor or pharmacist recommending to patients"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Scientific rigour",
+    "Transparency",
+    "Evidence-based health",
+    "Quality ingredients",
+    "Trustworthiness"
+  ],
+  "products": [
+    "Probiotics",
+    "Omega-3",
+    "Vitamin D",
+    "Collagen",
+    "Sleep support"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "Lab to Life",
+    "vibe": "From scientific rigour to everyday wellness",
+    "audio": "Subtle electronic ambient, soft data beeps, capsule clicking, clean pour sounds",
+    "motion": "Clean data overlay graphics, microscopic zoom transitioning to product shot, capsule falling in slow-mo, molecular visualization to lifestyle reveal",
+    "language": "Precision meets warmth — science that speaks human, data that tells a story",
+    "mood": "Confident, clean, trustworthy, intelligent"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "60",
+      "camera_movement": "Microscopic zoom out to product, data overlay slide-in, clean product spin",
+      "typical_use": "Quick science facts, ingredient breakdowns, myth-busting clips"
+    },
+    "instagram": {
+      "stories": "Infographic cards, ingredient spotlights with research citations, quiz polls on health facts",
+      "feed_carousel": "9:16 portrait images, clean product shots with data overlays, before/after research visuals",
+      "reels_carousel": "9:16 portrait motion clips, lab-to-product transitions, science animation sequences"
+    },
+    "youtube_shorts": {
+      "format": "Vertical 9:16",
+      "fps": "60",
+      "camera_movement": "Macro on ingredient, data graphic overlay, zoom out to lifestyle context",
+      "typical_use": "Science explainers, supplement education, research-backed health tips"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "nostalgic",
+  "description": "Retro print aesthetics with faded vintage styling, hand-drawn lettering, and the charm of analog design. This mood channels the golden age of screen printing and indie zine culture — sustainable fashion with soul and history.",
+  "output_types": ["aroll", "broll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm faded afternoon light | soft vintage tungsten | sun-bleached outdoor glow",
+    "color_grade": "faded retro palette | desaturated olive and mustard | vintage film grain",
+    "camera": "vintage portrait style | close-up hand-drawn lettering detail | nostalgic lifestyle medium",
+    "composition": "retro poster-style framing | vintage flat lay with old objects | film strip borders",
+    "props": "vinyl records, retro camera, vintage sunglasses, old magazines, hand-drawn sketches, screen print equipment",
+    "atmosphere": "retro, authentic, analog, soulful, indie"
+  },
+  "copy_tone": "Throwback and authentic, referencing analog culture and indie roots. Uses language like 'OG,' 'hand-drawn,' 'limited print run.' Feels like finding a rare vintage tee at a thrift shop.",
+  "music": { "mood": "retro funk, vinyl soul, classic indie rock", "bpm": "85-105" },
+  "example_prompt_fragment": "A vintage-styled flat lay of a GAIA Print tee with hand-drawn lettering design, laid out on a weathered wooden table beside vinyl records and an old film camera, faded retro color palette in olive green and mustard yellow, vintage film grain overlay, warm afternoon sun-bleached lighting, indie retro fashion photography with analog soul"
+}

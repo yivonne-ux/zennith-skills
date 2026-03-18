@@ -1,0 +1,16 @@
+{
+  "name": "nostalgic",
+  "description": "Traditional herbal medicine heritage with mortar and pestle grinding, dried botanicals in apothecary jars, and the ancient wisdom of plant-based healing. This mood connects modern supplements to centuries of traditional knowledge — science meets ancestral wisdom.",
+  "output_types": ["aroll", "broll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm apothecary glow | soft amber herbal shop light | gentle natural window",
+    "color_grade": "warm amber and earth tones | muted botanical greens | vintage herbal palette",
+    "camera": "close-up mortar and pestle | medium shot herbal arrangement | slow observational pan",
+    "composition": "traditional tools as heroes | botanical specimen layout | apothecary shelf depth",
+    "props": "stone mortar and pestle, dried herbs in glass jars, botanical illustrations, old herbal reference books, wooden apothecary cabinet",
+    "atmosphere": "ancestral, wise, grounded, reverent, nature-connected"
+  },
+  "copy_tone": "Reverent and knowledgeable, honoring traditional herbal wisdom while connecting it to modern science. Uses phrases like 'used for generations,' 'nature's pharmacy,' 'where tradition meets research.' Respectful of heritage.",
+  "music": { "mood": "traditional acoustic, soft gamelan elements, nature ambiance", "bpm": "55-70" },
+  "example_prompt_fragment": "A warm apothecary scene with dried herbs and botanicals in glass jars on wooden shelves, a stone mortar and pestle with freshly ground turmeric in the foreground, old botanical illustration pinned to the wall, amber tungsten glow lighting, vintage herbal reference book open beside the mortar, warm earth tone and muted green palette, traditional herbal medicine photography"
+}

@@ -1,0 +1,76 @@
+{
+  "brand": "gaia-supplements",
+  "display_name": "GAIA Supplements",
+  "tagline": "Nature's best, scientifically backed",
+  "visual": {
+    "colors": {
+      "primary": "#3B7A57",
+      "secondary": "#8FBC8F",
+      "background": "#F0FFF0",
+      "accent": "#FFD700"
+    },
+    "typography": {
+      "heading": "Clean modern sans-serif, premium and trustworthy",
+      "body": "Highly readable sans-serif, clinical clarity"
+    },
+    "photography": "Premium product photography, ingredient close-ups, clinical-lifestyle hybrid",
+    "lighting_default": "Clean studio lighting, white/light backgrounds, product-focused",
+    "style": "Clean, clinical-but-warm, trustworthy, premium, science-meets-nature",
+    "avoid": [
+      "Overly clinical or pharmaceutical look",
+      "Cheap supplement brand aesthetics",
+      "Unsubstantiated miracle claims imagery",
+      "Dark or moody tones",
+      "Cluttered label-heavy designs"
+    ]
+  },
+  "voice": {
+    "tone": "Credible, reassuring, science-forward",
+    "language_mix": "English 75% + Bahasa Malaysia 25%, natural switching",
+    "formality": "Professional-warm",
+    "personality": [
+      "Credible",
+      "Reassuring",
+      "Transparent",
+      "Science-forward",
+      "Genuinely caring"
+    ],
+    "avoid": [
+      "Miracle cure language",
+      "Unverified health claims",
+      "Fear-mongering about health",
+      "Overly technical without explanation",
+      "Aggressive supplement bro culture"
+    ]
+  },
+  "audience": {
+    "primary": "Health-conscious adults and fitness enthusiasts, 25-50",
+    "personas": [
+      "Health-conscious professional optimizing wellness",
+      "Fitness enthusiast seeking clean supplements",
+      "Parent looking for family-safe natural vitamins",
+      "Wellness-curious consumer exploring supplements"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Science-backed",
+    "Natural ingredients",
+    "Transparency",
+    "Wellness",
+    "Quality over quantity"
+  ],
+  "products": [
+    "Vitamin capsules",
+    "Protein powder",
+    "Herbal extracts",
+    "Wellness packs"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  }
+}

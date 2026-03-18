@@ -1,0 +1,105 @@
+{
+  "brand": "pinxin-vegan",
+  "display_name": "Pinxin Vegan",
+  "tagline": "Bold flavours, zero compromise",
+  "visual": {
+    "colors": {
+      "primary": "#4CAF50",
+      "secondary": "#8D6E63",
+      "background": "#F5F0EB",
+      "accent": "#33691E"
+    },
+    "typography": {
+      "heading": "Bold sans-serif, confident and modern",
+      "body": "Clean sans-serif, highly readable"
+    },
+    "photography": "Bold food photography, close-up textures, Malaysian street food aesthetic",
+    "lighting_default": "Warm natural light, high contrast, steam and smoke visible",
+    "style": "Bold, clean, appetizing, proudly Malaysian, health-forward",
+    "avoid": [
+      "Bland or clinical health food aesthetic",
+      "Overly Western plating styles",
+      "Washed-out or pale color grading",
+      "Generic stock food imagery",
+      "Preachy vegan messaging visuals"
+    ]
+  },
+  "voice": {
+    "tone": "Bold, clean, health-forward, proudly Malaysian",
+    "language_mix": "English 70% + Bahasa Malaysia 30%, natural code-switching",
+    "formality": "Casual-confident",
+    "personality": [
+      "Bold",
+      "Health-forward",
+      "Proudly Malaysian",
+      "No-nonsense",
+      "Flavour-obsessed"
+    ],
+    "avoid": [
+      "Preachy vegan lecturing",
+      "Apologetic tone about plant-based food",
+      "Corporate speak",
+      "Bland health food cliches",
+      "Talking down to meat eaters"
+    ]
+  },
+  "audience": {
+    "primary": "Health-conscious Malaysians, 25-45",
+    "personas": [
+      "Working professional wanting healthier Malaysian meals",
+      "Home cook exploring plant-based versions of comfort food",
+      "Fitness-conscious millennial who refuses to sacrifice flavour",
+      "Curious foodie open to trying vegan Malaysian cuisine"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Bold Malaysian flavour",
+    "Health without compromise",
+    "Sustainability",
+    "Accessibility",
+    "Heritage preservation"
+  ],
+  "products": [
+    "Vegan rendang",
+    "Laksa paste",
+    "Satay sauce",
+    "Tempeh chips",
+    "Nasi lemak kit"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "ASMR Kopitiam",
+    "vibe": "Wok hei energy meets clean plant-based eating",
+    "audio": "Wok sizzling, spice grinding, mortar and pestle pounding, steam hissing",
+    "motion": "Slow-mo wok toss, spice paste grinding close-up, steam rising from rendang, crispy tempeh chip snap",
+    "language": "Malaysian kopitiam energy — bold, sensory, unapologetically local",
+    "mood": "Bold, sensory, appetite-inducing, proudly Malaysian"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "60",
+      "camera_movement": "3x zoom on sizzling wok, pan across spice lineup",
+      "typical_use": "Quick recipe hacks, sizzle reels, flavour reveals"
+    },
+    "instagram": {
+      "stories": "Swipe-up polls (vegan vs original?), short vertical clips with steam overlay",
+      "feed_carousel": "9:16 portrait images, ingredient-to-dish transformation sequences",
+      "reels_carousel": "9:16 portrait motion clips, 3-step recipe format"
+    },
+    "youtube_shorts": {
+      "format": "Vertical 9:16",
+      "fps": "60",
+      "camera_movement": "Ingredient close-up to final dish reveal, 1:3 zoom ratio",
+      "typical_use": "Recipe tutorials, taste test reactions, behind-the-scenes production"
+    }
+  }
+}

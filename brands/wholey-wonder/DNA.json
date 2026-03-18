@@ -1,0 +1,104 @@
+{
+  "brand": "wholey-wonder",
+  "display_name": "Wholey Wonder",
+  "tagline": "Fuel your wonder",
+  "visual": {
+    "colors": {
+      "primary": "#9C27B0",
+      "secondary": "#FFD700",
+      "background": "#FFFFFF",
+      "accent": "#7B1FA2"
+    },
+    "typography": {
+      "heading": "Geometric sans-serif, energetic and modern",
+      "body": "Clean sans-serif, light weight, airy"
+    },
+    "photography": "Bright lifestyle photography, smoothie bowls from above, active living moments",
+    "lighting_default": "Bright morning light, clean whites, high key, sunrise tones",
+    "style": "Energetic, clean, optimistic, vibrant wellness without being clinical",
+    "avoid": [
+      "Dark or moody aesthetics",
+      "Clinical supplement imagery",
+      "Overly minimalist or cold design",
+      "Gym-bro aggressive fitness imagery",
+      "Artificial or neon color treatments"
+    ]
+  },
+  "voice": {
+    "tone": "Energetic, optimistic, clean wellness vibes",
+    "language_mix": "English 85% + Bahasa Malaysia 15%, upbeat and casual",
+    "formality": "Casual-upbeat",
+    "personality": [
+      "Energetic",
+      "Optimistic",
+      "Wellness-forward",
+      "Encouraging",
+      "Fun and accessible"
+    ],
+    "avoid": [
+      "Preachy health lecturing",
+      "Overly scientific jargon",
+      "Aggressive fitness culture language",
+      "Condescending wellness gatekeeping",
+      "Diet culture shame language"
+    ]
+  },
+  "audience": {
+    "primary": "Urban millennials, fitness-conscious, 22-38",
+    "personas": [
+      "Young professional starting a morning wellness routine",
+      "Fitness enthusiast seeking clean plant-based fuel",
+      "Busy millennial wanting quick healthy meal options",
+      "Social media-savvy health explorer"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Holistic wellness",
+    "Clean ingredients",
+    "Joyful health",
+    "Accessibility",
+    "Sustainability"
+  ],
+  "products": [
+    "Smoothie bowls",
+    "Protein bars",
+    "Gut-health drinks",
+    "Superfood blends"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "Sunrise Ritual",
+    "vibe": "Fresh morning energy, clean and alive",
+    "audio": "Blender whirring, liquid pouring, spoon scraping smoothie bowl, upbeat ambient track",
+    "motion": "Slow-mo pour into glass, blending vortex, overhead smoothie bowl assembly, splash freeze-frame",
+    "language": "Morning ritual energy — fresh, alive, aspirational but achievable",
+    "mood": "Bright, energetic, optimistic, clean"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "60",
+      "camera_movement": "Overhead pour shot, zoom into bowl toppings, 360 spin on product",
+      "typical_use": "Morning routine clips, smoothie bowl assembly ASMR, quick wellness tips"
+    },
+    "instagram": {
+      "stories": "Daily ritual prompts, swipe-up for recipes, quick ingredient spotlights",
+      "feed_carousel": "9:16 portrait images, bright flat-lay shots, ingredient-to-bowl sequences",
+      "reels_carousel": "9:16 portrait motion clips, satisfying pour and blend sequences"
+    },
+    "youtube_shorts": {
+      "format": "Vertical 9:16",
+      "fps": "60",
+      "camera_movement": "Ingredient toss into blender, slow reveal of finished bowl, taste reaction",
+      "typical_use": "Recipe walkthroughs, ingredient education, wellness routine vlogs"
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "brand": "gaia-print",
+  "display_name": "GAIA Print",
+  "tagline": "Wear your values",
+  "visual": {
+    "colors": {
+      "primary": "#2E8B57",
+      "secondary": "#556B2F",
+      "background": "#FAFAF5",
+      "accent": "#DAA520"
+    },
+    "typography": {
+      "heading": "Bold sans-serif or display font, streetwear-inspired",
+      "body": "Modern sans-serif, clean and punchy"
+    },
+    "photography": "Product mockups, lifestyle model shots, flat lay displays",
+    "lighting_default": "Studio product shots with lifestyle outdoor natural light",
+    "style": "Bold, modern, streetwear-meets-sustainable, trendy",
+    "avoid": [
+      "Corporate or formal aesthetics",
+      "Dated or generic merch looks",
+      "Greenwashing cliches (leaves on everything)",
+      "Low-quality mockups",
+      "Overly minimalist to the point of boring"
+    ]
+  },
+  "voice": {
+    "tone": "Bold, edgy, youthful",
+    "language_mix": "English 80% + Bahasa Malaysia 20%, natural switching",
+    "formality": "Gen Z native",
+    "personality": [
+      "Bold",
+      "Edgy",
+      "Unapologetically sustainable",
+      "Culturally proud",
+      "Trendsetting"
+    ],
+    "avoid": [
+      "Boomer language or outdated slang",
+      "Preachy environmentalism",
+      "Corporate sustainability-speak",
+      "Trying too hard to be cool",
+      "Generic motivational quotes"
+    ]
+  },
+  "audience": {
+    "primary": "Eco-conscious Gen Z and millennials, 18-35",
+    "personas": [
+      "Sustainability-minded Gen Z fashionista",
+      "University student expressing values through fashion",
+      "Young professional seeking meaningful merch",
+      "Eco-activist looking for statement pieces"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Sustainability",
+    "Self-expression",
+    "Eco-fashion",
+    "Malaysian pride",
+    "Individuality"
+  ],
+  "products": [
+    "T-shirts",
+    "Tote bags",
+    "Mugs",
+    "Notebooks",
+    "Stickers",
+    "Hoodies",
+    "Caps"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  }
+}

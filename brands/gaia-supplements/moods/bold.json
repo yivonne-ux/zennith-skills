@@ -1,0 +1,16 @@
+{
+  "name": "bold",
+  "description": "Athletic performance energy with gym intensity, power ingredients spotlighted, and the bold confidence of peak physical health. This mood speaks to the performance-driven consumer who wants supplements that fuel real results.",
+  "output_types": ["hero", "promotion", "ugc", "broll"],
+  "style": {
+    "lighting": "dramatic gym lighting | hard directional sport light | sweat-glistening rim light",
+    "color_grade": "high contrast green and black | gold power accents | deep shadow athletic",
+    "camera": "low angle power shot | dynamic action freeze | dramatic product close-up",
+    "composition": "athlete-product pairing | power ingredient hero | intensity-first framing",
+    "props": "protein shaker, gym equipment, sweat towel, resistance bands, supplement tub, weight plates",
+    "atmosphere": "powerful, driven, intense, performance-focused, results-oriented"
+  },
+  "copy_tone": "Powerful and direct. Performance-driven language with science backing. 'Fuel your peak.' Uses metrics and results language. Confident without making miracle claims. Honest strength.",
+  "music": { "mood": "driving workout beats, power electronic, motivational bass", "bpm": "120-140" },
+  "example_prompt_fragment": "A dramatic gym scene with a GAIA Supplements protein tub in forest green and gold positioned on a weight bench, dramatic directional lighting creating strong shadows, an athlete mid-workout in soft focus background, sweat glistening with rim light, high contrast green and black color grade with gold accents, bold athletic supplement photography"
+}

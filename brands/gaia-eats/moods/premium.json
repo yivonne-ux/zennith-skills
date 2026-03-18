@@ -1,0 +1,16 @@
+{
+  "name": "premium",
+  "description": "Fine dining presentation of Malaysian plant-based cuisine, with minimal elegant plating on dark wood surfaces. This mood elevates traditional flavors to a refined, aspirational level — proving plant-based Malaysian food belongs at the finest table.",
+  "output_types": ["hero", "promotion", "carousel", "aroll"],
+  "style": {
+    "lighting": "dramatic side light | subtle rim lighting | dark moody with warm accents",
+    "color_grade": "deep earth tones | dark wood warmth | gold accent highlights",
+    "camera": "macro food detail | slow cinematic pan | overhead minimal plating",
+    "composition": "negative space emphasis | single hero dish centered | elegant garnish details",
+    "props": "dark wood board, matte black ceramic, gold utensils, single herb garnish, linen napkin",
+    "atmosphere": "elegant, refined, aspirational, sophisticated, quiet luxury"
+  },
+  "copy_tone": "Refined and measured, with carefully chosen words. Evokes exclusivity without being pretentious. Descriptors feel curated — heritage rendang, artisan paste, crafted with intention.",
+  "music": { "mood": "minimal jazz piano, ambient elegance", "bpm": "60-80" },
+  "example_prompt_fragment": "An elegant fine-dining presentation of plant-based rendang on a dark matte ceramic plate, dark polished wood table, dramatic side lighting with warm rim light, single microgreen garnish, negative space composition, shallow depth of field on sauce texture, premium food photography, sophisticated earth tones"
+}

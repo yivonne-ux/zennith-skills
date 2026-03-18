@@ -1,0 +1,16 @@
+{
+  "name": "cozy",
+  "description": "Cozy indie cafe vibes with a vintage tee, a good book, and a warm reading nook. This mood positions GAIA Print merch as the perfect companion for your chill day — sustainable fashion that feels like home.",
+  "output_types": ["broll", "lofi", "carousel", "aroll"],
+  "style": {
+    "lighting": "warm cafe window light | soft ambient indoor glow | golden reading lamp",
+    "color_grade": "warm muted earth tones | olive and gold warmth | soft vintage feel",
+    "camera": "medium lifestyle portrait | close-up fabric texture | cozy corner establishing shot",
+    "composition": "person in cozy setting | tee and book pairing | layered textures and comfort items",
+    "props": "vintage tee, indie cafe table, book, warm drink, tote bag on chair, plant corner",
+    "atmosphere": "chill, cozy, indie, comfortable, authentic"
+  },
+  "copy_tone": "Relaxed and authentic, like a caption on a lazy Sunday photo. Understated cool. Uses words like 'vibe,' 'chill,' 'favorite tee.' Anti-hustle energy.",
+  "music": { "mood": "indie acoustic, lo-fi cafe beats, soft jazz", "bpm": "70-90" },
+  "example_prompt_fragment": "A person wearing an olive green GAIA Print tee sitting in a cozy indie cafe corner, warm window light, book open on a wooden table beside a latte, tote bag hanging on the chair, potted plant in background, warm muted earth tones with gold accents, lifestyle fashion photography with authentic indie cafe vibes"
+}

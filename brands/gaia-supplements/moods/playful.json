@@ -1,0 +1,16 @@
+{
+  "name": "playful",
+  "description": "Smoothie-making fun with colorful powder pours, ingredient tosses, and the creative joy of mixing your own wellness blends. This mood makes supplements feel approachable and enjoyable — wellness should be delicious, not medicinal.",
+  "output_types": ["ugc", "broll", "carousel", "education"],
+  "style": {
+    "lighting": "bright cheerful kitchen light | colorful powder highlight | clean even daylight",
+    "color_grade": "bright greens and golds | berry accent pops | fresh clean palette",
+    "camera": "overhead smoothie making | freeze-frame powder pour | fun close-up mixing",
+    "composition": "colorful ingredient arrangement | smoothie bowl art | mid-action powder toss",
+    "props": "blender, colorful powder scoops, fresh fruit, smoothie bowls, fun toppings, glass straws",
+    "atmosphere": "fun, approachable, colorful, delicious, creative"
+  },
+  "copy_tone": "Fun and approachable. Makes supplement routines feel exciting. Uses flavor language and creative recipe ideas. 'Your morning smoothie just leveled up.' Turns health into a treat.",
+  "music": { "mood": "happy pop, kitchen vibes, upbeat cheerful", "bpm": "100-120" },
+  "example_prompt_fragment": "A fun overhead shot of smoothie making in progress, GAIA Supplements green powder being scooped into a blender with fresh mango and spinach, colorful berry toppings scattered around, bright cheerful kitchen lighting, a mid-pour freeze frame of golden powder, fresh clean green and gold color palette with berry accents, playful wellness lifestyle photography"
+}

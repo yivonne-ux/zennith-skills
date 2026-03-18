@@ -1,0 +1,105 @@
+{
+  "brand": "gaia-eats",
+  "display_name": "GAIA Eats",
+  "tagline": "Plant-based food, Malaysian soul",
+  "visual": {
+    "colors": {
+      "primary": "#8FBC8F",
+      "secondary": "#DAA520",
+      "background": "#FFFDD0",
+      "accent": "#2E8B57"
+    },
+    "typography": {
+      "heading": "Rounded sans-serif, warm and approachable",
+      "body": "Clean sans-serif, highly readable"
+    },
+    "photography": "Magazine editorial, lifestyle, food photography",
+    "lighting_default": "Warm natural light, soft shadows, golden hour feel",
+    "style": "Warm, natural, appetizing, accessible, not clinical",
+    "avoid": [
+      "Sterile or clinical aesthetics",
+      "Overly Western plating",
+      "Artificial colors",
+      "Harsh white lighting",
+      "Stock photo feel"
+    ]
+  },
+  "voice": {
+    "tone": "Warm, authentic, community-focused",
+    "language_mix": "English 70% + Bahasa Malaysia 30%, natural switching",
+    "formality": "Casual-friendly",
+    "personality": [
+      "Warm",
+      "Authentic",
+      "Community-driven",
+      "Passionate about food",
+      "Proudly Malaysian"
+    ],
+    "avoid": [
+      "Corporate or cold language",
+      "Pushy sales tone",
+      "Preachy about veganism",
+      "Overly formal",
+      "Condescending health lecturing"
+    ]
+  },
+  "audience": {
+    "primary": "Malaysian health-conscious consumers, 25-45",
+    "personas": [
+      "Working professional seeking healthier meals",
+      "Home cook exploring plant-based Malaysian cuisine",
+      "Health-conscious parent feeding a family",
+      "Foodie curious about sustainable eating"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Sustainability",
+    "Health",
+    "Accessibility",
+    "Malaysian heritage",
+    "Community"
+  ],
+  "products": [
+    "Rendang paste",
+    "Laksa paste",
+    "Tempeh chips",
+    "Satay sauce",
+    "Nasi lemak kit"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "ASMR Kopitiam",
+    "vibe": "Authentic Malaysian coffee shop ambience",
+    "audio": "Glass clinking, steam rising, chopsticks tapping, slow pour sounds",
+    "motion": "Slow motion sizzling wok, pouring soy sauce, steam diffusion, food preparation details",
+    "language": "Regional Malaysian flavor - not generic, authentic Malaysian presentation style",
+    "mood": "Warm, sensory, immersive, appetite-inducing"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "60",
+      "camera_movement": "3x zoom on food, subtle pan across ingredients",
+      "typical_use": "Quick, attention-grabbing food preparation clips"
+    },
+    "instagram": {
+      "stories": "Swipe-up, short vertical clips (3-5s), overlay text on steam visuals",
+      "feed_carousel": "9:16 portrait images with motion overlay, seasonal themes",
+      "reels_carousel": "9:16 portrait motion clips, 2-3 item sequence showing process"
+    },
+    "youtube_shorts": {
+      "format": "Vertical 9:16",
+      "fps": "60",
+      "camera_movement": "1:3 zoom on ingredients before slow reveal of final dish",
+      "typical_use": "Educational and behind-the-scenes content"
+    }
+  }
+}

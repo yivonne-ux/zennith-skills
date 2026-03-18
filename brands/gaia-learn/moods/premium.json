@@ -1,0 +1,16 @@
+{
+  "name": "premium",
+  "description": "Professional masterclass environment with clean studio setup and expert authority. This mood positions GAIA Learn as the gold standard in wellness education — polished, credible, and worth investing in.",
+  "output_types": ["hero", "aroll", "promotion", "carousel"],
+  "style": {
+    "lighting": "even professional studio | clean three-point setup | bright and trustworthy",
+    "color_grade": "clean teal and white | minimal warm accents | professional neutrals",
+    "camera": "clean medium portrait | precise product shot | steady professional grade",
+    "composition": "clean background with expert | structured grid layouts | premium course mockup",
+    "props": "professional backdrop, course materials, certification badge, clean desk, premium device mockup",
+    "atmosphere": "polished, credible, authoritative, premium, investment-worthy"
+  },
+  "copy_tone": "Polished and professional with quiet confidence. Uses language that signals value — curated curriculum, industry-recognized, expert-led. Makes the investment feel worthwhile and prestigious.",
+  "music": { "mood": "clean ambient corporate, subtle electronic, modern professional", "bpm": "80-100" },
+  "example_prompt_fragment": "A professional masterclass studio setup, clean white background with teal accent panels, expert presenter at a minimal desk with course materials neatly arranged, bright even three-point lighting, certification badges displayed, premium device showing course interface, clean professional neutral color palette, high-end corporate education photography"
+}

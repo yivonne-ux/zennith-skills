@@ -1,0 +1,147 @@
+[
+  {
+    "date": "2026-03-04",
+    "correction": "SUPERSEDED — Dialogue MUST be embedded in Sora prompt so the person actually speaks the words. But NO timestamps in prompt. Write dialogue as natural speech within the continuous action description",
+    "applied_to": "build_sora_prompt_from_parts — dialogue back in prompt"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Language must be natural Malaysian English — NOT heavy Manglish. No overuse of la, lah, gila, sedap. Light particles (one per script max) are fine",
+    "applied_to": "SINGLE_SHOT_PROMPT language section"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Scripts need review-style dialogue: discovery, reaction, honest verdict — not just hook then eat then CTA",
+    "applied_to": "Beat structure expanded from 3 to 5 (hook, discover, taste, verdict, CTA)"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Each variant must use a different ad framework (PAS, SLAP, UGC Testimonial) for variety — not all the same structure",
+    "applied_to": "assign_frameworks() routes different frameworks per variant"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Sora prompts need iPhone selfie feel: slight shake, autofocus micro-pulses, no stabilization, natural edge distortion, slight overexposure",
+    "applied_to": "SINGLE_SHOT_PROMPT sora prompt realism governors"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Include authenticity signals: hesitation before trying, specific sensory details, honest admissions, natural pauses",
+    "applied_to": "SINGLE_SHOT_PROMPT authenticity signals section"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "STRICT word limits per beat — LLM will exceed soft limits. Use hard caps: Beat 1=8 words, Beat 2-3=12 words, Beat 4-5=8 words. Auto-trim any excess",
+    "applied_to": "SINGLE_SHOT_PROMPT word limits + validate_script_wpm + trim_overlength_beats"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Combinatorial mode needs 4+ bodies for 10 variants to avoid repetitive beats 2-5. Scale: ceil(num_variants/3) bodies",
+    "applied_to": "run_combinatorial_mode body scaling formula"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "ONE continuous shot for 12s video — NO scene changes, NO timestamped beats, NO zoom. Real UGC creators hold one selfie angle the entire time. Multiple scenes = food looks inconsistent + more AI artifacts",
+    "applied_to": "build_sora_prompt_from_parts rewritten to single continuous shot"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "SPOON for rice bowls, NOT chopsticks. Chopsticks are only for noodle dishes. Malaysian/SEA standard: spoon (primary) + fork. Chopsticks for rice instantly signals inauthenticity",
+    "applied_to": "Sora prompt utensil description"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Drop specific ethnicities (Malay, Chinese, Indian) from Sora prompts — Sora cannot reliably distinguish SEA ethnicities. Use 'Southeast Asian woman' instead",
+    "applied_to": "PERSONA_POOL appearance descriptions"
+  },
+  {
+    "date": "2026-03-04",
+    "correction": "Camera must stay at consistent arm-length selfie distance. NEVER zoom in closer. The progressive zoom-in to extreme face close-up is the #1 AI tell",
+    "applied_to": "Sora prompt — no zoom instruction"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "SUPERSEDED — 5-beat structure (hook/discover/taste/verdict/CTA) was too many beats. Reduced to 3 beats: hook (0-4s), discover+taste (4-8s), verdict+CTA (8-12s). Simpler = more believable",
+    "applied_to": "SINGLE_SHOT_PROMPT beat structure"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Need at least 1 food close-up scene. Pure single-shot misses food showcase. Support 3 cut types: single_shot (0 cuts), one_cut (face→food), two_cut (face→food→face). Mix for variety",
+    "applied_to": "assign_cut_types() + multi-clip generation"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Dialogue MUST be IN the Sora prompt — the person speaks the lines in the video. No separate TTS. Sora generates the talking. Specify accent in prompt: 'says in Malaysian English' or 'says in Malaysian Mandarin Chinese'",
+    "applied_to": "sora_prompts with embedded dialogue + language"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Language follows the brief — if brief is in Chinese or mentions Chinese audience, scripts and Sora voice are in Malaysian Chinese (Mandarin). Otherwise Malaysian English. detect_language() auto-detects",
+    "applied_to": "detect_language() + language_instruction in SINGLE_SHOT_PROMPT"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Dialogue sounded too westernized/American. Must sound like real Malaysian woman talking to friend. Malaysian English has syllable-timed rhythm, flat intonation, code-switching. NOT American influencer style",
+    "applied_to": "SINGLE_SHOT_PROMPT language instruction rewritten"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Frame extraction (imageio+PIL) is wrong way to review videos — misses motion, lip sync, temporal artifacts. Use instead: (1) open video.mp4 to watch, (2) ffmpeg contact sheet, (3) motion diff sheet (tblend), (4) preview GIF",
+    "applied_to": "tools/review_video.py created"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "SUPERSEDED — 'discover+taste+verdict' beat structure was WRONG for testimonial UGC. Real Malaysian UGC testimonials follow BEFORE→ACTION→RESULT: (1) Her specific before-state/situation, (2) What she did about it + shows product naturally, (3) Specific result with timeframe + personal commitment. She is NOT trying food for the first time — she ALREADY uses it and is sharing her ongoing experience. No first-bite reactions, no food reveals. Product is a prop in her story, not the star.",
+    "applied_to": "SINGLE_SHOT_PROMPT 3-beat structure rewritten to BEFORE→ACTION→RESULT"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Dialogue must have SPECIFIC details from the brief — not vague praise. Must mention: timeframes (5 days, one week), body changes (bloating gone, pants fit, no 3pm crash), real numbers (400 cal, 50+ menu). Generic lines like 'wow so good' or 'so light so filling' are useless",
+    "applied_to": "SINGLE_SHOT_PROMPT dialogue rules"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Single mode: ALWAYS 1 Sora generation per variant (12s). No splitting into multiple clips and stitching. For one_cut/two_cut, the camera movement (tilt to food, cut to food) happens WITHIN the single 12s generation. The Sora prompt describes the full flow. Splitting wastes credits and produces inconsistent results.",
+    "applied_to": "run_single_shot_mode — 1 job per variant, no stitch_clips"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "NEVER describe food appearance, container shape, colour, texture, or ingredients in Sora prompts. The input_reference image carries the full food visual. Prompt should only say 'the meal' or 'the food'. Text descriptions conflict with and override the reference image, producing food that doesn't match.",
+    "applied_to": "Sora prompt templates (single_shot, one_cut, two_cut) + Sora Prompt Rules #7-#8"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "When brief specifies ethnicity (e.g. 'malaysian chinese'), use that in persona description — Sora CAN distinguish Chinese/Malay/Indian features. 'Southeast Asian woman' is only the default fallback when no ethnicity is specified. detect_ethnicity() parses the brief.",
+    "applied_to": "detect_ethnicity() + SINGLE_SHOT_PROMPT persona_ethnicity + PERSONA_POOL {ethnicity} placeholder"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Clothing palette in brand config is a REFERENCE for brand tone, not a fixed wardrobe. Vary outfit colours and styles across variants — never repeat the same colour. Go beyond cream/sage/beige/dusty rose: include white, oatmeal, lavender, soft grey, terracotta, chambray, khaki, sand, mocha.",
+    "applied_to": "SINGLE_SHOT_PROMPT Persona & Visual Rules + PERSONA_POOL expanded wardrobe"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "NEVER use 'Cut to' or 'Cut back to' in Sora prompts — hard scene cuts break Sora's joint audio-video pipeline and produce silent videos. Use continuous camera movements instead: 'tilts phone down to show food... tilts back up to face'. Also ALWAYS end every sora_prompt with explicit audio instruction: 'Audio: her voice is clear and close-mic, natural room ambience in background.'",
+    "applied_to": "two_cut template rewritten to continuous camera tilt + audio footer added to all 3 templates"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "SUPERSEDED — Camera tilts/pans to food don't work because input_reference only anchors frame 1. When camera moves away, Sora invents new food visuals that don't match. Instead use FRAMING PROGRESSION with timestamps: 0-3s selfie mid-shot → 3-8s tight macro close-up on meal → 8-12s medium close-up on face. This is a zoom/framing change, NOT a camera movement. Sora prompt must follow structured format: Format → Framing & Progression → Lighting → Subject & Action Beats → Dialogue (separate section) → Audio. Dialogue MUST be in a separate labeled block, not inline with actions.",
+    "applied_to": "All Sora prompt templates rewritten to structured framing progression format"
+  },
+  {
+    "date": "2026-03-05",
+    "correction": "Silent audio fix: (1) Start EVERY Sora prompt with 'With audio.' (2) End with 'Audio priority: 1st her dialogue (close, clear, front-mic), 2nd gentle room ambience (distant, 30% volume).' (3) Use 'speaks clearly' not 'says'. These 3 fixes together reduced silent video rate from ~42% to 0% in testing.",
+    "applied_to": "All Sora prompt templates — prefix + audio priority footer + speaks clearly verb"
+  },
+  {
+    "date": "2026-03-06",
+    "correction": "Sora prompts must have MINIMAL physical actions. Only: looks at camera, picks up spoon, takes a bite, nods. Do NOT include gesturing at screen, pointing at food, gesturing towards meal, waving, or any complex hand movements. Too many described actions degrade video quality significantly.",
+    "applied_to": "All 3 Sora prompt templates — removed [Specific gesture] and [CTA gesture] placeholders, removed 'gestures at food'"
+  },
+  {
+    "date": "2026-03-06",
+    "correction": "When brief language is Chinese/华语, dialogue rules must switch entirely to Malaysian 华语 style — NOT just translate English Manglish rules. Malaysian 华语 has: (1) code-switching with English/Malay (hallmark feature), (2) Chinese particles 啦/咯/哦/嘛/咩/嗬, (3) short staccato clauses not flowing sentences, (4) fillers like 就是/然后hor/okay就是说, (5) NEVER formal written Chinese or mainland internet slang. Beat examples, word limits, and DOs/DON'Ts all need Chinese-specific versions.",
+    "applied_to": "SINGLE_SHOT_PROMPT — speech_style_guide, dialogue_dos_and_limits, beat_structure_and_examples, dialogue_budget all now language-conditional"
+  }
+]

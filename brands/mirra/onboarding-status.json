@@ -1,0 +1,46 @@
+{
+  "brand": "mirra",
+  "display_name": "MIRRA",
+  "created_at": "2026-03-02",
+  "status": "onboarding",
+  "sections": {
+    "identity": {
+      "status": "complete",
+      "count": 5,
+      "updated_at": "2026-03-02"
+    },
+    "products": {
+      "status": "complete",
+      "count": 5,
+      "updated_at": "2026-03-02"
+    },
+    "personas": {
+      "status": "complete",
+      "count": 8,
+      "updated_at": "2026-03-02"
+    },
+    "directions": {
+      "status": "complete",
+      "count": 8,
+      "updated_at": "2026-03-02"
+    },
+    "templates": {
+      "status": "complete",
+      "count": 9,
+      "updated_at": "2026-03-02"
+    },
+    "references": {
+      "status": "partial",
+      "count": 1,
+      "minimum": 10,
+      "updated_at": "2026-03-02"
+    },
+    "competitors": {
+      "status": "complete",
+      "count": 3,
+      "updated_at": "2026-03-02"
+    }
+  },
+  "readiness_pct": 85,
+  "production_since": ""
+}

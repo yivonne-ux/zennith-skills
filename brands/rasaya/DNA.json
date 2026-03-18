@@ -1,0 +1,104 @@
+{
+  "brand": "rasaya",
+  "display_name": "Rasaya",
+  "tagline": "Warisan rasa, penawar semulajadi",
+  "visual": {
+    "colors": {
+      "primary": "#FFBF00",
+      "secondary": "#5C4033",
+      "background": "#FFF8E7",
+      "accent": "#D4A017"
+    },
+    "typography": {
+      "heading": "Warm serif with heritage character, grounded and timeless",
+      "body": "Clean sans-serif, warm and readable"
+    },
+    "photography": "Heritage kitchen photography, raw ingredients, traditional preparation, warm earthy tones",
+    "lighting_default": "Warm amber light, soft shadows, kitchen hearth warmth, candlelight feel",
+    "style": "Heritage-proud, warm, earthy, handcrafted, grandmother's kitchen authenticity",
+    "avoid": [
+      "Modern clinical aesthetics",
+      "Cold or sterile lighting",
+      "Overly polished or commercialised look",
+      "Western herbal branding cliches",
+      "Disconnection from Malaysian heritage"
+    ]
+  },
+  "voice": {
+    "tone": "Heritage-proud, warm, trustworthy, grandmother's wisdom",
+    "language_mix": "Bahasa Malaysia 60% + English 40%, natural warmth",
+    "formality": "Warm-familiar",
+    "personality": [
+      "Heritage-proud",
+      "Warm and nurturing",
+      "Trustworthy",
+      "Wise but not preachy",
+      "Rooted in tradition"
+    ],
+    "avoid": [
+      "Cold scientific language",
+      "Trendy wellness buzzwords",
+      "Condescending about traditional remedies",
+      "Overly modern or detached tone",
+      "Dismissive of heritage knowledge"
+    ]
+  },
+  "audience": {
+    "primary": "Malaysians 30-60, heritage-conscious, natural remedy seekers",
+    "personas": [
+      "Makcik who swears by jamu and wants a trusted modern brand",
+      "Young adult reconnecting with traditional Malaysian remedies",
+      "Health-conscious parent seeking natural alternatives for family",
+      "Heritage food enthusiast who values authenticity"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Heritage preservation",
+    "Natural wellness",
+    "Trust and authenticity",
+    "Generational wisdom",
+    "Malaysian identity"
+  ],
+  "products": [
+    "Jamu drinks",
+    "Herbal blends",
+    "Traditional remedies",
+    "Turmeric paste"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  },
+  "motion_language": {
+    "name": "Nenek's Kitchen",
+    "vibe": "Grandmother's kitchen — warm, fragrant, timeless",
+    "audio": "Mortar and pestle grinding, slow boiling bubbles, herbal steam hiss, wooden spoon stirring",
+    "motion": "Slow grind of turmeric in stone mortar, golden jamu pouring into glass, herbal steam swirling, hands preparing traditional remedies",
+    "language": "Kampung kitchen warmth — heritage in every gesture, wisdom passed through generations",
+    "mood": "Warm, nostalgic, comforting, trustworthy"
+  },
+  "platform_specs": {
+    "tiktok": {
+      "loops": "15s",
+      "aspect_ratio": "portrait 9:16",
+      "fps": "60",
+      "camera_movement": "Macro on mortar grinding, slow tilt up from ingredients to finished jamu, amber light glow",
+      "typical_use": "Jamu preparation ASMR, heritage ingredient stories, nenek wisdom clips"
+    },
+    "instagram": {
+      "stories": "Step-by-step jamu recipes, ingredient spotlights with heritage context, user stories from elders",
+      "feed_carousel": "9:16 portrait images, earthy heritage tones, raw ingredient flat lays",
+      "reels_carousel": "9:16 portrait motion clips, traditional preparation sequences, mortar-to-glass journeys"
+    },
+    "youtube_shorts": {
+      "format": "Vertical 9:16",
+      "fps": "60",
+      "camera_movement": "Wide kitchen establishing shot, zoom into grinding detail, pour reveal",
+      "typical_use": "Heritage remedy tutorials, ingredient deep-dives, generational story features"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "premium",
+  "description": "Clinical elegance with white marble surfaces, precision arrangement, and the refined luxury of high-end wellness. This mood elevates supplements beyond commodities into premium health investments — clean, trustworthy, and beautifully presented.",
+  "output_types": ["hero", "promotion", "carousel", "aroll"],
+  "style": {
+    "lighting": "clean bright studio | soft even diffusion | minimal shadow precision",
+    "color_grade": "clean white and green | gold accent highlights | clinical warmth balance",
+    "camera": "precise product hero | macro ingredient detail | clean overhead arrangement",
+    "composition": "centered product with premium space | ingredient deconstruction | white space emphasis",
+    "props": "white marble surface, gold accent elements, single botanical sprig, premium glass bottle, precision dropper",
+    "atmosphere": "luxurious, clinical, precise, trustworthy, investment-grade"
+  },
+  "copy_tone": "Premium and precise. Every ingredient listed is intentional. Uses language of investment and quality — 'pharmaceutical-grade,' 'third-party tested,' 'precision-formulated.' Trust built through transparency.",
+  "music": { "mood": "clean minimal electronic, luxury spa ambient, precision soundscape", "bpm": "70-90" },
+  "example_prompt_fragment": "A premium supplement product shot on white marble surface, GAIA Supplements bottle in deep green glass with gold cap, precisely placed botanical ingredients deconstructed around it — turmeric root, moringa leaves, ashwagandha — clean bright studio lighting with minimal shadows, white and green color palette with gold accents, luxury clinical wellness photography"
+}

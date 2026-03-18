@@ -1,0 +1,16 @@
+{
+  "name": "cozy",
+  "description": "A comfortable study nook with warm lighting, a cup of tea, and the quiet focus of deep learning. This mood makes education feel like self-care — a warm, inviting space where knowledge flows naturally and without pressure.",
+  "output_types": ["broll", "lofi", "aroll", "carousel"],
+  "style": {
+    "lighting": "warm desk lamp glow | soft natural reading light | amber ambient",
+    "color_grade": "warm teal and cream tones | soft muted palette | gentle contrast",
+    "camera": "close-up book and tea | medium shot study space | gentle handheld drift",
+    "composition": "cozy corner framing | layered books and notes | personal study setup",
+    "props": "open notebook, warm tea, desk lamp, potted plant, highlighted textbook, reading glasses",
+    "atmosphere": "calm, focused, nurturing, warm, intellectually safe"
+  },
+  "copy_tone": "Gentle and encouraging, like a mentor checking in. Uses phrases like 'take your time,' 'no rush to master this,' and 'every small step counts.' Creates a safe space for learning.",
+  "music": { "mood": "lo-fi study beats, soft ambient piano, gentle rain", "bpm": "65-85" },
+  "example_prompt_fragment": "A cozy study nook with warm desk lamp lighting, an open notebook with handwritten notes beside a ceramic tea cup, potted plant in soft focus background, highlighted textbook with sticky notes, warm teal and cream color palette, gentle shallow depth of field, calm editorial lifestyle photography"
+}

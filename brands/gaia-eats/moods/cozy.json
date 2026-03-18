@@ -1,0 +1,16 @@
+{
+  "name": "cozy",
+  "description": "Morning kitchen warmth with banana leaf servings and steam rising from freshly cooked dishes. This mood captures the comfort of home-cooked Malaysian food — the kind of scene where you can almost smell the rendang simmering.",
+  "output_types": ["broll", "aroll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm golden hour | soft window light | ambient kitchen glow",
+    "color_grade": "warm amber tones | soft cream highlights | muted greens",
+    "camera": "close-up food detail | medium shot table setting | slow dolly across spread",
+    "composition": "banana leaf as hero surface | steam in foreground | hands serving food",
+    "props": "banana leaf, wooden table, traditional kuih molds, ceramic bowls, rattan placemats, morning tea",
+    "atmosphere": "comforting, homey, intimate, serene, nostalgic warmth"
+  },
+  "copy_tone": "Gentle and inviting, like whispering a family recipe. Short sentences, sensory words — warmth, aroma, home. Makes the reader feel wrapped in comfort.",
+  "music": { "mood": "acoustic guitar, lo-fi kitchen ambiance", "bpm": "70-90" },
+  "example_prompt_fragment": "A warm morning kitchen scene, soft golden light streaming through window onto a banana leaf lined with nasi lemak, steam rising gently from sambal, close-up of hands placing a fried egg, ceramic teacup nearby, shallow depth of field, warm cream and green tones, magazine editorial food photography style"
+}

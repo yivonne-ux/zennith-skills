@@ -1,0 +1,16 @@
+{
+  "name": "playful",
+  "description": "Fun cooking moments with ingredient splashes, bright pops of color, and a sense of joyful experimentation. This mood makes plant-based eating feel exciting and approachable — no rules, just delicious fun.",
+  "output_types": ["ugc", "broll", "promotion", "carousel"],
+  "style": {
+    "lighting": "bright even lighting | pop of color backlighting | cheerful daylight",
+    "color_grade": "bright saturated | pastel accents | high key warmth",
+    "camera": "overhead flat lay | freeze frame splash | medium shot cooking action",
+    "composition": "organized chaos of ingredients | color-blocked arrangements | hands in frame",
+    "props": "colorful cutting boards, ingredient scatter, mixing bowls, apron, bright utensils, splatter guards",
+    "atmosphere": "joyful, fun, colorful, approachable, lighthearted"
+  },
+  "copy_tone": "Light and bubbly, with casual language and playful puns. Uses food emoji energy without actual emojis. Makes cooking feel like play, not work. Approachable and never intimidating.",
+  "music": { "mood": "upbeat indie pop, cheerful ukulele", "bpm": "100-120" },
+  "example_prompt_fragment": "A fun overhead flat lay of colorful plant-based ingredients arranged on a bright pastel cutting board, tempeh chips mid-toss, bright splashes of turmeric powder, hands reaching in to grab ingredients, cheerful bright lighting, high-key color palette with greens and golds, playful food photography style"
+}

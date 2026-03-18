@@ -1,0 +1,76 @@
+{
+  "brand": "gaia-learn",
+  "display_name": "GAIA Learn",
+  "tagline": "Knowledge that nourishes",
+  "visual": {
+    "colors": {
+      "primary": "#4A90A4",
+      "secondary": "#7BC5AE",
+      "background": "#F5FAFA",
+      "accent": "#2C6E49"
+    },
+    "typography": {
+      "heading": "Modern sans-serif, clean and authoritative",
+      "body": "Highly readable sans-serif, optimized for long-form educational content"
+    },
+    "photography": "Educational content imagery, clean graphics, infographic style",
+    "lighting_default": "Bright, even studio lighting, minimal shadows",
+    "style": "Clean, modern, educational, trustworthy, professional",
+    "avoid": [
+      "Cluttered or busy layouts",
+      "Childish or overly playful graphics",
+      "Low-quality stock imagery",
+      "Overly corporate or cold aesthetics",
+      "Dense walls of text without visual breaks"
+    ]
+  },
+  "voice": {
+    "tone": "Authoritative but approachable",
+    "language_mix": "English 80% + Bahasa Malaysia 20%, natural switching",
+    "formality": "Professional-friendly",
+    "personality": [
+      "Authoritative",
+      "Approachable",
+      "Empowering",
+      "Clear communicator",
+      "Thought leader"
+    ],
+    "avoid": [
+      "Overly academic or jargon-heavy",
+      "Condescending or gatekeeping tone",
+      "Dry textbook style",
+      "Hype or exaggerated claims",
+      "Dismissive of beginners"
+    ]
+  },
+  "audience": {
+    "primary": "Aspiring entrepreneurs and health professionals, 25-55",
+    "personas": [
+      "Aspiring food entrepreneur",
+      "Health professional expanding plant-based knowledge",
+      "Career switcher into wellness industry",
+      "Existing business owner upskilling in sustainability"
+    ],
+    "market": "Malaysia (MYT timezone)"
+  },
+  "values": [
+    "Knowledge",
+    "Empowerment",
+    "Sustainability",
+    "Community",
+    "Evidence-based learning"
+  ],
+  "products": [
+    "Online courses",
+    "Workshops",
+    "Certifications",
+    "Masterclasses"
+  ],
+  "scoring": {
+    "voice_weight": 0.3,
+    "visual_weight": 0.4,
+    "mood_weight": 0.3,
+    "pass_threshold": 7.0,
+    "auto_approve_threshold": 8.5
+  }
+}

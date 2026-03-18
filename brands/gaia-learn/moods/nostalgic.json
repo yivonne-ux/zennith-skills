@@ -1,0 +1,16 @@
+{
+  "name": "nostalgic",
+  "description": "Traditional classroom warmth with chalkboard texture, vintage academia aesthetics, and the romantic notion of knowledge passed down through generations. This mood connects modern learning to timeless educational traditions.",
+  "output_types": ["aroll", "broll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm classroom natural light | soft overhead fluorescent with warmth | library golden glow",
+    "color_grade": "warm sepia-tinted | muted greens and browns | vintage academic palette",
+    "camera": "medium shot classroom | close-up chalkboard writing | slow pan across bookshelves",
+    "composition": "chalkboard as canvas | stacked books as props | library depth framing",
+    "props": "green chalkboard, chalk, vintage globe, leather-bound books, wooden desk, ink pen, spectacles",
+    "atmosphere": "scholarly, timeless, reverent, wisdom-rich, grounded"
+  },
+  "copy_tone": "Thoughtful and wise, referencing the long tradition of teaching and learning. Uses phrases like 'as scholars have long known' and 'timeless wisdom.' Reverent toward knowledge itself.",
+  "music": { "mood": "soft classical strings, library ambiance, old record warmth", "bpm": "55-75" },
+  "example_prompt_fragment": "A warm vintage classroom scene with a green chalkboard covered in elegant chalk diagrams, afternoon sunlight streaming through tall windows onto a wooden desk, leather-bound books stacked beside a vintage globe, reading spectacles resting on an open journal, warm sepia-tinted muted color palette, scholarly vintage academia photography"
+}

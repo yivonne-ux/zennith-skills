@@ -1,0 +1,126 @@
+{
+  "brand": "mirra",
+  "updated_at": "2026-03-02T16:27:48+0800",
+  "total_elements": 9,
+  "by_type": {
+    "style": 2,
+    "graphic": 3,
+    "product": 2,
+    "composition": 2
+  },
+  "elements": [
+    {
+      "id": "elem-mirra-style-20260302151241-f8f0b5",
+      "type": "style",
+      "name": "Recraft Bento Test",
+      "tags": [
+        "food",
+        "bento",
+        "top-down",
+        "food photography",
+        "healthy eating",
+        "meal prep",
+        "bento box",
+        "clean eating",
+        "graphic design",
+        "product display",
+        "minimalist",
+        "branding",
+        "fresh ingredients",
+        "nutrition",
+        "salmon",
+        "edamame",
+        "carrots",
+        "brown rice",
+        "winner",
+        "hero-shot"
+      ]
+    },
+    {
+      "id": "elem-mirra-graphic-20260302162625-38cf7d",
+      "type": "graphic",
+      "name": "MIRRA Brand Guide",
+      "tags": [
+        "brand-guide",
+        "identity",
+        "layout"
+      ]
+    },
+    {
+      "id": "elem-mirra-graphic-20260302162635-b40fcf",
+      "type": "graphic",
+      "name": "MIRRA Logo (Black)",
+      "tags": [
+        "logo",
+        "identity",
+        "black"
+      ]
+    },
+    {
+      "id": "elem-mirra-style-20260302162641-db3e35",
+      "type": "style",
+      "name": "Bento Top-View Style Ref",
+      "tags": [
+        "bento",
+        "topview",
+        "food-styling",
+        "hero"
+      ]
+    },
+    {
+      "id": "elem-mirra-product-20260302162653-be2a9f",
+      "type": "product",
+      "name": "Carbonara Fusilli Ref",
+      "tags": [
+        "carbonara",
+        "fusilli",
+        "pasta",
+        "food"
+      ]
+    },
+    {
+      "id": "elem-mirra-composition-20260302162700-d2fe15",
+      "type": "composition",
+      "name": "Comparison Layout Template",
+      "tags": [
+        "comparison",
+        "template",
+        "layout",
+        "this-vs-that"
+      ]
+    },
+    {
+      "id": "elem-mirra-composition-20260302162711-08243e",
+      "type": "composition",
+      "name": "Calorie Comparison Layout V1",
+      "tags": [
+        "comparison",
+        "calorie",
+        "layout",
+        "v1"
+      ]
+    },
+    {
+      "id": "elem-mirra-product-20260302162720-607dc1",
+      "type": "product",
+      "name": "Tortilla Top-View Ref",
+      "tags": [
+        "tortilla",
+        "topview",
+        "food",
+        "wrap"
+      ]
+    },
+    {
+      "id": "elem-mirra-graphic-20260302162741-57d50f",
+      "type": "graphic",
+      "name": "MIRRA Logo Reels (Black)",
+      "tags": [
+        "logo",
+        "reels",
+        "black",
+        "vertical"
+      ]
+    }
+  ]
+}

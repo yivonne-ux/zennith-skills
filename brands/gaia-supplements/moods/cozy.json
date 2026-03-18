@@ -1,0 +1,16 @@
+{
+  "name": "cozy",
+  "description": "Morning wellness ritual with warm tea, a yoga mat in soft light, and the peaceful start of a mindful day. This mood positions supplements as part of a holistic self-care routine — not just pills, but a daily act of caring for yourself.",
+  "output_types": ["broll", "lofi", "aroll", "carousel"],
+  "style": {
+    "lighting": "warm sunrise glow | soft morning window light | gentle ambient warmth",
+    "color_grade": "warm green and gold tones | soft honeydew highlights | gentle morning palette",
+    "camera": "close-up morning routine | medium shot wellness ritual | slow observational dolly",
+    "composition": "supplement as part of routine scene | morning ritual sequence | peaceful personal space",
+    "props": "yoga mat, herbal tea, supplement bottle on nightstand, journal, sunrise view, diffuser",
+    "atmosphere": "peaceful, mindful, nurturing, ritualistic, holistic"
+  },
+  "copy_tone": "Calm and mindful, like a guided meditation script. Uses sensory language about how wellness feels, not just what it does. 'Start your morning with intention.' Warmth and care in every word.",
+  "music": { "mood": "ambient meditation, soft nature sounds, gentle singing bowls", "bpm": "55-75" },
+  "example_prompt_fragment": "A serene morning wellness scene, a hand reaching for a GAIA Supplements bottle on a wooden nightstand beside herbal tea, warm sunrise light streaming through sheer curtains, yoga mat rolled in the corner, journal open with a pen resting on it, warm green and honeydew color palette, peaceful mindful lifestyle photography"
+}

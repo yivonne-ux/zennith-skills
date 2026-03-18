@@ -1,0 +1,16 @@
+{
+  "name": "playful",
+  "description": "Interactive learning with colorful infographics, gamified elements, and the fun side of education. This mood makes complex topics feel accessible and engaging — learning should be an adventure, not a chore.",
+  "output_types": ["education", "carousel", "ugc", "broll"],
+  "style": {
+    "lighting": "bright and even | cheerful clean lighting | colorful accent gels",
+    "color_grade": "bright teal and green pops | clean white base with color accents | fresh and lively",
+    "camera": "dynamic angles on infographics | interactive screen capture | animated transitions",
+    "composition": "colorful data visualization | gamified progress elements | icon-driven layouts",
+    "props": "colorful sticky notes, whiteboard markers, interactive screens, progress badges, brain icons",
+    "atmosphere": "engaging, fun, interactive, accessible, curiosity-driven"
+  },
+  "copy_tone": "Curious and engaging, using questions and fun facts. Makes the reader want to learn more. Uses formats like 'Did you know?' and 'Pop quiz!' Celebrates learning milestones with enthusiasm.",
+  "music": { "mood": "upbeat educational, positive synth, discovery theme", "bpm": "100-115" },
+  "example_prompt_fragment": "A bright colorful infographic layout on a clean white desk, teal and green sticky notes arranged in a learning map pattern, a tablet showing an interactive quiz interface, colorful progress badges scattered around, bright even lighting, fresh lively color palette with teal and green accents, playful educational content photography"
+}

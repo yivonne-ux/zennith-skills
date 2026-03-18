@@ -1,0 +1,134 @@
+{
+  "brand": "mirra",
+  "display_name": "MIRRA",
+  "generated": "2026-03-08T22:45:50",
+  "dimensions": {
+    "watermark_clear": {
+      "description": "No foreign brand handles/watermarks in any corner",
+      "critical": true,
+      "auto_retry": true,
+      "check_zones": [
+        "bottom-left",
+        "bottom-right",
+        "bottom-center",
+        "top-left",
+        "top-right"
+      ],
+      "retry_prompt_template": "Scan every corner and erase any creator watermark, handle, or brand tag that is not {display_name}."
+    },
+    "brand_palette": {
+      "description": "Brand palette tones visible in output",
+      "critical": true,
+      "auto_retry": false,
+      "pixel_check": {
+        "method": "dominant_hue_range",
+        "palette_rgb": {
+          "primary_blush": [
+            248,
+            190,
+            205
+          ],
+          "dusty_rose": [
+            235,
+            170,
+            189
+          ],
+          "crimson_accent": [
+            172,
+            55,
+            75
+          ],
+          "warm_cream": [
+            255,
+            245,
+            238
+          ],
+          "overlay_bg": [
+            245,
+            220,
+            210
+          ],
+          "hot_glitter": [
+            232,
+            99,
+            138
+          ],
+          "neutral_base": [
+            250,
+            246,
+            241
+          ]
+        },
+        "tolerance": 30
+      }
+    },
+    "logo_present": {
+      "description": "mirra visible exactly once",
+      "critical": true,
+      "auto_retry": true,
+      "retry_prompt_template": "Add MIRRA brand mark \u2014 small, Top-right corner, black serif MIRRA logotype."
+    },
+    "text_ok": {
+      "description": "All text legible, no garbled/truncated characters",
+      "critical": true,
+      "auto_retry": false
+    },
+    "crop_safe": {
+      "description": "No text or element truncated at canvas edge",
+      "critical": true,
+      "auto_retry": false
+    },
+    "layout_intact": {
+      "description": "Composition coherent, not distorted, wireframe preserved",
+      "critical": true,
+      "auto_retry": false
+    },
+    "product_real": {
+      "description": "Product photos look real/photographed, not AI-generated",
+      "critical": true,
+      "auto_retry": false,
+      "skip_if": "no_product_photo"
+    },
+    "brand_voice": {
+      "description": "Copy tone matches brand voice guide",
+      "critical": false,
+      "auto_retry": false,
+      "voice_tone": "Warm, relatable, confident \u2014 like a friend who eats well",
+      "voice_avoid": [
+        "Diet culture shame language",
+        "Overly clinical nutrition jargon",
+        "Luxury/pretentious skincare vibes",
+        "Cold corporate tone",
+        "Pushy hard-sell language"
+      ]
+    }
+  },
+  "models": {
+    "primary": "fal-ai/any-llm/vision",
+    "primary_model": "openai/gpt-4o",
+    "fallback": "fal-ai/llava-next",
+    "supplementary": "pil_pixel_check"
+  },
+  "thresholds": {
+    "pass_all_critical": true,
+    "min_dimensions_pass": 7,
+    "auto_retry_max": 2
+  },
+  "auto_retry": {
+    "triggers": [
+      "watermark_clear",
+      "logo_present"
+    ],
+    "method": "nano_edit_on_output",
+    "note": "Auto-retry runs NANO on OUTPUT (not source) to prevent full re-generation"
+  },
+  "avoid_in_output": [
+    "Teal or fuchsia colors",
+    "Studio/ring light photography (use natural window light)",
+    "Dark moody food photography",
+    "AI-generated food (use real product photos via Pipeline B)",
+    "Cheap promotional clip-art layouts",
+    "Harsh clinical lighting",
+    "Post-compositing food after generation (food must be INPUT)"
+  ]
+}

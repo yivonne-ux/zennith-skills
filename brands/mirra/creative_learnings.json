@@ -1,0 +1,332 @@
+{
+  "last_updated": "2026-03-10T13:48:00Z",
+  "patterns_source": "performance-ingestion/winning-patterns.jsonl",
+  "winning_patterns": [
+    {
+      "pattern_id": "did-you-know",
+      "type": "hook-format",
+      "confidence": "high",
+      "data_points": 2,
+      "performance": {
+        "before_ctr": "1.8%",
+        "after_ctr": "3.2%",
+        "improvement": "+77.8%",
+        "roas_improvement": "+128%"
+      },
+      "criteria": {
+        "format": "Did you know X can be Y?",
+        "application": "heritage_dishes",
+        "must_include": [
+          "familiar heritage dish (rendang, nasi lemak)",
+          "plant-based twist",
+          "Malaysian identity",
+          "health positioning"
+        ],
+        "example": "Did you know nasi lemak can be 450 kcal? This plant-based version keeps all the flavor with 35g protein."
+      },
+      "tags": ["hook", "tofu", "surprising", "heritage"]
+    },
+    {
+      "pattern_id": "heritage-malaysian-plant-based",
+      "type": "content-strategy",
+      "confidence": "high",
+      "data_points": 3,
+      "performance": {
+        "roas": "4.1",
+        "ctr": "3.2",
+        "vs_generic": "76% higher"
+      },
+      "criteria": {
+        "format": "Lead with familiar Malaysian dishes, reveal plant-based twist",
+        "example_hooks": [
+          "Nasi lemak. Filled with rice, sambal, anchovies... and 35g protein from vegan tempeh.",
+          "Rendang. Slow-cooked for 12 hours. Now plant-based, still sedap."
+        ],
+        "localization": "CN hooks should use authentic phrasing, don't over-translate"
+      },
+      "tags": ["malaysian", "local", "heritage", "localization"]
+    },
+    {
+      "pattern_id": "triple-tag-structure",
+      "type": "tag-strategy",
+      "confidence": "medium",
+      "data_points": 5,
+      "performance": {
+        "engagement": "8.5%",
+        "vs_generic": "+69-70%"
+      },
+      "criteria": {
+        "format": "channel + diet + culture",
+        "required_tags": [
+          "channel (tiktok/ig)",
+          "diet (vegan/plant-based)",
+          "culture (malaysian/local)"
+        ],
+        "example": "tiktok, vegan, malaysian"
+      },
+      "tags": ["tags", "discovery", "algorithm"]
+    },
+    {
+      "pattern_id": "cpc-as-early-signal",
+      "type": "optimization-signal",
+      "confidence": "medium",
+      "data_points": 4,
+      "performance": {
+        "cpc_correlation": "positive",
+        "cpc_threshold": "$0.80_kill"
+      },
+      "criteria": {
+        "format": "Lower CPC correlates with higher ROAS",
+        "monitor_frequency": "daily",
+        "action": "If CPC > $0.80, pause creative and optimize"
+      },
+      "tags": ["cpc", "optimization", "early-warning"]
+    },
+    {
+      "pattern_id": "cn-vs-en-efficiency",
+      "type": "localization",
+      "confidence": "high",
+      "data_points": 5,
+      "performance": {
+        "cn_avg_cpc": "$5.90",
+        "en_avg_cpc": "$7.72",
+        "efficiency_gap": "+30.6%"
+      },
+      "criteria": {
+        "action": "shift 30% budget from EN to CN",
+        "localization_note": "Develop bilingual content strategy (Malay primary, English secondary)",
+        "regions_to_test": ["Penang KL vs Rural"]
+      },
+      "tags": ["localization", "cn-vs-en", "budget", "bilingual"]
+    },
+    {
+      "pattern_id": "tutorial-format-dominance",
+      "type": "content-format",
+      "confidence": "high",
+      "data_points": 8,
+      "performance": {
+        "tutorial_reels": "85%",
+        "avg_reels": "35%",
+        "engagement_lift": "+143%",
+        "structure": "hook_problem_solution_result"
+      },
+      "criteria": {
+        "must_include": [
+          "High-protein claim",
+          "Meal prep emphasis",
+          "Time anchor (30 mins)",
+          "ASMR food presentation"
+        ],
+        "structure": "Hook → Problem → Solution → Result",
+        "platform": "instagram_reels"
+      },
+      "tags": ["tutorial", "format", "engagement", "meal-prep"]
+    },
+    {
+      "pattern_id": "brand-dna-compliance",
+      "type": "creative-direction",
+      "confidence": "medium",
+      "data_points": 6,
+      "performance": {
+        "brand_compliant_ctr": "2.2%+",
+        "baseline_ctr": "1.8%",
+        "improvement": "+22%"
+      },
+      "criteria": {
+        "colors": ["#F7AB9F", "#FFF9EB", "#FFFFFF"],
+        "nutrition_concept": "#sukusukuseparuh",
+        "auto_reject_score": "8.5"
+      },
+      "tags": ["brand", "dna", "visual"]
+    },
+    {
+      "pattern_id": "abo-scaling-1313",
+      "type": "campaign-scaling",
+      "confidence": "medium",
+      "data_points": 4,
+      "performance": {
+        "cost_connection": "$5.31",
+        "ctr": "3.65%",
+        "stability": "stable",
+        "scaling_potential": "20_percent_initial_increase"
+      },
+      "criteria": {
+        "action": "Increase budget by 20% → monitor 48h. If stable, increase another 20% (total 44%)",
+        "target": "Maintain <$6/connection at $100/day scale"
+      },
+      "tags": ["scaling", "best-performer", "target"]
+    },
+    {
+      "pattern_id": "retargeting-emergency-fix",
+      "type": "retargeting",
+      "confidence": "high",
+      "data_points": 4,
+      "performance": {
+        "en_cost_connection": "$17.89",
+        "cn_cost_connection": "$10.03",
+        "stale_days": "7+"
+      },
+      "criteria": {
+        "action": "Pause retargeting-EN and retargeting-CN, generate 3 new creatives (reminder/urgency/offer)",
+        "launch_budget": "20% of original budget",
+        "max_stale_days": "7"
+      },
+      "tags": ["retargeting", "creative-refresh", "urgency"]
+    },
+    {
+      "pattern_id": "channel-specific-content-mix",
+      "type": "content-distribution",
+      "confidence": "medium",
+      "data_points": 4,
+      "performance": {
+        "tiktok_format": "single_message_hooks",
+        "ig_format": "diverse_6_types",
+        "tiktok_focused": "15-30s"
+      },
+      "criteria": {
+        "tiktok": "Single-message hooks, high visual density, no long copy, 15-30s",
+        "ig": "Carousel for comparison, Reel for lifestyle, Static for affirmation, varied formats (43% character images)"
+      },
+      "tags": ["tiktok", "ig", "format", "distribution"]
+    },
+    {
+      "pattern_id": "tutorial-content-mix",
+      "type": "content-format",
+      "confidence": "high",
+      "data_points": 14,
+      "performance": {
+        "tutorial_posts": "6 (43%)",
+        "inspirational_posts": "4 (29%)",
+        "product_showcases": "2 (14%)",
+        "structure": "hook_problem_solution_result"
+      },
+      "criteria": {
+        "tutorial_ratio": "80% tutorials",
+        "inspirational_ratio": "15%",
+        "product_showcase_ratio": "5%",
+        "tutorial_structure": "Hook → Problem → Solution → Result",
+        "must_include": [
+          "High-protein claim",
+          "Meal prep emphasis",
+          "Time anchor (30 mins)",
+          "ASMR food presentation"
+        ]
+      },
+      "tags": ["tutorial", "ratio", "mix", "instagram"]
+    },
+    {
+      "pattern_id": "seraphina-nightshade-ranking",
+      "type": "persona-performance",
+      "confidence": "medium",
+      "data_points": 3,
+      "performance": {
+        "ranking": "1",
+        "theoretical_cr": "15-18%",
+        "vs_others": "+50%"
+      },
+      "criteria": {
+        "action": "Prioritize Seraphina Nightshade for Day 1-14 campaigns",
+        "priority_range": "day_1_to_14"
+      },
+      "tags": ["persona", "ranking", "conversion", "jade_oracle"]
+    },
+    {
+      "pattern_id": "one-dollar-product-dominance",
+      "type": "product-sales",
+      "confidence": "medium",
+      "data_points": 2,
+      "performance": {
+        "$1_product_share": "75-85%",
+        "revenue_share": "83%",
+        "upsell_rate": "25%"
+      },
+      "criteria": {
+        "recommendation": "25% upsell rate is moderate, can be improved to 35% with better follow-up",
+        "focus": "75% revenue from $1 product"
+      },
+      "tags": ["revenue_mix", "upsell", "conversions", "jade_oracle"]
+    },
+    {
+      "pattern_id": "authority-personalization-hook",
+      "type": "ad-hook",
+      "confidence": "medium",
+      "data_points": 4,
+      "performance": {
+        "ctr": "2.8%",
+        "cr": "18%",
+        "target_range": "2.5-3.5%_ctr"
+      },
+      "criteria": {
+        "format": "I Can See What No One Else Can — authority positioning + personalization",
+        "enhancement": "Add specific reading example: 'I can see he's thinking of you right now'",
+        "creative_format": "whisper narration + card reveal"
+      },
+      "tags": ["hook", "authority", "personalization", "jade_oracle"]
+    },
+    {
+      "pattern_id": "balanced-campaign-tier-structure",
+      "type": "campaign-structure",
+      "confidence": "high",
+      "data_points": 5,
+      "performance": {
+        "cold_prospecting_budget": "70%",
+        "retargeting_budget": "20%",
+        "lookalike_budget": "10%"
+      },
+      "criteria": {
+        "action": "Stick to this structure",
+        "example_allocation": {
+          "cold": "CBO-Mirra-EN ($500) + CBO-Mirra-CN ($400) + ABO-SCALLING-1313 ($800)",
+          "retargeting": "EN ($200) + CN ($150)",
+          "lookalike": "$50"
+        }
+      },
+      "tags": ["budget_allocation", "tiers", "structure", "campaign"]
+    }
+  ],
+  "underperformers": [
+    {
+      "pattern_id": "generic-health-claims",
+      "type": "underperformer",
+      "example": "Low calorie meal",
+      "metrics": {
+        "ctr": "1.2%",
+        "roas": "1.5"
+      },
+      "recommendation": "Replace with: 'Did you know nasi lemak can be 450 kcal?'",
+      "source": "MIRRA Campaign Analysis"
+    },
+    {
+      "pattern_id": "over-translated-cn",
+      "type": "underperformer",
+      "issue": "Unnatural phrasing from direct translation",
+      "recommendation": "Use original Malaysian phrasing with local context",
+      "source": "MIRRA CN Campaign Analysis"
+    },
+    {
+      "pattern_id": "missing-tags",
+      "type": "underperformer",
+      "issue": "Generic creative without channel/context tags",
+      "recommendation": "Always tag with channel + diet + culture (e.g., 'tiktok', 'vegan', 'malaysian')",
+      "source": "MIRRA Content Audit"
+    }
+  ],
+  "performance_summary": {
+    "total_patterns": 15,
+    "high_confidence": 6,
+    "medium_confidence": 9,
+    "total_improvement": "+40-140%",
+    "key_insights": [
+      "Tutorial format dominates IG Reels (+143% engagement)",
+      "CN campaigns are 30.6% more efficient than EN",
+      "Triple-tag structure drives +69-70% discovery",
+      "Retargeting campaigns need creative refresh every 7 days"
+    ]
+  },
+  "integration_notes": {
+    "content_tuner": "Run tune.sh weekly (Sunday 20:00 MYT) to promote patterns to content-intel",
+    "dreami_iris_prompts": "Add 'Read ~/.openclaw/brands/MIRRA/creative_learnings.json before generating. Incorporate confirmed winning patterns. Avoid flagged underperformers.'",
+    "a_b_testing": "Use ab-framework.sh to test new patterns against defaults",
+    "audit_frequency": "Review and update creative_learnings.json weekly"
+  }
+}

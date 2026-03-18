@@ -1,0 +1,1 @@
+Store GAIA Recipes reference images here: mood boards, approved photography, color palettes, logo variations, and recipe layout examples. These references are used by the Art Director and NanoBanana for visual consistency.

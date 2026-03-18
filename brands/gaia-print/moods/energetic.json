@@ -1,0 +1,16 @@
+{
+  "name": "energetic",
+  "description": "Festival drop energy with limited edition hype, crowd excitement, and the rush of a fresh merch launch. This mood captures the electricity of a product drop — countdown timers, sold-out stickers, and the thrill of being first.",
+  "output_types": ["promotion", "hero", "ugc", "broll"],
+  "style": {
+    "lighting": "dynamic flash bursts | festival stage lighting | high energy mixed sources",
+    "color_grade": "high contrast neon and green | electric gold highlights | vibrant night palette",
+    "camera": "fast handheld crowd energy | dynamic product reveal | motion blur excitement",
+    "composition": "crowd reaching for product | countdown-style urgency | limited edition showcase",
+    "props": "festival wristbands, crowd hands, neon signage, limited edition tags, product display rack",
+    "atmosphere": "hype, electric, urgent, exclusive, FOMO-inducing"
+  },
+  "copy_tone": "Hype and urgency. Countdown language, scarcity signals, drop culture vocabulary. 'Limited to 100 pieces.' 'Dropping Friday 8PM MYT.' Creates FOMO without being dishonest. Pure excitement.",
+  "music": { "mood": "high energy EDM, festival drops, bass-heavy hype", "bpm": "125-145" },
+  "example_prompt_fragment": "A dynamic festival merch drop scene, hands reaching for a limited edition GAIA Print hoodie on a display rack, neon green and gold signage glowing in the background, flash photography catching excited faces, motion blur conveying crowd energy, high contrast neon color palette, limited edition tag visible, electric hype fashion photography"
+}

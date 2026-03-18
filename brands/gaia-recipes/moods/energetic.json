@@ -1,0 +1,16 @@
+{
+  "name": "energetic",
+  "description": "Speed cooking energy with quick tutorials, dynamic transitions, and the satisfying pace of efficient meal prep. This mood captures the thrill of making something delicious fast — perfect for busy weeknight cooking content.",
+  "output_types": ["ugc", "broll", "education", "promotion"],
+  "style": {
+    "lighting": "bright clean overhead | crisp action lighting | fast-cut friendly even light",
+    "color_grade": "crisp saturated | clean whites with color pops | high energy contrast",
+    "camera": "fast cuts between steps | dynamic top-down sequence | whip pan transitions",
+    "composition": "step-by-step progression | before-and-after frames | time-lapse arrangement",
+    "props": "timer, prep containers, sharp knife on cutting board, organized mise en place, speed rack",
+    "atmosphere": "fast-paced, efficient, satisfying, dynamic, motivated"
+  },
+  "copy_tone": "Snappy and action-oriented. Short punchy instructions. Time stamps and countdowns. Makes the reader feel like they can conquer any recipe in record time. Energizing and motivating.",
+  "music": { "mood": "upbeat electronic, driving beats, cooking show energy", "bpm": "120-140" },
+  "example_prompt_fragment": "A dynamic top-down sequence of a quick meal prep, organized mise en place containers lined up precisely, hands chopping vegetables at speed with motion blur on the knife, bright clean overhead lighting, crisp saturated colors, timer showing 15 minutes in the corner, fast-paced editorial recipe photography with energy and motion"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "nostalgic",
+  "description": "Heritage recipes on handwritten recipe cards, sepia-tinted memories of family kitchens, and the timeless magic of dishes passed down through generations. This mood honors the roots of Malaysian home cooking with reverence and warmth.",
+  "output_types": ["aroll", "broll", "lofi", "carousel"],
+  "style": {
+    "lighting": "warm tungsten glow | faded afternoon window light | soft amber cast",
+    "color_grade": "sepia wash | desaturated warm earth tones | vintage film grain",
+    "camera": "static contemplative | slow push on recipe card | medium shot kitchen tableau",
+    "composition": "handwritten recipes as hero | generational hands cooking | layered kitchen history",
+    "props": "handwritten recipe cards, faded cookbook, vintage enamelware, grandmother's apron, old spice jars, traditional batu lesung",
+    "atmosphere": "sentimental, reverent, timeless, warm, story-rich"
+  },
+  "copy_tone": "Storytelling with heart. References family, heritage, and the way things were. Uses phrases like 'handed down,' 'just like arwah nenek,' and 'the recipe that started it all.' Evokes deep emotional connection to food.",
+  "music": { "mood": "nostalgic folk guitar, soft keroncong influence, vinyl crackle", "bpm": "60-75" },
+  "example_prompt_fragment": "A weathered handwritten recipe card in Jawi script lying on a worn wooden table, faded vintage enamel cooking pot in the background, warm tungsten light casting amber shadows, sepia-tinted film grain overlay, old spice jars lined up along the windowsill, gentle afternoon light, nostalgic heritage food photography"
+}
