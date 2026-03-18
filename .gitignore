@@ -83,3 +83,7 @@ openclaw.json
 .gstack/
 *.bak*
 *.backup
+agents/main/agent/models.json
+agents/main/sessions/
+agents/main/agent/auth-profiles.json
+workspace-main/.openclaw/

@@ -1,5 +1,5 @@
 # Zennith OS — Project State
-> Last updated: 2026-03-18 by Taoz (Claude Code)
+> Last updated: 2026-03-18 by Zenki (MacBook Claude Code Opus 4.6)
 > This file is the shared brain. Every Claude Code instance reads this.
 > Update after every significant build/deploy/decision.
 
@@ -64,7 +64,43 @@
 
 ---
 
-### 3. Brand Machine — IN PROGRESS
+### 3. DTC Product Research & Sourcing — READY FOR SAMPLES
+**Status**: Research complete. Ready for supplier contact + sample ordering.
+**Source**: Zenki (MacBook Claude Code Opus 4.6) — synced 2026-03-18
+**Files**: `workspace/knowledge/product-research/` (9 CSVs + 18 reports)
+**Full sync doc**: `workspace/knowledge/ZENKI-SYNC.md`
+
+**Key data**:
+- 70 products scored (Ali Akbar 12-checkbox method)
+- 14 products fully developed with forensic analysis + superior blueprints
+- 49 suppliers vetted on Alibaba International
+- 56 suppliers found on 1688.com (domestic China — 30-70% cheaper)
+- 25 products formatted for 1688 batch sourcing upload (xlsx template)
+- Supplier contact messages drafted for all 14 products
+
+**Priority launch order**:
+1. Tier 1: Vertigo supplement, Skin Flooding Kit, Oral Probiotic Lozenge
+2. Tier 2: Beef Organ, Astaxanthin Complex, Anti-Snoring Mouthpiece
+3. Tier 3: Scent Necklace, GHK-Cu Serum, Pheromone Perfume, Tuning Fork
+
+**Top margin products from 1688**:
+- Scent necklace: ¥2.60 source → $35-45 sell (99% margin, 466K sold on 1688)
+- Tuning fork set: ¥39 source → $55 sell (90% margin, 177K sold)
+- Ear seeds: ¥0.77 source → $39.99 sell (99.7% margin, 52K sold)
+
+**Next steps**: Send supplier contact messages (Tier 1 first) → order samples → test → brand → launch
+
+---
+
+### 4. Ling Xi (灵犀) — STRATEGY COMPLETE
+**Status**: Master strategy written, not yet built
+**What**: AI-powered BaZi + QMDJ + 数字能量学 platform for Asian markets
+**Sister brand**: Jade Oracle (English) ↔ Ling Xi (Chinese)
+**Strategy file**: `workspace/knowledge/LING-XI-MASTER-STRATEGY-2026.md`
+
+---
+
+### 5. Brand Machine — IN PROGRESS
 **Brands**: 14 (pinxin-vegan, wholey-wonder, mirra, rasaya, gaia-eats, dr-stan, serein, jade-oracle, gaia-os, gaia-print, gaia-learn, gaia-recipes, gaia-supplements, iris)
 **Core F&B**: pinxin-vegan, wholey-wonder, mirra, rasaya, gaia-eats, dr-stan, serein
 **MIRRA** = bento-style health food (NOT skincare)
