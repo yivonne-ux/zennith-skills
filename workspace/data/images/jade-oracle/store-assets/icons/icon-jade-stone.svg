@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bail / pendant loop -->
+  <path d="M28 12 Q28 6 32 6 Q36 6 36 12" stroke="#D4AF37" stroke-width="2" fill="none"/>
+  <!-- Small ring connecting bail to chain -->
+  <circle cx="32" cy="6" r="2.5" stroke="#D4AF37" stroke-width="1.5" fill="none"/>
+  <!-- Jade teardrop pendant -->
+  <path d="M32 14 Q22 28 22 38 Q22 52 32 56 Q42 52 42 38 Q42 28 32 14 Z" fill="#00A86B" stroke="#1A1A1A" stroke-width="2"/>
+  <!-- Light reflection / facet lines -->
+  <path d="M30 22 Q27 32 28 40" stroke="#8FA882" stroke-width="1" fill="none" opacity="0.7"/>
+  <path d="M32 18 Q29 30 30 42" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+  <!-- Subtle inner glow highlight -->
+  <ellipse cx="30" cy="34" rx="3" ry="6" fill="rgba(255,255,255,0.15)" stroke="none"/>
+  <!-- Bottom point accent -->
+  <circle cx="32" cy="50" r="1" fill="#D4AF37"/>
+</svg>

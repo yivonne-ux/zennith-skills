@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0">
+<title>Testimonial — Mina C.</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 375px;
+    height: 667px;
+    font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: #1A1A1A;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* IG Story background — gradient */
+  .story-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(170deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a1a2e 100%);
+  }
+
+  /* Status bar */
+  .status-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .status-bar .time { font-size: 15px; font-weight: 700; }
+  .status-bar .icons { display: flex; gap: 5px; align-items: center; font-size: 12px; }
+
+  /* Story progress bars */
+  .story-progress {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    gap: 3px;
+    padding: 6px 10px 0;
+  }
+  .story-progress .bar {
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.3);
+  }
+  .story-progress .bar.filled {
+    background: rgba(255,255,255,0.9);
+  }
+  .story-progress .bar.partial {
+    background: linear-gradient(90deg, rgba(255,255,255,0.9) 65%, rgba(255,255,255,0.3) 65%);
+  }
+
+  /* Story header */
+  .story-header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  .story-header .avatar-ring {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .story-header .avatar-inner {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2D5A3D, #4A8C6A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    border: 2px solid #1a1a2e;
+  }
+  .story-header .account-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    flex: 1;
+  }
+  .story-header .time-ago {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+  .story-header .close-btn {
+    font-size: 24px;
+    color: #fff;
+    font-weight: 300;
+    margin-left: 10px;
+  }
+
+  /* Story content area — the original story post */
+  .story-content {
+    position: relative;
+    z-index: 10;
+    padding: 30px 24px;
+    text-align: center;
+  }
+  .story-content .jade-logo {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  .story-content .story-question {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .story-content .story-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Reply bubble — the testimonial */
+  .reply-section {
+    position: relative;
+    z-index: 10;
+    margin: 10px 14px 0;
+  }
+
+  .original-story-ref {
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px 12px 4px 4px;
+    padding: 10px 14px;
+    border-left: 3px solid rgba(255,255,255,0.3);
+  }
+  .original-story-ref .ref-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+  }
+  .original-story-ref .ref-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .reply-bubble {
+    background: rgba(255,255,255,0.12);
+    border-radius: 4px 12px 12px 12px;
+    padding: 14px 16px;
+    margin-top: 2px;
+  }
+  .reply-bubble .reply-sender {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .reply-bubble .reply-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8B4B8, #D4919A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .reply-bubble .reply-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+  }
+  .reply-bubble .reply-text {
+    font-size: 14.5px;
+    line-height: 1.42;
+    color: #fff;
+    letter-spacing: -0.1px;
+  }
+  .reply-bubble .reply-time {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 8px;
+  }
+
+  /* Review card overlay */
+  .review-card {
+    position: relative;
+    z-index: 10;
+    margin: 16px 14px 0;
+    background: rgba(255,255,255,0.95);
+    border-radius: 14px;
+    padding: 14px 16px;
+    backdrop-filter: blur(20px);
+  }
+  .review-card .rc-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .review-card .rc-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8B4B8, #D4919A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .rc-name-row .rc-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1C1C1E;
+  }
+  .rc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    color: #00A86B;
+    font-weight: 500;
+    margin-top: 1px;
+  }
+  .stars {
+    color: #D4AF37;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .rc-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #262626;
+  }
+  .rc-date {
+    font-size: 10px;
+    color: #8E8E93;
+    margin-top: 8px;
+  }
+
+  /* Bottom reply bar */
+  .story-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 10px 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .story-bottom .reply-input {
+    flex: 1;
+    height: 38px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    padding: 0 16px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+  }
+  .story-bottom .action-icons {
+    display: flex;
+    gap: 14px;
+    color: #fff;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="story-bg"></div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span class="time">8:34</span>
+    <div class="icons">
+      <span>&#9679;&#9679;&#9679;&#9679;&#9679;</span>
+      <span style="font-size:13px;">&#128267;</span>
+    </div>
+  </div>
+
+  <!-- Story progress bars -->
+  <div class="story-progress">
+    <div class="bar filled"></div>
+    <div class="bar filled"></div>
+    <div class="bar partial"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <!-- Story header -->
+  <div class="story-header">
+    <div class="avatar-ring">
+      <div class="avatar-inner">JO</div>
+    </div>
+    <span class="account-name">thejadeoracle</span>
+    <span class="time-ago">3h</span>
+    <span class="close-btn">&times;</span>
+  </div>
+
+  <!-- Story content -->
+  <div class="story-content">
+    <div class="jade-logo">&#128154;</div>
+    <div class="story-question">Drop a 💚 if your reading changed your perspective</div>
+    <div class="story-sub">@thejadeoracle</div>
+  </div>
+
+  <!-- Reply section -->
+  <div class="reply-section">
+    <div class="original-story-ref">
+      <div class="ref-label">Replying to story</div>
+      <div class="ref-text">"Drop a 💚 if your reading changed your perspective"</div>
+    </div>
+    <div class="reply-bubble">
+      <div class="reply-sender">
+        <div class="reply-avatar">MC</div>
+        <span class="reply-name">mina.c_</span>
+      </div>
+      <div class="reply-text">Been following Jade for 2 months. Got the $1 reading first, then the full destiny reading. Worth every penny. She doesn't sugarcoat — she tells you the truth with so much warmth. Already booked VIP. 💚</div>
+      <div class="reply-time">8:31 PM</div>
+    </div>
+  </div>
+
+  <!-- Review card -->
+  <div class="review-card">
+    <div class="rc-top">
+      <div class="rc-avatar">MC</div>
+      <div class="rc-name-row">
+        <div class="rc-name">Mina C.</div>
+        <div class="rc-badge">Verified Purchase &#10003;</div>
+      </div>
+    </div>
+    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    <div class="rc-text">"Been following Jade for 2 months. Got the $1 reading first, then the full destiny reading. Worth every penny. She doesn't sugarcoat — she tells you the truth with so much warmth. Already booked VIP."</div>
+    <div class="rc-date">March 16, 2026 &middot; Destiny Reading</div>
+  </div>
+
+  <!-- Bottom reply bar -->
+  <div class="story-bottom">
+    <div class="reply-input">Send message</div>
+    <div class="action-icons">
+      <span>&#10084;</span>
+      <span>&#9993;</span>
+    </div>
+  </div>
+
+</body>
+</html>

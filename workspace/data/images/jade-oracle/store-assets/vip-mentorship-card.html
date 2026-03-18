@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jade Oracle — $497 VIP Mentorship</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #E8E3DB;
+    font-family: 'Inter', sans-serif;
+  }
+  .card {
+    width: 400px;
+    height: 560px;
+    background: linear-gradient(180deg, #1A1A1A 0%, #0F0F0F 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(26, 26, 26, 0.25), 0 2px 8px rgba(26, 26, 26, 0.1), 0 0 0 1px rgba(212, 175, 55, 0.15);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Gold border shimmer */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #D4AF37, #F0D878, #D4AF37, #F0D878, #D4AF37);
+    z-index: 2;
+    border-radius: 20px 20px 0 0;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    z-index: 2;
+    border-radius: 0 0 20px 20px;
+  }
+  .card-header {
+    padding: 28px 32px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-header::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+  .card-header::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -30px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(0, 168, 107, 0.06) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+  .icon-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .icon-container {
+    width: 52px;
+    height: 52px;
+  }
+  .icon-container svg {
+    width: 52px;
+    height: 52px;
+    filter: drop-shadow(0 2px 8px rgba(212,175,55,0.3));
+  }
+  .vip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(212,175,55,0.08));
+    border: 1px solid rgba(212,175,55,0.5);
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+  .vip-badge span {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #D4AF37;
+  }
+  .vip-badge .diamond {
+    font-size: 10px;
+    color: #D4AF37;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #FAFAF7;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .card-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #D4AF37;
+    opacity: 0.7;
+  }
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    margin: 16px 32px;
+  }
+  .card-body {
+    padding: 0 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .features {
+    list-style: none;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .features li {
+    font-size: 13px;
+    color: rgba(250, 250, 247, 0.85);
+    padding: 5.5px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.45;
+    font-weight: 400;
+  }
+  .features li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #D4AF37;
+  }
+  .features li:nth-child(2)::before { background: #00A86B; }
+  .features li:nth-child(3)::before { background: #D4AF37; opacity: 0.6; }
+  .features li:nth-child(4)::before { background: #00A86B; opacity: 0.7; }
+  .features li:nth-child(5)::before { background: #D4AF37; opacity: 0.4; }
+  .transform-quote {
+    background: linear-gradient(135deg, rgba(0,168,107,0.08), rgba(212,175,55,0.06));
+    border-left: 2px solid #D4AF37;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+  }
+  .transform-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(250, 250, 247, 0.7);
+    line-height: 1.5;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px 26px;
+  }
+  .price-block {}
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #D4AF37, #F0D878, #D4AF37);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .price-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: rgba(143, 168, 130, 0.7);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #D4AF37 0%, #B8962E 100%);
+    color: #1A1A1A;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 14px 24px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
+  }
+  .cta-btn:hover {
+    background: linear-gradient(135deg, #F0D878 0%, #D4AF37 100%);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <div class="icon-row">
+      <div class="icon-container">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Premium jade oracle icon -->
+          <path d="M26 4 L40 14 L44 30 L36 44 L16 44 L8 30 L12 14 Z" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
+          <path d="M26 10 L36 17 L39 28 L33 38 L19 38 L13 28 L16 17 Z" fill="rgba(0,168,107,0.08)" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+          <path d="M26 16 L32 21 L34 28 L30 34 L22 34 L18 28 L20 21 Z" fill="rgba(212,175,55,0.1)" stroke="rgba(212,175,55,0.3)" stroke-width="0.6"/>
+          <circle cx="26" cy="26" r="4" fill="rgba(212,175,55,0.4)"/>
+          <circle cx="26" cy="26" r="1.5" fill="rgba(212,175,55,0.7)"/>
+        </svg>
+      </div>
+      <div class="vip-badge">
+        <span class="diamond">&#9830;</span>
+        <span>VIP Exclusive</span>
+        <span class="diamond">&#9830;</span>
+      </div>
+    </div>
+    <h2 class="card-title">VIP Mentorship</h2>
+    <span class="card-tagline">3 months of personal transformation</span>
+  </div>
+  <div class="divider"></div>
+  <div class="card-body">
+    <ul class="features">
+      <li>3 months of personal guidance</li>
+      <li>Weekly QMDJ timing updates</li>
+      <li>Priority Telegram access to Jade</li>
+      <li>4x monthly live sessions</li>
+      <li>Custom destiny activation plan</li>
+    </ul>
+    <div class="transform-quote">
+      <p>"For those ready to transform their entire trajectory and align with their highest destiny."</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="price-block">
+      <div class="price">$497</div>
+      <div class="price-note">3-month program</div>
+    </div>
+    <a href="#" class="cta-btn">Apply Now</a>
+  </div>
+</div>
+</body>
+</html>

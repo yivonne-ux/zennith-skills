@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sound waveform bars (elegant, varying heights) -->
+  <line x1="8" y1="28" x2="8" y2="36" stroke="#1A1A1A" stroke-width="2"/>
+  <line x1="14" y1="22" x2="14" y2="42" stroke="#1A1A1A" stroke-width="2"/>
+  <line x1="20" y1="18" x2="20" y2="46" stroke="#00A86B" stroke-width="2"/>
+  <line x1="26" y1="12" x2="26" y2="52" stroke="#1A1A1A" stroke-width="2"/>
+  <line x1="32" y1="8" x2="32" y2="56" stroke="#00A86B" stroke-width="2"/>
+  <line x1="38" y1="14" x2="38" y2="50" stroke="#1A1A1A" stroke-width="2"/>
+  <line x1="44" y1="18" x2="44" y2="46" stroke="#00A86B" stroke-width="2"/>
+  <line x1="50" y1="24" x2="50" y2="40" stroke="#1A1A1A" stroke-width="2"/>
+  <line x1="56" y1="28" x2="56" y2="36" stroke="#1A1A1A" stroke-width="2"/>
+  <!-- Subtle curved envelope line connecting peaks -->
+  <path d="M8 28 Q14 20 20 18 Q26 10 32 8 Q38 12 44 18 Q50 22 56 28" stroke="#D4AF37" stroke-width="0.75" fill="none" opacity="0.4"/>
+  <path d="M8 36 Q14 44 20 46 Q26 54 32 56 Q38 52 44 46 Q50 42 56 36" stroke="#D4AF37" stroke-width="0.75" fill="none" opacity="0.4"/>
+  <!-- Small decorative dots at bar tips -->
+  <circle cx="32" cy="8" r="1.2" fill="#D4AF37"/>
+  <circle cx="32" cy="56" r="1.2" fill="#D4AF37"/>
+</svg>

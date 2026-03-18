@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jade Oracle — $49 Full Destiny Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #E8E3DB;
+    font-family: 'Inter', sans-serif;
+  }
+  .card {
+    width: 400px;
+    height: 560px;
+    background: #FAFAF7;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(26, 26, 26, 0.12), 0 2px 8px rgba(26, 26, 26, 0.06);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Gold shimmer border accent */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #D4AF37, #F0D878, #D4AF37, transparent);
+    z-index: 2;
+    border-radius: 20px 20px 0 0;
+  }
+  .card-header {
+    background: linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 40%, #1A1A1A 100%);
+    padding: 26px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-header::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(0, 168, 107, 0.1) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+  .card-header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+  .icon-container {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 12px;
+  }
+  .icon-container svg {
+    width: 52px;
+    height: 52px;
+    filter: drop-shadow(0 2px 8px rgba(212,175,55,0.3));
+  }
+  .tag {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #D4AF37;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FAFAF7;
+    line-height: 1.2;
+  }
+  .card-title .chinese {
+    font-size: 14px;
+    opacity: 0.5;
+    font-weight: 400;
+    margin-left: 6px;
+  }
+  .card-body {
+    padding: 22px 32px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #8FA882;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+  .features {
+    list-style: none;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+  .features li {
+    font-size: 13px;
+    color: #1A1A1A;
+    padding: 5px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.45;
+    font-weight: 400;
+  }
+  .features li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .features li:nth-child(1)::before { background: #D4AF37; }
+  .features li:nth-child(2)::before { background: #00A86B; }
+  .features li:nth-child(3)::before { background: #722F37; }
+  .features li:nth-child(4)::before { background: #8FA882; }
+  .features li:nth-child(5)::before { background: #D4AF37; opacity: 0.6; }
+  .delivery-badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #F5F0E8;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #1A1A1A;
+    font-weight: 500;
+  }
+  .badge svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px 24px;
+  }
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #D4AF37;
+    line-height: 1;
+  }
+  .price-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #8FA882;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #722F37;
+    color: #FAFAF7;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .cta-btn:hover {
+    background: #5E252D;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <div class="icon-container">
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Destiny compass / oracle card icon -->
+        <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
+        <circle cx="26" cy="26" r="16" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+        <circle cx="26" cy="26" r="8" fill="rgba(0,168,107,0.15)" stroke="rgba(212,175,55,0.5)" stroke-width="1"/>
+        <circle cx="26" cy="26" r="3" fill="rgba(212,175,55,0.5)"/>
+        <!-- Cardinal lines -->
+        <path d="M26 4 L26 10 M26 42 L26 48 M4 26 L10 26 M42 26 L48 26" stroke="rgba(212,175,55,0.35)" stroke-width="1" stroke-linecap="round"/>
+        <!-- Diagonal accents -->
+        <path d="M10 10 L14 14 M38 38 L42 42 M42 10 L38 14 M14 38 L10 42" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" stroke-linecap="round"/>
+        <!-- Inner star points -->
+        <path d="M26 18 L28 24 L26 22 L24 24 Z" fill="rgba(212,175,55,0.4)"/>
+        <path d="M26 34 L28 28 L26 30 L24 28 Z" fill="rgba(212,175,55,0.4)"/>
+      </svg>
+    </div>
+    <span class="tag">Best Value</span>
+    <h2 class="card-title">Full Destiny Reading <span class="chinese">命盘</span></h2>
+  </div>
+  <div class="card-body">
+    <p class="subtitle">"Unveil your complete life blueprint"</p>
+    <ul class="features">
+      <li>Complete birth chart analysis</li>
+      <li>Career, love, health & wealth insights</li>
+      <li>12-month timing forecast</li>
+      <li>Personal growth roadmap</li>
+      <li>Follow-up Q&A included</li>
+    </ul>
+    <div class="delivery-badges">
+      <div class="badge">
+        <svg viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="13" rx="2" stroke="#722F37" stroke-width="1" fill="none"/><path d="M4 5h6M4 7.5h6M4 10h3" stroke="#722F37" stroke-width="0.7" stroke-linecap="round"/></svg>
+        PDF Report
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#00A86B" stroke-width="1" fill="none"/><path d="M7 4v3l2.5 1.5" stroke="#00A86B" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        30-min Voice Note
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div>
+      <div class="price">$49</div>
+      <div class="price-note">one-time</div>
+    </div>
+    <a href="#" class="cta-btn">Book Now</a>
+  </div>
+</div>
+</body>
+</html>

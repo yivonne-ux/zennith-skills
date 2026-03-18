@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jade Oracle — $1 Intro Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #E8E3DB;
+    font-family: 'Inter', sans-serif;
+  }
+  .card {
+    width: 400px;
+    height: 560px;
+    background: #FAFAF7;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(26, 26, 26, 0.12), 0 2px 8px rgba(26, 26, 26, 0.06);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-header {
+    background: linear-gradient(135deg, #00A86B 0%, #008F5B 50%, #007A4D 100%);
+    padding: 32px 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-header::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .card-header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .icon-container {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .jade-stone {
+    width: 56px;
+    height: 56px;
+    position: relative;
+  }
+  .jade-stone svg {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+  }
+  .tag {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #F5F0E8;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FAFAF7;
+    line-height: 1.2;
+  }
+  .card-body {
+    padding: 28px 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #8FA882;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .features {
+    list-style: none;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .features li {
+    font-size: 13.5px;
+    color: #1A1A1A;
+    padding: 7px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  .features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 8px;
+    height: 8px;
+    background: #00A86B;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .best-for {
+    background: #F5F0E8;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .best-for-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #722F37;
+  }
+  .best-for-text {
+    font-size: 13px;
+    color: #1A1A1A;
+    font-weight: 400;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px 28px;
+  }
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #D4AF37;
+    line-height: 1;
+  }
+  .price-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #8FA882;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #722F37;
+    color: #FAFAF7;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .cta-btn:hover {
+    background: #5E252D;
+  }
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    margin: 0 auto 16px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <div class="icon-container">
+      <div class="jade-stone">
+        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Jade stone / oracle card icon -->
+          <ellipse cx="28" cy="28" rx="22" ry="24" fill="rgba(255,255,255,0.15)" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
+          <ellipse cx="28" cy="28" rx="14" ry="16" fill="rgba(255,255,255,0.1)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+          <circle cx="28" cy="28" r="5" fill="rgba(212,175,55,0.4)"/>
+          <path d="M28 12 L28 16 M28 40 L28 44 M14 28 L18 28 M38 28 L42 28" stroke="rgba(212,175,55,0.3)" stroke-width="1" stroke-linecap="round"/>
+          <path d="M20 18 L22 20 M34 36 L36 38 M36 18 L34 20 M22 36 L20 38" stroke="rgba(212,175,55,0.2)" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <span class="tag">First Step</span>
+    <h2 class="card-title">Intro Reading</h2>
+  </div>
+  <div class="card-body">
+    <p class="subtitle">"Your first taste of ancient wisdom"</p>
+    <ul class="features">
+      <li>Quick QMDJ snapshot reading</li>
+      <li>1 question answered with clarity</li>
+      <li>Delivered instantly via Telegram</li>
+    </ul>
+    <div class="best-for">
+      <span class="best-for-label">Best for:</span>
+      <span class="best-for-text">Curiosity seekers</span>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div>
+      <div class="price">$1</div>
+      <div class="price-note">one-time</div>
+    </div>
+    <a href="#" class="cta-btn">Get Reading</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0">
+<title>Testimonial — Rachel L.</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 375px;
+    height: 667px;
+    font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: #F9F9F9;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff;
+  }
+  .status-bar .time { font-size: 15px; font-weight: 700; }
+  .status-bar .icons { display: flex; gap: 5px; align-items: center; font-size: 12px; }
+
+  /* Shopify-style review header */
+  .review-header {
+    background: #fff;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid #E5E5EA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .review-header .back {
+    color: #007AFF;
+    font-size: 16px;
+  }
+  .review-header .page-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1C1C1E;
+  }
+  .review-header .share-btn {
+    color: #007AFF;
+    font-size: 16px;
+  }
+
+  /* Review summary bar */
+  .summary-bar {
+    background: #fff;
+    padding: 14px 16px;
+    margin: 12px 16px 0;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .summary-bar .big-rating {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1C1C1E;
+    line-height: 1;
+  }
+  .summary-bar .rating-detail {
+    flex: 1;
+  }
+  .summary-bar .stars-large {
+    color: #D4AF37;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+  .summary-bar .review-count {
+    font-size: 12px;
+    color: #8E8E93;
+    margin-top: 2px;
+  }
+
+  /* Main review card */
+  .review-card {
+    margin: 14px 16px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  .rc-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .rc-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5B86E5, #36D1DC);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .rc-name-block { flex: 1; }
+  .rc-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1C1C1E;
+  }
+  .rc-labels {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 3px;
+    flex-wrap: wrap;
+  }
+  .rc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10.5px;
+    color: #00A86B;
+    font-weight: 600;
+    background: rgba(0,168,107,0.08);
+    padding: 3px 8px;
+    border-radius: 10px;
+  }
+  .rc-repeat {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10.5px;
+    color: #007AFF;
+    font-weight: 600;
+    background: rgba(0,122,255,0.08);
+    padding: 3px 8px;
+    border-radius: 10px;
+  }
+
+  .stars-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .stars {
+    color: #D4AF37;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+  .rating-num {
+    font-size: 13px;
+    color: #636366;
+    font-weight: 600;
+  }
+
+  .review-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1C1C1E;
+    margin-bottom: 8px;
+  }
+
+  .review-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #2C2C2E;
+    letter-spacing: -0.1px;
+  }
+
+  .review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 0.5px solid #E5E5EA;
+  }
+  .review-date {
+    font-size: 12px;
+    color: #8E8E93;
+  }
+  .helpful-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .helpful-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #636366;
+    background: #F2F2F7;
+    padding: 5px 10px;
+    border-radius: 14px;
+  }
+  .helpful-btn .icon { font-size: 14px; }
+  .helpful-btn .num { font-weight: 600; }
+
+  /* Other reviews peek */
+  .other-reviews {
+    margin: 0 16px;
+    padding: 14px 16px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .other-reviews .or-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8E8E93;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .mini-review {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-top: 0.5px solid #F2F2F7;
+  }
+  .mini-review:first-of-type { border-top: none; }
+  .mini-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .mini-review .mini-stars {
+    color: #D4AF37;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+  .mini-review .mini-text {
+    font-size: 12px;
+    color: #636366;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Home indicator */
+  .home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 134px;
+    height: 5px;
+    background: #1C1C1E;
+    border-radius: 3px;
+    opacity: 0.2;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span class="time">3:15</span>
+    <div class="icons">
+      <span>&#9679;&#9679;&#9679;&#9675;&#9675;</span>
+      <span style="font-size:14px;">&#128267;</span>
+    </div>
+  </div>
+
+  <!-- Review header -->
+  <div class="review-header">
+    <span class="back">&#8249; Back</span>
+    <span class="page-title">Reviews</span>
+    <span class="share-btn">&#8599;</span>
+  </div>
+
+  <!-- Summary bar -->
+  <div class="summary-bar">
+    <div class="big-rating">4.9</div>
+    <div class="rating-detail">
+      <div class="stars-large">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-count">Based on 847 reviews</div>
+    </div>
+  </div>
+
+  <!-- Main review -->
+  <div class="review-card">
+    <div class="rc-header">
+      <div class="rc-avatar">RL</div>
+      <div class="rc-name-block">
+        <div class="rc-name">Rachel L.</div>
+        <div class="rc-labels">
+          <span class="rc-repeat">Repeat Client &#8635;</span>
+          <span class="rc-badge">Verified &#10003;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stars-row">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <span class="rating-num">5.0</span>
+    </div>
+
+    <div class="review-title">Every timing prediction has been accurate</div>
+
+    <div class="review-text">
+      3rd reading with Jade. Every single timing prediction has been accurate. She told me NOT to sign the contract in February &mdash; my lawyer later found a hidden clause that would have cost me $200K.
+    </div>
+
+    <div class="review-footer">
+      <span class="review-date">Feb 28, 2026 &middot; QMDJ Timing Reading</span>
+      <div class="helpful-section">
+        <div class="helpful-btn">
+          <span class="icon">&#128077;</span>
+          <span class="num">41</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other reviews peek -->
+  <div class="other-reviews">
+    <div class="or-title">More Reviews</div>
+    <div class="mini-review">
+      <div class="mini-avatar" style="background:linear-gradient(135deg,#F4C4D7,#E8A0BF);">SK</div>
+      <span class="mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="mini-text">SCARY accurate. She told me my ex would...</span>
+    </div>
+    <div class="mini-review">
+      <div class="mini-avatar" style="background:linear-gradient(135deg,#C77DBA,#9B5DE5);">AR</div>
+      <span class="mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="mini-text">Nothing came close to this. The QMDJ system...</span>
+    </div>
+    <div class="mini-review">
+      <div class="mini-avatar" style="background:linear-gradient(135deg,#B8860B,#DAA520);">JM</div>
+      <span class="mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="mini-text">VIP mentorship changed my life. $47K first month...</span>
+    </div>
+  </div>
+
+  <div class="home-indicator"></div>
+
+</body>
+</html>

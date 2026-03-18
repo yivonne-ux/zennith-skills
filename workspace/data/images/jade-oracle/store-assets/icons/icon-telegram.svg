@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Paper plane body -->
+  <path d="M6 30 L58 8 L42 58 L30 38 Z" fill="#00A86B" stroke="#1A1A1A" stroke-width="2"/>
+  <!-- Wing fold line -->
+  <line x1="58" y1="8" x2="30" y2="38" stroke="#1A1A1A" stroke-width="1.5"/>
+  <!-- Inner fold / shadow -->
+  <path d="M30 38 L36 34 L42 58 Z" fill="#008755" stroke="none"/>
+  <!-- Tail fin detail -->
+  <path d="M30 38 L26 52 L42 58" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+  <!-- Speed lines -->
+  <line x1="2" y1="26" x2="12" y2="26" stroke="#8FA882" stroke-width="1" opacity="0.5"/>
+  <line x1="4" y1="34" x2="14" y2="34" stroke="#8FA882" stroke-width="1" opacity="0.4"/>
+  <line x1="6" y1="42" x2="12" y2="42" stroke="#8FA882" stroke-width="0.75" opacity="0.3"/>
+  <!-- Small jade sparkle -->
+  <circle cx="18" cy="18" r="1" fill="#D4AF37"/>
+</svg>
