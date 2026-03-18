@@ -1,0 +1,307 @@
+{
+  "_version": "1.0.0",
+  "_description": "Zennith OS Pub-Sub Subscription Registry. Defines what each agent watches and produces. Used by pubsub-dispatch.sh for AGENT->AGENT routing.",
+  "_updated": "2026-03-19",
+
+  "agents": {
+    "main": {
+      "id": "main",
+      "alias": "zenni",
+      "role": "Orchestrator / Router",
+      "produces": [
+        "routing-decision",
+        "user-response",
+        "status-update",
+        "objective-assignment",
+        "approval"
+      ],
+      "watches": [
+        "escalation",
+        "completion-report",
+        "error",
+        "approval-request",
+        "pipeline-summary"
+      ],
+      "priority": 0
+    },
+    "taoz": {
+      "id": "taoz",
+      "role": "CTO / Builder",
+      "produces": [
+        "code-artifact",
+        "build-result",
+        "deploy-status",
+        "technical-analysis",
+        "skill-created",
+        "infrastructure-report"
+      ],
+      "watches": [
+        "code-request",
+        "build-request",
+        "bug-report",
+        "infrastructure-task",
+        "deploy-request",
+        "skill-request",
+        "technical-question"
+      ],
+      "priority": 1
+    },
+    "dreami": {
+      "id": "dreami",
+      "role": "Creative Director + Copywriter",
+      "produces": [
+        "creative-brief",
+        "ad-copy",
+        "image-prompt",
+        "video-script",
+        "brand-content",
+        "campaign-plan",
+        "copy-variants"
+      ],
+      "watches": [
+        "creative-request",
+        "content-request",
+        "brand-task",
+        "campaign-brief",
+        "copy-request",
+        "video-request",
+        "image-request"
+      ],
+      "priority": 2
+    },
+    "artemis": {
+      "id": "artemis",
+      "role": "Researcher / Scout",
+      "produces": [
+        "research-report",
+        "competitor-analysis",
+        "market-data",
+        "scrape-result",
+        "trend-report"
+      ],
+      "watches": [
+        "research-request",
+        "scrape-request",
+        "analysis-request",
+        "trend-request",
+        "fact-check-request"
+      ],
+      "priority": 3
+    },
+    "hermes": {
+      "id": "hermes",
+      "role": "Ads / Distribution",
+      "produces": [
+        "ad-report",
+        "distribution-plan",
+        "pricing-analysis",
+        "revenue-report"
+      ],
+      "watches": [
+        "ad-request",
+        "distribution-request",
+        "pricing-request",
+        "campaign-plan"
+      ],
+      "priority": 4
+    },
+    "athena": {
+      "id": "athena",
+      "role": "Strategy / Research",
+      "produces": [
+        "strategy-report",
+        "competitive-intel",
+        "decision-framework"
+      ],
+      "watches": [
+        "strategy-request",
+        "analysis-request",
+        "competitive-request"
+      ],
+      "priority": 4
+    },
+    "iris": {
+      "id": "iris",
+      "role": "Visual Design / QA",
+      "produces": [
+        "visual-design",
+        "design-review",
+        "qa-result"
+      ],
+      "watches": [
+        "design-request",
+        "visual-qa-request",
+        "qa-request",
+        "image-prompt"
+      ],
+      "priority": 5
+    },
+    "argus": {
+      "id": "argus",
+      "role": "Testing / QA",
+      "produces": [
+        "qa-result",
+        "test-report",
+        "regression-report"
+      ],
+      "watches": [
+        "qa-request",
+        "test-request",
+        "build-result"
+      ],
+      "priority": 5
+    },
+    "myrmidons": {
+      "id": "myrmidons",
+      "role": "Worker Swarm / Bulk Ops",
+      "produces": [
+        "bulk-result",
+        "batch-report"
+      ],
+      "watches": [
+        "bulk-request",
+        "batch-request",
+        "data-migration"
+      ],
+      "priority": 6
+    }
+  },
+
+  "pipelines": {
+    "content-factory": {
+      "description": "Full content production loop: research -> brief -> copy -> image prompts",
+      "trigger": "content-request",
+      "flow": [
+        "artemis:research-report",
+        "dreami:creative-brief",
+        "dreami:ad-copy",
+        "dreami:image-prompt"
+      ],
+      "max_rounds": 5,
+      "on_complete": "completion-report"
+    },
+    "campaign-launch": {
+      "description": "Full campaign lifecycle: research -> strategy -> creative -> build",
+      "trigger": "campaign-brief",
+      "flow": [
+        "artemis:research-report",
+        "dreami:creative-brief",
+        "dreami:ad-copy",
+        "dreami:image-prompt",
+        "taoz:build-result"
+      ],
+      "max_rounds": 10,
+      "on_complete": "completion-report"
+    },
+    "bug-fix": {
+      "description": "Bug investigation and fix: analyze -> code -> verify",
+      "trigger": "bug-report",
+      "flow": [
+        "taoz:technical-analysis",
+        "taoz:code-artifact",
+        "taoz:build-result",
+        "artemis:qa-result"
+      ],
+      "max_rounds": 5,
+      "on_complete": "completion-report"
+    },
+    "brand-audit": {
+      "description": "Brand health check: research -> analysis -> creative recommendations",
+      "trigger": "brand-task",
+      "flow": [
+        "artemis:research-report",
+        "artemis:competitor-analysis",
+        "dreami:creative-brief"
+      ],
+      "max_rounds": 5,
+      "on_complete": "completion-report"
+    },
+    "skill-build": {
+      "description": "New skill development: design -> code -> test",
+      "trigger": "skill-request",
+      "flow": [
+        "taoz:technical-analysis",
+        "taoz:code-artifact",
+        "taoz:build-result",
+        "artemis:qa-result"
+      ],
+      "max_rounds": 5,
+      "on_complete": "completion-report"
+    }
+  },
+
+  "message_types": [
+    "code-request",
+    "code-artifact",
+    "build-request",
+    "build-result",
+    "deploy-request",
+    "deploy-status",
+    "creative-request",
+    "creative-brief",
+    "ad-copy",
+    "copy-request",
+    "copy-variants",
+    "image-request",
+    "image-prompt",
+    "video-request",
+    "video-script",
+    "research-request",
+    "research-report",
+    "campaign-brief",
+    "campaign-plan",
+    "routing-decision",
+    "completion-report",
+    "pipeline-summary",
+    "error",
+    "escalation",
+    "approval-request",
+    "approval",
+    "bug-report",
+    "technical-analysis",
+    "technical-question",
+    "content-request",
+    "brand-content",
+    "brand-task",
+    "scrape-request",
+    "scrape-result",
+    "competitor-analysis",
+    "market-data",
+    "trend-request",
+    "trend-report",
+    "status-update",
+    "infrastructure-task",
+    "infrastructure-report",
+    "analysis-request",
+    "qa-request",
+    "qa-result",
+    "fact-check-request",
+    "skill-request",
+    "skill-created",
+    "objective-assignment"
+  ],
+
+  "rooms": {
+    "directory": "~/.openclaw/workspace/rooms",
+    "format": "jsonl",
+    "naming": "{room_name}.jsonl",
+    "predefined": [
+      "exec",
+      "build",
+      "creative",
+      "analytics",
+      "execution",
+      "feedback",
+      "social",
+      "townhall"
+    ]
+  },
+
+  "config": {
+    "log_file": "~/.openclaw/workspace/rooms/logs/pubsub.log",
+    "dead_letter_room": "townhall",
+    "max_message_age_hours": 168,
+    "dedup_window_seconds": 5,
+    "idle_timeout_seconds": 30
+  }
+}
