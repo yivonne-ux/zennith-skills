@@ -1,0 +1,26 @@
+# Jade Oracle — Content Topics
+# One topic per line. Used by: jade-content-factory.sh batch --topics jade-topics.txt
+
+# Birth Year Readings (highest engagement hooks)
+Your birth year reveals a hidden power nobody told you about
+Born in 1988? The universe has been trying to tell you something
+If you were born between 1990-1995, read this carefully
+Your birth year holds the key to your next breakthrough
+
+# QMDJ Daily Readings
+Today's Qi Men chart says something unexpected about your love life
+The cosmic doors are shifting — here's what it means for your career this week
+Why March 2026 is the most powerful month for manifestation
+The ancient Chinese masters predicted this energy shift happening right now
+
+# Spiritual Tips
+3 signs the universe is trying to redirect your path
+Stop manifesting wrong — the QMDJ method changes everything
+The one thing blocking your abundance (and how to clear it in 60 seconds)
+Why your intuition has been stronger lately — it's not a coincidence
+
+# Engagement Bait (proven hooks)
+Comment your birth year and I'll reveal your hidden destiny
+I did a reading for everyone born in December — you need to hear this
+The energy around you right now is trying to tell you something important
+Pick a number 1-9 and I'll tell you what the universe wants you to know

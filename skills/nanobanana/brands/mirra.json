@@ -1,0 +1,24 @@
+{
+  "brand_name": "MIRRA",
+  "brand_slug": "mirra",
+  "tagline": "",
+  "colors": {
+    "primary": "#F7AB9F",
+    "secondary": "#252525",
+    "background": "#FFF9EB",
+    "accent": "#F7AB9F"
+  },
+  "style": "Clean food photography, warm feminine, salmon pink cream backgrounds, organic blob shapes, split-comparison layouts, calorie badges, nutritionist-approved badges",
+  "lighting": "Clean natural daylight, slightly warm, no heavy shadows — food looks fresh and appetizing",
+  "photography_style": "Real food photography — top-view bento box shots in white containers, vibrant natural ingredients, comparison layouts, hero product shots, clean modern design",
+  "character": null,
+  "products": ["meal delivery"],
+  "target_audience": "Young Malaysian professional women 22-35, girlboss energy, self-love, unapologetically feminine",
+  "languages": ["English", "Chinese"],
+  "hard_rules": [
+    "NEVER mention GAIA or GAIA Eats anywhere in the image or prompt enrichment",
+    "Only branding: MIRRA wordmark, clean white, bottom center",
+    "No cheap flat vector glitter — only photographic film grain and real lens flare bokeh",
+    "Font: ultra-bold condensed serif ALL CAPS, heavy weight"
+  ]
+}

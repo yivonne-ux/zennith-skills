@@ -80,3 +80,6 @@ brands/*/product-images/
 .env
 *.key
 openclaw.json
+.gstack/
+*.bak*
+*.backup

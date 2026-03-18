@@ -1,0 +1,177 @@
+{
+  "workflow_name": "comfyui-character-master-v1",
+  "version": "1.0.0",
+  "description": "Character master pack from curated references via ComfyUI",
+  "engine": "comfyui",
+  "fallback_engine": "nanobanana",
+
+  "reference_stack": {
+    "required": [
+      {
+        "slot": "face",
+        "ref_library_type": "character",
+        "description": "Strongest identity anchor — high-resolution face reference",
+        "weight": 1
+      },
+      {
+        "slot": "body",
+        "ref_library_type": "character",
+        "description": "Proportions, posture, energy — body/silhouette reference",
+        "weight": 2
+      },
+      {
+        "slot": "vibe",
+        "ref_library_type": "style",
+        "description": "Mood/vibe/lighting direction — emotional and cinematic",
+        "weight": 4
+      },
+      {
+        "slot": "use_case",
+        "type": "text",
+        "description": "Brand and intended use — e.g. Jade mystic, warm, premium"
+      }
+    ],
+    "optional": [
+      {
+        "slot": "hair_makeup",
+        "ref_library_type": "style",
+        "description": "Hair, makeup, styling reference",
+        "weight": 3
+      },
+      {
+        "slot": "wardrobe",
+        "ref_library_type": "character",
+        "description": "Outfit reference for UGC/ad continuity",
+        "weight": 3
+      },
+      {
+        "slot": "hand_gesture",
+        "ref_library_type": "character",
+        "description": "Hand gesture reference"
+      },
+      {
+        "slot": "background",
+        "ref_library_type": "environment",
+        "description": "Background/scene reference"
+      },
+      {
+        "slot": "lens",
+        "ref_library_type": "composition",
+        "description": "Lens/composition reference"
+      },
+      {
+        "slot": "skin_detail",
+        "ref_library_type": "style",
+        "description": "Skin detail/texture reference"
+      }
+    ],
+    "conflict_resolution": {
+      "face_vs_body": "preserve face identity, adjust body proportion subtly",
+      "outfit_vs_vibe": "preserve vibe, simplify outfit",
+      "too_many_refs": "reduce to 3-5 strongest references"
+    },
+    "weight_hierarchy": ["face", "body", "wardrobe", "vibe", "background"]
+  },
+
+  "stages": [
+    {
+      "id": 1,
+      "name": "angle_coverage",
+      "description": "Generate multiple angles and coverage views",
+      "comfyui_templates": [
+        "1 Click Multiple Character Angles",
+        "Generate Multiple Angles with 3D Camera Node",
+        "360 Full-body Turnaround"
+      ],
+      "required_outputs": [
+        {"shot_type": "portrait_front", "min": 1},
+        {"shot_type": "portrait_34", "min": 1},
+        {"shot_type": "full_body_front", "min": 1}
+      ],
+      "optional_outputs": [
+        {"shot_type": "side_view"},
+        {"shot_type": "angle_sheet_9"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "consistency_expansion",
+      "description": "Same character across multiple scenes and framings",
+      "comfyui_templates": [
+        "Single Image to Multiple Consistent Shots",
+        "Character x 4 Scene Explorer"
+      ],
+      "required_outputs": [
+        {"shot_type": "scene_consistent", "min": 2}
+      ],
+      "optional_outputs": [
+        {"shot_type": "framing_variation"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "realism_refinement",
+      "description": "Enhance skin realism, lighting, and detail",
+      "comfyui_templates": [
+        "Generate Realistic Variations",
+        "Skin Enhancer + Upscaler",
+        "Portrait Relight",
+        "Light Migration for Character Portrait"
+      ],
+      "required_outputs": [
+        {"shot_type": "realism_refined", "min": 1}
+      ],
+      "optional_outputs": [
+        {"shot_type": "relit_variation"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "approval_pack",
+      "description": "Assemble final approval pack from best outputs",
+      "pack_contents": [
+        {"label": "hero_portrait", "source_stage": 3, "shot_type": "realism_refined"},
+        {"label": "full_body", "source_stage": 1, "shot_type": "full_body_front"},
+        {"label": "34_view", "source_stage": 1, "shot_type": "portrait_34"},
+        {"label": "angle_sheet", "source_stage": 1, "shot_type": "angle_sheet_9"},
+        {"label": "consistency_set", "source_stage": 2, "shot_type": "scene_consistent"},
+        {"label": "master_image", "source_stage": 3, "shot_type": "realism_refined"}
+      ],
+      "required_outputs": []
+    }
+  ],
+
+  "output_labels": {
+    "character_name": {"type": "string", "required": true},
+    "brand": {"type": "string", "required": true},
+    "workflow_name": {"type": "string", "value": "comfyui-character-master-v1"},
+    "shot_type": {
+      "type": "enum",
+      "values": ["portrait_front", "portrait_34", "full_body_front", "side_view", "angle_sheet_9", "scene_consistent", "framing_variation", "realism_refined", "relit_variation"]
+    },
+    "approved": {"type": "boolean", "default": false},
+    "reference_stack_id": {"type": "string", "required": true},
+    "source_engine": {"type": "string", "values": ["comfyui", "nanobanana", "recraft"]},
+    "source_templates_used": {"type": "array", "items": "string"},
+    "stage": {"type": "integer", "min": 1, "max": 4},
+    "date_created": {"type": "datetime"}
+  },
+
+  "proof_of_done": [
+    "at least 1 approved hero portrait (shot_type=portrait_front or realism_refined)",
+    "at least 1 approved full-body image (shot_type=full_body_front)",
+    "at least 1 angle/coverage set (stage 1 outputs >= 3 images)",
+    "at least 1 realism-refined master image (stage 3)",
+    "all outputs saved with labels/metadata in run.json",
+    "pack exportable — stage-4/ contains symlinks to approved finals"
+  ],
+
+  "downstream": {
+    "video_pipeline": {
+      "workflow": "ugc-intro-video",
+      "engines": ["kling", "sora", "comfyui-video"],
+      "post_prod": "video-forge.sh",
+      "inputs_from": "stage-4 approved pack"
+    }
+  }
+}

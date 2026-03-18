@@ -1,0 +1,21 @@
+{
+  "brand_name": "GAIA Recipes",
+  "brand_slug": "gaia-recipes",
+  "tagline": "Cook with confidence, eat with joy",
+  "colors": {
+    "primary": "#E8A87C",
+    "secondary": "#D4A574",
+    "background": "#FFF8F0",
+    "accent": "#C85A17"
+  },
+  "style": "warm, instructional, inviting, home-kitchen feel",
+  "lighting": "bright natural kitchen light, clean, well-lit workspace",
+  "photography_style": "step-by-step recipe, overhead shots, ingredient flat lays",
+  "character": null,
+  "products": ["recipe ebooks", "cooking guides", "meal planners", "video courses"],
+  "target_audience": "Home cooks, cooking enthusiasts, 20-50",
+  "languages": ["English", "Bahasa Malaysia"],
+  "ecommerce_platforms": ["Shopee", "own website", "Gumroad"],
+  "social_platforms": ["Instagram", "TikTok", "YouTube", "Pinterest"],
+  "brand_values": ["simplicity", "confidence", "joy", "plant-based"]
+}

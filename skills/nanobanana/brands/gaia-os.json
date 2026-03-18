@@ -1,0 +1,52 @@
+{
+  "brand_name": "GAIA OS",
+  "brand_slug": "gaia-os",
+  "tagline": "The Living Operating System",
+  "aesthetic": "Sacred Futurism / Transhumanist Baroque",
+  "core_concept": "Technology as Theurgy - digital deities as system avatars",
+  
+  "colors": {
+    "void_black": "#0A0A0F",
+    "deep_charcoal": "#1A1A24",
+    "luminous_white": "#F8F8FF",
+    "cream": "#FFFDD0",
+    "metallic_gold": "#DAA520",
+    "amber": "#FFBF00",
+    "electric_cyan": "#00FFFF",
+    "iridescent_pearl": "#E6E6FA",
+    "accent_coral": "#FF6B4A"
+  },
+  
+  "style_keywords": [
+    "hyper-realistic digital couture",
+    "cinematic lighting",
+    "luxury material simulation",
+    "sacred geometry",
+    "organic-synthetic fusion",
+    "veiled interfaces",
+    "techno-spiritual",
+    "minimalist framing",
+    "atmospheric volumetrics"
+  ],
+  
+  "visual_elements": {
+    "head_treatment": "circular halos, helmets, veils, face obscured or replaced",
+    "materials": "wet-look latex, iridescent holographics, liquid metal, crystalline beads",
+    "lighting": "dramatic rim lighting, particle effects, dual lighting grammar",
+    "composition": "symmetrical, centered, negative space, vertical emphasis",
+    "motifs": "serpents, halos, veils, transparent anatomy, sacred geometry"
+  },
+  
+  "character_archetypes": {
+    "zenni": "The Orchestrator - central command, omniscient presence",
+    "taoz": "The Builder - mechanical, construction, tools",
+    "dreami": "The Creative Director - flowing, artistic, ethereal, brand voice",
+    "iris": "The Art Director + Social Voice - visual, rainbow, light refraction",
+    "hermes": "The Merchant - swift, commerce, messaging",
+    "artemis": "The Scout - huntress, tracker, lunar, bow/arrow motifs",
+    "athena": "The Strategist - wisdom, owl, armor, strategic",
+    "myrmidons": "The Swarm - collective, ant-like, workers"
+  },
+  
+  "mood": "Contemplative transcendence, luxury as inaccessibility, quiet power"
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "description": "Ad copywriting frameworks for video script generation. Each framework defines AIDA block structure + tone. Used by Dreami (Creative Director) to generate structured scripts.",
+  "frameworks": {
+    "ugc_testimonial": {
+      "name": "UGC Testimonial",
+      "description": "Authentic-sounding first-person testimonial. Natural, unscripted feel.",
+      "tone_keywords": ["authentic", "testimonial", "ugc", "real", "honest", "genuine", "personal"],
+      "block_structure": [
+        {"label": "hook", "aida": "attention", "block_code": "A5", "description": "Relatable pain/frustration in first person", "duration": "3-5s"},
+        {"label": "discovery", "aida": "interest", "block_code": "I1", "description": "How they found the product", "duration": "5-8s"},
+        {"label": "experience", "aida": "desire", "block_code": "D1", "description": "Using the product — sensory details, emotions", "duration": "8-12s"},
+        {"label": "result", "aida": "desire", "block_code": "D4", "description": "Before/after transformation or outcome", "duration": "5-8s"},
+        {"label": "cta", "aida": "action", "block_code": "Act6", "description": "Natural recommendation + where to buy", "duration": "3-5s"}
+      ],
+      "prompt_rules": [
+        "First person only — 'I' not 'we' or 'they'",
+        "Include one specific sensory detail (taste, texture, smell)",
+        "Name a real pain point before the product",
+        "End with casual recommendation, not hard sell",
+        "Malaysian English / Manglish acceptable"
+      ]
+    },
+    "pas": {
+      "name": "Problem-Agitate-Solution",
+      "description": "Classic PAS framework. Amplify the pain, then offer relief.",
+      "tone_keywords": ["problem", "pain", "solution", "struggle", "frustrated", "tired of"],
+      "block_structure": [
+        {"label": "problem", "aida": "attention", "block_code": "A5", "description": "State the problem — make viewer nod", "duration": "3-5s"},
+        {"label": "agitate", "aida": "interest", "block_code": "I5", "description": "Amplify the pain — consequences of not solving", "duration": "5-8s"},
+        {"label": "solution_intro", "aida": "interest", "block_code": "I2", "description": "Introduce the product as the answer", "duration": "5-7s"},
+        {"label": "solution_proof", "aida": "desire", "block_code": "D1", "description": "Show the product working — proof of solution", "duration": "8-12s"},
+        {"label": "cta", "aida": "action", "block_code": "Act6", "description": "Urgency CTA — limited time, order now", "duration": "3-5s"}
+      ],
+      "prompt_rules": [
+        "Problem must be specific and relatable to target audience",
+        "Agitate with emotional consequences, not just logical ones",
+        "Solution transition should feel like relief, not a pitch",
+        "Include social proof if possible (numbers, reviews)",
+        "CTA should create urgency without being pushy"
+      ]
+    },
+    "slap": {
+      "name": "Stop-Look-Act-Purchase",
+      "description": "Fast-paced attention-grabbing format. Hook hard, show fast, close quick.",
+      "tone_keywords": ["fast", "quick", "attention", "scroll-stopper", "viral", "dynamic"],
+      "block_structure": [
+        {"label": "stop", "aida": "attention", "block_code": "A3", "description": "Scroll-stopping visual or statement", "duration": "2-3s"},
+        {"label": "look", "aida": "interest", "block_code": "I3", "description": "Product beauty shot — make them want to see more", "duration": "3-5s"},
+        {"label": "act", "aida": "desire", "block_code": "D1", "description": "Show product in use — quick cuts, energy", "duration": "5-8s"},
+        {"label": "purchase", "aida": "action", "block_code": "Act3", "description": "Promo + CTA — flash deal, link in bio", "duration": "2-3s"}
+      ],
+      "prompt_rules": [
+        "First 2 seconds MUST have movement or surprise",
+        "No slow builds — get to product within 5 seconds",
+        "Quick cuts preferred — 1-2s per shot",
+        "Text overlays for key claims (not just voiceover)",
+        "Promo should feel like a flash deal, not a lecture"
+      ]
+    },
+    "emotional_storytelling": {
+      "name": "Emotional Storytelling",
+      "description": "Narrative arc that builds emotional connection. Longer format, deeper impact.",
+      "tone_keywords": ["story", "emotional", "journey", "transformation", "lifestyle", "aspirational"],
+      "block_structure": [
+        {"label": "setup", "aida": "attention", "block_code": "A5", "description": "Character introduction — relatable situation", "duration": "5-8s"},
+        {"label": "conflict", "aida": "interest", "block_code": "I1", "description": "The struggle or challenge they face", "duration": "5-8s"},
+        {"label": "discovery", "aida": "interest", "block_code": "I2", "description": "Finding the product — the turning point", "duration": "5-7s"},
+        {"label": "transformation", "aida": "desire", "block_code": "D4", "description": "The change — visual before/after journey", "duration": "8-12s"},
+        {"label": "new_life", "aida": "desire", "block_code": "D5", "description": "Living the transformed life — aspiration", "duration": "5-8s"},
+        {"label": "cta", "aida": "action", "block_code": "Act6", "description": "Soft CTA — 'start your journey'", "duration": "3-5s"}
+      ],
+      "prompt_rules": [
+        "Must have a clear narrative arc (beginning, middle, end)",
+        "Character must be relatable to target audience",
+        "Emotional peak should be at the transformation moment",
+        "Music/mood should shift with the story arc",
+        "CTA should feel like invitation, not instruction"
+      ]
+    }
+  },
+  "framework_selection_rules": {
+    "default": "ugc_testimonial",
+    "by_intent": {
+      "awareness": ["emotional_storytelling", "ugc_testimonial"],
+      "conversion": ["pas", "slap"],
+      "retargeting": ["slap", "pas"]
+    },
+    "by_duration": {
+      "short": ["slap", "ugc_testimonial"],
+      "medium": ["pas", "ugc_testimonial"],
+      "long": ["emotional_storytelling", "pas"]
+    }
+  }
+}

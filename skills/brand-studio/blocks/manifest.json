@@ -1,0 +1,241 @@
+{
+  "version": "1.0",
+  "description": "Brand Studio composable blocks — like ComfyUI nodes for AI creative production",
+  "blocks": {
+    "research": {
+      "id": "research",
+      "name": "Reference Research",
+      "description": "Pull reference data from gaia.db — similar vibes, patterns, blocked items",
+      "script": "scripts/research-fill.sh",
+      "callable": "python3 -c 'research block inline'",
+      "inputs": {
+        "brand": {"type": "string", "required": true, "description": "Brand slug"},
+        "template": {"type": "string", "required": false, "description": "Filter by template type"}
+      },
+      "outputs": {
+        "refs": {"type": "array", "description": "Reference images and metadata"},
+        "patterns": {"type": "array", "description": "Known patterns from knowledge DB"},
+        "blocked": {"type": "array", "description": "Patterns to avoid"}
+      },
+      "category": "input",
+      "color": "#4CAF50"
+    },
+    "headline": {
+      "id": "headline",
+      "name": "Headline Generator",
+      "description": "Generate template-aware headlines from brand DNA + headline bank",
+      "script": "inline",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "template": {"type": "string", "required": true},
+        "count": {"type": "number", "required": false, "default": 3},
+        "learnings": {"type": "object", "required": false, "description": "creative_learnings from DNA"}
+      },
+      "outputs": {
+        "headlines": {"type": "array", "description": "Array of headline strings"},
+        "template": {"type": "string", "description": "Pass-through template type"}
+      },
+      "category": "transform",
+      "color": "#FF9800"
+    },
+    "compose": {
+      "id": "compose",
+      "name": "Prompt Composer",
+      "description": "Build brand-aware generation prompt from DNA + template + headline + refs",
+      "script": "scripts/compose.sh",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "template": {"type": "string", "required": true},
+        "headline": {"type": "string", "required": true},
+        "subtitle": {"type": "string", "required": false},
+        "product": {"type": "string", "required": false},
+        "ratio": {"type": "string", "required": false, "default": "1:1"},
+        "ref_image": {"type": "filepath", "required": false}
+      },
+      "outputs": {
+        "image": {"type": "filepath", "description": "Generated image path"},
+        "prompt": {"type": "string", "description": "The composed prompt used"}
+      },
+      "category": "generate",
+      "color": "#E91E63"
+    },
+    "generate": {
+      "id": "generate",
+      "name": "NanoBanana Generate",
+      "description": "Raw image generation via Gemini Image API",
+      "script": "../../nanobanana/scripts/nanobanana-gen.sh",
+      "inputs": {
+        "prompt": {"type": "string", "required": true},
+        "brand": {"type": "string", "required": true},
+        "ratio": {"type": "string", "required": false, "default": "1:1"},
+        "model": {"type": "string", "required": false, "default": "flash", "enum": ["flash", "pro"]},
+        "ref_image": {"type": "filepath", "required": false},
+        "style_seed": {"type": "string", "required": false}
+      },
+      "outputs": {
+        "image": {"type": "filepath", "description": "Generated image path"}
+      },
+      "category": "generate",
+      "color": "#E91E63"
+    },
+    "audit": {
+      "id": "audit",
+      "name": "Visual Audit",
+      "description": "Score image against brand DNA via Gemini Vision",
+      "script": "scripts/audit.sh",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "image": {"type": "filepath", "required": true},
+        "reference": {"type": "filepath", "required": false}
+      },
+      "outputs": {
+        "scores": {"type": "object", "description": "Per-dimension scores (1-10)"},
+        "overall": {"type": "number", "description": "Overall score (1-10)"},
+        "pass": {"type": "boolean", "description": "Whether it passes threshold"},
+        "feedback": {"type": "string", "description": "Detailed feedback text"},
+        "fix_suggestions": {"type": "array", "description": "Actionable fixes"}
+      },
+      "category": "evaluate",
+      "color": "#2196F3"
+    },
+    "loop": {
+      "id": "loop",
+      "name": "Generate-Audit Loop",
+      "description": "Compose → Generate → Audit → Retry until pass or max retries",
+      "script": "scripts/loop.sh",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "template": {"type": "string", "required": true},
+        "headline": {"type": "string", "required": false},
+        "max_retries": {"type": "number", "required": false, "default": 3}
+      },
+      "outputs": {
+        "image": {"type": "filepath", "description": "Best image from all attempts"},
+        "score": {"type": "number", "description": "Best score achieved"},
+        "passed": {"type": "boolean", "description": "Whether any attempt passed"},
+        "attempts": {"type": "number", "description": "Number of attempts used"}
+      },
+      "category": "pipeline",
+      "color": "#9C27B0"
+    },
+    "learn": {
+      "id": "learn",
+      "name": "Compound Learner",
+      "description": "Analyze results → update DNA creative_learnings → store to knowledge DB",
+      "script": "scripts/learn.sh",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "run_dir": {"type": "filepath", "required": true, "description": "Path to curator run results"}
+      },
+      "outputs": {
+        "best_templates": {"type": "array", "description": "Templates with high pass rate"},
+        "winning_headlines": {"type": "object", "description": "Top headlines per template"},
+        "blocked_headlines": {"type": "array", "description": "Headlines to avoid"},
+        "dna_updated": {"type": "boolean", "description": "Whether DNA was updated"}
+      },
+      "category": "learn",
+      "color": "#FF5722"
+    },
+    "store": {
+      "id": "store",
+      "name": "Seed Bank Store",
+      "description": "Store passing image + metadata to content seed bank",
+      "script": "../../content-seed-bank/scripts/seed-store.sh",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "image": {"type": "filepath", "required": true},
+        "template": {"type": "string", "required": true},
+        "headline": {"type": "string", "required": false},
+        "score": {"type": "number", "required": false},
+        "tags": {"type": "string", "required": false}
+      },
+      "outputs": {
+        "seed_id": {"type": "string", "description": "Stored seed ID"},
+        "stored": {"type": "boolean"}
+      },
+      "category": "output",
+      "color": "#607D8B"
+    },
+    "curator": {
+      "id": "curator",
+      "name": "Regression Curator",
+      "description": "Full regression: N types x M variations → audit all → learn → compound",
+      "script": "scripts/curator.sh",
+      "inputs": {
+        "brand": {"type": "string", "required": true},
+        "types": {"type": "string", "required": false, "default": "comparison,hero,grid,lifestyle,collage"},
+        "variations": {"type": "number", "required": false, "default": 3},
+        "max_retries": {"type": "number", "required": false, "default": 2}
+      },
+      "outputs": {
+        "pass_rate": {"type": "string", "description": "Overall pass rate percentage"},
+        "avg_score": {"type": "number", "description": "Average score across all"},
+        "run_id": {"type": "string", "description": "Unique run identifier"},
+        "summary": {"type": "filepath", "description": "Path to summary JSON"}
+      },
+      "category": "pipeline",
+      "color": "#9C27B0"
+    }
+  },
+  "connections": {
+    "description": "Pre-wired block chains (workflows). Each is a named pipeline of block connections.",
+    "workflows": {
+      "single-ad": {
+        "name": "Single Ad",
+        "description": "Generate one brand-compliant ad",
+        "chain": ["compose → audit"],
+        "blocks": [
+          {"block": "compose", "connect_to": "audit", "wire": {"compose.image": "audit.image", "compose.brand": "audit.brand"}}
+        ]
+      },
+      "loop-ad": {
+        "name": "Loop Ad",
+        "description": "Generate → audit → retry until pass",
+        "chain": ["loop"],
+        "blocks": [
+          {"block": "loop"}
+        ]
+      },
+      "research-fill": {
+        "name": "Research Fill",
+        "description": "Research refs → generate headlines → loop each → store passes",
+        "chain": ["research → headline → loop → store"],
+        "blocks": [
+          {"block": "research", "connect_to": "headline", "wire": {"research.refs": "headline.learnings"}},
+          {"block": "headline", "connect_to": "loop", "wire": {"headline.headlines[]": "loop.headline", "headline.template": "loop.template"}},
+          {"block": "loop", "connect_to": "store", "wire": {"loop.image": "store.image", "loop.score": "store.score"}, "condition": "loop.passed == true"}
+        ]
+      },
+      "curator-regression": {
+        "name": "Curator Regression",
+        "description": "Full regression: all types x N variations → audit → learn → compound DNA",
+        "chain": ["curator → learn"],
+        "blocks": [
+          {"block": "curator", "connect_to": "learn", "wire": {"curator.run_id": "learn.run_dir"}}
+        ]
+      },
+      "discovery-loop": {
+        "name": "Discovery Loop",
+        "description": "Research → generate → audit → learn → repeat with better prompts",
+        "chain": ["research → headline → loop → learn → headline"],
+        "blocks": [
+          {"block": "research", "connect_to": "headline"},
+          {"block": "headline", "connect_to": "loop", "wire": {"headline.headlines[]": "loop.headline"}},
+          {"block": "loop", "connect_to": "learn", "condition": "collect_all"},
+          {"block": "learn", "connect_to": "headline", "wire": {"learn.winning_headlines": "headline.learnings"}, "condition": "learn.blocked_headlines.length < threshold"}
+        ],
+        "loop": true,
+        "max_iterations": 3
+      }
+    }
+  },
+  "categories": {
+    "input": {"label": "Input / Research", "icon": "search", "description": "Data sources and reference gathering"},
+    "transform": {"label": "Transform", "icon": "shuffle", "description": "Data transformation and generation prep"},
+    "generate": {"label": "Generate", "icon": "image", "description": "Content generation (images, video, text)"},
+    "evaluate": {"label": "Evaluate", "icon": "check-circle", "description": "Quality scoring and brand compliance"},
+    "learn": {"label": "Learn", "icon": "brain", "description": "Compound learning and DNA updates"},
+    "output": {"label": "Output / Store", "icon": "database", "description": "Storage and distribution"},
+    "pipeline": {"label": "Pipeline", "icon": "git-merge", "description": "Composite blocks (contain sub-chains)"}
+  }
+}

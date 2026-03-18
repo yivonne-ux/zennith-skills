@@ -1,0 +1,33 @@
+{
+  "brand_name": "The Jade Oracle",
+  "brand_slug": "jade-oracle",
+  "tagline": "Ancient wisdom, modern guidance",
+  "colors": {
+    "primary": "#00A86B",
+    "secondary": "#D4AF37",
+    "background": "#0B0B0B",
+    "accent": "#FFBF00"
+  },
+  "style": "mystical, ethereal, sacred geometry, celestial, cyber-futuristic crystal grid",
+  "lighting": "soft mystical glow, candlelight, celestial radiance, neon cyan and jade green ambient",
+  "photography_style": "magazine editorial, mystical, ethereal, sacred futurism",
+  "character": {
+    "luna_solaris": {
+      "name": "Luna Solaris",
+      "description": "Modern Energy Reader with cyber-futuristic crystal grid aesthetic. Pale porcelain complexion, teal-blue eyes, honey-blonde celestial updo, emerald and neon cyan robes, crystal crown.",
+      "reference_images": [
+        "~/.openclaw/workspace-main/workspace-data/characters/luna-solaris/luna-solaris-frontal.png",
+        "~/.openclaw/workspace-main/workspace-data/characters/luna-solaris/luna-solaris-3quarter.png",
+        "~/.openclaw/workspace-main/workspace-data/characters/luna-solaris/luna-solaris-fullbody.png"
+      ],
+      "style_seeds": {
+        "frontal": "seed-1773041716-zpnq",
+        "3quarter": "seed-1773041833-gmns",
+        "fullbody": "seed-1773041872-kkiw"
+      }
+    }
+  },
+  "products": ["oracle readings", "tarot readings", "qmdj consultations", "birth chart analysis"],
+  "target_audience": "Spiritual seekers, tarot enthusiasts, 25-45, globally conscious",
+  "languages": ["English"]
+}
