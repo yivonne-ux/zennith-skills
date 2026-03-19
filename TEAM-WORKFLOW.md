@@ -1,154 +1,144 @@
-# Zennith OS — Team Workflow
-> 4 Claude Codes, 1 machine. Everyone builds, everyone learns, everyone evolves.
+# Zennith Skills — Team Workflow
+> 3 humans, 3 Claude Codes, 1 repo. Pull → Build → Push → Everyone gets smarter.
 
 ---
 
-## The Idea
-
-Each person has Claude Code on their MacBook. Each Claude Code reads this same repo.
-When anyone builds something better — a skill, a workflow, a fix — it goes into the repo
-and EVERY Claude Code gets smarter. The machine compounds.
-
----
-
-## Before You Start Working
+## Setup (first time only)
 
 ```bash
-cd ~/.openclaw && git pull
+# 1. Clone the repo
+git clone https://github.com/jennwoei316/zennith-skills.git
+cd zennith-skills
+
+# 2. Read these files to understand what we're building
+#    - CLAUDE.md          → system overview, agents, file rules
+#    - PROJECT-STATE.md   → what's live, what's built, what's next
+#    - This file          → how we work together
 ```
 
-Every time. No exceptions. This gets you everyone else's latest work.
+That's it. No OpenClaw install needed. No special tools. Just git + Claude Code.
 
 ---
 
-## While You Work
+## Daily Flow
 
-Build whatever you're building with Claude Code. It reads skills from `~/.openclaw/skills/`
-and knows the full system from `CLAUDE.md`, `PROJECT-STATE.md`, and agent SOULs.
+```
+START SESSION:     git pull origin main
+DO YOUR WORK:      build, fix, create — whatever Jenn assigned
+END SESSION:       git add → git commit → git push origin main
+```
 
-**Where to put things:**
+### Pull (every time you start)
 
-| What you built | Where it goes |
-|----------------|---------------|
-| New skill or improved skill | `skills/{skill-name}/SKILL.md` + `scripts/` |
-| Brand config change | `brands/{brand}/DNA.json` |
-| Agent personality update | `workspace-{agent}/SOUL.md` |
-| Shared utility script | `workspace/scripts/` |
-| New brand DNA | `brands/{brand}/DNA.json` (run onboard-brand skill) |
+```bash
+cd zennith-skills
+git pull origin main
+```
 
-**What stays local (NOT in git):**
+This gets you everyone else's latest work. **Never skip this.**
+
+### Push (every time you finish)
+
+```bash
+git add <the files you changed>
+git commit -m "short description of what you did"
+git push origin main
+```
+
+**Don't use `git add -A`** — only add files you actually worked on.
+**Don't commit** API keys, .env files, secrets, or huge media files.
+
+### If push fails
+
+Someone else pushed while you were working. Normal — just:
+
+```bash
+git pull --rebase origin main
+# fix any conflicts if needed
+git push origin main
+```
+
+---
+
+## Where Things Go
+
+| What you're building | Where to put it |
+|---------------------|-----------------|
+| Skill (code that does a thing) | `skills/{skill-name}/SKILL.md` + `scripts/` |
+| Brand config | `brands/{brand}/DNA.json` |
+| Store assets (HTML, SVG, images) | `workspace/data/images/{brand}/` |
+| Research / knowledge | `workspace/knowledge/` |
+| Agent workspace docs | `workspace-{agent}/` |
+| Shared scripts | `workspace/scripts/` or `bin/` |
+
+**What stays OUT of git:**
 - Generated images/videos (too large)
-- API keys (`openclaw.json`)
-- User data, sessions, credentials
+- API keys, tokens, secrets
+- `openclaw.json` (local to each machine)
+- Temporary test files
 
 ---
 
-## After You Finish a Session
+## Commit Message Style
+
+Keep it short, say what you did:
+
+```
+jade bot: fix cards bug + refine UX tone
+add store product cards + testimonial HTML
+zenki sync: product research + 1688 suppliers
+pub-sub routing system for agent dispatch
+```
+
+---
+
+## How to Check What Others Did
 
 ```bash
-cd ~/.openclaw
-git add -A
-git commit -m "what you built — keep it short and clear"
-git push
+git log --oneline -20          # recent commits
+git log --oneline --since="yesterday"   # what happened today
+git diff HEAD~1                # what the last commit changed
 ```
 
-**Commit message examples:**
-- `improve video-gen: add Kling 3.0 support + auto-retry on timeout`
-- `fix nanobanana brand bleed: skip enrichment for character mode`
-- `add mirra CNY campaign briefs + ad copy variants`
-- `jade bot: persistent user store + default shipan for all questions`
+---
+
+## When You Build Something Big
+
+Update `PROJECT-STATE.md` — that's the shared brain. Other Claude Codes read it to know what's live, what's broken, what's next.
 
 ---
 
-## When You Build Something Significant
+## The Team
 
-Update `PROJECT-STATE.md` with what you did. This is the shared brain — it's how
-other Claude Code instances know what's live, what works, what's broken.
+| Person | Machine | Role |
+|--------|---------|------|
+| Jenn | iMac | CEO — strategy, Jade Oracle, system architecture |
+| Tricia | MacBook | Designer — video, visuals, ad creative, store design |
+| Yivonne | MacBook | Ops — ads, content scheduling, operations |
 
-Add your update under the right project section. Keep it factual:
-- What changed
-- What's live vs not
-- Any gotchas or decisions made
-
-Then commit and push.
+Each person runs Claude Code on their own machine. We all push to the same repo. Every push makes every Claude Code smarter.
 
 ---
 
-## When There's a Conflict
-
-If `git pull` shows a merge conflict:
-
-```bash
-# See what conflicted
-git status
-
-# Open the file, pick the right version (usually keep both changes)
-# Look for <<<<<<< HEAD ... ======= ... >>>>>>> markers
-
-# After fixing:
-git add -A
-git commit -m "merge: resolved conflict in {file}"
-git push
-```
-
-If unsure, ask Claude Code to help resolve it — it can read both versions and pick the right merge.
-
----
-
-## Skill Evolution Protocol
-
-When you improve an existing skill:
-
-1. **Read the current SKILL.md first** — understand what's there
-2. **Build on it, don't rewrite from scratch** — evolution, not revolution
-3. **Test it** — run the skill, verify it works
-4. **Update SKILL.md** if the interface changed (new flags, new behavior)
-5. **Commit with clear message** — others need to know what changed and why
-
-When you create a new skill:
-
-1. Create `skills/{name}/SKILL.md` — describe what it does, when to use it, how to call it
-2. Create `skills/{name}/scripts/` — the actual code
-3. Commit and push — it's immediately available to everyone's Claude Code
-
----
-
-## Who's Building What
-
-| Person | Machine | Current Focus |
-|--------|---------|---------------|
-| Jenn | iMac (this machine) | Jade Oracle, system architecture, strategy |
-| Tricia | MacBook | Video workflows, image refine, ad creative, brand visuals |
-| Yivonne | MacBook | Ad upload, content scheduling, multi-brand ops |
-
-Update this table when focus shifts.
-
----
-
-## How the Compounding Works
+## How It Compounds
 
 ```
-Jenn builds Jade Oracle bot
-  → pushes to repo
-    → Tricia pulls, her Claude Code now knows about Jade
-      → she builds video content skill for Jade
-        → pushes to repo
-          → Yivonne pulls, sees both Jade bot + video skill
-            → she builds ad upload pipeline for Jade videos
-              → pushes to repo
-                → everyone pulls → the machine is smarter
+Jenn builds Jade Oracle bot → pushes
+  Tricia pulls → sees bot + store assets → builds Shopify pages → pushes
+    Yivonne pulls → sees everything → sets up ad pipeline → pushes
+      Jenn pulls → the whole machine is smarter
 ```
 
-Every push makes every Claude Code smarter. That's the whole point.
+The repo IS the brain. Git IS the sync. Simple.
 
 ---
 
 ## Rules
 
-1. **Always pull before working.** Stale code = merge hell.
-2. **Always push after building.** Unpushed work = invisible to the team.
-3. **Update PROJECT-STATE.md after big builds.** Otherwise the shared brain goes stale.
-4. **Don't delete other people's skills.** Improve them or build alongside.
-5. **Don't commit API keys or secrets.** The .gitignore handles this, but double-check.
-6. **Commit often.** Small commits > big dumps. Easier to understand, easier to merge.
-7. **Write clear commit messages.** Future-you and future-Claude-Code will thank you.
+1. **Always pull before working.** Stale code = merge pain.
+2. **Always push when done.** Unpushed work is invisible.
+3. **Update PROJECT-STATE.md after big builds.**
+4. **Don't delete other people's work.** Build on it or build alongside.
+5. **Don't commit secrets.** Ever.
+6. **Commit often.** Small commits > big dumps.
+7. **Ask Jenn if unsure.**

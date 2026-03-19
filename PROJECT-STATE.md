@@ -36,13 +36,25 @@
 | 1998-10-30 命盘 | 阴遁3局 | 阴遁3局 | ✅ |
 | 2026-03-18 18:13 时盘 | 阳遁3局 | 阳遁3局 | ✅ all 8 palaces |
 
+**Recently completed (iMac, 2026-03-18)**:
+- Cards bug fixed — `findDayStemPalace()` now works with JS QMDJ engine format
+- Bot UX refined — natural psychic friend tone, casual intros, soft birth chart offer
+- Travel topic added to parseTopic()
+- /debug-interpret endpoint for live testing
+- 10-test regression suite (`jade-regression.sh`) — all passing
+- Full audit report (`JADE-AUDIT-2026-03-18.md`)
+- Ralph enabled for autonomous development
+- PDF generation working (fpdf2, branded dark theme)
+- Email delivery working (Resend API on VPS)
+- Full order pipeline: Order → Reading → PDF → Email → Log (9/9 test orders delivered)
+
 **NOT yet built**:
-- Shopify store (product pages, checkout)
-- PDF reading reports (code exists, not connected to bot)
-- Email delivery (code exists, no API keys)
+- Shopify store (product pages, checkout) — store assets ready in repo
 - Web login / user auth
 - Western astrology + tarot integration in bot (engines exist, not wired)
 - Ad campaigns / TikTok / IG content pipeline
+- Bot→Store upsell funnel
+- Monitoring / structured logging
 
 **VPS files** (jade-os.fly.dev:/home/node/.openclaw/data/):
 - `jade-telegram-bot.js` — the running bot (= jade-bot-v3.js)
