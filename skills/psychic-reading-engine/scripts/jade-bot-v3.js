@@ -617,7 +617,7 @@ async function handleContextCollection(chatId, text, state) {
     user.shipanCount = (user.shipanCount || 0) + 1;
     if (user.shipanCount === 3 && !user.birthData && !user.birthChartOffered) {
       user.birthChartOffered = true;
-      await sendTgMessage(chatId, `btw — if you ever want me to go deeper, give me your birthday and birth time. i can map out your whole energy blueprint. no pressure though, the moment reads are solid on their own.`);
+      await sendTgMessage(chatId, `btw — i keep picking up layers i can't fully read without your birth info. if you ever feel like sharing your birthday and birth time, i can see so much more. totally up to you though.`);
     }
     saveUser(chatId, user);
   }
@@ -660,7 +660,7 @@ async function deliverShipanReading(chatId, readingContext) {
   let prompt = '';
 
   if (interpretation?.oracleNarrative) {
-    prompt = `[You just checked their energy. Tell them what you see — like a friend giving real talk, not a formal reading. Weave in the card names naturally. End by asking how that lands for them or if something resonates.]\n\n${interpretation.oracleNarrative}\n\n[Raw chart:]\n${chartJson}`;
+    prompt = `[You just checked their energy. Tell them what you see — like a friend who happens to be psychic, not a reading service. Say what you SEE, not what cards mean. Drop the card names in naturally like "there's this warrior energy around your work right now" not "The Warrior card represents...". Keep it tight — 200 words max. End with something real: a question that shows you were listening, or one thing they can actually do.]\n\n${interpretation.oracleNarrative}\n\n[Raw chart:]\n${chartJson}`;
   } else {
     prompt = `[Read their current energy for ${readingContext.topic}. They asked: "${readingContext.question}". Talk like their personal psychic, not a reading service. NO Chinese characters.]\n\n${chartJson}${buildChartContext(chart)}`;
   }
@@ -709,7 +709,7 @@ async function deliverReading(chatId, birthData, userQuestion, readingContext) {
   let prompt = '';
 
   if (interpretation?.oracleNarrative) {
-    prompt = `[You're reading their life energy from their birth chart. This is deep — tell them who they really are and what you see for the area they asked about. Be their psychic friend giving them the real picture. Weave card names in naturally. End by asking what resonates or if they want to go deeper on something.]\n\n${interpretation.oracleNarrative}\n\n[Raw chart:]\n${chartJson}`;
+    prompt = `[This is a birth chart reading — you're looking at their whole energy blueprint, not just the moment. Go deeper than the moment reads. Tell them something about themselves they haven't told you — that's what makes it hit. Be specific, be real, be their psychic friend. 300 words max. End with something they can sit with — not a generic "any questions?" but something that shows you actually saw them.]\n\n${interpretation.oracleNarrative}\n\n[Raw chart:]\n${chartJson}`;
   } else {
     prompt = `[Birth chart reading. Topic: ${ctx.topic}. Question: "${ctx.question}". Be their personal psychic — real talk, not a formal reading. NO Chinese characters.]\n\n${chartJson}${buildChartContext(chart)}`;
   }
@@ -814,7 +814,7 @@ async function handleMessage(chatId, text, userName, isPhoto) {
     }
 
     // Read immediately — 时盘 (default) or 命盘 if user has birth data
-    const intros = ['let me look into that...', 'give me a sec...', 'hmm ok let me see...', 'on it.'];
+    const intros = ['let me tune in...', 'give me a sec, pulling up your energy...', 'hmm ok let me see what\'s there...', 'one sec — checking...', 'hold on, something\'s coming through...'];
     await sendTgMessage(chatId, intros[Math.floor(Math.random() * intros.length)]);
     tg('sendChatAction', { chat_id: chatId, action: 'typing' }).catch(() => {});
 
@@ -1154,6 +1154,42 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Debug endpoint — returns raw QMDJ chart + interpretation JSON for testing
+  if (req.method === 'GET' && url === '/debug-interpret') {
+    try {
+      const chart = qmdjAvailable ? computeChart('realtime') : null;
+      let interpretation = null;
+      if (chart && interpretEngine) {
+        interpretation = interpretEngine.interpret(chart, {
+          gender: 'unknown', topic: 'general', question: 'test', chartType: 'shipan',
+        });
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        timestamp: new Date().toISOString(),
+        chart_available: !!chart,
+        interpretation_available: !!interpretation,
+        cards: interpretation?.cards || null,
+        focusPalace: interpretation?.focusPalace || null,
+        stemReading: interpretation?.stemReading || null,
+        narrative_length: interpretation?.oracleNarrative?.length || 0,
+        narrative_preview: interpretation?.oracleNarrative?.substring(0, 500) || '',
+        chart_top_keys: chart ? Object.keys(chart) : null,
+        chart_pillars: chart?.pillars || null,
+        chart_four_pillars: chart?.four_pillars || null,
+        chart_day_stem_palace: chart?.day_stem_palace || null,
+        chart_focus_palaces: chart?.focus_palaces || null,
+        chart_palaces_type: chart?.palaces ? (Array.isArray(chart.palaces) ? 'array' : 'object') : null,
+        chart_palaces_keys: chart?.palaces ? (Array.isArray(chart.palaces) ? chart.palaces.map((_, i) => i) : Object.keys(chart.palaces)).slice(0, 3) : null,
+        chart_palace_sample: chart?.palaces ? Object.entries(chart.palaces).slice(0, 1).map(([k, v]) => ({ palace: k, keys: Object.keys(v), star: v.star, door: v.door, deity: v.deity, heaven_stem: v.heaven_stem, earth_stem: v.earth_stem })) : null,
+      }, null, 2));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: e.message, stack: e.stack?.split('\n').slice(0, 3) }));
+    }
+    return;
+  }
+
   if (req.method === 'GET' && url === '/') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
@@ -1162,7 +1198,7 @@ const server = http.createServer(async (req, res) => {
       status: 'running',
       qmdj_engine: qmdjAvailable,
       interpretation_engine: !!interpretEngine,
-      endpoints: ['/health', '/telegram', '/webhook/order', '/test'],
+      endpoints: ['/health', '/telegram', '/webhook/order', '/test', '/debug-interpret'],
     }));
     return;
   }

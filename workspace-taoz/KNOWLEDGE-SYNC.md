@@ -4,7 +4,52 @@ This file bridges Claude Code (Opus 4.6) and ALL OpenClaw agents. Claude Code wr
 
 **Readers:** Zenni (primary, every session) → Taoz (builds) → All agents (via Zenni delegation)
 
-## Last Updated: 2026-03-17 (QMDJ 第八节 十干克应 乙木 extraction)
+## Last Updated: 2026-03-18 (Jade Oracle Full Automation Loop Wired)
+
+---
+
+## SESSION SYNC — 2026-03-18 (Jade Oracle Full Automation Loop)
+
+### ACTIVE MISSION: THE JADE ORACLE — FULL LOOP LAUNCH
+
+**ALL AGENTS READ THIS — THIS IS THE #1 PRIORITY**
+
+The Jade Oracle is an AI-powered psychic reading platform combining QMDJ + Western Astrology + Tarot.
+
+**Infrastructure (LIVE):**
+- VPS: `jade-os.fly.dev` — reading pipeline, Telegram bot (@Jade4134bot)
+- Reading engine: 3 engines (qmdj-calc.py + birth-chart.py + tarot-engine.py) → synthesizer → PDF
+- PDF download: `https://jade-os.fly.dev/reading/{order_number}`
+
+**Product lineup:** $1 intro → $9.99 quick → $29.99 deep → $49.99 birth chart → $97 QMDJ session → $29.99/mo membership → $497 mentorship
+
+**Agent assignments:**
+- **Zenni:** Orchestrate daily content cycle, dispatch to Dreami/Scout, review output
+- **Dreami:** Generate ALL jade-oracle content — daily QMDJ forecasts, pick-a-card posts, ad copy, reel scripts, captions
+- **Scout:** Monitor Psychic Samira competitor, track trends, research KOLs
+- **Taoz:** VPS maintenance, pipeline fixes, feature builds (Claude Code CLI)
+
+**Brand voice for Jade Oracle:**
+- Warm, wise, slightly mysterious, grounded
+- English with natural Chinese metaphysics terms (QMDJ, BaZi, 易经)
+- NOT: cosmic/celestial, neon, gothic, generic mystical fog
+- Character: Jade — Korean woman, 30s, jade pendant necklace, burgundy wrap dress
+
+**Key files:**
+- Brand DNA: `~/.openclaw/brands/jade-oracle/DNA.json`
+- Character: `~/.openclaw/workspace/data/characters/jade-oracle/jade/`
+- Content output: `~/.openclaw/workspace/data/content/jade-oracle/daily/`
+- Daily dispatch: `~/.openclaw/skills/psychic-reading-engine/scripts/jade-daily-dispatch.sh`
+- Content factory: `~/.openclaw/skills/ai-influencer/scripts/jade-content-factory.sh`
+- Creative brief: `~/Desktop/JADE-ORACLE-CREATIVE-BRIEF-FOR-YIVONNE.md`
+
+**Competitor:** Psychic Samira — $500K+/mo ad spend, 89M+ views, AI pink-haired persona, $1 intro hook
+**Our edge:** REAL computational QMDJ system, 25% affiliate commission (vs her 10%), Korean editorial aesthetic
+
+**Content dispatch schedule:**
+- Morning: QMDJ daily forecast (12 zodiac), pick-a-card post, 3 ad copy variants
+- Afternoon: Educational reel script, competitor check
+- Evening: Zenni reviews all output, approves for posting
 
 ---
 
@@ -1100,11 +1145,16 @@ bash ~/.openclaw/workspace/scripts/claude-code-runner.sh dispatch "TASK" zenni b
 - Result: Done. Here's what was extracted and added to the knowledge base:  **File created:** `skills/psychic-reading-engine/data/chart-symbols-extracted.json` (40KB)  **9 structured sections extracted:**  | Section | Content | |---|---| | `ba_men` | 8 gates — keywords, auspicious levels, careers, feng shui
 
 ## Build taoz-1773759407-26146 (2026-03-17 23:05) — success
-- Task: Please process this newly added QMDJ PDF about Ten Stems (十干克应) into the knowledge base: /Users/jennwoeiloh/.openclaw/media/inbound/1_第八�
+- Task: Please process this newly added QMDJ PDF about Ten Stems (十干克应) into the knowledge base: /Users/jennwoeiloh/.openclaw/media/inbound/1_第八�
 - Model: sonnet | Duration: 505s | Status: completed
 - Result: Done. Here's what was completed:  1. **Extracted all 4 pages** of the 第八节 十干克应 PDF (image-based, read visually) — covering the complete 乙木 (Yi Wood) section with 9 stem combinations.  2. **Updated `qmdj-knowledge.json` → v2.1** — enriched all 乙加乙 through 乙加癸 entri
 
 ## Build taoz-1773759531-27333 (2026-03-17 23:08) — success
-- Task: Please process this second QMDJ PDF (Focus: Geng Metal 十干克应) into the knowledge base: /Users/jennwoeiloh/.openclaw/media/inbound/2_第八节_�
+- Task: Please process this second QMDJ PDF (Focus: Geng Metal 十干克应) into the knowledge base: /Users/jennwoeiloh/.openclaw/media/inbound/2_第八节_�
 - Model: sonnet | Duration: 600s | Status: timeout
 - Result: [Taoz] Task timed out (600s). Result may be partial — check /Users/jennwoeiloh/.openclaw/workspace/data/taoz-results/taoz-1773759531-27333.txt
+
+## Build taoz-1773882026-99565 (2026-03-19 09:03) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. MIRRA revenue is top priority. Build the next concrete UNBLOCKED MIRRA revenue step. Scope ONLY: inspect /Users/
+- Model: sonnet | Duration: 150s | Status: completed
+- Result: Done. Here's what I did:  1. **Scanned all relevant artifacts** — `mirra/creative-feedback-loop/`, `mirra/chatwoot-lead-capture/`, `mirra/attribution-pipeline/`, `MIRRA-REVENUE-ACTIVATION-PACK.md`, `MIRRA-ATTRIBUTION-STATUS.md`, and the existing go-live checklists — to establish verified truth v

@@ -579,6 +579,22 @@ detect_tier() {
     fi
   fi
 
+  # JADE ORACLE: daily content dispatch, reading gen, content factory → SCRIPT tier
+  if echo "$task" | grep -qiE '(jade.?(daily|content|forecast|dispatch)|qmdj.?(daily|forecast|energy)|jade.?oracle.*(content|daily|dispatch|cycle))'; then
+    echo "script"
+    return 0
+  fi
+  # JADE ORACLE: reading generation → SCRIPT tier (psychic-reading.sh handles directly)
+  if echo "$task" | grep -qiE '(jade.?reading|psychic.?reading|qmdj.?reading|generate.?reading).*(generat|creat|run|produc|test)|(generat|creat|run|produc|test).*(jade.?reading|psychic.?reading|qmdj.?reading)'; then
+    echo "script"
+    return 0
+  fi
+  # JADE ORACLE: video content factory → SCRIPT tier
+  if echo "$task" | grep -qiE '(jade.?(video|reel|tiktok|clip)|jade.?oracle.*(video|reel|clip))' && ! echo "$task" | grep -qiE '(script|concept|brief|storyboard|plan|strategy)'; then
+    echo "script"
+    return 0
+  fi
+
   # EVOMAP: evomap commands → SCRIPT tier (evomap-gaia.sh handles directly)
   if [[ "$agent" = "taoz" ]]; then
     if echo "$task" | grep -qiE '(evomap|evolve.?cycle|evolution.?(cycle|network)|gene.?capsule|publish.*(gene|capsule|learning).*evomap|fetch.*(capsule|gene).*evomap|evomap.*(status|heartbeat|publish|fetch|tasks|evolve))'; then
@@ -741,6 +757,38 @@ if desc: print(f\"About: {desc[:300]}\")
     TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     LABEL="script-$(date +%H%M%S)"
 
+    # --- JADE ORACLE: Daily content dispatch, reading gen, video factory ---
+    if echo "$TASK_LOWER" | grep -qiE '(jade.?(daily|content|forecast|dispatch|cycle)|qmdj.?(daily|forecast|energy)|jade.?oracle.*(content|daily|dispatch|cycle))'; then
+      JADE_DISPATCH="/Users/jennwoeiloh/.openclaw/skills/psychic-reading-engine/scripts/jade-daily-dispatch.sh"
+      JADE_CYCLE="full"
+      if echo "$TASK_LOWER" | grep -qiE 'morning'; then JADE_CYCLE="morning"
+      elif echo "$TASK_LOWER" | grep -qiE 'afternoon'; then JADE_CYCLE="afternoon"
+      elif echo "$TASK_LOWER" | grep -qiE 'evening|review'; then JADE_CYCLE="evening"
+      fi
+      CMD="bash ${JADE_DISPATCH} ${JADE_CYCLE}"
+      echo "SCRIPT:${LABEL}"; echo "TYPE:jade-daily"; echo "CMD:${CMD}"
+      echo "{\"ts\":\"$TS\",\"label\":\"$LABEL\",\"tier\":\"script\",\"type\":\"jade-daily\",\"cmd\":\"$JADE_CYCLE\"}" >> "$DISPATCH_LOG"
+      exit 0
+    fi
+
+    # --- JADE ORACLE: Reading generation ---
+    if echo "$TASK_LOWER" | grep -qiE '(jade.?reading|psychic.?reading|qmdj.?reading|generate.?reading).*(generat|creat|run|produc|test)|(generat|creat|run|produc|test).*(jade.?reading|psychic.?reading|qmdj.?reading)'; then
+      READING_SCRIPT="/Users/jennwoeiloh/.openclaw/skills/psychic-reading-engine/scripts/psychic-reading.sh"
+      CMD="bash ${READING_SCRIPT}"
+      echo "SCRIPT:${LABEL}"; echo "TYPE:jade-reading"; echo "CMD:${CMD}"
+      echo "{\"ts\":\"$TS\",\"label\":\"$LABEL\",\"tier\":\"script\",\"type\":\"jade-reading\"}" >> "$DISPATCH_LOG"
+      exit 0
+    fi
+
+    # --- JADE ORACLE: Video content factory ---
+    if echo "$TASK_LOWER" | grep -qiE '(jade.?(video|reel|tiktok|clip)|jade.?oracle.*(video|reel|clip))'; then
+      JADE_VIDEO="/Users/jennwoeiloh/.openclaw/skills/ai-influencer/scripts/jade-content-factory.sh"
+      CMD="bash ${JADE_VIDEO} full"
+      echo "SCRIPT:${LABEL}"; echo "TYPE:jade-video"; echo "CMD:${CMD}"
+      echo "{\"ts\":\"$TS\",\"label\":\"$LABEL\",\"tier\":\"script\",\"type\":\"jade-video\"}" >> "$DISPATCH_LOG"
+      exit 0
+    fi
+
     # --- EVOMAP: Direct evomap-gaia.sh execution ---
     if echo "$TASK_LOWER" | grep -qiE '(evomap|evolve.?cycle|evolution.?(cycle|network)|gene.?capsule|publish.*(gene|capsule|learning).*evomap|fetch.*(capsule|gene)|evomap.*(status|heartbeat|publish|fetch|tasks|evolve))'; then
       EVOMAP_SCRIPT="/Users/jennwoeiloh/.openclaw/skills/evomap/scripts/evomap-gaia.sh"
@@ -768,6 +816,7 @@ if desc: print(f\"About: {desc[:300]}\")
     elif echo "$TASK_LOWER" | grep -qiE 'rasaya'; then SCRIPT_BRAND="rasaya"
     elif echo "$TASK_LOWER" | grep -qiE 'dr.?stan'; then SCRIPT_BRAND="dr-stan"
     elif echo "$TASK_LOWER" | grep -qiE 'gaia.?eats'; then SCRIPT_BRAND="gaia-eats"
+    elif echo "$TASK_LOWER" | grep -qiE 'jade.?oracle|jade|qmdj|psychic.?reading'; then SCRIPT_BRAND="jade-oracle"
     else SCRIPT_BRAND="mirra"  # default
     fi
 

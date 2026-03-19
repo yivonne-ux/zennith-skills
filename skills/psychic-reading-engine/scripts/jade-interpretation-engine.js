@@ -207,9 +207,21 @@ function findSymbolPalace(chart, symbolName) {
 
 function findDayStemPalace(chart) {
   if (chart?.day_stem_palace) return chart.day_stem_palace;
-  // Fallback: search for 日干 in palaces
-  if (!chart?.pillars?.day?.stem || !chart?.palaces) return null;
-  const dayStem = chart.pillars.day.stem;
+
+  // Try focus_palaces from JS engine (first entry is typically the day stem palace)
+  if (chart?.focus_palaces?.length > 0) {
+    const fp = chart.focus_palaces[0];
+    if (fp.palace && fp.palace !== 5) return fp.palace; // Skip center palace (天禽寄坤)
+    if (chart.focus_palaces.length > 1) return chart.focus_palaces[1].palace;
+    return fp.palace; // Use center as last resort
+  }
+
+  // Extract day stem from various formats
+  const dayStem = chart?.pillars?.day?.stem           // old format
+    || chart?.four_pillars?.day?.stem?.chinese          // JS engine format
+    || chart?.four_pillars?.day?.stem;                  // fallback if stem is string
+
+  if (!dayStem || !chart?.palaces) return null;
   for (const [pn, p] of Object.entries(chart.palaces)) {
     if (p.heaven_stem === dayStem || p.earth_stem === dayStem) return parseInt(pn);
   }
@@ -570,6 +582,7 @@ function parseTopic(text) {
   if (/money|wealth|financ|invest|income|abundance|rich|salary|财|钱|投资/.test(lower)) return 'wealth';
   if (/love|relationship|partner|marriage|dating|boyfriend|girlfriend|crush|husband|wife|ex|感情|恋爱|婚姻/.test(lower)) return 'love';
   if (/health|sick|illness|body|medical|wellbeing|mental|anxiety|depression|stress|健康|身体/.test(lower)) return 'health';
+  if (/travel|trip|vacation|flight|moving|relocation|abroad|visa|travel|旅行|出行|出国/.test(lower)) return 'travel';
   if (/general|life|direction|everything|overall|all|通用|综合/.test(lower)) return 'general';
 
   // Check for topic emoji shortcuts

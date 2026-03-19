@@ -3,6 +3,11 @@
   "display_name": "The Jade Oracle",
   "tagline": "Ancient wisdom, modern guidance",
   "domains": ["jadeoracle.co", "askjadeoracle.com"],
+  "social": {
+    "tiktok": "@jade141319",
+    "instagram": "@jade141319",
+    "telegram": "@Jade4134bot"
+  },
   "business_model": "AI psychic reading platform — QMDJ-powered readings via Shopify storefront. $1 intro reading hook → upsell to full readings ($29-$97) → mentorship ($497). Competing with Psychic Samira.",
   "visual": {
     "colors": {
