@@ -626,7 +626,7 @@
     },
     "agent-reach": {
       "name": "agent-reach",
-      "description": "Give ALL OpenClaw agents eyes on the internet. Multiple tools for different jobs — pick the right one.",
+      "description": "Give ALL OpenClaw agents eyes on the internet. Multiple tools for different jobs \u2014 pick the right one.",
       "category": "scraping",
       "trigger_patterns": [
         "agent",
@@ -691,7 +691,7 @@
     },
     "ai-influencer": {
       "name": "ai-influencer",
-      "description": "AI Influencer Factory — end-to-end pipeline for creating, producing, and scaling AI character content across TikTok, Reels, Shorts. Face consistency, voice cloning, lip sync, auto-posting.",
+      "description": "AI Influencer Factory \u2014 end-to-end pipeline for creating, producing, and scaling AI character content across TikTok, Reels, Shorts. Face consistency, voice cloning, lip sync, auto-posting.",
       "category": "content",
       "trigger_patterns": [
         "ai-influencer",
@@ -727,13 +727,13 @@
         "publishing"
       ],
       "cli_command": "~/.openclaw/skills/ai-influencer/scripts/jade-content-factory.sh",
-      "example_usage": "B-Roll → Wan 2.6 via video-gen.sh",
+      "example_usage": "B-Roll \u2192 Wan 2.6 via video-gen.sh",
       "active": true,
       "path": "~/.openclaw/skills/ai-influencer"
     },
     "biz-scraper": {
       "name": "biz-scraper",
-      "description": "GAIA E-Commerce Flywheel — Ali Akbar \"Spy → Clone → Scale\" method with AI agents. Scrapes competitors, clones winning funnels, generates content at scale, launches, measures, compounds.",
+      "description": "GAIA E-Commerce Flywheel \u2014 Ali Akbar \"Spy \u2192 Clone \u2192 Scale\" method with AI agents. Scrapes competitors, clones winning funnels, generates content at scale, launches, measures, compounds.",
       "category": "scraping",
       "trigger_patterns": [
         "akbar",
@@ -800,7 +800,7 @@
     },
     "browser-use": {
       "name": "browser-use",
-      "description": "Browser automation for GAIA agents — Chrome CDP (primary, local, signed-in) + Browser Use Cloud (fallback for anti-bot)",
+      "description": "Browser automation for GAIA agents \u2014 Chrome CDP (primary, local, signed-in) + Browser Use Cloud (fallback for anti-bot)",
       "category": "scraping",
       "trigger_patterns": [
         "anti-bot",
@@ -942,7 +942,7 @@
     },
     "claude-code": {
       "name": "claude-code",
-      "description": "Invoke Claude Code (Opus 4.6) locally for red-team reviews and heavy coding tasks. Two modes — claude-code.review (read-only analysis) and claude-code.build (code execution).",
+      "description": "Invoke Claude Code (Opus 4.6) locally for red-team reviews and heavy coding tasks. Two modes \u2014 claude-code.review (read-only analysis) and claude-code.build (code execution).",
       "category": "build",
       "trigger_patterns": [
         "analysis",
@@ -980,7 +980,7 @@
     },
     "clip-factory": {
       "name": "clip-factory",
-      "description": "Long video → short viral clips pipeline for GAIA CORP-OS. Transcribes, detects scene boundaries, scores segments for virality via LLM, extracts ranked clips, applies VideoForge post-production (captio",
+      "description": "Long video \u2192 short viral clips pipeline for GAIA CORP-OS. Transcribes, detects scene boundaries, scores segments for virality via LLM, extracts ranked clips, applies VideoForge post-production (captio",
       "category": "video",
       "trigger_patterns": [
         "applies",
@@ -1098,7 +1098,7 @@
     },
     "content-tuner": {
       "name": "content-tuner",
-      "description": "Daily A/B test evaluation — 10:00 MYT",
+      "description": "Daily A/B test evaluation \u2014 10:00 MYT",
       "category": "content",
       "trigger_patterns": [
         "ab-framework",
@@ -1122,7 +1122,7 @@
     },
     "corp-os-compound": {
       "name": "corp-os-compound",
-      "description": "Enhanced nightly + weekly review for GAIA CORP-OS. Scans rooms, feedback, learning-log — extracts patterns, detects gaps, updates memory. The compounding engine.",
+      "description": "Enhanced nightly + weekly review for GAIA CORP-OS. Scans rooms, feedback, learning-log \u2014 extracts patterns, detects gaps, updates memory. The compounding engine.",
       "category": "ops",
       "trigger_patterns": [
         "compound",
@@ -1285,7 +1285,7 @@
     },
     "gaia-ops": {
       "name": "gaia-ops",
-      "description": "Background knowledge about GAIA CORP-OS operations — how to interact with the system, agent communication patterns, room protocols, skill invocation.",
+      "description": "Background knowledge about GAIA CORP-OS operations \u2014 how to interact with the system, agent communication patterns, room protocols, skill invocation.",
       "category": "ops",
       "trigger_patterns": [
         "agent",
@@ -1379,7 +1379,7 @@
     },
     "image-seed-bank": {
       "name": "image-seed-bank",
-      "description": "Image seed bank CLI for GAIA Creative Studio — store, query, promote, and export generated images",
+      "description": "Image seed bank CLI for GAIA Creative Studio \u2014 store, query, promote, and export generated images",
       "category": "creative",
       "trigger_patterns": [
         "bank",
@@ -1410,7 +1410,7 @@
     },
     "knowledge-compound": {
       "name": "knowledge-compound",
-      "description": "Self-learning loop — intake external knowledge, digest into patterns, compound into agent capabilities",
+      "description": "Self-learning loop \u2014 intake external knowledge, digest into patterns, compound into agent capabilities",
       "category": "knowledge",
       "trigger_patterns": [
         "agent",
@@ -1459,7 +1459,7 @@
     },
     "learn-youtube": {
       "name": "learn-youtube",
-      "description": "Learn from a YouTube video — extract transcript, categorize, analyze, map to GAIA knowledge vault. Structured knowledge extraction pipeline.",
+      "description": "Learn from a YouTube video \u2014 extract transcript, categorize, analyze, map to GAIA knowledge vault. Structured knowledge extraction pipeline.",
       "category": "content",
       "trigger_patterns": [
         "akbar",
@@ -1521,25 +1521,38 @@
       "description": "NanoBanana (Gemini Image API) best practices for character-consistent, multi-scene, brand-aligned image generation across use cases.",
       "category": "creative",
       "trigger_patterns": [
-        "api",
-        "brand-aligned",
-        "cases",
-        "character-consistent",
-        "gemini",
-        "generation",
+        "generate",
         "image",
-        "multi-scene",
+        "photo",
+        "picture",
         "nanobanana",
-        "nanobanana-gen"
+        "generate image",
+        "create image",
+        "make image",
+        "character image",
+        "brand image",
+        "product image",
+        "gemini image",
+        "style seed",
+        "face lock",
+        "image gen"
       ],
       "agents": [
         "dreami",
         "taoz"
       ],
       "capabilities": [
-        "branding",
-        "characters",
-        "images"
+        "image",
+        "generation",
+        "character",
+        "consistency",
+        "brand",
+        "alignment",
+        "style",
+        "batch",
+        "face lock",
+        "multi-scene",
+        "gemini"
       ],
       "cli_command": "~/.openclaw/skills/nanobanana/scripts/generate-and-audit.sh",
       "example_usage": "No manual `image-seed.sh add` needed after generation.",
@@ -1548,7 +1561,7 @@
     },
     "onboard-brand": {
       "name": "onboard-brand",
-      "description": "Create a new GAIA brand with AI-assisted identity design — colors, voice, tone, audience, DNA.json generation, brand directory setup.",
+      "description": "Create a new GAIA brand with AI-assisted identity design \u2014 colors, voice, tone, audience, DNA.json generation, brand directory setup.",
       "category": "commerce",
       "trigger_patterns": [
         "adding",
@@ -1629,7 +1642,7 @@
         "knowledge"
       ],
       "cli_command": "~/.openclaw/skills/orchestrate-v2/scripts/classify.sh",
-      "example_usage": "│ bash ~/.openclaw/skills/orchestrate-v2/ │",
+      "example_usage": "\u2502 bash ~/.openclaw/skills/orchestrate-v2/ \u2502",
       "active": true,
       "path": "~/.openclaw/skills/orchestrate-v2"
     },
@@ -1762,13 +1775,13 @@
       ],
       "capabilities": [],
       "cli_command": "~/.openclaw/skills/rigour/scripts/gate.sh",
-      "example_usage": "python3 -m py_compile <file.py> && echo \"✅ Python syntax OK\" || echo \"❌ Syntax error\"",
+      "example_usage": "python3 -m py_compile <file.py> && echo \"\u2705 Python syntax OK\" || echo \"\u274c Syntax error\"",
       "active": true,
       "path": "~/.openclaw/skills/rigour"
     },
     "scrapling": {
       "name": "scrapling",
-      "description": "Unified web scraping — anti-bot bypass, JS rendering, site crawling, structured extraction. Replaces site-scraper, firecrawl-search, Browser Use Cloud. Powered by Scrapling (30K+ stars).",
+      "description": "Unified web scraping \u2014 anti-bot bypass, JS rendering, site crawling, structured extraction. Replaces site-scraper, firecrawl-search, Browser Use Cloud. Powered by Scrapling (30K+ stars).",
       "category": "scraping",
       "trigger_patterns": [
         "anti-bot",
@@ -2006,7 +2019,7 @@
     },
     "spawn-templates": {
       "name": "spawn-templates",
-      "description": "Spawn temporary specialist sub-agents on demand — QA, regression, copy, ads, research, scrape, batch, diagnose. No permanent sub-agents.",
+      "description": "Spawn temporary specialist sub-agents on demand \u2014 QA, regression, copy, ads, research, scrape, batch, diagnose. No permanent sub-agents.",
       "category": "ops",
       "trigger_patterns": [
         "ads",
@@ -2125,7 +2138,7 @@
         "data"
       ],
       "cli_command": "~/.openclaw/skills/taoz-auditor/scripts/taoz-auditor.sh",
-      "example_usage": "Happy path: User → Zenni → classify.sh → Agent → Job done ✓",
+      "example_usage": "Happy path: User \u2192 Zenni \u2192 classify.sh \u2192 Agent \u2192 Job done \u2713",
       "active": true,
       "path": "~/.openclaw/skills/taoz-auditor"
     },
@@ -2232,7 +2245,7 @@
     },
     "video-gen": {
       "name": "video-gen",
-      "description": "Unified video generation skill — Kling, Wan, Sora",
+      "description": "Unified video generation skill \u2014 Kling, Wan, Sora",
       "category": "video",
       "trigger_patterns": [
         "gen",
