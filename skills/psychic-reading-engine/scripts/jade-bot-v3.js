@@ -453,7 +453,7 @@ function httpRequest(url, options, body) {
       });
     });
     req.on('error', reject);
-    req.setTimeout(60000, () => { req.destroy(new Error('timeout')); });
+    req.setTimeout(120000, () => { req.destroy(new Error('timeout')); });
     if (body) req.write(body);
     req.end();
   });
@@ -516,11 +516,40 @@ async function llmChat(chatId, userMessage, { systemOverride, modelOverride, tem
       console.error(`[llm] ${tryModel} no content:`, JSON.stringify(res.data).substring(0, 200));
     } catch (e) {
       console.error(`[llm] ${tryModel} failed:`, e.message);
+      // Single retry with 2s delay before trying next model
+      try {
+        await new Promise(r => setTimeout(r, 2000));
+        console.log(`[llm] retrying ${tryModel}...`);
+        const retryRes = await httpRequest('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${OPENROUTER_KEY}`,
+            'HTTP-Referer': 'https://jadeoracle.co',
+            'X-Title': 'The Jade Oracle'
+          }
+        }, JSON.stringify({
+          model: tryModel,
+          messages,
+          max_tokens: 1024,
+          temperature: temperature || 0.8,
+        }));
+        if (retryRes.data?.choices?.[0]?.message?.content) {
+          reply = retryRes.data.choices[0].message.content;
+          usedModel = tryModel;
+          break;
+        }
+      } catch (retryErr) {
+        console.error(`[llm] ${tryModel} retry failed:`, retryErr.message);
+      }
     }
   }
 
   if (!reply) {
-    reply = '🔮 the energies are a bit turbulent right now... give me a moment and try again ✨';
+    // Don't add turbulence fallback to chat history — it pollutes context
+    const fallback = '🔮 the energies are a bit turbulent right now... give me a moment and try again ✨';
+    console.log(`[${new Date().toISOString()}] chat=${chatId} ALL MODELS FAILED`);
+    return fallback;
   }
 
   addMessage(chatId, 'assistant', reply);
@@ -540,7 +569,8 @@ function detectIntent(text) {
   if (/(时盘|现在的能量|当前能量|current energy|current chart|此刻|现在的盘|当下)/.test(lower)) return 'shipan';
 
   if (/(八字|命盘|命理|生辰|奇门遁甲|qmdj|bazi|birth chart|destiny|fate|命运|测命|算命|问[问]*我的命|看命|我的命|排盘|排八字|问命|reading|chart|fortune|life blueprint)/.test(text)) return 'reading';
-  if (parseBirthDate(text) && parseBirthTime(text)) return 'reading';
+  // REMOVED: aggressive date+time detection hijacks normal conversation
+  // if (parseBirthDate(text) && parseBirthTime(text)) return 'reading';
 
   if (/(财运|事业|感情|婚姻|健康|wealth|career|love|marriage|health|relationship|工作|恋爱|money|job)/.test(lower)) return 'question';
 
@@ -829,6 +859,12 @@ async function handleMessage(chatId, text, userName, isPhoto) {
 
   // ── /bazi or reading request — ONLY time we collect birth data
   if (intent === 'bazi' || intent === 'reading') {
+    // ALWAYS check disk first -- userCharts may be stale
+    const user = getUser(chatId, userName);
+    if (user.birthData && !userCharts.has(chatId)) {
+      userCharts.set(chatId, { birthData: user.birthData, chartData: null });
+    }
+
     const existingChart = userCharts.get(chatId);
 
     // Already have birth data on disk — use it

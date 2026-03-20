@@ -4,7 +4,7 @@
 > It is auto-generated from `openclaw.json` by `scripts/generate-agent-matrix.py`.
 > To change a model: edit `openclaw.json` → run this script → git commit both.
 
-**Generated:** 2026-03-18 14:00  
+**Generated:** 2026-03-19 14:00  
 **Source:** `~/.openclaw/openclaw.json`  
 **Rule:** Any change to agent models must go through `openclaw.json` first.
 

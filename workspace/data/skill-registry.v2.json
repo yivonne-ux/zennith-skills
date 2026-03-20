@@ -1,0 +1,2329 @@
+{
+  "version": "2.0",
+  "updated_at": "2026-03-19T18:40:18Z",
+  "total_skills": 63,
+  "active_skills": 63,
+  "categories": [
+    "ads",
+    "build",
+    "commerce",
+    "content",
+    "creative",
+    "knowledge",
+    "ops",
+    "scraping",
+    "video"
+  ],
+  "skills": {
+    "ad-composer": {
+      "name": "ad-composer",
+      "description": "Unified ad image generation CLI wrapping NanoBanana (Gemini), Recraft V4, and Flux 2 Pro (fal.ai) for GAIA CORP-OS brand content.",
+      "category": "creative",
+      "trigger_patterns": [
+        "ad-composer",
+        "ad-image-gen",
+        "brand",
+        "cli",
+        "composer",
+        "content",
+        "fal",
+        "flux",
+        "gemini",
+        "generation",
+        "image",
+        "nanobanana",
+        "pro",
+        "recraft",
+        "unified",
+        "wrapping"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "branding",
+        "images"
+      ],
+      "cli_command": "~/.openclaw/skills/ad-composer/scripts/ad-bulk-gen.sh",
+      "example_usage": "~/.openclaw/skills/ad-composer/scripts/ad-image-gen.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/ad-composer"
+    },
+    "ads": {
+      "name": "ads",
+      "description": "Comprehensive paid advertising audit and optimization for any business type. Covers Google, Meta, LinkedIn, TikTok, Microsoft. Multi-platform analysis with scoring.",
+      "category": "ads",
+      "trigger_patterns": [
+        "ads",
+        "advertising",
+        "analysis",
+        "audit",
+        "brand",
+        "business",
+        "check-ins",
+        "client",
+        "covers",
+        "evaluating",
+        "google",
+        "linkedin",
+        "meta",
+        "microsoft",
+        "monthly",
+        "multi-platform",
+        "multiple",
+        "optimization",
+        "paid",
+        "performance",
+        "planning",
+        "platforms",
+        "quarterly",
+        "requests",
+        "review",
+        "scoring",
+        "strategy",
+        "tiktok"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "analysis"
+      ],
+      "cli_command": "",
+      "example_usage": "Audit all active ads for jade-oracle across Meta and TikTok.",
+      "active": true,
+      "path": "~/.openclaw/skills/ads"
+    },
+    "ads-audit": {
+      "name": "ads-audit",
+      "description": "Full multi-platform paid advertising audit with parallel subagent delegation. Comprehensive scoring across all ad platforms.",
+      "category": "ads",
+      "trigger_patterns": [
+        "accounts",
+        "active",
+        "ads",
+        "ads-audit",
+        "advertising",
+        "audit",
+        "brand",
+        "business",
+        "cause",
+        "delegation",
+        "dispatch",
+        "dropped",
+        "evaluation",
+        "existing",
+        "include",
+        "media",
+        "multi-platform",
+        "need",
+        "onboarding",
+        "paid",
+        "parallel",
+        "performance",
+        "platforms",
+        "quarterly",
+        "requested",
+        "reviews",
+        "root",
+        "scoring",
+        "subagent",
+        "unknown",
+        "where"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-audit-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-audit"
+    },
+    "ads-budget": {
+      "name": "ads-budget",
+      "description": "Budget allocation and bidding strategy review across all ad platforms. Evaluate spend efficiency, ROAS, CPA targets.",
+      "category": "ads",
+      "trigger_patterns": [
+        "added",
+        "ads",
+        "ads-budget",
+        "allocation",
+        "bidding",
+        "budget",
+        "campaigns",
+        "cpa",
+        "down",
+        "efficiency",
+        "monthly",
+        "needs",
+        "planning",
+        "platform",
+        "platforms",
+        "quarterly",
+        "rebalancing",
+        "review",
+        "roas",
+        "scaling",
+        "spend",
+        "strategy",
+        "targets"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis",
+        "strategy"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-budget-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-budget"
+    },
+    "ads-competitor": {
+      "name": "ads-competitor",
+      "description": "Competitor ad intelligence analysis across Google, Meta, LinkedIn, TikTok, Microsoft. Spy on competitor ad copy, targeting, spend.",
+      "category": "ads",
+      "trigger_patterns": [
+        "ads",
+        "ads-competitor",
+        "analysis",
+        "brand",
+        "competitive",
+        "competitor",
+        "copy",
+        "creative",
+        "entering",
+        "google",
+        "inspiration",
+        "intelligence",
+        "landscape",
+        "launching",
+        "leaders",
+        "linkedin",
+        "market",
+        "meta",
+        "microsoft",
+        "need",
+        "outperforming",
+        "planning",
+        "refresh",
+        "spend",
+        "spy",
+        "targeting",
+        "tiktok",
+        "understand",
+        "vertical",
+        "want"
+      ],
+      "agents": [
+        "dreami",
+        "scout"
+      ],
+      "capabilities": [
+        "analysis",
+        "text"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-competitor-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-competitor"
+    },
+    "ads-creative": {
+      "name": "ads-creative",
+      "description": "Cross-platform creative quality audit covering ad copy, video, image, and landing pages. Creative scoring framework.",
+      "category": "ads",
+      "trigger_patterns": [
+        "ads",
+        "ads-creative",
+        "audit",
+        "auditing",
+        "baseline",
+        "brand",
+        "copy",
+        "creative",
+        "cross-platform",
+        "declining",
+        "dropping",
+        "elements",
+        "evaluating",
+        "existing",
+        "framework",
+        "image",
+        "landing",
+        "launch",
+        "library",
+        "needs",
+        "pages",
+        "performance",
+        "preparing",
+        "quality",
+        "refresh",
+        "results",
+        "rising",
+        "scoring",
+        "test",
+        "video"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "analysis",
+        "images",
+        "text",
+        "video"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-creative-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-creative"
+    },
+    "ads-google": {
+      "name": "ads-google",
+      "description": "Google Ads deep analysis covering Search, Performance Max, Display, YouTube, Shopping. Evaluate Quality Score, structure, keywords.",
+      "category": "ads",
+      "trigger_patterns": [
+        "account",
+        "ads",
+        "ads-google",
+        "analysis",
+        "audit",
+        "brand",
+        "campaigns",
+        "declining",
+        "deep",
+        "display",
+        "google",
+        "improvement",
+        "keywords",
+        "max",
+        "needs",
+        "performance",
+        "quality",
+        "rising",
+        "score",
+        "search",
+        "setting",
+        "shopping",
+        "structure",
+        "underperforming",
+        "without",
+        "youtube"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-google-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-google"
+    },
+    "ads-landing": {
+      "name": "ads-landing",
+      "description": "Landing page quality assessment for paid advertising campaigns. Evaluate message match, load speed, conversion elements, mobile UX.",
+      "category": "ads",
+      "trigger_patterns": [
+        "ads",
+        "ads-landing",
+        "advertising",
+        "assessment",
+        "average",
+        "brand",
+        "campaigns",
+        "conversion",
+        "elements",
+        "experience",
+        "good",
+        "landing",
+        "launching",
+        "load",
+        "match",
+        "message",
+        "mobile",
+        "page",
+        "pages",
+        "paid",
+        "quality",
+        "rate",
+        "score",
+        "setup",
+        "shopify",
+        "speed",
+        "store",
+        "testing",
+        "variations"
+      ],
+      "agents": [
+        "dreami",
+        "scout"
+      ],
+      "capabilities": [
+        "strategy"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-landing-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-landing"
+    },
+    "ads-linkedin": {
+      "name": "ads-linkedin",
+      "description": "LinkedIn Ads deep analysis for B2B advertising. Evaluate 25 checks across targeting, creative, bidding, tracking.",
+      "category": "ads",
+      "trigger_patterns": [
+        "account",
+        "ads",
+        "ads-linkedin",
+        "advertising",
+        "analysis",
+        "audit",
+        "bidding",
+        "brand",
+        "campaign",
+        "channel",
+        "checks",
+        "creative",
+        "deep",
+        "evaluating",
+        "first",
+        "lead",
+        "linkedin",
+        "optimization",
+        "performance",
+        "review",
+        "setting",
+        "targeting",
+        "time",
+        "tracking"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-linkedin-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-linkedin"
+    },
+    "ads-meta": {
+      "name": "ads-meta",
+      "description": "Meta Ads deep analysis covering Facebook and Instagram advertising. Evaluate Pixel/CAPI, EMQ, creative diversity, Advantage+, audience.",
+      "category": "ads",
+      "trigger_patterns": [
+        "account",
+        "ads",
+        "ads-meta",
+        "advantage",
+        "advertising",
+        "analysis",
+        "audience",
+        "audit",
+        "brand",
+        "campaigns",
+        "capi",
+        "creative",
+        "deep",
+        "diagnosis",
+        "diversity",
+        "emq",
+        "evaluation",
+        "facebook",
+        "fatigue",
+        "instagram",
+        "meta",
+        "performance",
+        "pixel",
+        "review",
+        "setting",
+        "shopping",
+        "troubleshooting"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "analysis",
+        "characters"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-meta-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-meta"
+    },
+    "ads-microsoft": {
+      "name": "ads-microsoft",
+      "description": "Microsoft/Bing Ads deep analysis covering Search, Performance Max, Audience Network. Import quality from Google.",
+      "category": "ads",
+      "trigger_patterns": [
+        "account",
+        "adding",
+        "ads",
+        "ads-microsoft",
+        "analysis",
+        "audience",
+        "audit",
+        "bing",
+        "brand",
+        "channel",
+        "deep",
+        "evaluating",
+        "exploring",
+        "google",
+        "import",
+        "max",
+        "microsoft",
+        "network",
+        "optimization",
+        "performance",
+        "quality",
+        "search"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-microsoft-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-microsoft"
+    },
+    "ads-plan": {
+      "name": "ads-plan",
+      "description": "Strategic paid advertising planning with industry-specific templates. Create campaign structures, budget allocations, audience strategies.",
+      "category": "ads",
+      "trigger_patterns": [
+        "ads",
+        "ads-plan",
+        "advertising",
+        "allocations",
+        "audience",
+        "brand",
+        "budget",
+        "campaign",
+        "create",
+        "entering",
+        "industry-specific",
+        "launching",
+        "paid",
+        "plan",
+        "planning",
+        "platform",
+        "promotion",
+        "quarterly",
+        "refresh",
+        "scaling",
+        "significantly",
+        "spend",
+        "strategic",
+        "strategies",
+        "strategy",
+        "structures",
+        "templates"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "strategy"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-plan-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-plan"
+    },
+    "ads-tiktok": {
+      "name": "ads-tiktok",
+      "description": "TikTok Ads deep analysis covering creative quality, tracking, bidding, catalog, Spark Ads.",
+      "category": "ads",
+      "trigger_patterns": [
+        "account",
+        "ads",
+        "ads-tiktok",
+        "analysis",
+        "audit",
+        "bidding",
+        "brand",
+        "catalog",
+        "creative",
+        "deep",
+        "evaluating",
+        "integration",
+        "optimization",
+        "organic-to-paid",
+        "performance",
+        "quality",
+        "review",
+        "setting",
+        "shop",
+        "spark",
+        "strategy",
+        "tiktok",
+        "tracking"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "analysis"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-tiktok-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-tiktok"
+    },
+    "ads-youtube": {
+      "name": "ads-youtube",
+      "description": "YouTube Ads specific analysis covering campaign types, creative quality, targeting, bumper/skippable/discovery formats.",
+      "category": "ads",
+      "trigger_patterns": [
+        "ads",
+        "ads-google",
+        "ads-youtube",
+        "analysis",
+        "assessment",
+        "audit",
+        "brand",
+        "bumper",
+        "campaign",
+        "covers",
+        "creative",
+        "deeper",
+        "discovery",
+        "dive",
+        "evaluating",
+        "formats",
+        "google",
+        "part",
+        "performance",
+        "quality",
+        "setting",
+        "skippable",
+        "targeting",
+        "video",
+        "youtube"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "analysis",
+        "strategy"
+      ],
+      "cli_command": "",
+      "example_usage": "Save to: `~/.openclaw/workspace/rooms/logs/ads-youtube-{brand}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/ads-youtube"
+    },
+    "agent-reach": {
+      "name": "agent-reach",
+      "description": "Give ALL OpenClaw agents eyes on the internet. Multiple tools for different jobs — pick the right one.",
+      "category": "scraping",
+      "trigger_patterns": [
+        "agent",
+        "agent-reach",
+        "different",
+        "eyes",
+        "give",
+        "internet",
+        "jobs",
+        "multiple",
+        "one",
+        "openclaw",
+        "pick",
+        "pinchtab-browse",
+        "reach",
+        "right",
+        "scrapling-fetch",
+        "web-read",
+        "youtube-info"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [],
+      "cli_command": "~/.openclaw/skills/agent-reach/scripts/pinchtab-browse.sh",
+      "example_usage": "bash ~/.openclaw/skills/agent-reach/scripts/web-read.sh \"https://example.com\"",
+      "active": true,
+      "path": "~/.openclaw/skills/agent-reach"
+    },
+    "agent-vitality": {
+      "name": "agent-vitality",
+      "description": "_Each agent is a living cell. It reflects, learns, evolves, and synchronizes with the organism._",
+      "category": "ops",
+      "trigger_patterns": [
+        "agent",
+        "agent-vitality",
+        "cell",
+        "cross-pollinate",
+        "evolve",
+        "evolves",
+        "learns",
+        "living",
+        "organism",
+        "pulse",
+        "reflects",
+        "synchronizes",
+        "vitality"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "knowledge"
+      ],
+      "cli_command": "~/.openclaw/skills/agent-vitality/scripts/cross-pollinate.sh",
+      "example_usage": "bash pulse.sh <agent_name>",
+      "active": true,
+      "path": "~/.openclaw/skills/agent-vitality"
+    },
+    "ai-influencer": {
+      "name": "ai-influencer",
+      "description": "AI Influencer Factory — end-to-end pipeline for creating, producing, and scaling AI character content across TikTok, Reels, Shorts. Face consistency, voice cloning, lip sync, auto-posting.",
+      "category": "content",
+      "trigger_patterns": [
+        "ai-influencer",
+        "auto-posting",
+        "character",
+        "cloning",
+        "consistency",
+        "content",
+        "creating",
+        "end-to-end",
+        "face",
+        "factory",
+        "influencer",
+        "lip",
+        "pipeline",
+        "producing",
+        "reels",
+        "scaling",
+        "shorts",
+        "sync",
+        "tiktok",
+        "voice"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "automation",
+        "characters",
+        "publishing"
+      ],
+      "cli_command": "~/.openclaw/skills/ai-influencer/scripts/jade-content-factory.sh",
+      "example_usage": "B-Roll → Wan 2.6 via video-gen.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/ai-influencer"
+    },
+    "biz-scraper": {
+      "name": "biz-scraper",
+      "description": "GAIA E-Commerce Flywheel — Ali Akbar \"Spy → Clone → Scale\" method with AI agents. Scrapes competitors, clones winning funnels, generates content at scale, launches, measures, compounds.",
+      "category": "scraping",
+      "trigger_patterns": [
+        "akbar",
+        "ali",
+        "biz",
+        "biz-scraper",
+        "clone",
+        "clones",
+        "competitors",
+        "compounds",
+        "content",
+        "e-commerce",
+        "flywheel",
+        "funnels",
+        "generates",
+        "launches",
+        "measures",
+        "scale",
+        "scraper",
+        "scrapes",
+        "spy",
+        "winning"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "cli_command": "~/.openclaw/skills/biz-scraper/scripts/biz-scraper.sh",
+      "example_usage": "~/.openclaw/skills/biz-scraper/scripts/biz-scraper.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/biz-scraper"
+    },
+    "brand-studio": {
+      "name": "brand-studio",
+      "description": "Brand-aware ad generation with visual QA scoring against real brand references.",
+      "category": "creative",
+      "trigger_patterns": [
+        "against",
+        "brand",
+        "brand-aware",
+        "brand-studio",
+        "compose",
+        "generation",
+        "real",
+        "references",
+        "scoring",
+        "studio",
+        "visual"
+      ],
+      "agents": [
+        "dreami",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "branding"
+      ],
+      "cli_command": "~/.openclaw/skills/brand-studio/scripts/audit.sh",
+      "example_usage": "bash ~/.openclaw/skills/brand-studio/scripts/composer.sh --list",
+      "active": true,
+      "path": "~/.openclaw/skills/brand-studio"
+    },
+    "browser-use": {
+      "name": "browser-use",
+      "description": "Browser automation for GAIA agents — Chrome CDP (primary, local, signed-in) + Browser Use Cloud (fallback for anti-bot)",
+      "category": "scraping",
+      "trigger_patterns": [
+        "anti-bot",
+        "automation",
+        "browser",
+        "browser-use",
+        "cdp",
+        "chrome",
+        "cloud",
+        "fallback",
+        "local",
+        "primary",
+        "signed-in",
+        "use"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "automation"
+      ],
+      "cli_command": "~/.openclaw/skills/browser-use/scripts/meta-ig-setup.py",
+      "example_usage": "browser.navigate { url: \"https://admin.shopify.com/store/7qz8cj-uu\", profile: \"user\" }",
+      "active": true,
+      "path": "~/.openclaw/skills/browser-use"
+    },
+    "campaign-planner": {
+      "name": "campaign-planner",
+      "description": "Campaign brief generation engine for GAIA CORP-OS ad factory. Generates structured ad campaign briefs from Tricia's template taxonomy + strategic directions.",
+      "category": "ads",
+      "trigger_patterns": [
+        "brief",
+        "briefs",
+        "campaign",
+        "campaign-planner",
+        "directions",
+        "engine",
+        "factory",
+        "generates",
+        "generation",
+        "planner",
+        "strategic",
+        "structured",
+        "taxonomy",
+        "template",
+        "tricia"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "strategy"
+      ],
+      "cli_command": "~/.openclaw/skills/campaign-planner/scripts/campaign-planner.sh",
+      "example_usage": "campaign-planner.sh create \\",
+      "active": true,
+      "path": "~/.openclaw/skills/campaign-planner"
+    },
+    "character-body-pairing": {
+      "name": "character-body-pairing",
+      "description": ">",
+      "category": "creative",
+      "trigger_patterns": [
+        "body",
+        "character",
+        "character-body-pairing",
+        "nanobanana-gen",
+        "pairing"
+      ],
+      "agents": [
+        "dreami",
+        "taoz"
+      ],
+      "capabilities": [],
+      "cli_command": "",
+      "example_usage": "nanobanana-gen.sh generate \\",
+      "active": true,
+      "path": "~/.openclaw/skills/character-body-pairing"
+    },
+    "character-design": {
+      "name": "character-design",
+      "description": "> Source: Sirio's workflows (2 videos) + GAIA OS practice",
+      "category": "creative",
+      "trigger_patterns": [
+        "character",
+        "character-design",
+        "design",
+        "practice",
+        "sirio",
+        "source",
+        "videos",
+        "workflows"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "automation",
+        "video"
+      ],
+      "cli_command": "~/.openclaw/skills/character-design/scripts/character-correction.sh",
+      "example_usage": "character-correction.sh status",
+      "active": true,
+      "path": "~/.openclaw/skills/character-design"
+    },
+    "character-lock": {
+      "name": "character-lock",
+      "description": "Face lock and body consistency rules for NanoBanana character generation. Learned from Luna Solaris v3.",
+      "category": "creative",
+      "trigger_patterns": [
+        "body",
+        "character",
+        "character-lock",
+        "consistency",
+        "face",
+        "generation",
+        "learned",
+        "lock",
+        "luna",
+        "nanobanana",
+        "rules",
+        "solaris"
+      ],
+      "agents": [
+        "dreami",
+        "taoz"
+      ],
+      "capabilities": [
+        "characters",
+        "knowledge"
+      ],
+      "cli_command": "",
+      "example_usage": "~/.openclaw/skills/character-lock/scripts/generate-locked.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/character-lock"
+    },
+    "claude-code": {
+      "name": "claude-code",
+      "description": "Invoke Claude Code (Opus 4.6) locally for red-team reviews and heavy coding tasks. Two modes — claude-code.review (read-only analysis) and claude-code.build (code execution).",
+      "category": "build",
+      "trigger_patterns": [
+        "analysis",
+        "build",
+        "claude",
+        "claude-code",
+        "claude-code-runner",
+        "code",
+        "coding",
+        "execution",
+        "heavy",
+        "invoke",
+        "locally",
+        "modes",
+        "opus",
+        "read-only",
+        "red-team",
+        "review",
+        "reviews",
+        "taoz-inbox",
+        "tasks",
+        "two"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis",
+        "code"
+      ],
+      "cli_command": "~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh",
+      "example_usage": "bash ~/.openclaw/skills/claude-code/scripts/claude-code-runner.sh review \"Review brief goes here\" .",
+      "active": true,
+      "path": "~/.openclaw/skills/claude-code"
+    },
+    "clip-factory": {
+      "name": "clip-factory",
+      "description": "Long video → short viral clips pipeline for GAIA CORP-OS. Transcribes, detects scene boundaries, scores segments for virality via LLM, extracts ranked clips, applies VideoForge post-production (captio",
+      "category": "video",
+      "trigger_patterns": [
+        "applies",
+        "boundaries",
+        "brand",
+        "caption",
+        "clip",
+        "clip-factory",
+        "clips",
+        "detects",
+        "effects",
+        "exports",
+        "extracts",
+        "factory",
+        "feed",
+        "llm",
+        "long",
+        "multi-platform",
+        "pipeline",
+        "post-production",
+        "ranked",
+        "reels",
+        "registers",
+        "scene",
+        "scores",
+        "seed-store",
+        "segments",
+        "short",
+        "shorts",
+        "tiktok",
+        "transcribes",
+        "via",
+        "video",
+        "videoforge",
+        "viral",
+        "virality"
+      ],
+      "agents": [
+        "taoz"
+      ],
+      "capabilities": [
+        "analysis",
+        "automation",
+        "branding",
+        "commerce",
+        "data",
+        "publishing",
+        "text",
+        "video"
+      ],
+      "cli_command": "~/.openclaw/skills/clip-factory/scripts/clip-factory.sh",
+      "example_usage": "bash /Users/jennwoeiloh/.openclaw/skills/clip-factory/scripts/clip-factory.sh run \\",
+      "active": true,
+      "path": "~/.openclaw/skills/clip-factory"
+    },
+    "content-scraper": {
+      "name": "content-scraper",
+      "description": "_Zenni queues scrape jobs. Scout + Dreami execute. Learnings flow into the organism._",
+      "category": "content",
+      "trigger_patterns": [
+        "content",
+        "content-scraper",
+        "dreami",
+        "execute",
+        "flow",
+        "jobs",
+        "learnings",
+        "organism",
+        "pinterest-sync",
+        "queues",
+        "scout",
+        "scrape",
+        "scrape-queue",
+        "scrape-run",
+        "scraper",
+        "social-scan",
+        "youtube-scan",
+        "zenni"
+      ],
+      "agents": [
+        "dreami",
+        "scout"
+      ],
+      "capabilities": [
+        "data",
+        "knowledge"
+      ],
+      "cli_command": "~/.openclaw/skills/content-scraper/scripts/facebook-scan.sh",
+      "example_usage": "bash scrape-queue.sh add --platform pinterest --target \"jennloh85\" --type board_sync",
+      "active": true,
+      "path": "~/.openclaw/skills/content-scraper"
+    },
+    "content-supply-chain": {
+      "name": "content-supply-chain",
+      "description": "**Owner:** Zenni (orchestration), all agents participate",
+      "category": "content",
+      "trigger_patterns": [
+        "chain",
+        "content",
+        "content-supply-chain",
+        "orchestration",
+        "owner",
+        "participate",
+        "supply",
+        "zenni"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [],
+      "cli_command": "~/.openclaw/skills/content-supply-chain/scripts/content-supply-chain.sh",
+      "example_usage": "bash ~/.openclaw/skills/content-supply-chain/scripts/content-supply-chain.sh cycle --brand mirra",
+      "active": true,
+      "path": "~/.openclaw/skills/content-supply-chain"
+    },
+    "content-tuner": {
+      "name": "content-tuner",
+      "description": "Daily A/B test evaluation — 10:00 MYT",
+      "category": "content",
+      "trigger_patterns": [
+        "ab-framework",
+        "content",
+        "content-tuner",
+        "daily",
+        "evaluation",
+        "myt",
+        "test",
+        "tune",
+        "tuner"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [],
+      "cli_command": "~/.openclaw/skills/content-tuner/scripts/ab-framework.sh",
+      "example_usage": "bash ~/.openclaw/skills/content-tuner/scripts/tune.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/content-tuner"
+    },
+    "corp-os-compound": {
+      "name": "corp-os-compound",
+      "description": "Enhanced nightly + weekly review for GAIA CORP-OS. Scans rooms, feedback, learning-log — extracts patterns, detects gaps, updates memory. The compounding engine.",
+      "category": "ops",
+      "trigger_patterns": [
+        "compound",
+        "compounding",
+        "corp",
+        "corp-os-compound",
+        "detects",
+        "engine",
+        "enhanced",
+        "extracts",
+        "feedback",
+        "gaps",
+        "learning-log",
+        "memory",
+        "nightly",
+        "patterns",
+        "review",
+        "rooms",
+        "scans",
+        "updates",
+        "weekly"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis",
+        "data",
+        "knowledge"
+      ],
+      "cli_command": "~/.openclaw/skills/corp-os-compound/scripts/nightly.sh",
+      "example_usage": "bash ~/.openclaw/skills/corp-os-compound/scripts/nightly.sh --help",
+      "active": true,
+      "path": "~/.openclaw/skills/corp-os-compound"
+    },
+    "creative-intake": {
+      "name": "creative-intake",
+      "description": "**agents**: [zenni, dreami, scout]",
+      "category": "creative",
+      "trigger_patterns": [
+        "creative",
+        "creative-intake",
+        "dreami",
+        "intake",
+        "scout",
+        "zenni"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [],
+      "cli_command": "~/.openclaw/skills/creative-intake/scripts/approval-queue.sh",
+      "example_usage": "bash ~/.openclaw/skills/creative-intake/scripts/approval-queue.sh --help",
+      "active": true,
+      "path": "~/.openclaw/skills/creative-intake"
+    },
+    "creative-studio": {
+      "name": "creative-studio",
+      "description": "Control room for character and asset creation workflows.",
+      "category": "creative",
+      "trigger_patterns": [
+        "asset",
+        "character",
+        "control",
+        "creation",
+        "creative",
+        "creative-studio",
+        "room",
+        "studio",
+        "workflows"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "automation",
+        "characters"
+      ],
+      "cli_command": "~/.openclaw/skills/creative-studio/scripts/comfyui-api.sh",
+      "example_usage": "studio.sh launch --brand <brand> --character <name> [--engine nanobanana]",
+      "active": true,
+      "path": "~/.openclaw/skills/creative-studio"
+    },
+    "evomap": {
+      "name": "evomap",
+      "description": "Connects GAIA CORP-OS to [EvoMap](https://evomap.ai), the global AI agent evolution network (45K+ agents, 483K+ assets). GAIA publishes learnings as Gene+Capsule bundles and can fetch proven patterns ",
+      "category": "ops",
+      "trigger_patterns": [
+        "agent",
+        "assets",
+        "bundles",
+        "capsule",
+        "connects",
+        "evolution",
+        "evomap",
+        "fetch",
+        "gene",
+        "global",
+        "https",
+        "learnings",
+        "network",
+        "patterns",
+        "proven",
+        "publishes",
+        "worldwide"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "knowledge",
+        "publishing"
+      ],
+      "cli_command": "~/.openclaw/skills/evomap/scripts/evomap-gaia.sh",
+      "example_usage": "evomap-gaia hello          # Register or re-authenticate node",
+      "active": true,
+      "path": "~/.openclaw/skills/evomap"
+    },
+    "firecrawl-search": {
+      "name": "firecrawl-search",
+      "description": "Web search and scraping via Firecrawl API. Use when you need to search the web, scrape websites (including JS-heavy pages), crawl entire sites, or extract structured data from web pages. Requires FIRE",
+      "category": "scraping",
+      "trigger_patterns": [
+        "api",
+        "crawl",
+        "data",
+        "entire",
+        "environment",
+        "extract",
+        "firecrawl",
+        "firecrawl-search",
+        "including",
+        "js-heavy",
+        "key",
+        "need",
+        "pages",
+        "requires",
+        "scrape",
+        "scraping",
+        "search",
+        "sites",
+        "structured",
+        "variable",
+        "via",
+        "web",
+        "websites",
+        "when",
+        "you"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "cli_command": "~/.openclaw/skills/firecrawl-search/scripts/crawl.py",
+      "example_usage": "bash ~/.openclaw/skills/firecrawl-search/scripts/crawl.py --help",
+      "active": true,
+      "path": "~/.openclaw/skills/firecrawl-search"
+    },
+    "gaia-ops": {
+      "name": "gaia-ops",
+      "description": "Background knowledge about GAIA CORP-OS operations — how to interact with the system, agent communication patterns, room protocols, skill invocation.",
+      "category": "ops",
+      "trigger_patterns": [
+        "agent",
+        "background",
+        "communication",
+        "dispatch",
+        "gaia",
+        "gaia-ops",
+        "interact",
+        "invocation",
+        "knowledge",
+        "operations",
+        "ops",
+        "patterns",
+        "protocols",
+        "room"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "knowledge"
+      ],
+      "cli_command": "",
+      "example_usage": "4. **CODE**: Claude Code CLI fires via `claude-code-runner.sh`",
+      "active": true,
+      "path": "~/.openclaw/skills/gaia-ops"
+    },
+    "gstack": {
+      "name": "gstack",
+      "description": "|",
+      "category": "build",
+      "trigger_patterns": [
+        "gstack"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [],
+      "cli_command": "",
+      "example_usage": "mkdir -p ~/.gstack/sessions",
+      "active": true,
+      "path": "~/.openclaw/skills/gstack"
+    },
+    "ig-character-gen": {
+      "name": "ig-character-gen",
+      "description": "Instagram content library generator for AI influencer characters. Produces authentic, iPhone-quality daily life images in WESTERN city settings with consistent face/body. Built from reverse-engineerin",
+      "category": "creative",
+      "trigger_patterns": [
+        "authentic",
+        "body",
+        "built",
+        "character",
+        "characters",
+        "city",
+        "confirmed",
+        "consistent",
+        "content",
+        "daily",
+        "face",
+        "gen",
+        "generator",
+        "ig-character-gen",
+        "ig-gen",
+        "images",
+        "influencer",
+        "instagram",
+        "iphone-quality",
+        "jade",
+        "library",
+        "life",
+        "nanobanana-gen",
+        "oracle",
+        "produces",
+        "reverse-engineering",
+        "settings",
+        "western"
+      ],
+      "agents": [
+        "dreami",
+        "taoz"
+      ],
+      "capabilities": [
+        "characters",
+        "images"
+      ],
+      "cli_command": "~/.openclaw/skills/ig-character-gen/scripts/ig-gen.sh",
+      "example_usage": "bash ~/.openclaw/skills/ig-character-gen/scripts/ig-gen.sh --help",
+      "active": true,
+      "path": "~/.openclaw/skills/ig-character-gen"
+    },
+    "image-seed-bank": {
+      "name": "image-seed-bank",
+      "description": "Image seed bank CLI for GAIA Creative Studio — store, query, promote, and export generated images",
+      "category": "creative",
+      "trigger_patterns": [
+        "bank",
+        "cli",
+        "creative",
+        "export",
+        "generated",
+        "image",
+        "image-seed-bank",
+        "images",
+        "promote",
+        "query",
+        "seed",
+        "store",
+        "studio"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "commerce",
+        "images"
+      ],
+      "cli_command": "~/.openclaw/skills/image-seed-bank/scripts/asset-bridge.sh",
+      "example_usage": "Syncs assets between `library.db` (Creative Studio) and `image-seed-bank.jsonl` (seed bank).",
+      "active": true,
+      "path": "~/.openclaw/skills/image-seed-bank"
+    },
+    "knowledge-compound": {
+      "name": "knowledge-compound",
+      "description": "Self-learning loop — intake external knowledge, digest into patterns, compound into agent capabilities",
+      "category": "knowledge",
+      "trigger_patterns": [
+        "agent",
+        "capabilities",
+        "compound",
+        "digest",
+        "external",
+        "intake",
+        "knowledge",
+        "knowledge-compound",
+        "loop",
+        "pattern",
+        "patterns",
+        "self-learning"
+      ],
+      "agents": [
+        "dreami",
+        "scout"
+      ],
+      "capabilities": [
+        "knowledge"
+      ],
+      "cli_command": "~/.openclaw/skills/knowledge-compound/scripts/classify-vault.py",
+      "example_usage": "bash ~/.openclaw/skills/knowledge-compound/scripts/digest.sh \\",
+      "active": true,
+      "path": "~/.openclaw/skills/knowledge-compound"
+    },
+    "knowledge-transfer": {
+      "name": "knowledge-transfer",
+      "description": ">",
+      "category": "knowledge",
+      "trigger_patterns": [
+        "knowledge",
+        "knowledge-transfer",
+        "transfer"
+      ],
+      "agents": [
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [],
+      "cli_command": "",
+      "example_usage": "**Where:** `~/.openclaw/skills/orchestrate-v2/scripts/classify.sh`",
+      "active": true,
+      "path": "~/.openclaw/skills/knowledge-transfer"
+    },
+    "learn-youtube": {
+      "name": "learn-youtube",
+      "description": "Learn from a YouTube video — extract transcript, categorize, analyze, map to GAIA knowledge vault. Structured knowledge extraction pipeline.",
+      "category": "content",
+      "trigger_patterns": [
+        "akbar",
+        "analyze",
+        "analyzing",
+        "base",
+        "building",
+        "categorize",
+        "competitor",
+        "content",
+        "creation",
+        "digest",
+        "educational",
+        "extract",
+        "extracting",
+        "extraction",
+        "gaia-learn",
+        "industry",
+        "ingesting",
+        "knowledge",
+        "leaders",
+        "learn",
+        "learn-youtube",
+        "learning",
+        "map",
+        "marketing",
+        "patterns",
+        "pipeline",
+        "psychic",
+        "samira",
+        "strategies",
+        "structured",
+        "thought",
+        "transcript",
+        "tutorials",
+        "vault",
+        "video",
+        "viral",
+        "youtube"
+      ],
+      "agents": [
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "automation",
+        "data",
+        "knowledge",
+        "text",
+        "video"
+      ],
+      "cli_command": "",
+      "example_usage": "Save analysis to: `~/.openclaw/workspace/rooms/logs/learn-youtube-{video_id}-{date}.md`",
+      "active": true,
+      "path": "~/.openclaw/skills/learn-youtube"
+    },
+    "nanobanana": {
+      "name": "nanobanana",
+      "description": "NanoBanana (Gemini Image API) best practices for character-consistent, multi-scene, brand-aligned image generation across use cases.",
+      "category": "creative",
+      "trigger_patterns": [
+        "api",
+        "brand-aligned",
+        "cases",
+        "character-consistent",
+        "gemini",
+        "generation",
+        "image",
+        "multi-scene",
+        "nanobanana",
+        "nanobanana-gen"
+      ],
+      "agents": [
+        "dreami",
+        "taoz"
+      ],
+      "capabilities": [
+        "branding",
+        "characters",
+        "images"
+      ],
+      "cli_command": "~/.openclaw/skills/nanobanana/scripts/generate-and-audit.sh",
+      "example_usage": "No manual `image-seed.sh add` needed after generation.",
+      "active": true,
+      "path": "~/.openclaw/skills/nanobanana"
+    },
+    "onboard-brand": {
+      "name": "onboard-brand",
+      "description": "Create a new GAIA brand with AI-assisted identity design — colors, voice, tone, audience, DNA.json generation, brand directory setup.",
+      "category": "commerce",
+      "trigger_patterns": [
+        "adding",
+        "ai-assisted",
+        "audience",
+        "brand",
+        "business",
+        "cloning",
+        "colors",
+        "competitor",
+        "copy",
+        "create",
+        "creating",
+        "design",
+        "directory",
+        "dna",
+        "ecosystem",
+        "existing",
+        "generation",
+        "identity",
+        "json",
+        "nanobanana-gen",
+        "onboard",
+        "onboard-brand",
+        "positioning",
+        "rebranding",
+        "setup",
+        "strategy",
+        "sub-brand",
+        "tone",
+        "variant",
+        "voice",
+        "zennith"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "branding"
+      ],
+      "cli_command": "",
+      "example_usage": "# Skill: onboard-brand (reference docs only, no CLI)",
+      "active": true,
+      "path": "~/.openclaw/skills/onboard-brand"
+    },
+    "orchestrate-v2": {
+      "name": "orchestrate-v2",
+      "description": "Zenni's production orchestration discipline. Auto-classify tasks, enforce delegation rules, dispatch to the right agent, track outcomes, compound learnings.",
+      "category": "ops",
+      "trigger_patterns": [
+        "agent",
+        "auto-classify",
+        "compound",
+        "delegation",
+        "discipline",
+        "dispatch",
+        "enforce",
+        "learnings",
+        "orchestrate",
+        "orchestrate-v2",
+        "orchestration",
+        "outcomes",
+        "production",
+        "right",
+        "rules",
+        "tasks",
+        "track",
+        "zenni"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "commerce",
+        "knowledge"
+      ],
+      "cli_command": "~/.openclaw/skills/orchestrate-v2/scripts/classify.sh",
+      "example_usage": "│ bash ~/.openclaw/skills/orchestrate-v2/ │",
+      "active": true,
+      "path": "~/.openclaw/skills/orchestrate-v2"
+    },
+    "pinterest-ref": {
+      "name": "pinterest-ref",
+      "description": "Extract visual references from Pinterest pins and boards, then generate structured visual DNA analysis documents for character design and brand identity work.",
+      "category": "creative",
+      "trigger_patterns": [
+        "analysis",
+        "boards",
+        "brand",
+        "character",
+        "design",
+        "dna",
+        "documents",
+        "extract",
+        "generate",
+        "identity",
+        "pins",
+        "pinterest",
+        "pinterest-extract",
+        "pinterest-ref",
+        "ref",
+        "references",
+        "structured",
+        "visual",
+        "visual-dna-extract",
+        "work"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis",
+        "branding",
+        "characters",
+        "data"
+      ],
+      "cli_command": "~/.openclaw/skills/pinterest-ref/scripts/pinterest-extract.sh",
+      "example_usage": "pinterest-extract.sh <pinterest-url> <output-dir>",
+      "active": true,
+      "path": "~/.openclaw/skills/pinterest-ref"
+    },
+    "psychic-reading-engine": {
+      "name": "psychic-reading-engine",
+      "description": "Deep computational psychic reading system combining Western astrology (PyEphem), Chinese metaphysics (Qi Men Dun Jia), Tarot (Rider-Waite), and Jungian/Forer psychology synthesis. All astronomical com",
+      "category": "knowledge",
+      "trigger_patterns": [
+        "approximations",
+        "astrology",
+        "astronomical",
+        "chinese",
+        "combining",
+        "computational",
+        "computations",
+        "data",
+        "deep",
+        "dun",
+        "engine",
+        "fake",
+        "forer",
+        "jia",
+        "jungian",
+        "men",
+        "metaphysics",
+        "psychic",
+        "psychic-reading",
+        "psychic-reading-engine",
+        "psychology",
+        "pyephem",
+        "reading",
+        "real",
+        "rider-waite",
+        "synthesis",
+        "tarot",
+        "western"
+      ],
+      "agents": [
+        "dreami",
+        "main"
+      ],
+      "capabilities": [
+        "readings"
+      ],
+      "cli_command": "~/.openclaw/skills/psychic-reading-engine/scripts/birth-chart.py",
+      "example_usage": "psychic-reading.sh \\",
+      "active": true,
+      "path": "~/.openclaw/skills/psychic-reading-engine"
+    },
+    "ref-picker": {
+      "name": "ref-picker",
+      "description": "Unified catalog + picker for all reference images across GAIA OS. Solves the \"every time I need a ref I have to search manually\" problem.",
+      "category": "creative",
+      "trigger_patterns": [
+        "catalog",
+        "images",
+        "manually",
+        "need",
+        "picker",
+        "problem",
+        "ref",
+        "ref-picker",
+        "reference",
+        "search",
+        "solves",
+        "time",
+        "unified"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "images"
+      ],
+      "cli_command": "~/.openclaw/skills/ref-picker/scripts/ref-picker.sh",
+      "example_usage": "ref-picker.sh catalog [--force]           # Scan & index all 485+ images",
+      "active": true,
+      "path": "~/.openclaw/skills/ref-picker"
+    },
+    "rigour": {
+      "name": "rigour",
+      "description": ">",
+      "category": "build",
+      "trigger_patterns": [
+        "gate",
+        "rigour"
+      ],
+      "agents": [
+        "taoz"
+      ],
+      "capabilities": [],
+      "cli_command": "~/.openclaw/skills/rigour/scripts/gate.sh",
+      "example_usage": "python3 -m py_compile <file.py> && echo \"✅ Python syntax OK\" || echo \"❌ Syntax error\"",
+      "active": true,
+      "path": "~/.openclaw/skills/rigour"
+    },
+    "scrapling": {
+      "name": "scrapling",
+      "description": "Unified web scraping — anti-bot bypass, JS rendering, site crawling, structured extraction. Replaces site-scraper, firecrawl-search, Browser Use Cloud. Powered by Scrapling (30K+ stars).",
+      "category": "scraping",
+      "trigger_patterns": [
+        "anti-bot",
+        "browser",
+        "bypass",
+        "cloud",
+        "crawling",
+        "extraction",
+        "firecrawl-search",
+        "powered",
+        "rendering",
+        "replaces",
+        "scraping",
+        "scrapling",
+        "site",
+        "site-scraper",
+        "stars",
+        "structured",
+        "unified",
+        "web"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "cli_command": "~/.openclaw/skills/scrapling/scripts/scrape.py",
+      "example_usage": "bash scrape.sh fetch \"https://example.com\" --output json",
+      "active": true,
+      "path": "~/.openclaw/skills/scrapling"
+    },
+    "self-diagnose": {
+      "name": "self-diagnose",
+      "description": "System health diagnostics for GAIA OS. Checks session counts, gateway RAM, A2A bridge status, and cron errors.",
+      "category": "ops",
+      "trigger_patterns": [
+        "bridge",
+        "checks",
+        "counts",
+        "cron",
+        "diagnose",
+        "diagnostics",
+        "errors",
+        "gateway",
+        "health",
+        "ram",
+        "self",
+        "self-diagnose",
+        "session",
+        "status"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [],
+      "cli_command": "~/.openclaw/skills/self-diagnose/scripts/diagnose.sh",
+      "example_usage": "bash ~/.openclaw/skills/self-diagnose/scripts/diagnose.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/self-diagnose"
+    },
+    "shopify-manager": {
+      "name": "shopify-manager",
+      "description": "Shopify Admin GraphQL API wrapper for The Jade Oracle store.",
+      "category": "commerce",
+      "trigger_patterns": [
+        "admin",
+        "api",
+        "graphql",
+        "jade",
+        "manager",
+        "oracle",
+        "shopify",
+        "shopify-manager",
+        "store",
+        "wrapper"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "commerce"
+      ],
+      "cli_command": "~/.openclaw/skills/shopify-manager/scripts/shopify-admin.sh",
+      "example_usage": "shopify-admin.sh products",
+      "active": true,
+      "path": "~/.openclaw/skills/shopify-manager"
+    },
+    "shopsteal": {
+      "name": "shopsteal",
+      "description": "Scrape any e-commerce site (Shopify, Woo, custom), decompose ALL materials, regenerate everything with YOUR branding, deploy to YOUR Shopify store. Goal: higher CTR, higher conversion rate than the or",
+      "category": "scraping",
+      "trigger_patterns": [
+        "branding",
+        "conversion",
+        "ctr",
+        "custom",
+        "decompose",
+        "deploy",
+        "e-commerce",
+        "everything",
+        "goal",
+        "higher",
+        "materials",
+        "original",
+        "rate",
+        "regenerate",
+        "scrape",
+        "shopify",
+        "shopsteal",
+        "site",
+        "store",
+        "woo",
+        "your"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "branding",
+        "code",
+        "commerce",
+        "data"
+      ],
+      "cli_command": "",
+      "example_usage": "Output: all regenerated assets in workspace/data/images/{brand}/shopsteal/",
+      "active": true,
+      "path": "~/.openclaw/skills/shopsteal"
+    },
+    "site-health-auditor": {
+      "name": "site-health-auditor",
+      "description": "Automated health checking for GAIA OS web properties. Runs URL audits, validates content, checks SSL, reports outages.",
+      "category": "scraping",
+      "trigger_patterns": [
+        "auditor",
+        "audits",
+        "automated",
+        "checking",
+        "checks",
+        "content",
+        "health",
+        "outages",
+        "properties",
+        "reports",
+        "runs",
+        "site",
+        "site-health-auditor",
+        "ssl",
+        "url",
+        "validates",
+        "web"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis",
+        "automation"
+      ],
+      "cli_command": "",
+      "example_usage": "# Skill: site-health-auditor (reference docs only, no CLI)",
+      "active": true,
+      "path": "~/.openclaw/skills/site-health-auditor"
+    },
+    "site-scraper": {
+      "name": "site-scraper",
+      "description": "Local website crawler + extractor (best-effort) that turns pages into clean notes, briefs, and checklists.",
+      "category": "scraping",
+      "trigger_patterns": [
+        "best-effort",
+        "briefs",
+        "checklists",
+        "clean",
+        "crawler",
+        "extractor",
+        "local",
+        "notes",
+        "pages",
+        "scraper",
+        "site",
+        "site-scraper",
+        "turns",
+        "website"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "cli_command": "~/.openclaw/skills/site-scraper/scripts/site_scraper.py",
+      "example_usage": "bash ~/.openclaw/skills/site-scraper/scripts/site_scraper.py --help",
+      "active": true,
+      "path": "~/.openclaw/skills/site-scraper"
+    },
+    "social-publish": {
+      "name": "social-publish",
+      "description": "Multi-platform social media publishing for GAIA brands. Supports Instagram and Facebook via Meta Graph API with scheduling, multi-platform posting, and queue management.",
+      "category": "content",
+      "trigger_patterns": [
+        "api",
+        "brands",
+        "facebook",
+        "graph",
+        "instagram",
+        "management",
+        "media",
+        "meta",
+        "multi-platform",
+        "posting",
+        "publish",
+        "publishing",
+        "queue",
+        "scheduling",
+        "social",
+        "social-publish",
+        "supports",
+        "via"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "branding",
+        "characters",
+        "publishing"
+      ],
+      "cli_command": "~/.openclaw/skills/social-publish/scripts/social-publish.sh",
+      "example_usage": "SCRIPT=\"$HOME/.openclaw/skills/social-publish/scripts/social-publish.sh\"",
+      "active": true,
+      "path": "~/.openclaw/skills/social-publish"
+    },
+    "spawn-templates": {
+      "name": "spawn-templates",
+      "description": "Spawn temporary specialist sub-agents on demand — QA, regression, copy, ads, research, scrape, batch, diagnose. No permanent sub-agents.",
+      "category": "ops",
+      "trigger_patterns": [
+        "ads",
+        "batch",
+        "copy",
+        "demand",
+        "diagnose",
+        "permanent",
+        "regression",
+        "research",
+        "scrape",
+        "spawn",
+        "spawn-templates",
+        "spawn-worker",
+        "specialist",
+        "sub-agents",
+        "templates",
+        "temporary"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "data",
+        "text"
+      ],
+      "cli_command": "~/.openclaw/skills/spawn-templates/scripts/spawn-worker.sh",
+      "example_usage": "bash spawn-worker.sh <template> \"<task>\" [parent_agent] [timeout_seconds]",
+      "active": true,
+      "path": "~/.openclaw/skills/spawn-templates"
+    },
+    "style-control": {
+      "name": "style-control",
+      "description": "Explore and manage GAIA brand styles, mood presets, and generate style-controlled images. Brand visual identity management.",
+      "category": "creative",
+      "trigger_patterns": [
+        "boards",
+        "brand",
+        "comparing",
+        "consistency",
+        "control",
+        "creating",
+        "debugging",
+        "different",
+        "directions",
+        "ensuring",
+        "explore",
+        "exploring",
+        "generate",
+        "generated",
+        "generation",
+        "identity",
+        "images",
+        "inconsistency",
+        "manage",
+        "management",
+        "mood",
+        "nanobanana",
+        "nanobanana-gen",
+        "presets",
+        "references",
+        "seeds",
+        "setting",
+        "side-by-side",
+        "style",
+        "style-control",
+        "style-controlled",
+        "styles",
+        "visual"
+      ],
+      "agents": [
+        "dreami"
+      ],
+      "capabilities": [
+        "branding",
+        "images"
+      ],
+      "cli_command": "",
+      "example_usage": "nanobanana-gen.sh generate \\",
+      "active": true,
+      "path": "~/.openclaw/skills/style-control"
+    },
+    "taoz-auditor": {
+      "name": "taoz-auditor",
+      "description": "A self-healing routing system where Taoz (glm-5) audits every dispatch, catches failures, orchestrates retries, extracts patterns, and improves classify.sh over time.",
+      "category": "build",
+      "trigger_patterns": [
+        "auditor",
+        "audits",
+        "catches",
+        "classify",
+        "dispatch",
+        "extracts",
+        "failures",
+        "glm-",
+        "improves",
+        "orchestrates",
+        "over",
+        "patterns",
+        "retries",
+        "routing",
+        "self-healing",
+        "taoz",
+        "taoz-auditor",
+        "time",
+        "where"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "analysis",
+        "data"
+      ],
+      "cli_command": "~/.openclaw/skills/taoz-auditor/scripts/taoz-auditor.sh",
+      "example_usage": "Happy path: User → Zenni → classify.sh → Agent → Job done ✓",
+      "active": true,
+      "path": "~/.openclaw/skills/taoz-auditor"
+    },
+    "video-compiler": {
+      "name": "video-compiler",
+      "description": "Automated UGC video ad production pipeline. Takes a brief (brand + product + goal + tone) and outputs ready-to-publish video ads for TikTok/Reels/Shorts.",
+      "category": "video",
+      "trigger_patterns": [
+        "ads",
+        "automated",
+        "brand",
+        "brief",
+        "compiler",
+        "goal",
+        "outputs",
+        "pipeline",
+        "product",
+        "production",
+        "ready-to-publish",
+        "reels",
+        "shorts",
+        "takes",
+        "tiktok",
+        "tone",
+        "ugc",
+        "video",
+        "video-compiler"
+      ],
+      "agents": [
+        "dreami",
+        "main",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "automation",
+        "branding",
+        "commerce",
+        "publishing",
+        "video"
+      ],
+      "cli_command": "~/.openclaw/skills/video-compiler/scripts/video-compiler.sh",
+      "example_usage": "video-compiler.sh run --brand mirra --product \"Bento Box\" \\",
+      "active": true,
+      "path": "~/.openclaw/skills/video-compiler"
+    },
+    "video-forge": {
+      "name": "video-forge",
+      "description": "Automated video post-production pipeline for GAIA CORP-OS. Captioning (Whisper + ASS), branding (logo/watermark/LUT), music mixing (auto-duck), effects (grain/vignette/color grade/zoom/shaky), multi-c",
+      "category": "video",
+      "trigger_patterns": [
+        "ass",
+        "assembly",
+        "auto-duck",
+        "automated",
+        "brand",
+        "branding",
+        "captioning",
+        "chains",
+        "color",
+        "dna",
+        "effects",
+        "export",
+        "forge",
+        "grade",
+        "grain",
+        "logo",
+        "lut",
+        "mixing",
+        "mood",
+        "multi-clip",
+        "multi-platform",
+        "music",
+        "operations",
+        "output",
+        "pipeline",
+        "post-production",
+        "produce",
+        "safe",
+        "shaky",
+        "video",
+        "video-forge",
+        "vignette",
+        "watermark",
+        "whisper",
+        "zones",
+        "zoom"
+      ],
+      "agents": [
+        "taoz"
+      ],
+      "capabilities": [
+        "automation",
+        "branding",
+        "commerce",
+        "publishing",
+        "text",
+        "video"
+      ],
+      "cli_command": "~/.openclaw/skills/video-forge/scripts/video-forge.sh",
+      "example_usage": "bash scripts/video-forge.sh caption input.mp4 [options]",
+      "active": true,
+      "path": "~/.openclaw/skills/video-forge"
+    },
+    "video-gen": {
+      "name": "video-gen",
+      "description": "Unified video generation skill — Kling, Wan, Sora",
+      "category": "video",
+      "trigger_patterns": [
+        "gen",
+        "generation",
+        "kling",
+        "sora",
+        "unified",
+        "video",
+        "video-gen",
+        "wan"
+      ],
+      "agents": [
+        "dreami",
+        "taoz"
+      ],
+      "capabilities": [
+        "video"
+      ],
+      "cli_command": "~/.openclaw/skills/video-gen/scripts/video-gen.sh",
+      "example_usage": "bash video-gen.sh sora generate --prompt \"bento box\" --brand mirra",
+      "active": true,
+      "path": "~/.openclaw/skills/video-gen"
+    },
+    "visual-registry": {
+      "name": "visual-registry",
+      "description": "Multi-angle asset registration for SKUs, characters, models, scenes, props.",
+      "category": "creative",
+      "trigger_patterns": [
+        "asset",
+        "characters",
+        "models",
+        "multi-angle",
+        "props",
+        "registration",
+        "registry",
+        "scenes",
+        "skus",
+        "visual",
+        "visual-registry"
+      ],
+      "agents": [
+        "main"
+      ],
+      "capabilities": [
+        "characters"
+      ],
+      "cli_command": "~/.openclaw/skills/visual-registry/scripts/visual-registry.sh",
+      "example_usage": "visual-registry.sh scan                    # Auto-discover and register from existing files",
+      "active": true,
+      "path": "~/.openclaw/skills/visual-registry"
+    },
+    "workflow-automation": {
+      "name": "workflow-automation",
+      "description": "Agent-driven automation layer for GAIA CORP-OS. Agents auto-register new output types, workflows, and production chains without human CLI input. Manages the skill registry, production chains, and work",
+      "category": "ops",
+      "trigger_patterns": [
+        "agent-driven",
+        "auto-register",
+        "automation",
+        "chains",
+        "cli",
+        "data",
+        "human",
+        "input",
+        "layer",
+        "list-output-types",
+        "machine-readable",
+        "manages",
+        "output",
+        "production",
+        "registry",
+        "templates",
+        "update-skill-registry",
+        "without",
+        "workflow",
+        "workflow-automation",
+        "workflows"
+      ],
+      "agents": [
+        "dreami",
+        "scout",
+        "taoz"
+      ],
+      "capabilities": [
+        "automation",
+        "commerce"
+      ],
+      "cli_command": "~/.openclaw/skills/workflow-automation/scripts/list-output-types.sh",
+      "example_usage": "bash ~/.openclaw/skills/workflow-automation/scripts/register-output-type.sh",
+      "active": true,
+      "path": "~/.openclaw/skills/workflow-automation"
+    }
+  }
+}

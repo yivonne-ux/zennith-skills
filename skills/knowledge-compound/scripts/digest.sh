@@ -34,8 +34,10 @@ TAGS=""
 AGENT=""
 FILE=""
 PATTERN_NAME=""
+NAMESPACE=""
+ENTRY_PATH=""
 
-if [[ "$ACTION" == "list" || "$ACTION" == "search" || "$ACTION" == "stats" || "$ACTION" == "recent" ]]; then
+if [[ "$ACTION" == "list" || "$ACTION" == "search" || "$ACTION" == "stats" || "$ACTION" == "recent" || "$ACTION" == "add" ]]; then
     shift
 else
     ACTION="add"
@@ -50,6 +52,10 @@ while [[ $# -gt 0 ]]; do
         --agent)   AGENT="$2"; shift 2 ;;
         --file)    FILE="$2"; shift 2 ;;
         --pattern) PATTERN_NAME="$2"; shift 2 ;;
+        --namespace) NAMESPACE="$2"; shift 2 ;;
+        --path)    ENTRY_PATH="$2"; shift 2 ;;
+        --source-type) TYPE="$2"; shift 2 ;;
+        --text)    FACT="$2"; shift 2 ;;
         *)
             if [[ "$ACTION" == "search" ]]; then
                 FACT="$1"; shift
@@ -96,15 +102,81 @@ case "$ACTION" in
 
         TS_EPOCH_MS=$((TS_EPOCH * 1000))
 
+        # Auto-classify namespace and path if not provided
+        if [[ -z "$NAMESPACE" ]]; then
+            case "$TYPE" in
+                memory|shared-facts)
+                    if [[ -n "$AGENT" ]]; then
+                        NAMESPACE="agent"
+                        if [[ -z "$ENTRY_PATH" ]]; then
+                            _first_agent=$(echo "$AGENT" | cut -d',' -f1 | tr -d ' ')
+                            _et="${TYPE:-general}"
+                            ENTRY_PATH="agent/${_first_agent}/memory/${_et}"
+                        fi
+                    else
+                        NAMESPACE="resources"
+                    fi
+                    ;;
+                brand-dna)
+                    NAMESPACE="resources"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="resources/brands/${SOURCE:-unknown}"
+                    ;;
+                seeds|image-seeds)
+                    NAMESPACE="resources"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="resources/seeds/${SOURCE:-general}"
+                    ;;
+                patterns|pattern)
+                    NAMESPACE="agent"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="agent/system/patterns/${SOURCE:-general}"
+                    ;;
+                room-exec|room-feedback)
+                    NAMESPACE="agent"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="agent/system/rooms/${TYPE}"
+                    ;;
+                knowledge)
+                    NAMESPACE="agent"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="agent/system/knowledge"
+                    ;;
+                biz-opportunity)
+                    NAMESPACE="resources"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="resources/biz-opportunities"
+                    ;;
+                youtube)
+                    NAMESPACE="resources"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="resources/youtube"
+                    ;;
+                *)
+                    NAMESPACE="resources"
+                    [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="resources/${TYPE:-other}"
+                    ;;
+            esac
+        fi
+        [[ -z "$ENTRY_PATH" ]] && ENTRY_PATH="${NAMESPACE:-resources}/${TYPE:-other}"
+
+        # Generate L0 abstract (first sentence or first 200 chars)
+        L0_ABSTRACT=""
+        _first_period=$(echo "$FACT" | head -c 300 | grep -o '^[^.]*\.' 2>/dev/null | head -1)
+        if [[ -n "$_first_period" && ${#_first_period} -gt 5 ]]; then
+            L0_ABSTRACT="$_first_period"
+        else
+            L0_ABSTRACT=$(echo "$FACT" | head -c 200)
+            if [[ ${#FACT} -gt 200 ]]; then
+                L0_ABSTRACT="${L0_ABSTRACT}..."
+            fi
+        fi
+        SAFE_L0=$(echo "$L0_ABSTRACT" | sed "s/'/''/g")
+        SAFE_NAMESPACE=$(echo "$NAMESPACE" | sed "s/'/''/g")
+        SAFE_ENTRY_PATH=$(echo "$ENTRY_PATH" | sed "s/'/''/g")
+
         if [[ -n "$EXISTING" ]]; then
             echo "📝 Updated existing knowledge #$EXISTING (duplicate from $SOURCE)"
             log "SKIP duplicate knowledge from $SOURCE"
         else
             # Insert into vault
             SAFE_FILE=$(echo "$FILE" | sed "s/'/''/g")
-            sqlite3 "$DB" "INSERT INTO vault (source_type, source_ref, source_path, brand, category, agent, entry_type, text, metadata, ts)
+            sqlite3 "$DB" "INSERT INTO vault (source_type, source_ref, source_path, brand, category, agent, entry_type, text, metadata, ts, namespace, path, l0_abstract)
                 VALUES ('knowledge', 'digest-${TS_EPOCH}', '$SAFE_FILE', '', '$SAFE_SOURCE', '$AGENT', '$TYPE', '$SAFE_FACT',
-                '{\"tags\":\"$SAFE_TAGS\",\"status\":\"active\",\"confidence\":1.0}', $TS_EPOCH_MS);"
+                '{\"tags\":\"$SAFE_TAGS\",\"status\":\"active\",\"confidence\":1.0}', $TS_EPOCH_MS, '$SAFE_NAMESPACE', '$SAFE_ENTRY_PATH', '$SAFE_L0');"
             NEW_ID=$(sqlite3 "$DB" "SELECT last_insert_rowid();")
             echo "✅ Knowledge #$NEW_ID digested from $SOURCE ($TYPE)"
             log "ADD knowledge #$NEW_ID: $SOURCE ($TYPE) → agents: $AGENT"

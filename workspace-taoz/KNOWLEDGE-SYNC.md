@@ -1158,3 +1158,43 @@ bash ~/.openclaw/workspace/scripts/claude-code-runner.sh dispatch "TASK" zenni b
 - Task: SKIP HEARTBEAT — PRIORITY DISPATCH. MIRRA revenue is top priority. Build the next concrete UNBLOCKED MIRRA revenue step. Scope ONLY: inspect /Users/
 - Model: sonnet | Duration: 150s | Status: completed
 - Result: Done. Here's what I did:  1. **Scanned all relevant artifacts** — `mirra/creative-feedback-loop/`, `mirra/chatwoot-lead-capture/`, `mirra/attribution-pipeline/`, `MIRRA-REVENUE-ACTIVATION-PACK.md`, `MIRRA-ATTRIBUTION-STATUS.md`, and the existing go-live checklists — to establish verified truth v
+
+## Build taoz-1773898255-56092 (2026-03-19 13:36) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. MIRRA revenue is top priority. Build the next concrete UNBLOCKED MIRRA revenue step. Scope ONLY: /Users/jennwoei
+- Model: sonnet | Duration: 315s | Status: completed
+- Result: All verified. Here's what was built:  **Staging pack delivered at:** `/Users/jennwoeiloh/.openclaw/workspace-main/mirra/chatwoot-lead-capture/mirra-lead-page-staging-pack/`  4 files, all exist: - `index.html` — complete MIRRA-branded landing page (pink/cream, bento menu cards, order form with meal
+
+## Build taoz-1773912897-53882 (2026-03-19 17:40) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. Jade Oracle reading delivery pipeline. Build the next concrete UNBLOCKED step toward verified order → PDF deli
+- Model: sonnet | Duration: 300s | Status: completed
+- Result: **0.28 seconds. `status: ready_for_delivery`. All 5 artifacts present.**  The `fpdf2` warning (`LM is not a valid XPos`) is a minor API compatibility issue in `pdf_generator.py`'s existing code — the fallback writes a `.txt` renamed to `.pdf`. That's pre-existing behavior, not introduced by this w
+
+## Build taoz-1773913669-64866 (2026-03-19 17:50) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. Jade Oracle affiliate mission. Build exactly ONE concrete deliverable inside /Users/jennwoeiloh/.openclaw/worksp
+- Model: sonnet | Duration: 135s | Status: completed
+- Result: Done. I inspected all 6 existing jade-oracle workspace files (DELIVERABLES.md, PROJECT_OVERVIEW.md, QUICK_START.md, product-descriptions.md, kol-outreach/top-10-kols.md) plus the wider workspace context (KNOWLEDGE-SYNC.md for the 25% commission data, JADE-ORACLE-META-ADS-LAUNCH-PACKAGE.md for store 
+
+## Build taoz-1773913925-75472 (2026-03-19 17:55) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. Jade Oracle ads mission. Build exactly ONE concrete deliverable inside /Users/jennwoeiloh/.openclaw/workspace-ma
+- Model: sonnet | Duration: 210s | Status: completed
+- Result: Delivered. Here's what was built:  **`workspace-main/jade-oracle/ads-launch-pack-100day.md`** — a complete $100/day ads launch pack synthesized from 6 existing Jade Oracle source files (JADE-ORACLE-META-ADS-LAUNCH-PACKAGE.md, JADE-ORACLE-ADS-SETUP.md, JADE-ORACLE-BRAND-COPY.md, affiliate-launch-pa
+
+## Build taoz-1773918137-39348 (2026-03-19 19:03) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. MIRRA revenue is top priority. Build exactly ONE concrete deliverable inside /Users/jennwoeiloh/.openclaw/worksp
+- Model: sonnet | Duration: 80s | Status: completed
+- Result: Created `CREDENTIAL-BUNDLE-TEMPLATE.md` at `workspace-main/mirra/chatwoot-lead-capture/`. The file contains: a copy-paste credential block with all 7 required values (`CHATWOOT_BASE_URL`, `CHATWOOT_WEBSITE_TOKEN`, `CHATWOOT_API_TOKEN`, `CHATWOOT_ACCOUNT_ID`, `CHATWOOT_INBOX_ID`, `META_PIXEL_ID`, `ME
+
+## Build taoz-1773937256-85976 (2026-03-20 00:24) — success
+- Task: Review current VPS logs for jade-os.fly.dev. Check for webhook processing errors or PDF generation failures in the last 24h.
+- Model: sonnet | Duration: 200s | Status: completed
+- Result: The output file is empty (task was killed before producing output). The gaia-supervisor agent already retrieved the full log analysis above — that result stands.
+
+## Build taoz-1773955869-26305 (2026-03-20 05:33) — success
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. MIRRA revenue is top priority. Build exactly ONE concrete deliverable inside /Users/jennwoeiloh/.openclaw/worksp
+- Model: sonnet | Duration: 110s | Status: completed
+- Result: File created at `/Users/jennwoeiloh/.openclaw/workspace-main/mirra/chatwoot-lead-capture/MIRRA-LAUNCH-CONTROL-TOWER.md`.  **Source files used (all verified by direct read):** - `mirra/chatwoot-lead-capture/JENN-EXECUTION-BRIEF.md` - `mirra/chatwoot-lead-capture/GO-LIVE-CHECKLIST.md` - `mirra/MIRRA-N
+
+## Build taoz-1773972049-51965 (2026-03-20 10:02) — fail
+- Task: SKIP HEARTBEAT — PRIORITY DISPATCH. MIRRA revenue is top priority. Build exactly ONE concrete deliverable inside /Users/jennwoeiloh/.openclaw/worksp
+- Model: sonnet | Duration: 85s | Status: completed
+- Result: Script works correctly. The 2 FAILs are real blockers (FILL_ME tokens not yet filled by Jenn), and the WARN is a reminder to paste the n8n URL into Chatwoot. All structural checks pass.  ---  **Created:** `/Users/jennwoeiloh/.openclaw/workspace-main/mirra/chatwoot-lead-capture/preflight-check.sh`  *
