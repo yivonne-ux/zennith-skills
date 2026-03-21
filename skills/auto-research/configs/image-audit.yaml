@@ -1,0 +1,44 @@
+name: "Image Quality Auditor — Frame-by-Frame Detail"
+objective: "score"
+description: "Audit AI-generated images at pixel level. Compound learnings from every failure."
+
+generate_prompt: |
+  You are a forensic image quality auditor for the Jade Oracle brand.
+  Audit the image against every criterion below. Be RUTHLESS.
+  Score each criterion YES (passes) or NO (fails).
+  For every NO, describe EXACTLY what's wrong and where in the image.
+
+eval_criteria:
+  # Face consistency (compare to lock-08 reference)
+  - "FACE MATCH: Does Jade's face match the lock-08 canonical reference? Same jawline, eye shape, nose bridge, skin tone, age appearance (~31). Score NO if any feature deviates."
+  - "FACE SYMMETRY: Is the face symmetrical? No warped eyes, uneven cheekbones, misaligned jaw. Score NO if asymmetric."
+  - "FACE AGE: Does she look 28-34? Not younger (teenager) or older (40+). Score NO if age is wrong."
+  - "EXPRESSION: Is the expression natural and warm? Not frozen, uncanny, or overly posed. Score NO if uncanny valley."
+
+  # Body/anatomy realism
+  - "HANDS: Count fingers on each visible hand. Exactly 5 per hand. No extra, missing, or fused fingers. Score NO if wrong."
+  - "BODY PROPORTIONS: Are proportions realistic? No elongated limbs, tiny head, oversized torso. Score NO if distorted."
+  - "SKIN TEXTURE: Does skin look real? Natural pores, subtle imperfections. Score NO if plastic/airbrushed/waxy."
+  - "HAIR: Is hair natural-looking? No floating strands, merged clumps, or impossible physics. Score NO if artificial."
+
+  # Brand consistency
+  - "JADE PENDANT: Is the jade teardrop pendant visible and correct? Score NO if missing or wrong shape."
+  - "COLOR PALETTE: Does the image use brand colors? Cream, jade green, burgundy, gold, warm earth tones. Score NO if off-palette."
+  - "WARDROBE: Is she wearing on-brand clothing? Silk, linen, cashmere in cream/sage/burgundy/black. Score NO if wrong outfit."
+  - "SETTING: Is the setting on-brand? Warm apartment, cafe, natural light. NOT temple, ceremony, cosmic. Score NO if wrong setting."
+
+  # Technical quality
+  - "RESOLUTION: Is the image sharp and clear? No blur, noise, or compression artifacts. Score NO if quality issues."
+  - "LIGHTING: Is lighting natural and warm? Window light, golden hour, candlelight. NOT flat studio or harsh flash. Score NO if wrong lighting."
+  - "COMPOSITION: Is the composition intentional? Rule of thirds, leading lines, or centered portrait. Score NO if poorly composed."
+  - "AI ARTIFACTS: Any visible AI glitches? Warped text, melted backgrounds, extra limbs, impossible reflections. Score NO if artifacts present."
+
+  # Physics / realism
+  - "PHYSICS: Do all objects obey physics? Gravity, reflections, shadows all correct. Score NO if physically impossible."
+  - "OBJECT INTEGRITY: Are all objects complete and correct? No half-cups, melted phones, impossible furniture. Score NO if broken objects."
+
+max_iterations: 1
+model: "claude-sonnet-4-6"
+
+compound_learnings: true
+learnings_file: "~/.openclaw/skills/auto-research/learnings-image-audit.json"

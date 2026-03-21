@@ -1,0 +1,55 @@
+name: "Video Frame-by-Frame Auditor"
+objective: "score"
+description: "Audit AI-generated video frame by frame. Check face consistency, physics, continuity, and brand alignment across every frame."
+
+generate_prompt: |
+  You are a forensic video quality auditor for Jade Oracle.
+  Analyze the video FRAME BY FRAME. Check every second.
+  Score each criterion YES or NO. For every NO, specify the EXACT timestamp.
+
+eval_criteria:
+  # Face consistency across frames
+  - "FACE LOCK: Is Jade's face consistent across ALL frames? Same person from frame 1 to last frame. Score NO if face shifts/morphs between cuts."
+  - "FACE IDENTITY: Does she match lock-08 reference in EVERY frame? Score NO if any frame shows a different person."
+  - "FACE STABILITY: No face flickering, warping, or melting between frames. Score NO if any instability."
+
+  # Body continuity
+  - "OUTFIT CONTINUITY: Same outfit throughout the scene. No costume changes between cuts unless intentional. Score NO if inconsistent."
+  - "HAND COUNT: In every frame where hands are visible, exactly 5 fingers per hand. Score NO with timestamp if wrong."
+  - "BODY CONSISTENCY: Same body proportions throughout. No sudden size changes. Score NO if inconsistent."
+  - "HAIR CONTINUITY: Hair stays consistent — same length, color, style across frames. Score NO if it changes."
+
+  # Motion / physics
+  - "NATURAL MOTION: Do all movements look natural? Walking, hand gestures, head turns. Score NO if robotic or glitchy."
+  - "PHYSICS: Do objects obey gravity? Liquids pour correctly? Hair moves naturally? Score NO with timestamp if physics break."
+  - "SMOOTH TRANSITIONS: No frame jumps, stutters, or impossible teleportation. Score NO if discontinuity."
+  - "LIP SYNC: If speaking, do lips match audio? Score NO if out of sync."
+  - "BACKGROUND STABILITY: Is the background consistent and stable? No warping, shifting, or impossible changes. Score NO if unstable."
+
+  # Brand / tone
+  - "JADE PENDANT: Visible in frames where upper body is shown. Score NO if missing."
+  - "COLOR GRADING: Warm, natural tones throughout. Not cold, blue, or oversaturated. Score NO if wrong grade."
+  - "MOOD: Does the video feel warm, intimate, approachable? NOT corporate, clinical, or spooky. Score NO if wrong mood."
+  - "AUDIO TONE: If voiceover/music, does it match Jade's warm, calm, wise personality? Score NO if wrong tone."
+
+  # Technical
+  - "RESOLUTION: Consistent resolution throughout. No sudden quality drops. Score NO if quality varies."
+  - "SAFE ZONES: Text/faces within platform safe zones (TikTok: top 15%, bottom 20% clear). Score NO if cut off."
+  - "DURATION: Within platform limits (TikTok: 15-60s, Reels: 15-90s). Score NO if wrong length."
+  - "ASPECT RATIO: Correct for platform (9:16 vertical for TikTok/Reels, 1:1 for feed). Score NO if wrong ratio."
+
+  # Psychic content logic
+  - "READING LOGIC: If showing a reading, does the QMDJ/tarot interpretation make logical sense? Score NO if nonsensical."
+  - "NO FALSE CLAIMS: No guaranteed predictions, medical advice, or impossible promises. Score NO if problematic claims."
+  - "CULTURAL ACCURACY: Chinese metaphysics terms used correctly. 奇门遁甲 not misrepresented. Score NO if inaccurate."
+
+max_iterations: 1
+model: "claude-sonnet-4-6"
+
+compound_learnings: true
+learnings_file: "~/.openclaw/skills/auto-research/learnings-video-audit.json"
+
+frame_analysis:
+  method: "extract key frames at 1-second intervals"
+  tool: "ffmpeg -i input.mp4 -vf fps=1 frame_%03d.jpg"
+  compare_reference: "~/.openclaw/workspace/data/characters/jade-oracle/jade/face-refs/"

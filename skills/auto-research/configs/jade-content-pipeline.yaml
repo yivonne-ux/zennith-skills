@@ -1,0 +1,119 @@
+# Auto-Research Config: Jade Oracle Content Production Pipeline
+# Full content piece generator: hook + visual prompt + caption + hashtags
+# Evaluates against 10 quality criteria for engagement optimization
+#
+# Usage: bash auto-loop.sh configs/jade-content-pipeline.yaml
+#
+# This config generates complete Instagram content pieces for Jade Oracle.
+# Each variant is a full content brief: scroll-stopping hook, image/video
+# direction, caption copy, hashtags, and CTA — scored as a unified piece.
+
+objective: "engagement_rate"
+task: "Generate a complete Instagram content piece for Jade Oracle (@jade141319). The piece must include: (1) a scroll-stopping hook (first line / text overlay), (2) a visual direction prompt for Jade's face-locked character using the v22 reference, (3) a full caption with storytelling arc, (4) relevant hashtags (15-20), and (5) a CTA driving to Shopify or Telegram bot. Target audience: spiritual seekers, women 25-45, globally English-speaking. Jade is a Korean woman, 31, warm brown eyes, long dark hair with curtain bangs, jade pendant necklace (always). Palette: jade green (#00A86B), gold (#D4AF37), cream (#F5F0E8), sage (#8FA882), burgundy (#722F37). Fonts: Cormorant Garamond (headings) + Jost (body). Tone: warm wise friend over tea — NOT corporate, NOT witchy, NOT cosmic. Aesthetic: Korean beauty editorial meets cozy home studio."
+brand: "jade-oracle"
+model: "claude-sonnet-4-6"
+max_iterations: 15
+keep_threshold: null
+
+template: |
+  HOOK: "What does your birth chart say about this week?"
+
+  VISUAL DIRECTION:
+  Jade sitting at her reading table, warm window light, jade pendant visible.
+  She holds a ceramic tea mug, tarot cards spread on a sage green linen cloth.
+  Shot: medium close-up, shallow depth of field. Mood: warm, intimate, inviting.
+  Lighting: natural side window light with warm candle fill. Style: editorial lifestyle.
+  Ref: face-lock v22. Palette: cream background, jade green accents, gold candle holders.
+
+  CAPTION:
+  Every week, the energy shifts.
+  And most people just... feel it. The unexplained heaviness. The sudden clarity.
+  But they don't know WHY.
+
+  That's where Qi Men Dun Jia (奇门遁甲) comes in — an ancient Chinese
+  metaphysical system that maps the exact energetic landscape of any moment.
+
+  This week's chart reveals a powerful window for career decisions.
+  If you've been sitting on something — this is your sign.
+
+  Your personal reading is waiting. Link in bio.
+
+  HASHTAGS:
+  #JadeOracle #QMDJ #QiMenDunJia #BaZi #ChineseMetaphysics #SpiritualGuidance
+  #OracleReading #WeeklyReading #EnergyForecast #AncientWisdom #ModernSpirituality
+  #SpiritualAwakening #Divination #LifeGuidance #CosmicTiming
+
+  CTA: "Book your $1 intro reading — link in bio"
+
+criteria:
+  - id: face_consistency
+    description: "Visual direction explicitly references the v22 face-lock, describes Jade's signature features (Korean woman, curtain bangs, jade pendant, warm brown eyes), and would produce an image recognizably consistent with the locked reference"
+  - id: tone_consistency
+    description: "Caption reads like a warm, wise friend sharing insight over tea — not corporate (no jargon, no bullet points), not witchy (no 'spells', 'hexes', 'dark moon'), not salesy (no ALL CAPS urgency, no 'LAST CHANCE'). Natural, conversational depth."
+  - id: logic_realism
+    description: "Visual direction describes a physically plausible scene — correct hand count, believable object placement, consistent lighting direction, no floating objects, no impossible reflections. Scene could exist in real life."
+  - id: brand_alignment
+    description: "Uses jade green + gold + cream palette. Typography direction specifies Cormorant Garamond for headings and Jost for body text. Overall aesthetic matches Korean beauty editorial, not generic mystical or cosmic."
+  - id: hook_power
+    description: "First line (hook / text overlay) would stop a scroll in 0.5 seconds — uses pattern interrupt, curiosity gap, bold claim, or emotional trigger. Not generic ('Welcome to my page'), not clickbait ('You won't believe')."
+  - id: platform_native
+    description: "Feels like organic Instagram content, not an ad. Right caption length (150-300 words), natural paragraph breaks, emoji use is tasteful (0-3 max), hashtags grouped at end, story arc in caption (hook → tension → insight → CTA)."
+  - id: cultural_sensitivity
+    description: "Chinese metaphysics terms (QMDJ, BaZi, 奇门遁甲, 八字) are used accurately and respectfully. No appropriation of sacred practices. No mixing incompatible traditions carelessly. Chinese characters used correctly where included."
+  - id: cta_clarity
+    description: "Clear single next step — book a reading, join Telegram, visit Shopify store. CTA is specific (not 'check it out'), naturally woven into the caption (not bolted on), and low-friction ($1 intro or free resource)."
+  - id: social_proof
+    description: "Includes or implies credibility — number of readings done, testimonial snippet, mention of ancient tradition's 4000-year history, 'thousands of women have discovered', or similar trust signal. Not fabricated statistics."
+  - id: emotional_resonance
+    description: "The full content piece (hook + visual + caption) makes the viewer FEEL something specific — wonder, recognition ('that's me'), comfort, curiosity, hope. Not neutral informational. Hits an emotional truth about seeking guidance in uncertain times."
+
+output_dir: "~/.openclaw/workspace/data/auto-research/jade-content-pipeline"
+
+# Real-world feedback (enable when Instagram API is connected)
+# feedback_sources:
+#   - type: instagram_api
+#     account: "jade141319"
+#     metric: "engagement_rate"
+#     formula: "(likes + comments + shares + saves) / reach"
+#   - type: shopify_api
+#     store: "jade-oracle"
+#     metric: "referral_conversions"
+#     source: "instagram"
+
+# Content type rotation (used by calendar integration)
+# The auto-loop generates for whichever content_type is specified at runtime.
+# Override with: CONTENT_TYPE=educational bash auto-loop.sh jade-content-pipeline.yaml
+content_types:
+  - id: educational
+    description: "QMDJ explainer, BaZi basics, Five Elements, how readings work"
+    day: "Monday"
+  - id: social_proof
+    description: "Testimonial screenshot, review highlight, transformation story"
+    day: "Tuesday"
+  - id: lifestyle
+    description: "Jade's day, behind the scenes, reading setup, tea moment"
+    day: "Wednesday"
+  - id: reading_demo
+    description: "Mini reading, oracle card pull, weekly energy snapshot"
+    day: "Thursday"
+  - id: emotional
+    description: "Pain point → solution arc, relatable spiritual struggle, 'you're not alone'"
+    day: "Friday"
+  - id: community
+    description: "Q&A, poll, 'which element are you?', engagement prompt"
+    day: "Saturday"
+  - id: spiritual
+    description: "Weekly oracle message, meditation prompt, gratitude, affirmation"
+    day: "Sunday"
+
+# Cross-references
+related_configs:
+  - "configs/email-subject.yaml"
+  - "configs/jade-instagram-loop.yaml"
+related_skills:
+  - "art-director"
+  - "fast-iterate"
+dependencies:
+  face_lock_ref: "~/Desktop/gaia-projects/jade-oracle-site/images/jade/v15-v22/"
+  video_compiler: "/tmp/video-compiler/"
+  brand_dna: "~/.openclaw/brands/jade-oracle/DNA.json"

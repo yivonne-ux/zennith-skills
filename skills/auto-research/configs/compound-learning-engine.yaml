@@ -1,0 +1,59 @@
+name: "Compound Learning Engine"
+objective: "improve"
+description: "After every content production run, extract patterns from successes and failures. Feed learnings back into generation prompts. The system gets smarter every cycle."
+
+generate_prompt: |
+  You are the compound learning engine for Zennith OS.
+  After each production cycle, analyze ALL audit results and extract patterns.
+
+  Input: audit scores from image-audit, video-frame-audit, ad-creative configs.
+
+  Your job:
+  1. PATTERN EXTRACTION: What patterns appear in HIGH-scoring content?
+  2. FAILURE ANALYSIS: What patterns appear in LOW-scoring content?
+  3. PROMPT EVOLUTION: How should generation prompts change based on these patterns?
+  4. REFERENCE UPDATE: Which reference images/videos produce the best results?
+  5. CRITERIA REFINEMENT: Should any eval criteria be added, removed, or reweighted?
+
+  Output format:
+  - KEEP: Patterns that consistently produce high scores (promote to "always do")
+  - KILL: Patterns that consistently produce low scores (promote to "never do")
+  - TEST: Patterns with mixed results (need more data)
+  - EVOLVE: Specific prompt changes to make for next cycle
+
+eval_criteria:
+  - "Did we identify at least 3 KEEP patterns from this cycle?"
+  - "Did we identify at least 3 KILL patterns from this cycle?"
+  - "Did we produce specific prompt edits (not vague 'be better')?"
+  - "Did we compare this cycle's scores to previous cycle's scores?"
+  - "Did we update the learnings.json with new data?"
+  - "Did we check if any previous KEEP/KILL patterns were validated or invalidated?"
+  - "Did we produce a net improvement metric (this cycle vs last cycle)?"
+
+compound_rules:
+  # How learnings flow between skills
+  image_audit_learnings: "~/.openclaw/skills/auto-research/learnings-image-audit.json"
+  video_audit_learnings: "~/.openclaw/skills/auto-research/learnings-video-audit.json"
+  content_learnings: "~/.openclaw/skills/auto-research/learnings.json"
+
+  # Feed INTO these generation prompts
+  feeds_into:
+    - "~/.openclaw/skills/auto-research/configs/ad-creative.yaml"
+    - "~/.openclaw/skills/auto-research/configs/jade-content-pipeline.yaml"
+    - "~/.openclaw/skills/fast-iterate/learnings.md"
+    - "~/.openclaw/skills/art-director/knowledge/anti-patterns.md"
+
+  # Compound cycle
+  cycle: |
+    1. Run content generation (fast-iterate)
+    2. Run image audit (image-audit.yaml)
+    3. Run video audit (video-frame-audit.yaml)
+    4. Run compound learning (this config)
+    5. Update generation prompts with learnings
+    6. Repeat from step 1
+
+    Every 10 cycles: review and prune learnings (remove noise, promote strong patterns)
+    Every 50 cycles: full learnings audit — are we actually improving?
+
+max_iterations: 1
+model: "claude-sonnet-4-6"
