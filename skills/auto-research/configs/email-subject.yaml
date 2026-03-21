@@ -1,0 +1,35 @@
+# Auto-Research Config: Email Subject Line Optimization
+# Optimizes email subject lines for open rate
+#
+# Usage: bash auto-loop.sh configs/email-subject.yaml
+
+objective: "open_rate"
+task: "Write an email subject line for Jade Oracle's weekly BaZi reading newsletter. Target: spiritually curious Malaysians and Singaporeans. The email contains their personalized weekly energy forecast."
+brand: "jade-oracle"
+model: "claude-sonnet-4-6"
+max_iterations: 10
+keep_threshold: null
+
+template: "Your Weekly BaZi Reading is Ready"
+
+criteria:
+  - id: curiosity
+    description: "Creates an information gap that compels opening — teases without revealing"
+  - id: urgency
+    description: "Implies time-sensitivity (this week, today, limited window)"
+  - id: personalization
+    description: "Feels personal — uses 'your', references individual destiny or energy"
+  - id: length
+    description: "Under 50 characters (mobile-friendly, no truncation)"
+  - id: spam_safe
+    description: "Avoids spam triggers — no ALL CAPS, no excessive punctuation, no 'free/guaranteed'"
+  - id: emotion
+    description: "Evokes wonder, anticipation, or gentle urgency (not fear or hype)"
+  - id: brand_voice
+    description: "Matches Jade Oracle voice — mystical but grounded, wise but accessible"
+  - id: specificity
+    description: "References something specific (element, energy, timing) rather than being vague"
+  - id: mobile_preview
+    description: "First 30 chars are compelling even without seeing the rest (preview text friendly)"
+
+output_dir: "~/.openclaw/workspace/data/auto-research/jade-oracle-email"

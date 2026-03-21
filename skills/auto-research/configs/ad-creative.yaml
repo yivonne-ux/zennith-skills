@@ -1,0 +1,51 @@
+# Auto-Research Config: Ad Creative Optimization
+# Optimizes Facebook/Instagram ad copy for CTR and engagement
+#
+# Usage: bash auto-loop.sh configs/ad-creative.yaml
+
+objective: "CTR"
+task: "Write a Facebook ad for MIRRA plant-based bento delivery in KL. Target: health-conscious Malaysian professionals aged 25-40. Must include pricing anchor and CTA."
+brand: "mirra"
+model: "claude-sonnet-4-6"
+max_iterations: 10
+keep_threshold: null
+
+template: |
+  Healthy eating made easy.
+  MIRRA plant-based bento — fresh, delicious, delivered to your door.
+  From RM15.90/meal. Order now on our website.
+  #PlantBased #HealthyEating #KualaLumpur
+
+criteria:
+  - id: hook_power
+    description: "First line creates a pattern interrupt or curiosity gap that stops the scroll"
+  - id: clarity
+    description: "Main benefit (healthy + convenient + affordable) is obvious within 3 seconds"
+  - id: emotion
+    description: "Triggers a specific emotion — desire, curiosity, or FOMO"
+  - id: urgency
+    description: "Creates time pressure, scarcity, or reason to act NOW"
+  - id: brand_voice
+    description: "Matches MIRRA brand voice — warm, Malaysian, health-conscious, not preachy"
+  - id: cta_strength
+    description: "Call to action is clear, specific, and compelling (not generic 'learn more')"
+  - id: social_proof
+    description: "Includes or implies social proof — reviews, numbers, community"
+  - id: price_anchor
+    description: "Price is framed as a deal (per meal, vs eating out, vs competitors)"
+  - id: visual_hook
+    description: "Copy suggests or complements a strong visual (food porn, before/after, lifestyle)"
+  - id: platform_native
+    description: "Reads naturally on Facebook/Instagram — right length, tone, hashtag usage"
+  - id: objection_handled
+    description: "Preemptively addresses top objection (taste, variety, or delivery)"
+  - id: local_relevance
+    description: "Contains Malaysian cultural reference or local context (not generic global copy)"
+
+output_dir: "~/.openclaw/workspace/data/auto-research/mirra-ad-creative"
+
+# Real-world feedback (enable when Meta API is connected)
+# feedback_sources:
+#   - type: meta_api
+#     campaign_id: "CAMPAIGN_ID"
+#     metric: "ctr"

@@ -1,0 +1,60 @@
+# Auto-Research Config: Product Description Optimization
+# Optimizes Shopify product descriptions for conversion rate
+#
+# Usage: bash auto-loop.sh configs/product-description.yaml
+
+objective: "conversion_rate"
+task: "Write a Shopify product description for Wholey Wonder Collagen Peptides (Marine). 150g pouch, 30 servings. Key benefits: skin elasticity, joint health, gut support. Price: RM89. Target: Malaysian women 28-45 who care about aging gracefully and natural beauty."
+brand: "wholey-wonder"
+model: "claude-sonnet-4-6"
+max_iterations: 10
+keep_threshold: null
+
+template: |
+  Wholey Wonder Marine Collagen Peptides
+
+  Support your skin, joints, and gut with premium marine collagen.
+  Each serving delivers 5000mg of hydrolyzed collagen peptides
+  sourced from wild-caught fish.
+
+  - Improves skin elasticity
+  - Supports joint flexibility
+  - Promotes gut health
+  - Tasteless and odourless
+  - Mixes into any drink
+
+  150g | 30 servings | RM89
+
+criteria:
+  - id: benefit_clarity
+    description: "Top 3 benefits are immediately scannable — no wall of text"
+  - id: seo_keywords
+    description: "Naturally includes key terms: marine collagen, collagen peptides, skin elasticity, Malaysia"
+  - id: emotional_trigger
+    description: "Connects to deeper desire — confidence, youth, vitality — not just ingredients"
+  - id: social_proof
+    description: "Includes or implies social proof — testimonials, usage stats, expert endorsement"
+  - id: scannability
+    description: "Uses bullet points, short paragraphs, or visual hierarchy — scannable on mobile"
+  - id: objection_handling
+    description: "Addresses top objection — taste, source quality, or 'does it actually work?'"
+  - id: value_framing
+    description: "Price is framed as value (per serving, per day, vs alternatives)"
+  - id: trust_signals
+    description: "Includes quality markers — sourcing, certifications, or manufacturing standards"
+  - id: cta_placement
+    description: "Natural transition to 'Add to Cart' — description ends with momentum, not flatness"
+  - id: brand_voice
+    description: "Matches Wholey Wonder voice — clean, scientific but warm, empowering not preachy"
+  - id: sensory_language
+    description: "Uses sensory or experiential language that helps the reader FEEL the product"
+  - id: local_context
+    description: "Relevant to Malaysian market — climate, diet, lifestyle, pricing in RM"
+
+output_dir: "~/.openclaw/workspace/data/auto-research/wholey-wonder-collagen"
+
+# Real-world feedback (enable when Shopify API is connected)
+# feedback_sources:
+#   - type: shopify_api
+#     product_id: "PRODUCT_ID"
+#     metric: "conversion_rate"
