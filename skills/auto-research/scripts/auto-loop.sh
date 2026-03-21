@@ -31,6 +31,36 @@ log_info()  { echo "[auto-research] $(date +"%H:%M:%S") INFO  $*"; }
 log_warn()  { echo "[auto-research] $(date +"%H:%M:%S") WARN  $*" >&2; }
 log_error() { echo "[auto-research] $(date +"%H:%M:%S") ERROR $*" >&2; }
 
+###############################################################################
+# Auto-detect OpenClaw API keys (so it works natively on iMac Zennith OS)
+###############################################################################
+if [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -z "${OPENAI_API_KEY:-}" ] && [ -z "${OPENROUTER_API_KEY:-}" ]; then
+  OPENCLAW_CONFIG="${HOME}/.openclaw/openclaw.json"
+  if [ -f "${OPENCLAW_CONFIG}" ]; then
+    # Extract API keys from openclaw.json providers
+    eval "$("${PYTHON3}" -c "
+import json
+d = json.load(open('${OPENCLAW_CONFIG}'))
+providers = d.get('models',{}).get('providers',{})
+for name, cfg in providers.items():
+    key = cfg.get('apiKey', cfg.get('key',''))
+    base = cfg.get('baseUrl','')
+    if name == 'openrouter' and key:
+        print(f'export OPENAI_API_KEY=\"{key}\"')
+        print(f'export OPENAI_BASE_URL=\"{base}\"')
+    elif name == 'anthropic' and key:
+        print(f'export ANTHROPIC_API_KEY=\"{key}\"')
+    elif name == 'moonshot' and key and not key.startswith('not-'):
+        print(f'export MOONSHOT_API_KEY=\"{key}\"')
+" 2>/dev/null)"
+    if [ -n "${OPENAI_API_KEY:-}" ]; then
+      log_info "Auto-detected OpenRouter API key from openclaw.json"
+    elif [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+      log_info "Auto-detected Anthropic API key from openclaw.json"
+    fi
+  fi
+fi
+
 usage() {
   echo "Usage: auto-loop.sh <config.yaml>"
   echo ""
@@ -38,8 +68,10 @@ usage() {
   echo "  MAX_ITERATIONS=N    Override max iterations from config"
   echo "  MODEL=name          Override model from config"
   echo "  DRY_RUN=1           Print what would happen without calling LLM"
-  echo "  ANTHROPIC_API_KEY   Required for Claude models"
-  echo "  OPENAI_API_KEY      Required for OpenAI models"
+  echo "  ANTHROPIC_API_KEY   Claude models (auto-detected from openclaw.json)"
+  echo "  OPENAI_API_KEY      OpenAI/OpenRouter models (auto-detected from openclaw.json)"
+  echo ""
+  echo "On Zennith OS (iMac), API keys are auto-detected from openclaw.json."
   exit 1
 }
 

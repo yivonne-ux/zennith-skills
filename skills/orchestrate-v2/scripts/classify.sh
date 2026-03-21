@@ -126,6 +126,12 @@ classify_override() {
     return 0
   fi
 
+  # AUTO-RESEARCH / SELF-IMPROVING LOOP → TAOZ (runs the loop engine)
+  if echo "$task" | grep -qiE '(auto.?research|self.?improv|karpathy.?loop|optimize.*(loop|iterate|variant)|fast.?iterate|iterate.*(ad|email|copy|headline|description)|improve.*(loop|auto|variant)|research.?loop|eval.?loop|generate.?eval.*(loop|repeat))'; then
+    echo "taoz"
+    return 0
+  fi
+
   # CONTENT SUPPLY CHAIN: full content loop / supply chain cycle → HERMES (orchestrates all agents)
   if echo "$task" | grep -qiE '(content.?supply.?chain|supply.?chain.*(cycle|run|status|loop)|content.?(loop|cycle).*(run|start|full)|run.*(content|creative).*(loop|cycle|pipeline|chain))'; then
     echo "dreami"

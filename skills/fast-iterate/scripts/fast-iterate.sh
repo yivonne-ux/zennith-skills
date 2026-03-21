@@ -29,6 +29,28 @@ DEFAULT_MODEL="claude-sonnet-4-6"
 QUIET=false
 
 ###############################################################################
+# Auto-detect OpenClaw API keys (native Zennith OS support)
+###############################################################################
+if [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -z "${OPENAI_API_KEY:-}" ]; then
+  OPENCLAW_CONFIG="${HOME}/.openclaw/openclaw.json"
+  if [ -f "${OPENCLAW_CONFIG}" ]; then
+    eval "$("${PYTHON3}" -c "
+import json
+d = json.load(open('${OPENCLAW_CONFIG}'))
+providers = d.get('models',{}).get('providers',{})
+for name, cfg in providers.items():
+    key = cfg.get('apiKey', cfg.get('key',''))
+    base = cfg.get('baseUrl','')
+    if name == 'openrouter' and key:
+        print(f'export OPENAI_API_KEY=\"{key}\"')
+        print(f'export OPENAI_BASE_URL=\"{base}\"')
+    elif name == 'anthropic' and key:
+        print(f'export ANTHROPIC_API_KEY=\"{key}\"')
+" 2>/dev/null)"
+  fi
+fi
+
+###############################################################################
 # Criteria Shorthand Dictionary
 ###############################################################################
 
