@@ -1,0 +1,169 @@
+# Auto-Research Config: Jade Oracle Instagram Feedback Loop
+# Pulls engagement data, scores posts against criteria, learns patterns,
+# feeds learnings back into content generation. The outer loop.
+#
+# Usage: bash auto-loop.sh configs/jade-instagram-loop.yaml
+#
+# This is the OUTER loop (real-world feedback over days/weeks).
+# jade-content-pipeline.yaml is the INNER loop (pre-ship quality via LLM).
+# Together they form a complete self-improving content system.
+
+objective: "engagement_rate"
+task: "Analyze Jade Oracle's Instagram post performance and generate an optimized next content piece. Use engagement data (or simulated data during cold-start) to identify what resonates with the audience. Score each post against 10 quality criteria, track patterns over time, and use accumulated learnings to inform the next content generation. Target: engagement rate > 5% (likes + comments + shares + saves / reach). Account: @jade141319."
+brand: "jade-oracle"
+model: "claude-sonnet-4-6"
+max_iterations: 20
+keep_threshold: null
+
+# Cold-start template: simulated initial performance data
+# Replace with real data once Instagram API is connected
+template: |
+  POST PERFORMANCE LOG (simulated cold-start data):
+
+  Post 1 — Monday Educational (QMDJ explainer)
+    Hook: "You have 8 palaces in your destiny chart. Most people never look at palace #4."
+    Format: Carousel (5 slides)
+    Engagement: 4.2% (312 likes, 47 comments, 18 shares, 890 saves)
+    Top comment theme: "I never knew about QMDJ — how is this different from astrology?"
+    Pattern: Educational content with specific numbers performs well
+
+  Post 2 — Wednesday Lifestyle (Jade's morning routine)
+    Hook: "My morning starts before the sun — here's why"
+    Format: Photo series (3 images)
+    Engagement: 5.8% (487 likes, 63 comments, 31 shares, 234 saves)
+    Top comment theme: "Love seeing the real you!" / "What tea is that?"
+    Pattern: Behind-scenes personal content drives highest comments
+
+  Post 3 — Thursday Reading Demo (weekly oracle pull)
+    Hook: "I pulled three cards for this week. The middle one made me pause."
+    Format: Reel (45 seconds)
+    Engagement: 6.1% (534 likes, 89 comments, 54 shares, 1,203 saves)
+    Top comment theme: "Can you do mine?" / "This is so accurate!"
+    Pattern: Suspense hooks + video format = highest engagement
+
+  Post 4 — Friday Emotional (feeling lost in your 30s)
+    Hook: "Nobody tells you that your 30s feel like starting over"
+    Format: Text overlay on lifestyle photo
+    Engagement: 7.3% (612 likes, 124 comments, 87 shares, 456 saves)
+    Top comment theme: "I feel so seen" / "This is exactly where I am"
+    Pattern: Vulnerability + universal pain point = viral potential
+
+  Post 5 — Tuesday Social Proof (client transformation)
+    Hook: "She almost didn't book the reading. Here's what happened next."
+    Format: Before/after story carousel
+    Engagement: 3.9% (298 likes, 38 comments, 22 shares, 678 saves)
+    Top comment theme: "How do I book?" / "Is this real?"
+    Pattern: Testimonials drive saves and DMs but lower visible engagement
+
+  ACCUMULATED LEARNINGS:
+  - Video (Reels) outperforms static images by 1.5-2x on engagement
+  - Vulnerability/emotional hooks outperform educational hooks
+  - Suspense ("the middle one made me pause") > direct statements
+  - Specific numbers in hooks ("8 palaces", "palace #4") boost curiosity
+  - Comments increase when content invites personal identification
+  - Saves are highest on educational and reading demo content
+  - Shares are highest on emotional/relatable content
+  - Best posting time: 7-9am MYT (evening in US/EU = double timezone hit)
+  - Carousel format = highest saves, Reel = highest shares
+
+  Generate an optimized content piece that applies ALL of these learnings.
+
+criteria:
+  - id: data_driven
+    description: "The content piece clearly reflects learnings from prior performance data — uses proven hook patterns, format choices, and themes that scored above 5% engagement"
+  - id: hook_tested
+    description: "Hook follows a proven pattern from the data: suspense hook, vulnerability hook, curiosity-gap-with-number, or behind-scenes personal reveal. Not a generic or untested hook pattern."
+  - id: format_optimized
+    description: "Content format matches the engagement data — uses Reel for maximum reach, Carousel for saves, or Photo for comments. Format choice is justified by the objective (engagement rate = Reel or emotional photo)."
+  - id: timing_aware
+    description: "Content is designed for optimal posting window (7-9am MYT). If it references time-sensitive content (weekly reading, lunar phase), the timing is accurate for the current week."
+  - id: comment_magnet
+    description: "Caption includes at least one genuine engagement prompt — a question, a 'tag someone', a 'save this for later', or an opinion-inviting statement. Not forced engagement bait."
+  - id: save_worthy
+    description: "Content has reference value worth saving — a teaching, a framework, a list, a reading interpretation, or an insight the viewer would want to return to."
+  - id: share_trigger
+    description: "Content has a 'send this to someone who needs to hear it' quality — emotionally resonant, universally relatable, or practically useful enough to forward."
+  - id: pattern_evolved
+    description: "The content innovates on proven patterns rather than copying them verbatim. Combines successful elements in new ways (e.g., suspense hook + educational carousel + vulnerability angle)."
+  - id: funnel_aligned
+    description: "Content maps to a clear position in the funnel: awareness (reach-optimized), consideration (trust-building), or conversion (CTA to $1 reading). Not trying to do all three."
+  - id: learnings_applied
+    description: "At least 3 specific learnings from the performance log are visibly applied in the content piece. The variant demonstrates that the system is learning, not generating randomly."
+
+output_dir: "~/.openclaw/workspace/data/auto-research/jade-instagram-loop"
+
+# Performance tracking schema
+# Each run appends to learnings.json with this structure:
+# {
+#   "post_id": "jade_20260322_001",
+#   "content_type": "emotional",
+#   "format": "reel",
+#   "hook_pattern": "vulnerability",
+#   "posting_time": "08:00 MYT",
+#   "engagement_rate": 0.073,
+#   "likes": 612,
+#   "comments": 124,
+#   "shares": 87,
+#   "saves": 456,
+#   "reach": 17500,
+#   "top_comment_themes": ["feeling seen", "personal identification"],
+#   "criteria_scores": { ... },
+#   "overall_score": 0.8,
+#   "learnings": "Vulnerability hooks on Friday evenings drive 2x comment rate"
+# }
+
+# Pattern tracking dimensions
+track_patterns:
+  - dimension: "hook_type"
+    values: ["suspense", "vulnerability", "curiosity_number", "question", "behind_scenes", "bold_claim", "story_open"]
+    metric: "engagement_rate"
+  - dimension: "content_format"
+    values: ["reel", "carousel", "single_photo", "text_overlay", "photo_series"]
+    metric: "engagement_rate"
+  - dimension: "content_type"
+    values: ["educational", "social_proof", "lifestyle", "reading_demo", "emotional", "community", "spiritual"]
+    metric: "engagement_rate"
+  - dimension: "posting_time"
+    values: ["6am_MYT", "7am_MYT", "8am_MYT", "9am_MYT", "12pm_MYT", "6pm_MYT", "9pm_MYT"]
+    metric: "engagement_rate"
+  - dimension: "caption_length"
+    values: ["short_under_100", "medium_100_200", "long_200_plus"]
+    metric: "engagement_rate"
+  - dimension: "hashtag_count"
+    values: ["5_to_10", "11_to_15", "16_to_20", "21_to_30"]
+    metric: "reach"
+  - dimension: "cta_type"
+    values: ["link_in_bio", "dm_me", "book_now", "join_telegram", "save_this", "tag_someone", "none"]
+    metric: "conversion_rate"
+
+# Feedback sources
+# Phase 1 (now): Simulated data in template above
+# Phase 2: Manual entry from Instagram Insights screenshots
+# Phase 3: Instagram Graph API integration
+feedback_sources:
+  - type: simulated
+    description: "Cold-start simulated performance data baked into template"
+    active: true
+  # - type: manual_entry
+  #   description: "Paste Instagram Insights data into learnings.json manually"
+  #   active: false
+  # - type: instagram_api
+  #   account: "jade141319"
+  #   metric: "engagement_rate"
+  #   formula: "(likes + comments + shares + saves) / reach"
+  #   active: false
+
+# Learning decay: older learnings are weighted less
+learning_decay:
+  enabled: true
+  half_life_days: 30
+  min_weight: 0.1
+
+# Cross-references
+related_configs:
+  - "configs/jade-content-pipeline.yaml"
+  - "configs/email-subject.yaml"
+related_skills:
+  - "auto-research"
+  - "fast-iterate"
+  - "art-director"
