@@ -1,160 +1,151 @@
 ---
 name: shopify-cdp
-description: Shopify admin automation via Chrome CDP. Create/delete products, manage collections, configure store settings — all through the real signed-in Chrome browser. No API token needed.
-version: 1.0.0
+description: Shopify admin automation via Pinchtab browser. Create/delete products, manage collections, configure store — all through real signed-in Chrome. No API token needed. Self-evolving.
+version: 2.0.0
 agents: [taoz, main]
+evolves: true
+last_patched: 2026-03-21
+patch_log: patches/CHANGELOG.md
 ---
 
-# Shopify CDP — Admin Automation via Chrome DevTools Protocol
+# Shopify CDP — Admin Automation via Pinchtab
 
 ## Why This Exists
-Shopify CLI only supports theme operations. The Admin API needs a `shpat_` token from a custom app. Getting that token requires manual steps in the Shopify admin UI. This skill bypasses all of that by controlling the real Chrome browser that's already logged into Shopify admin.
+Shopify CLI = theme only. Admin API = needs `shpat_` token. Getting token = manual UI clicks. This skill bypasses ALL of that — controls real Chrome via Pinchtab to do anything a human can do in Shopify admin.
 
-## Prerequisites
-
-1. Chrome installed at `/Applications/Google Chrome.app`
-2. User logged into Shopify admin in Chrome (penanghuatgroup@gmail.com)
-3. Chrome launched with CDP flag (see below)
-
-## Launch Chrome with CDP
-
-```bash
-# First quit any running Chrome
-osascript -e 'quit app "Google Chrome"' 2>/dev/null
-sleep 2
-
-# Launch with remote debugging + a non-default user-data-dir
-# (Chrome requires non-default dir for CDP)
-CDP_DIR="$HOME/.chrome-cdp"
-mkdir -p "$CDP_DIR"
-
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-  --remote-debugging-port=9222 \
-  --user-data-dir="$CDP_DIR" \
-  "https://admin.shopify.com/store/7qz8cj-uu" &
-
-# Wait for startup
-sleep 8
-
-# Verify CDP
-curl -s http://localhost:9222/json/version | python3 -c "import sys,json; print(json.loads(sys.stdin.read()).get('Browser','FAILED'))"
-```
-
-**IMPORTANT:** After launching, user must login to Shopify ONCE in the browser. Session persists in `~/.chrome-cdp/` for future runs.
-
-## Check if CDP is Ready
-
-```bash
-curl -s http://localhost:9222/json/version 2>/dev/null | python3 -c "import sys,json; print(json.loads(sys.stdin.read()).get('Browser','NOT RUNNING'))" 2>/dev/null || echo "CDP NOT RUNNING"
-```
+## Stack
+- **Pinchtab v0.8.4** — headless Chrome via HTTP API, ~100ms per command
+- **NO Playwright** — Pinchtab is lighter, faster, uses accessibility refs (not CSS selectors)
+- **Self-evolving** — patches go in `patches/`, learnings compound in `learnings.md`
 
 ## Store Details
 
 | Key | Value |
 |-----|-------|
-| Store URL | `7qz8cj-uu.myshopify.com` |
-| Admin URL | `https://admin.shopify.com/store/7qz8cj-uu` |
+| Store | `7qz8cj-uu.myshopify.com` |
+| Admin | `https://admin.shopify.com/store/7qz8cj-uu` |
 | Domain | `jadeoracle.co` |
 | Account | `penanghuatgroup@gmail.com` |
-| CDP Port | `9222` |
-| CDP Dir | `~/.chrome-cdp/` |
+| Client ID | Stored in `~/.openclaw/secrets/shopify-client-id` |
+| Client Secret | Stored in `~/.openclaw/secrets/shopify-client-secret` |
 
-## Client Credentials (for future API use)
+## Quick Start
 
-| Key | Value |
-|-----|-------|
-| Client ID | `STORED_IN_OPENCLAW_SECRETS` |
-| Client Secret | `STORED_IN_OPENCLAW_SECRETS` |
+```bash
+# 1. Start Pinchtab with your Chrome profile (already logged into Shopify)
+BRIDGE_HEADLESS=false \
+BRIDGE_PROFILE=~/.chrome-cdp \
+pinchtab &
 
-## Common Operations
+# 2. Navigate to Shopify admin
+pinchtab nav "https://admin.shopify.com/store/7qz8cj-uu/products"
 
-### Connect to Shopify Admin
+# 3. Snapshot to see what's there
+pinchtab snap -i -c
 
-```python
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    browser = p.chromium.connect_over_cdp("http://127.0.0.1:9222")
-    context = browser.contexts[0]
-    page = context.pages[0]  # or context.new_page()
-
-    page.goto("https://admin.shopify.com/store/7qz8cj-uu/products", timeout=30000)
-    time.sleep(6)
+# 4. Act on refs (click, type, etc.)
+pinchtab click e5
 ```
 
-### Create a Product
+## Login Flow (First Time Only)
 
-```python
-page.goto("https://admin.shopify.com/store/7qz8cj-uu/products/new", timeout=30000)
-time.sleep(6)
+```bash
+# Launch headed so you can see and login
+BRIDGE_HEADLESS=false \
+BRIDGE_PROFILE=~/.chrome-cdp \
+pinchtab &
 
-page.locator('input[name="title"]').fill("Product Name")
-time.sleep(1)
+# Navigate to Shopify login
+pinchtab nav "https://admin.shopify.com/store/7qz8cj-uu"
 
-page.locator('input[name="price"]').fill("29.00")
-time.sleep(1)
+# User logs in manually in the Chrome window
+# Session persists in ~/.chrome-cdp/ for all future runs
 
-page.locator('button:has-text("Save")').first.click()
-time.sleep(5)
+# Verify logged in
+pinchtab text | grep -i "products\|orders\|home"
 ```
 
-### Delete a Product
-
-```python
-page.goto(f"https://admin.shopify.com/store/7qz8cj-uu/products/{product_id}", timeout=20000)
-time.sleep(4)
-
-page.locator('button:has-text("More actions")').first.click()
-time.sleep(1)
-
-page.locator('[role="menuitem"]:has-text("Delete")').first.click()
-time.sleep(2)
-
-# Confirm
-page.locator('button:has-text("Delete product")').last.click()
-time.sleep(3)
-```
+## Operations
 
 ### List Products
+```bash
+pinchtab nav "https://admin.shopify.com/store/7qz8cj-uu/products"
+sleep 5
+pinchtab snap -i -c | grep -i "reading\|chart\|mentor"
+```
 
-```python
-page.goto("https://admin.shopify.com/store/7qz8cj-uu/products", timeout=30000)
-time.sleep(6)
+### Create Product
+```bash
+pinchtab nav "https://admin.shopify.com/store/7qz8cj-uu/products/new"
+sleep 5
+pinchtab snap -i -c
 
-products = page.locator('a[href*="/products/"]')
-for i in range(products.count()):
-    text = products.nth(i).inner_text().strip()
-    href = products.nth(i).get_attribute("href") or ""
-    pid = href.split("/products/")[-1].split("?")[0]
-    if pid and pid.isdigit():
-        print(f"  {pid}: {text}")
+# Find the title input ref, e.g. e12
+pinchtab type e12 "Product Name"
+sleep 1
+
+# Find price input ref, e.g. e25
+pinchtab type e25 "29.00"
+sleep 1
+
+# Find Save button ref, e.g. e40
+pinchtab click e40
+sleep 3
+```
+
+### Delete Product
+```bash
+pinchtab nav "https://admin.shopify.com/store/7qz8cj-uu/products/PRODUCT_ID"
+sleep 4
+pinchtab snap -i -c
+
+# Find "More actions" button
+pinchtab click e_MORE_ACTIONS_REF
+sleep 1
+pinchtab snap -i -c
+
+# Find "Delete product" menu item
+pinchtab click e_DELETE_REF
+sleep 2
+pinchtab snap -i -c
+
+# Find confirm "Delete" button
+pinchtab click e_CONFIRM_REF
+sleep 3
 ```
 
 ### Remove Store Password
+```bash
+pinchtab nav "https://admin.shopify.com/store/7qz8cj-uu/online_store/preferences"
+sleep 5
+pinchtab snap -i -c
 
-```python
-page.goto("https://admin.shopify.com/store/7qz8cj-uu/online_store/preferences", timeout=30000)
-time.sleep(6)
-
-# Uncheck password protection
-checkbox = page.locator('input[name*="password"], label:has-text("password") input[type="checkbox"]')
-if checkbox.count() > 0 and checkbox.first.is_checked():
-    checkbox.first.uncheck()
-    time.sleep(1)
-    page.locator('button:has-text("Save")').first.click()
+# Find password toggle, uncheck it
+pinchtab click e_PASSWORD_CHECKBOX
+sleep 1
+pinchtab click e_SAVE_BUTTON
 ```
 
-## Gotchas
+### Take Screenshot
+```bash
+pinchtab ss -o /tmp/shopify-state.jpg
+```
 
-1. **Chrome must be quit before launching with CDP** — if Chrome is already running without `--remote-debugging-port`, the flag is ignored
-2. **Must use `--user-data-dir` that's NOT the default Chrome profile dir** — Chrome rejects CDP on its default data dir
-3. **Session expires** — if Shopify session expires, user needs to login once in the CDP browser window
-4. **Shopify admin is a SPA** — always `time.sleep()` after navigation. `wait_for_load_state("networkidle")` often times out
-5. **Locator timing** — Shopify uses React/Polaris. Elements take 2-6 seconds to render. Always sleep after goto
-6. **Google OAuth** — if using a fresh `--user-data-dir`, Google won't trust the browser. User must login manually the first time
-7. **CDP port conflict** — if port 9222 is in use, Chrome won't start with CDP. Kill any existing processes: `lsof -i :9222 | awk 'NR>1{print $2}' | xargs kill`
+## Scripts
 
-## Current Products (as of 2026-03-21)
+### `scripts/shopify-products.sh` — Batch Product CRUD
+```bash
+bash ~/.openclaw/skills/shopify-cdp/scripts/shopify-products.sh list
+bash ~/.openclaw/skills/shopify-cdp/scripts/shopify-products.sh create "Title" "29.00" "Description"
+bash ~/.openclaw/skills/shopify-cdp/scripts/shopify-products.sh delete PRODUCT_ID
+```
+
+### `scripts/shopify-ensure-pinchtab.sh` — Start Pinchtab if not running
+```bash
+bash ~/.openclaw/skills/shopify-cdp/scripts/shopify-ensure-pinchtab.sh
+```
+
+## Current Products (2026-03-21)
 
 | ID | Product | Price |
 |----|---------|-------|
@@ -163,3 +154,48 @@ if checkbox.count() > 0 and checkbox.first.is_checked():
 | 8528732422223 | Career & Purpose Reading | $47 |
 | 8528737304655 | Full Destiny Chart | $97 |
 | 8528742580303 | Monthly Mentorship with Jade | $497 |
+
+## Gotchas (Learned the Hard Way)
+
+1. **Shopify admin is a React SPA** — always `sleep 5-8` after navigation. Pinchtab `snap` too early = empty refs
+2. **Refs change on page reload** — always re-snapshot after navigation or significant UI change
+3. **Google OAuth on fresh profile** — Google won't trust headless Chrome. First login MUST be headed (`BRIDGE_HEADLESS=false`)
+4. **`--user-data-dir` required** — Chrome rejects CDP on default profile dir. Use `~/.chrome-cdp/`
+5. **Playwright is too heavy** — Pinchtab is 100x lighter, HTTP API not WebSocket, shell-native
+6. **Product page takes 6-8s to fully render** — don't interact before then
+7. **"More actions" dropdown** — refs inside dropdown only appear AFTER clicking the trigger button. Two-step: click trigger → snap → click menu item
+
+## Self-Evolution
+
+This skill is designed to **compound learnings**. After every Shopify session:
+
+### How to Patch
+```bash
+# 1. Document what you learned
+echo "## $(date +%Y-%m-%d) — What happened" >> ~/.openclaw/skills/shopify-cdp/learnings.md
+echo "- Finding: ..." >> ~/.openclaw/skills/shopify-cdp/learnings.md
+echo "- Fix: ..." >> ~/.openclaw/skills/shopify-cdp/learnings.md
+
+# 2. If it's a reusable pattern, add to patches/
+cat > ~/.openclaw/skills/shopify-cdp/patches/PATCH-001-name.md << 'EOF'
+## Patch: Name
+**Date:** YYYY-MM-DD
+**Problem:** What broke
+**Solution:** How to fix
+**Apply to:** Which section of SKILL.md to update
+EOF
+
+# 3. Update SKILL.md with the fix
+# 4. Bump version in frontmatter
+# 5. Commit: git add skills/shopify-cdp/ && git commit -m "shopify-cdp patch: description"
+```
+
+### Learnings File
+All session learnings go to `learnings.md` — raw, unfiltered. Periodically review and promote patterns to SKILL.md gotchas or scripts.
+
+### Patch Format
+Patches in `patches/` follow this structure:
+- `PATCH-NNN-short-name.md` — description, problem, solution, where to apply
+- `CHANGELOG.md` — version log
+
+This lets any agent (Taoz, Zenni, Claude Code) apply patches independently.
