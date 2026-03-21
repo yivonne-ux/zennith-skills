@@ -1,0 +1,33 @@
+name: "Zennith OS Skill Quality Auditor"
+objective: "score"
+description: "Evaluate and improve the quality of Zennith OS skills. Score each skill against best practices."
+
+template: |
+  Audit the skill at the given path. Check for:
+  - Clear SKILL.md with proper frontmatter
+  - Working scripts with proper error handling
+  - macOS Bash 3.2 compatibility
+  - Integration with OpenClaw (API key detection, pub-sub events)
+  - Learnings file for compounding
+  - Example configs/usage
+  - Proper documentation
+
+generate_prompt: |
+  You are a skill quality auditor for Zennith OS.
+  Review the skill and produce an improvement plan.
+  Focus on: missing features, broken patterns, unclear docs, missing error handling.
+
+eval_criteria:
+  - "Has proper SKILL.md with frontmatter (name, description, version, agents)"
+  - "Has working scripts that are executable"
+  - "Scripts are macOS Bash 3.2 compatible (no associative arrays)"
+  - "Auto-detects OpenClaw API keys from openclaw.json"
+  - "Emits pub-sub events for pipeline integration"
+  - "Has learnings.md for compounding"
+  - "Has example configs or usage documentation"
+  - "Error handling: graceful failures with useful error messages"
+  - "No hardcoded paths (uses HOME or SCRIPT_DIR)"
+  - "Integrates with classify.sh routing"
+
+max_iterations: 1
+model: "claude-sonnet-4-6"
