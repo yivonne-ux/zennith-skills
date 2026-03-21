@@ -26,3 +26,22 @@
 - Pinchtab uses HTTP API + accessibility refs (e0, e5, e12) instead of CSS selectors
 - ~100ms per command vs Playwright's heavier WebSocket protocol
 - Shell-native: `pinchtab nav`, `pinchtab snap`, `pinchtab click e5`
+
+## 2026-03-21 — Frontpage Collection Fix
+
+### What broke
+- /collections/frontpage was empty
+- Shopify Polaris React UI prevents programmatic checkbox selection in Browse modal
+- JavaScript clicks don't trigger React state updates
+
+### What worked
+- /collections/all shows all products correctly (Shopify built-in)
+- Created URL redirect: /collections/frontpage → /collections/all
+- Automated collections work when conditions match (but "price > 0" condition may not have worked)
+
+### Pattern: Shopify Polaris React UI limitations
+- `page.evaluate()` JS clicks don't update React state
+- `aria-label="Select: ..."` elements have overlay divs blocking clicks
+- Checkboxes wrapped in Polaris components reject Playwright `.check()`
+- Save button stays `aria-disabled="true"` until React state changes
+- **Workaround**: Use URL redirects or automated collections instead of fighting the manual UI
