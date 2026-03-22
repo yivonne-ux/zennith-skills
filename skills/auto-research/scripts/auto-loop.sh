@@ -257,21 +257,27 @@ call_llm() {
       return 1
     fi
 
+    local tmp_sys=$(mktemp)
+    local tmp_usr=$(mktemp)
+    local tmp_payload=$(mktemp)
+    printf '%s' "$system_prompt" > "$tmp_sys"
+    printf '%s' "$user_prompt" > "$tmp_usr"
+    "$PYTHON3" - "$tmp_sys" "$tmp_usr" "$model" << 'PYEOF' > "$tmp_payload"
+import json, sys
+with open(sys.argv[1]) as f: system = f.read()
+with open(sys.argv[2]) as f: user = f.read()
+model = sys.argv[3]
+print(json.dumps({"model": model, "max_tokens": 4096, "system": system, "messages": [{"role": "user", "content": user}]}))
+PYEOF
+
     local response
     response=$(curl -s --max-time 120 \
       "https://api.anthropic.com/v1/messages" \
       -H "x-api-key: $api_key" \
       -H "anthropic-version: 2023-06-01" \
       -H "content-type: application/json" \
-      -d "$(printf '%s' "{
-        \"model\": \"$model\",
-        \"max_tokens\": 4096,
-        \"system\": $(echo "$system_prompt" | "$PYTHON3" -c 'import sys,json; print(json.dumps(sys.stdin.read()))'),
-        \"messages\": [{
-          \"role\": \"user\",
-          \"content\": $(echo "$user_prompt" | "$PYTHON3" -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
-        }]
-      }")")
+      -d @"$tmp_payload")
+    rm -f "$tmp_sys" "$tmp_usr" "$tmp_payload"
 
     # Extract text from response
     echo "$response" | "$PYTHON3" -c "
@@ -299,19 +305,26 @@ except Exception as e:
       return 1
     fi
 
+    local tmp_sys2=$(mktemp)
+    local tmp_usr2=$(mktemp)
+    local tmp_payload2=$(mktemp)
+    printf '%s' "$system_prompt" > "$tmp_sys2"
+    printf '%s' "$user_prompt" > "$tmp_usr2"
+    "$PYTHON3" - "$tmp_sys2" "$tmp_usr2" "$model" << 'PYEOF' > "$tmp_payload2"
+import json, sys
+with open(sys.argv[1]) as f: system = f.read()
+with open(sys.argv[2]) as f: user = f.read()
+model = sys.argv[3]
+print(json.dumps({"model": model, "max_tokens": 4096, "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}))
+PYEOF
+
     local response
     response=$(curl -s --max-time 120 \
-      "$api_base/chat/completions" \
+      "${api_base}/chat/completions" \
       -H "Authorization: Bearer $api_key" \
       -H "Content-Type: application/json" \
-      -d "$(printf '%s' "{
-        \"model\": \"$model\",
-        \"max_tokens\": 4096,
-        \"messages\": [
-          {\"role\": \"system\", \"content\": $(echo "$system_prompt" | "$PYTHON3" -c 'import sys,json; print(json.dumps(sys.stdin.read()))')},
-          {\"role\": \"user\", \"content\": $(echo "$user_prompt" | "$PYTHON3" -c 'import sys,json; print(json.dumps(sys.stdin.read()))')}
-        ]
-      }")")
+      -d @"$tmp_payload2")
+    rm -f "$tmp_sys2" "$tmp_usr2" "$tmp_payload2"
 
     echo "$response" | "$PYTHON3" -c "
 import sys, json
