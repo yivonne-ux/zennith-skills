@@ -249,7 +249,7 @@ call_llm() {
   fi
 
   # Determine API based on model name
-  if echo "$model" | grep -q "claude"; then
+  if echo "$model" | grep -q "^claude"; then
     # Anthropic API
     local api_key="${ANTHROPIC_API_KEY:-}"
     if [ -z "$api_key" ]; then
@@ -504,6 +504,8 @@ log_experiment() {
   local analysis="$7"
   local best_score="$8"
 
+  export _ANALYSIS="$analysis"
+  export _EVAL_JSON="$eval_json"
   "$PYTHON3" << PYEOF
 import json, os
 from datetime import datetime
@@ -529,8 +531,8 @@ experiment = {
     "score": float("$score"),
     "best_score_at_time": float("$best_score"),
     "kept": "$kept" == "true",
-    "analysis": """$analysis""",
-    "eval": json.loads('''$eval_json''') if '''$eval_json''' else {}
+    "analysis": os.environ.get("_ANALYSIS",""),
+    "eval": json.loads(os.environ.get("_EVAL_JSON","{}")) if os.environ.get("_EVAL_JSON","") else {}
 }
 
 data["experiments"].append(experiment)

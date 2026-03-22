@@ -138,12 +138,26 @@ call_llm() {
     return 0
   fi
 
-  if echo "$model" | grep -q "claude"; then
+  if echo "$model" | grep -q "^claude"; then
     local api_key="${ANTHROPIC_API_KEY:-}"
     if [ -z "$api_key" ]; then
       log_error "ANTHROPIC_API_KEY not set"
       return 1
     fi
+
+    # Build JSON payload via temp files (avoids all quoting issues)
+    local tmp_sys=$(mktemp)
+    local tmp_usr=$(mktemp)
+    local tmp_payload=$(mktemp)
+    printf '%s' "$system_prompt" > "$tmp_sys"
+    printf '%s' "$user_prompt" > "$tmp_usr"
+    "$PYTHON3" - "$tmp_sys" "$tmp_usr" "$model" << 'PYEOF' > "$tmp_payload"
+import json, sys
+with open(sys.argv[1]) as f: system = f.read()
+with open(sys.argv[2]) as f: user = f.read()
+model = sys.argv[3]
+print(json.dumps({"model": model, "max_tokens": 4096, "system": system, "messages": [{"role": "user", "content": user}]}))
+PYEOF
 
     local response
     response=$(curl -s --max-time 120 \
@@ -151,17 +165,8 @@ call_llm() {
       -H "x-api-key: $api_key" \
       -H "anthropic-version: 2023-06-01" \
       -H "content-type: application/json" \
-      -d "$("$PYTHON3" -c "
-import json, sys
-system = '''$system_prompt'''
-user = '''$user_prompt'''
-print(json.dumps({
-    'model': '$model',
-    'max_tokens': 4096,
-    'system': system,
-    'messages': [{'role': 'user', 'content': user}]
-}))
-")")
+      -d @"$tmp_payload")
+    rm -f "$tmp_sys" "$tmp_usr" "$tmp_payload"
 
     echo "$response" | "$PYTHON3" -c "
 import sys, json
@@ -187,24 +192,26 @@ except Exception as e:
       return 1
     fi
 
+    local tmp_sys2=$(mktemp)
+    local tmp_usr2=$(mktemp)
+    local tmp_payload2=$(mktemp)
+    printf '%s' "$system_prompt" > "$tmp_sys2"
+    printf '%s' "$user_prompt" > "$tmp_usr2"
+    "$PYTHON3" - "$tmp_sys2" "$tmp_usr2" "$model" << 'PYEOF' > "$tmp_payload2"
+import json, sys
+with open(sys.argv[1]) as f: system = f.read()
+with open(sys.argv[2]) as f: user = f.read()
+model = sys.argv[3]
+print(json.dumps({"model": model, "max_tokens": 4096, "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}))
+PYEOF
+
     local response
     response=$(curl -s --max-time 120 \
-      "$api_base/chat/completions" \
+      "${api_base}/chat/completions" \
       -H "Authorization: Bearer $api_key" \
       -H "Content-Type: application/json" \
-      -d "$("$PYTHON3" -c "
-import json
-system = '''$system_prompt'''
-user = '''$user_prompt'''
-print(json.dumps({
-    'model': '$model',
-    'max_tokens': 4096,
-    'messages': [
-        {'role': 'system', 'content': system},
-        {'role': 'user', 'content': user}
-    ]
-}))
-")")
+      -d @"$tmp_payload2")
+    rm -f "$tmp_sys2" "$tmp_usr2" "$tmp_payload2"
 
     echo "$response" | "$PYTHON3" -c "
 import sys, json
