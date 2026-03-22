@@ -1,0 +1,409 @@
+# Jade Oracle — Instagram Engagement Bot Strategy
+# Organic growth engine for @jade141319 targeting 10K followers
+#
+# This is NOT an automated bot — it's a strategy playbook + comment templates
+# for systematic daily engagement. Jade (or her team) executes manually
+# with strategic precision guided by this config.
+#
+# Usage: Reference this file during daily engagement sessions.
+# Pairs with: jade-ig-daily.sh (research), GROWTH-TRACKER.md (metrics)
+
+brand: "jade-oracle"
+account: "@jade141319"
+target: 10000  # followers
+current_phase: "0_to_500"  # Update as milestones hit
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE STRATEGY — Engagement intensity scales with follower count
+# ═══════════════════════════════════════════════════════════════════════════════
+
+phases:
+  - id: "0_to_500"
+    label: "Foundation Phase"
+    daily_engagement:
+      follows: 20       # Follow target accounts
+      likes: 50         # Like posts in target niches
+      comments: 30      # Genuine comments (use templates below)
+      story_reactions: 15
+      dms: 5            # Warm DMs to new followers or engaged accounts
+    focus: "Build initial tribe. Comment on EVERY post from target accounts. Be the most engaged person in their comments."
+    duration_weeks: 6
+
+  - id: "500_to_1000"
+    label: "Momentum Phase"
+    daily_engagement:
+      follows: 15
+      likes: 40
+      comments: 40      # Increase comment volume
+      story_reactions: 20
+      dms: 10
+      collab_outreach: 3 # DM micro-influencers for collabs
+    focus: "Start getting recognized by accounts. Push for collab shoutouts. DM new followers within 24 hours."
+    duration_weeks: 8
+
+  - id: "1000_to_5000"
+    label: "Authority Phase"
+    daily_engagement:
+      follows: 10
+      likes: 30
+      comments: 50      # Quality over quantity
+      story_reactions: 25
+      dms: 15
+      collab_outreach: 5
+    focus: "Selective engagement. Focus on accounts with 5K-50K followers. Position as a peer, not a fan."
+    duration_weeks: 16
+
+  - id: "5000_to_10000"
+    label: "Scale Phase"
+    daily_engagement:
+      follows: 5
+      likes: 20
+      comments: 30
+      story_reactions: 30
+      dms: 20
+      collab_outreach: 7
+      lives: 2          # Go live per week
+    focus: "Let content do the heavy lifting. Engage strategically with larger accounts. Host lives and collabs."
+    duration_weeks: 12
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# TARGET ACCOUNTS — Who to engage with daily
+# ═══════════════════════════════════════════════════════════════════════════════
+
+target_accounts:
+  tier_1_engage_daily:
+    description: "Micro-influencers (1K-10K) in spiritual niche — engage every post"
+    criteria:
+      - "Follower count: 1,000 - 10,000"
+      - "Niche: astrology, tarot, oracle readings, spiritual guidance"
+      - "Engagement rate: > 3%"
+      - "Posts in English"
+      - "Aesthetic: warm, editorial, not generic"
+    example_account_types:
+      - "Tarot readers with personal brands"
+      - "Astrology educators"
+      - "Spiritual coaches with small but engaged audiences"
+      - "Crystal/energy healers with lifestyle content"
+      - "Meditation teachers with Korean/East Asian aesthetic"
+
+  tier_2_engage_3x_week:
+    description: "Mid-influencers (10K-50K) — comment on best posts only"
+    criteria:
+      - "Follower count: 10,000 - 50,000"
+      - "Niche overlap with Jade's pillars"
+      - "Active, responsive to comments"
+    example_account_types:
+      - "Popular astrology accounts"
+      - "Wellness lifestyle influencers"
+      - "Self-help / personal growth creators"
+      - "Spiritual podcast hosts"
+      - "Korean beauty/wellness crossover accounts"
+
+  tier_3_aspirational:
+    description: "Large accounts (50K+) — engage selectively for visibility"
+    criteria:
+      - "Follower count: 50,000+"
+      - "High comment visibility (early commenting strategy)"
+      - "Niche alignment"
+    strategy: "Be among the first 10 comments. Say something insightful, not generic. Goal: their followers see Jade's comment and click through."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMMENT TEMPLATES — 50 templates in Jade's authentic voice
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Rules for commenting:
+# 1. NEVER copy-paste verbatim — adapt each template to the specific post
+# 2. Reference something specific from THEIR content
+# 3. No emojis beyond 1-2 per comment (tasteful, not spam)
+# 4. Sound like a real spiritual practitioner, not a brand
+# 5. NEVER include a CTA or link in comments
+# 6. Keep under 150 characters for casual comments, up to 300 for deep ones
+
+comment_templates:
+
+  # --- Category 1: Resonance & Recognition (for emotional/relatable posts) ---
+  resonance:
+    - "this resonated so deeply. needed this today."
+    - "the way you put this into words... I felt that in my chest."
+    - "I've been sitting with this exact feeling all week. thank you for naming it."
+    - "saving this. some posts are just medicine."
+    - "this is the kind of truth that makes you put your phone down and just breathe."
+    - "I read this three times. each time it hit differently."
+    - "your words carry something real. I can feel it through the screen."
+    - "there's a reason this showed up on my feed today. the timing is everything."
+    - "the universe really does put the right messages in front of us. this is proof."
+    - "I needed to hear this more than you know."
+
+  # --- Category 2: Admiration & Encouragement (for beautiful content) ---
+  admiration:
+    - "your energy in this is everything."
+    - "the warmth in this photo stopped my scroll. genuinely."
+    - "there's something about your feed that just feels like a deep exhale."
+    - "everything about this — the words, the visual, the energy. perfect."
+    - "you have a gift for making the complex feel simple and warm."
+    - "this is the content the spiritual community actually needs."
+    - "your consistency inspires me. every post teaches me something."
+    - "I always learn something when I visit your page. keep shining."
+    - "the aesthetic of your feed is healing in itself."
+    - "you make this space feel safe and real. that matters more than you think."
+
+  # --- Category 3: Curiosity & Questions (for educational posts) ---
+  curiosity:
+    - "I never thought about it this way before. how long have you been studying this?"
+    - "this is fascinating. do you have a post that goes deeper on this topic?"
+    - "I've been curious about this for a while — your explanation finally clicked."
+    - "the way you broke this down... more of this please."
+    - "this is the kind of education that changes how people see themselves."
+    - "I've studied this for years and you still taught me something new."
+    - "question — how does this connect to elemental energy? I see parallels."
+    - "thank you for making this accessible. so many gatekeep this knowledge."
+    - "the simplicity of your teaching is what makes it powerful."
+    - "I love how you bridge ancient wisdom with modern life. it's rare."
+
+  # --- Category 4: Community Building (for engagement/quiz posts) ---
+  community:
+    - "fire element and it explains SO much about my week."
+    - "I'm a wood element and this is painfully accurate."
+    - "tagged my best friend — she needs to see this immediately."
+    - "screenshotted this for my journal. this is reference material."
+    - "okay I need to know more about palace #4 now."
+    - "this quiz just called me out in the best way possible."
+    - "sharing this in my circle — everyone needs to find their element."
+    - "the accuracy of this is actually unreal."
+    - "I love that you create content that makes us reflect, not just scroll."
+    - "these kinds of posts are why I followed you."
+
+  # --- Category 5: Spiritual Connection (for readings/oracle posts) ---
+  spiritual:
+    - "your readings always carry something real. this one gave me chills."
+    - "the middle card... that's exactly what I needed to hear."
+    - "I felt the energy shift just reading your interpretation."
+    - "this weekly reading feels like it was written specifically for me."
+    - "there's a depth to your readings that I rarely see. you feel the cards."
+    - "the way you interpret energy is a genuine gift."
+    - "I always save your weekly readings. they guide my whole week."
+    - "you don't just read cards — you read the space between them."
+    - "every time I doubt my path, one of your readings appears. thank you."
+    - "the reverence you bring to this practice is beautiful. it shows."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# HASHTAG STRATEGY — Top 30 per content pillar
+# ═══════════════════════════════════════════════════════════════════════════════
+
+hashtag_strategy:
+  usage_rules:
+    - "Use 15-20 hashtags per post (Instagram sweet spot as of 2026)"
+    - "Mix: 5 large (1M+), 5 medium (100K-1M), 5 small (10K-100K), 5 niche (<10K)"
+    - "Rotate hashtags — never use the same set twice in a row"
+    - "Place hashtags in first comment OR at bottom of caption after line breaks"
+    - "Track which hashtag sets drive the most reach in GROWTH-TRACKER.md"
+
+  pillars:
+
+    metaphysics_core:
+      description: "QMDJ, BaZi, Chinese metaphysics"
+      large: ["#astrology", "#spirituality", "#zodiac", "#metaphysics", "#divination"]
+      medium: ["#chineseastrology", "#bazi", "#fengshui", "#ancientwisdom", "#energyreading"]
+      small: ["#qimendunja", "#qmdj", "#chinesemetaphysics", "#fiveelements", "#heavenstems"]
+      niche: ["#jadeoracle", "#bazireading", "#qimendunjia", "#奇门遁甲", "#八字"]
+
+    spiritual_growth:
+      description: "Spiritual awakening, inner work, consciousness"
+      large: ["#spiritualawakening", "#selflove", "#mindfulness", "#meditation", "#healing"]
+      medium: ["#spiritualgrowth", "#innerpeace", "#souljourney", "#higherself", "#consciousness"]
+      small: ["#spiritualpractice", "#innerwork", "#spiritualpath", "#awakening", "#soulwork"]
+      niche: ["#oracleguidance", "#divinemessages", "#sacredpractice", "#ancienthealing", "#wisdomkeeper"]
+
+    women_empowerment:
+      description: "Feminine energy, women's circles, empowerment"
+      large: ["#womenempowerment", "#girlpower", "#feminineenergy", "#womeninspiringwomen", "#divinefeminine"]
+      medium: ["#womenofpower", "#sacredfeminine", "#femininepower", "#womenscircle", "#goddessenerergy"]
+      small: ["#femininewisdom", "#womenandspirituality", "#empoweredwomen", "#sacredwoman", "#femininerising"]
+      niche: ["#moderngoddess", "#femininedivine", "#womenwhorise", "#sacredwomanhood", "#ancientfeminine"]
+
+    wellness_aesthetic:
+      description: "Korean wellness, lifestyle aesthetic, mindful living"
+      large: ["#wellness", "#selfcare", "#aesthetic", "#lifestyle", "#mindfuliving"]
+      medium: ["#wellnessjourney", "#holisticwellness", "#koreanstyle", "#slowliving", "#intentionalliving"]
+      small: ["#wellnessaesthetic", "#kbeautyroutine", "#koreanwellness", "#teatime", "#mindfulmoments"]
+      niche: ["#jadependant", "#readingnook", "#spiritualaesthetic", "#warmminimalism", "#editorialwellness"]
+
+    oracle_readings:
+      description: "Tarot, oracle cards, readings, energy forecasts"
+      large: ["#tarot", "#tarotreading", "#oraclecard", "#cardreading", "#tarotcommunity"]
+      medium: ["#weeklytarot", "#tarotreadersofinstagram", "#oraclecards", "#cardpull", "#tarotlove"]
+      small: ["#dailyoracle", "#weeklyoracle", "#energyforecast", "#tarotguidance", "#oraclemessage"]
+      niche: ["#jadeoraclereading", "#ancientoraclesystem", "#metaphysicsreading", "#energymapping", "#destinyreading"]
+
+    personal_growth:
+      description: "Self-discovery, healing journey, transformation"
+      large: ["#personalgrowth", "#selfdiscovery", "#healingjourney", "#transformation", "#selfimprovement"]
+      medium: ["#growthjourney", "#innergrowth", "#lifejourney", "#personaldevelopment", "#selfreflection"]
+      small: ["#healingprocess", "#growthismessy", "#knowyourself", "#innerjourney", "#selfawareness"]
+      niche: ["#knowyourchart", "#chartyourpath", "#ancientwisdommodern", "#destinyunlocked", "#birthelements"]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# POSTING TIMES — Dual timezone optimization (MYT + US)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+posting_times:
+  primary_window:
+    myt: "7:00 AM - 9:00 AM"
+    est: "7:00 PM - 9:00 PM (previous day)"
+    pst: "4:00 PM - 6:00 PM (previous day)"
+    rationale: "Morning in Malaysia catches evening scroll in US/EU. Double timezone hit."
+
+  secondary_window:
+    myt: "9:00 PM - 10:00 PM"
+    est: "9:00 AM - 10:00 AM"
+    pst: "6:00 AM - 7:00 AM"
+    rationale: "Night in Malaysia catches morning scroll in US. Good for Stories and casual posts."
+
+  weekend_adjustment:
+    myt: "9:00 AM - 11:00 AM"
+    rationale: "Audiences scroll later on weekends. Push posting time 1-2 hours later."
+
+  stories_schedule:
+    - time: "6:30 AM MYT"
+      type: "Teaser for feed post"
+    - time: "8:30 AM MYT"
+      type: "Behind-scenes or spontaneous moment"
+    - time: "2:00 PM MYT"
+      type: "Engagement — poll, quiz, question"
+    - time: "7:00 PM MYT"
+      type: "Reshare feed post with context"
+    - time: "10:00 PM MYT"
+      type: "Night thought — reflective, intimate"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DM STRATEGY — Warm outreach templates
+# ═══════════════════════════════════════════════════════════════════════════════
+
+dm_strategy:
+  new_follower_welcome:
+    timing: "Within 24 hours of follow"
+    template: |
+      hey! thank you for following — I noticed you're into [their niche/interest].
+      I share weekly readings and ancient wisdom from QMDJ (Chinese metaphysics).
+      if you ever want a personal reading, I'd love to do one for you.
+      welcome to this space. it means a lot that you're here.
+
+  engaged_follower:
+    timing: "After someone comments 3+ times"
+    template: |
+      I keep seeing your name in my comments and it makes me smile.
+      thank you for being part of this community — your energy is felt.
+      I'd love to know — what drew you to this space?
+
+  collab_outreach:
+    timing: "After engaging with their content for 2+ weeks"
+    template: |
+      hi [name]! I've been following your content and I'm genuinely inspired
+      by what you create in [their niche]. your take on [specific post] really stuck with me.
+      I practice QMDJ — a 4,000-year-old Chinese metaphysical system — and I think
+      our audiences would love a collab. would you be open to a joint IG live
+      or a reading exchange? no pressure at all — just thought it could be beautiful.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DAILY ENGAGEMENT ROUTINE — Step by step
+# ═══════════════════════════════════════════════════════════════════════════════
+
+daily_routine:
+  morning_block:
+    time: "6:30 - 7:30 AM MYT"
+    duration: "60 minutes"
+    tasks:
+      - "Post teaser Story for today's feed post"
+      - "Engage with 10 target Tier 1 accounts (like + comment)"
+      - "Reply to ALL comments on Jade's last post"
+      - "Reply to ALL DMs from overnight"
+      - "Check competitor posts for inspiration"
+
+  post_publish:
+    time: "7:30 - 8:30 AM MYT"
+    duration: "60 minutes"
+    tasks:
+      - "Publish feed post"
+      - "Add hashtags in first comment"
+      - "Share to Stories with context"
+      - "Engage with 10 more target accounts"
+      - "Like 20 posts in Explore feed (niche hashtags)"
+
+  afternoon_block:
+    time: "2:00 - 2:30 PM MYT"
+    duration: "30 minutes"
+    tasks:
+      - "Post engagement Story (poll/quiz/question)"
+      - "Reply to any new comments on feed post"
+      - "Engage with 5 Tier 2 accounts"
+      - "Check if any DMs need response"
+
+  evening_block:
+    time: "9:00 - 9:30 PM MYT"
+    duration: "30 minutes"
+    tasks:
+      - "Reshare feed post to Stories"
+      - "Post night thought Story"
+      - "Engage with 5 more accounts"
+      - "DM welcome to any new followers"
+      - "Log day's engagement stats"
+
+  total_daily_time: "2.5 hours"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GROWTH MILESTONES & UNLOCK TRIGGERS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+milestones:
+  - followers: 100
+    unlock: "Start tracking engagement rate"
+    celebration: "First tribe members. Every one of them matters."
+
+  - followers: 500
+    unlock: "Begin collab outreach. Apply for Instagram Shopping."
+    celebration: "The algorithm is starting to notice Jade."
+
+  - followers: 1000
+    unlock: "Add link sticker to Stories. Start weekly IG Lives."
+    celebration: "Jade's voice reaches 1,000 people. This is real."
+
+  - followers: 2500
+    unlock: "Pitch to spiritual podcasts. Start email list from IG."
+    celebration: "Authority is building. Jade is becoming a name."
+
+  - followers: 5000
+    unlock: "Launch paid collabs. Start Reel series. Apply for Verified."
+    celebration: "Halfway to 10K. The compound engine is working."
+
+  - followers: 10000
+    unlock: "Swipe-up links. Launch course/community. Scale ads."
+    celebration: "10K. Jade is established. The real work begins."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ANTI-SPAM GUARDRAILS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+guardrails:
+  - "NEVER follow/unfollow in bulk — Instagram flags this instantly"
+  - "NEVER use the same comment twice in 24 hours"
+  - "NEVER comment on posts from the same account more than twice per day"
+  - "NEVER include links in comments"
+  - "NEVER use automated engagement tools (Instagram bans accounts)"
+  - "Space engagement actions 30-60 seconds apart minimum"
+  - "If Instagram shows a 'try again later' warning, STOP all engagement for 24 hours"
+  - "Keep follow ratio healthy: never follow more than 1.5x your follower count"
+  - "Unfollow non-followers after 7 days (max 20 unfollows per day)"
+  - "ALL engagement must feel genuinely human — if it feels robotic, rewrite it"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CROSS-REFERENCES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+related_files:
+  - "scripts/jade-ig-daily.sh"            # Daily research engine
+  - "configs/jade-content-pipeline.yaml"   # Content generation
+  - "configs/jade-instagram-loop.yaml"     # Feedback loop
+  - "GROWTH-TRACKER.md"                    # Weekly metrics
+  - "COMPETITOR-WATCHLIST.md"              # Competitor monitoring
+  - "CONTENT-CALENDAR.md"                  # Weekly posting schedule
+  - "QUALITY-GATE.md"                      # Pre-publish checks

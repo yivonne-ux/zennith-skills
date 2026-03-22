@@ -1,0 +1,263 @@
+# Jade Oracle — Weekly Content Audit Config
+# Runs every Sunday night to analyze the past week's post performance,
+# identify patterns, compare to competitors, and generate improvement
+# suggestions for the coming week.
+#
+# Usage:
+#   bash auto-loop.sh configs/jade-ig-content-audit.yaml
+#   Or triggered by cron every Sunday at 11:00 PM MYT
+#
+# Cron:
+#   0 15 * * 0 /bin/bash /Users/jennwoeiloh/.openclaw/skills/auto-research/scripts/auto-loop.sh /Users/jennwoeiloh/.openclaw/skills/auto-research/configs/jade-ig-content-audit.yaml >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-audit.log 2>&1
+
+objective: "weekly_improvement_score"
+task: |
+  Perform a weekly content audit for Jade Oracle (@jade141319).
+  Analyze the past 7 days of Instagram posts and generate a comprehensive
+  performance report with actionable improvements for next week.
+
+  The audit must cover:
+  1. Individual post performance analysis (engagement rate, saves, shares, comments)
+  2. Pattern recognition: which hook types, formats, and posting times performed best
+  3. Hashtag effectiveness: which sets drove the most reach
+  4. Competitor benchmarking: how Jade's metrics compare to similar accounts
+  5. Content pillar performance: which day's content type resonated most
+  6. Specific improvement suggestions for each day of next week
+
+  Account: @jade141319
+  Brand: Jade Oracle
+  Content Calendar: 7 posts/week (Mon-Sun rotation)
+  Target engagement rate: > 5%
+  Growth target: 200+ followers/week
+
+brand: "jade-oracle"
+model: "claude-sonnet-4-6"
+max_iterations: 5
+keep_threshold: null
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# AUDIT TEMPLATE — Structure for weekly reports
+# ═══════════════════════════════════════════════════════════════════════════════
+
+template: |
+  # WEEKLY CONTENT AUDIT — Jade Oracle @jade141319
+  ## Week of: [DATE_RANGE]
+
+  ---
+
+  ## 1. WEEK AT A GLANCE
+
+  | Metric | This Week | Last Week | Change | Target |
+  |--------|-----------|-----------|--------|--------|
+  | Followers | [N] | [N] | +/- [N] | +200/week |
+  | Posts published | [N]/7 | [N]/7 | — | 7/7 |
+  | Avg engagement rate | [N]% | [N]% | +/- [N]% | > 5% |
+  | Total reach | [N] | [N] | +/- [N]% | Growing |
+  | Total saves | [N] | [N] | +/- [N]% | > 300 avg |
+  | Total shares | [N] | [N] | +/- [N]% | > 40 avg |
+  | DMs received | [N] | [N] | +/- [N] | > 5/day |
+  | Link clicks | [N] | [N] | +/- [N] | > 50/week |
+  | $1 reading conversions | [N] | [N] | +/- [N] | > 10/week |
+
+  ---
+
+  ## 2. POST-BY-POST ANALYSIS
+
+  ### Monday — Educational
+  - **Hook:** "[the hook used]"
+  - **Format:** [Carousel/Reel/Photo/Text]
+  - **Engagement:** [N]% ([likes] likes, [comments] comments, [shares] shares, [saves] saves)
+  - **Reach:** [N]
+  - **Hook score:** [1-10] — [why]
+  - **What worked:** [specific observation]
+  - **What didn't:** [specific observation]
+  - **Fix for next Monday:** [specific suggestion]
+
+  [Repeat for Tue-Sun]
+
+  ---
+
+  ## 3. PATTERN ANALYSIS
+
+  ### Hook Performance Ranking
+  | Rank | Hook Type | Avg Engagement | Best Example |
+  |------|-----------|---------------|--------------|
+  | 1 | [type] | [N]% | "[hook]" |
+  | ... | | | |
+
+  ### Format Performance
+  | Format | Posts | Avg Engagement | Avg Saves | Avg Shares |
+  |--------|-------|---------------|-----------|------------|
+  | Reel | [N] | [N]% | [N] | [N] |
+  | Carousel | [N] | [N]% | [N] | [N] |
+  | Photo | [N] | [N]% | [N] | [N] |
+  | Text overlay | [N] | [N]% | [N] | [N] |
+
+  ### Content Pillar Performance
+  | Day | Pillar | Engagement | vs Target | Trend (3-week) |
+  |-----|--------|-----------|-----------|----------------|
+  | Mon | Educational | [N]% | [above/below] | [up/down/flat] |
+  | ... | | | | |
+
+  ### Posting Time Analysis
+  | Post Time (MYT) | Engagement | Reach | Notes |
+  |-----------------|-----------|-------|-------|
+  | [time] | [N]% | [N] | [observation] |
+
+  ---
+
+  ## 4. HASHTAG AUDIT
+
+  ### Top Performing Hashtag Sets
+  | Set | Posts Used | Avg Reach | Avg Engagement |
+  |-----|-----------|-----------|----------------|
+  | [hashtags] | [N] | [N] | [N]% |
+
+  ### Hashtags to KEEP (driving reach):
+  - [list]
+
+  ### Hashtags to DROP (low performance):
+  - [list]
+
+  ### Hashtags to TEST next week:
+  - [list with rationale]
+
+  ---
+
+  ## 5. COMPETITOR BENCHMARK
+
+  | Account | Followers | Posts/Week | Avg Engagement | What They Do Better | What Jade Does Better |
+  |---------|-----------|-----------|---------------|--------------------|--------------------|
+  | [account] | [N] | [N] | [N]% | [observation] | [observation] |
+
+  ---
+
+  ## 6. IMPROVEMENT PLAN — Next Week
+
+  ### Monday — Educational
+  - **Hook to try:** "[specific hook]"
+  - **Format change:** [if any]
+  - **Hashtag set:** [specific hashtags]
+  - **Visual note:** [if any]
+
+  [Repeat for Tue-Sun]
+
+  ### Overall Strategy Adjustments
+  - [bullet point adjustments based on data]
+
+  ---
+
+  ## 7. COMPOUND ENGINE FEED
+
+  ### Learnings to feed into jade-instagram-loop.yaml:
+  - [pattern 1]
+  - [pattern 2]
+  - [pattern 3]
+
+  ### Content calendar adjustments for CONTENT-CALENDAR.md:
+  - [adjustment 1]
+  - [adjustment 2]
+
+  ### Growth tracker updates for GROWTH-TRACKER.md:
+  - [metric update 1]
+  - [metric update 2]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVALUATION CRITERIA — How to judge the audit quality itself
+# ═══════════════════════════════════════════════════════════════════════════════
+
+criteria:
+  - id: data_completeness
+    description: "All 7 days of the week are analyzed individually with specific metrics for each. No days skipped. If a post wasn't published, that's noted as a gap."
+
+  - id: pattern_specificity
+    description: "Patterns identified are specific and actionable — not vague observations like 'engagement was good.' Includes specific numbers, percentages, and examples."
+
+  - id: hook_ranking
+    description: "Hooks are ranked by actual performance with clear explanations of WHY each worked or didn't. Links hook type to engagement outcome."
+
+  - id: hashtag_intelligence
+    description: "Hashtag analysis goes beyond listing — identifies which sets drove reach vs engagement, recommends specific swaps, and tracks emerging hashtags."
+
+  - id: competitor_insight
+    description: "Competitor comparison is specific and balanced — identifies what competitors do better AND what Jade does better. Not just a list of bigger accounts."
+
+  - id: actionable_improvements
+    description: "Every improvement suggestion is specific enough to act on immediately. Not 'try better hooks' but 'use vulnerability hook pattern with specific number' for Monday."
+
+  - id: trend_awareness
+    description: "Identifies week-over-week trends, not just this week's snapshot. Notes if engagement is trending up/down/flat and why."
+
+  - id: funnel_alignment
+    description: "Connects content performance to business outcomes — link clicks, DMs, $1 reading conversions. Not just vanity metrics."
+
+  - id: format_recommendation
+    description: "Recommends specific format changes backed by data — if Reels outperform carousels 2:1, that's reflected in next week's plan."
+
+  - id: brand_consistency
+    description: "Audit maintains Jade's brand voice in its recommendations — doesn't suggest anything that conflicts with jade-oracle brand DNA or voice guidelines."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# AUDIT DATA SOURCES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+data_sources:
+  phase_1_manual:
+    description: "Manual data entry from Instagram Insights screenshots"
+    how: |
+      1. Open Instagram app → Professional dashboard → Insights
+      2. Screenshot each post's performance (reach, likes, comments, saves, shares)
+      3. Screenshot account overview (followers, reach, impressions)
+      4. Paste screenshots or type data into the audit template
+      5. Run the audit loop with the populated template
+    active: true
+
+  phase_2_api:
+    description: "Instagram Graph API integration"
+    how: |
+      1. Set up Instagram Graph API via Facebook Developer portal
+      2. Script pulls metrics automatically via API
+      3. Populates audit template with real data
+      4. Run the audit loop on populated data
+    active: false
+
+  phase_3_automated:
+    description: "Fully automated weekly audit"
+    how: |
+      1. API pulls data
+      2. Script populates template
+      3. LLM generates analysis
+      4. Recommendations auto-feed into content calendar
+      5. Human reviews and approves
+    active: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# OUTPUT & INTEGRATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+output_dir: "~/.openclaw/workspace/data/jade-oracle-content-pipeline/weekly-audits"
+
+# After audit completes, update these files:
+post_audit_actions:
+  - file: "GROWTH-TRACKER.md"
+    action: "Append this week's metrics to the tracker"
+  - file: "CONTENT-CALENDAR.md"
+    action: "Update hook patterns and format recommendations based on findings"
+  - file: "configs/jade-instagram-loop.yaml"
+    action: "Update the template with new learnings from this week's data"
+  - file: "configs/jade-ig-engagement.yaml"
+    action: "Update comment templates if engagement patterns shifted"
+
+# Pub-sub event
+pubsub_event: "jade-ig.weekly-audit.complete"
+
+# Cross-references
+related_configs:
+  - "configs/jade-content-pipeline.yaml"
+  - "configs/jade-instagram-loop.yaml"
+  - "configs/jade-ig-engagement.yaml"
+related_files:
+  - "GROWTH-TRACKER.md"
+  - "COMPETITOR-WATCHLIST.md"
+  - "CONTENT-CALENDAR.md"
+  - "QUALITY-GATE.md"
