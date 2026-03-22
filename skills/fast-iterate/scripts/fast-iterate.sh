@@ -138,10 +138,27 @@ call_llm() {
     return 0
   fi
 
+  # Try claude CLI first (works on MacBook via OAuth, no API key needed)
+  local claude_cli
+  claude_cli=$(command -v claude 2>/dev/null || echo "")
+  if [ -n "$claude_cli" ] && [ -z "${FORCE_API:-}" ]; then
+    local tmp_prompt=$(mktemp)
+    printf '%s\n\n%s' "$system_prompt" "$user_prompt" > "$tmp_prompt"
+    unset ANTHROPIC_API_KEY 2>/dev/null  # Prevent invalid key override
+    local result
+    result=$(cat "$tmp_prompt" | "$claude_cli" --print --model "$model" 2>/dev/null)
+    rm -f "$tmp_prompt"
+    if [ -n "$result" ]; then
+      echo "$result"
+      return 0
+    fi
+    # Fallback to API if claude CLI failed
+  fi
+
   if echo "$model" | grep -q "^claude"; then
     local api_key="${ANTHROPIC_API_KEY:-}"
     if [ -z "$api_key" ]; then
-      log_error "ANTHROPIC_API_KEY not set"
+      log_error "ANTHROPIC_API_KEY not set and claude CLI not available"
       return 1
     fi
 
