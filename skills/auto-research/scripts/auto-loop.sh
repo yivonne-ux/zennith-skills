@@ -48,7 +48,7 @@ for name, cfg in providers.items():
     if name == 'openrouter' and key:
         print(f'export OPENAI_API_KEY=\"{key}\"')
         print(f'export OPENAI_BASE_URL=\"{base}\"')
-    elif name == 'anthropic' and key:
+    elif name == 'anthropic' and key and False:  # NEVER auto-use Anthropic (costs money)
         print(f'export ANTHROPIC_API_KEY=\"{key}\"')
     elif name == 'moonshot' and key and not key.startswith('not-'):
         print(f'export MOONSHOT_API_KEY=\"{key}\"')
