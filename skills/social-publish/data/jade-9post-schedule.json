@@ -105,9 +105,9 @@
       "time_myt": "23:00",
       "format": "story",
       "pillar": "oracle_wisdom",
-      "type": "story_qmdj_tip",
+      "type": "story_oracle_tip",
       "ratio": "9:16",
-      "purpose": "Story: Quick QMDJ fact or tip. Educational micro-content.",
+      "purpose": "Story: Quick oracle reading tip or spiritual insight. Micro-content.",
       "generator": "jade-9post-generator.sh"
     },
     {
@@ -146,9 +146,16 @@
   ],
 
   "hashtag_sets": {
-    "oracle": "#JadeOracle #TheJadeOracle #OracleCard #DailyOracle #QMDJ #QiMenDunJia #奇门遁甲 #OracleReading #CardOfTheDay #SpiritualGuidance #DivineMessage #EnergyReading #Divination #OracleDeck #SpiritualJourney #IntuitionGuide #CosmicGuidance #DailyDivination #SpiritualAwakening #OracleMessage",
-    "spiritual": "#SpiritualQuotes #SpiritualAwakening #HealingJourney #InnerWisdom #SelfLove #PersonalGrowth #Mindfulness #SpiritualGrowth #SoulWork #EnergyHealing #DivineGuidance #HigherSelf #ManifestationQuotes #UniverseMessage #WomenEmpowerment #HealingQuotes #SelfDiscovery #SpiritualWisdom #AncientWisdom #TrustTheProcess",
-    "vibes": "#SpiritualVibes #MysticVibes #HealingVibes #LofiVibes #CalmVibes #PeacefulMoments #SacredMoment #MeditativeVibes #CandlelightMood #SpiritualMood #QuietMoments #SoftAesthetic #DreamyVibes #GoldenHour #WarmLight #SereneVibes #SoulfulMoments #InnerCalm #EnergyFlow #ZenMoments",
-    "reading": "#PsychicReading #OracleReading #TarotReading #QMDJReading #SpiritualReading #IntuitiveReading #EnergyReading #DivineGuidance #SoulReading #LifeGuidance #BookAReading #SpiritualAdvisor #MetaphysicsReading #GuidanceSession #CosmicInsight #DestinyReading #AncientDivination #ReadingSession #AskTheOracle #SpiritualMentor"
+    "oracle": "#JadeOracle #OracleReading #DailyOracle #CardOfTheDay #SpiritualGuidance #OracleDeck #Divination",
+    "spiritual": "#SpiritualAwakening #HealingJourney #SelfLove #InnerWisdom #SpiritualGrowth #TrustTheProcess #SoulWork",
+    "vibes": "#SpiritualVibes #HealingVibes #PeacefulMoments #GoldenHour #SoftAesthetic #DreamyVibes #InnerCalm",
+    "reading": "#OracleReading #SpiritualReading #EnergyReading #SpiritualAdvisor #AskTheOracle #IntuitiveGuidance #DivineGuidance",
+    "lifestyle": "#MindfulLiving #SlowLiving #SelfCareRoutine #SpiritualLifestyle #IntentionalLiving #WellnessJourney #InnerPeace"
+  },
+  "caption_rules": {
+    "qmdj_frequency": "5% max — only 1 in 20 posts should mention QMDJ or Chinese terms",
+    "hashtag_count": "5-8 per post max. Rotate sets. Never repeat same set twice in a row.",
+    "tone": "Oracle reader, spiritual guide. NOT metaphysics educator. Warm, personal, relatable.",
+    "avoid": "Excessive Chinese terms, 奇门遁甲 in most posts, hashtag spam, preachy tone"
   }
 }

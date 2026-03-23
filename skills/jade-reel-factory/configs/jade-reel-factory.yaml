@@ -1,0 +1,44 @@
+objective: "reel_quality_score"
+task: "Generate a viral-quality Instagram Reel for Jade Oracle (@the_jade_oracle). The reel should feel like it was made by a professional content creator — smooth transitions, face-locked character, warm mood, music that matches the energy, and a hook that stops the scroll in 3 seconds. Korean-inspired modern spirituality aesthetic. QMDJ oracle brand."
+brand: "jade-oracle"
+model: "claude-sonnet-4-6"
+max_iterations: 10
+keep_threshold: 7.0
+
+template: |
+  REEL BRIEF:
+  - Duration: 15 seconds
+  - Format: 9:16 vertical (Instagram Reels)
+  - Character: Jade — Korean woman, early 30s, jade pendant, warm brown eyes
+  - Mood: warm, mystical, intimate
+  - Music: lo-fi or ambient, matches mood
+  - Hook: scroll-stopping first 3 seconds
+  - Scenes: 3-4 scenes with smooth transitions
+
+  REFERENCE PATTERNS (from competitor analysis):
+  - @mysticmichaela: question hooks + card reveals + warm lighting
+  - @spiritdaughter: aesthetic flat lays + gentle movement + ambient music
+  - @girl_and_her_moon: oracle card close-ups + text overlay + ethereal vibes
+  - @theholisticpsychologist: emotional quotes + slow zoom + personal voice
+
+  Generate a complete reel concept with scene descriptions.
+
+criteria:
+  - id: hook_power
+    description: "First 3 seconds stop the scroll — uses pattern interrupt, bold visual, or emotional opening that demands attention"
+  - id: visual_quality
+    description: "No AI artifacts, glitches, weird hands, floating objects, or uncanny valley. Clean, professional-looking frames"
+  - id: face_consistency
+    description: "Jade looks like Jade in every frame — consistent features, natural expressions, recognizable"
+  - id: movement_realism
+    description: "All movement is natural and physics-correct. No robotic motion, teleporting objects, or impossible actions"
+  - id: music_vibe
+    description: "Music perfectly matches the visual mood. Lo-fi for calm, ambient for mystical. Volume balanced, not overpowering"
+  - id: transition_quality
+    description: "Scene transitions are smooth and intentional — cross-dissolve, gentle zoom, or rhythmic cuts. No jarring jumps"
+  - id: brand_alignment
+    description: "Jade green/gold/cream palette visible. Warm natural lighting. Korean editorial aesthetic. Not generic or corporate"
+  - id: shareability
+    description: "Viewer would save or send to a friend. Emotionally resonant + visually beautiful + provides value or wonder"
+
+output_dir: "~/.openclaw/workspace/data/jade-oracle-content-pipeline/reel-variants"
