@@ -35,6 +35,8 @@ TOKEN_MGR="$SCRIPT_DIR/meta-token-manager.sh"
 NANOBANANA="$OPENCLAW_DIR/skills/ad-composer/scripts/nanobanana-gen.sh"
 AUTO_LOOP="$OPENCLAW_DIR/skills/auto-research/scripts/auto-loop.sh"
 BRAND_VOICE="$OPENCLAW_DIR/skills/brand-voice-check/scripts/brand-voice-check.sh"
+IMAGE_SCANNER="$SCRIPT_DIR/jade-image-scanner.sh"
+IMAGE_REGISTRY="$OPENCLAW_DIR/workspace/data/images/jade-oracle/ig-library/image-registry.json"
 
 mkdir -p "$(dirname "$POSTING_LOG")" "$IMAGE_DIR"
 
@@ -179,35 +181,53 @@ PROMPT
 }
 
 ###############################################################################
-# Step 3: Generate image
+# Step 3: Pick best matching image from registry
 ###############################################################################
 
 generate_image() {
-    log "Generating Jade's image for today's post..."
+    log "Picking best image for today's post..."
 
+    # Use image scanner picker if registry exists
+    if [[ -f "$IMAGE_SCANNER" ]] && [[ -f "$IMAGE_REGISTRY" ]]; then
+        # Extract theme keywords from content type and caption
+        local keywords="${JADE_CONTENT_TYPE:-self_love}"
+        # Add mood keywords based on content
+        local caption_preview="${JADE_CAPTION:-}"
+        if echo "$caption_preview" | grep -qi "kindness\|kind\|gentle\|soft"; then
+            keywords="${keywords} kindness warm"
+        elif echo "$caption_preview" | grep -qi "oracle\|card\|reading\|pull"; then
+            keywords="${keywords} oracle_reading mystical"
+        elif echo "$caption_preview" | grep -qi "confidence\|power\|strong\|bold"; then
+            keywords="${keywords} empowerment confidence"
+        elif echo "$caption_preview" | grep -qi "transition\|change\|chapter\|between"; then
+            keywords="${keywords} life_transitions contemplation"
+        elif echo "$caption_preview" | grep -qi "morning\|routine\|tea\|journal"; then
+            keywords="${keywords} morning_routine self_care warm"
+        else
+            keywords="${keywords} self_love warm"
+        fi
+
+        log "Searching for image matching: $keywords"
+        local best_match
+        best_match=$(bash "$IMAGE_SCANNER" --pick "$keywords" 2>/dev/null | grep "BEST MATCH:" | sed 's/BEST MATCH: //')
+
+        if [[ -n "$best_match" ]] && [[ -f "$best_match" ]]; then
+            log "Image picked: $(basename "$best_match")"
+            export JADE_IMAGE="$best_match"
+            return 0
+        fi
+    fi
+
+    # Fallback: pick from today's generated images or existing library
     local today_images=$(find "$IMAGE_DIR" -name "${DATE//-/}*" -type f 2>/dev/null | head -1)
-
     if [[ -n "$today_images" ]]; then
-        log "Image already exists: $today_images"
+        log "Fallback image: $today_images"
         export JADE_IMAGE="$today_images"
         return 0
     fi
 
-    # Pick a scene based on day of week
-    local dow=$(date +%u)  # 1=Mon, 7=Sun
-    local scene=""
-    case "$dow" in
-        1) scene="Jade in a cozy Western coffee shop, cream linen top, morning light, journaling with tea, warm tones" ;;
-        2) scene="Jade at a farmers market, white wrap blouse showing decolletage, laughing, holding fresh flowers, golden hour" ;;
-        3) scene="Jade in modern apartment, sage green tank top, spreading tarot cards on table, candlelight, intimate" ;;
-        4) scene="Jade at candlelit restaurant, black slip dress, chin on hand, wine glass, warm amber lighting" ;;
-        5) scene="Jade on rooftop at golden hour, burgundy wrap dress, wind in hair, city skyline behind, contemplative" ;;
-        6) scene="Jade at Western bookstore, oatmeal cardigan over tank, browsing crystals section, soft window light" ;;
-        7) scene="Jade in bed, morning light, cream tank top bare shoulders, steaming tea, soft smile, selfie angle" ;;
-    esac
-
     if [[ "$DRY_RUN" -eq 1 ]]; then
-        log "[DRY RUN] Would generate image: $scene"
+        log "[DRY RUN] Would pick image from library"
         export JADE_IMAGE=""
         return 0
     fi
