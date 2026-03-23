@@ -1,0 +1,17 @@
+# Sessions (contain merchant cookies)
+sessions/
+*.session
+
+# Data
+data/photos/
+data/screenshots/
+data/reports/
+data/*.db
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/

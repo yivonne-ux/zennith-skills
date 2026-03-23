@@ -1,0 +1,21 @@
+# GrabFood Listing Optimizer
+# Browser automation
+playwright>=1.49.0
+playwright-stealth>=1.0.6
+
+# Telegram bot
+python-telegram-bot>=21.0
+
+# Image processing
+Pillow>=10.0.0
+
+# AI / LLM
+openai>=1.50.0
+
+# Database
+# (sqlite3 is built-in)
+
+# Utilities
+python-dotenv>=1.0.0
+httpx>=0.27.0
+rich>=13.0.0
