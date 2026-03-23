@@ -3,7 +3,9 @@
 # Usage: klaviyo.sh <command> [args]
 set -euo pipefail
 
-SECRETS_DIR="$HOME/.openclaw/secrets"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+SECRETS_DIR="$REPO_DIR/secrets"
 KEY_FILE="$SECRETS_DIR/klaviyo-api-key"
 API="https://a.klaviyo.com/api"
 REV="2025-04-15"

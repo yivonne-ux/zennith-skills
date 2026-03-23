@@ -3,7 +3,9 @@
 # Theme ops via Shopify CLI, admin ops via Chrome CDP
 set -euo pipefail
 
-SECRETS_DIR="$HOME/.openclaw/secrets"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+SECRETS_DIR="$REPO_DIR/secrets"
 STORE_FILE="$SECRETS_DIR/shopify-store"
 PORT=9222
 P3="$(command -v python3 || echo /usr/bin/python3)"
@@ -24,7 +26,7 @@ check_cdp() {
 require_cdp() {
   if [ -z "$(check_cdp)" ]; then
     echo "Chrome CDP not running. Start it first:"
-    echo "  bash ~/.openclaw/skills/auth-browser/scripts/browser.sh start"
+    echo "  bash $REPO_DIR/skills/auth-browser/scripts/browser.sh start"
     exit 1
   fi
 }
@@ -173,11 +175,11 @@ PYEOF
     ;;
 
   browser-start)
-    bash "$HOME/.openclaw/skills/auth-browser/scripts/browser.sh" start
+    bash "$REPO_DIR/skills/auth-browser/scripts/browser.sh" start
     ;;
 
   browser-check)
-    bash "$HOME/.openclaw/skills/auth-browser/scripts/browser.sh" check
+    bash "$REPO_DIR/skills/auth-browser/scripts/browser.sh" check
     ;;
 
   help|--help|-h|*)
