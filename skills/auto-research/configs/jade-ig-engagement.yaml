@@ -1,5 +1,5 @@
 # Jade Oracle — Instagram Engagement Bot Strategy
-# Organic growth engine for @jade141319 targeting 10K followers
+# Organic growth engine for @the_jade_oracle targeting 10K followers
 #
 # This is NOT an automated bot — it's a strategy playbook + comment templates
 # for systematic daily engagement. Jade (or her team) executes manually
@@ -9,7 +9,7 @@
 # Pairs with: jade-ig-daily.sh (research), GROWTH-TRACKER.md (metrics)
 
 brand: "jade-oracle"
-account: "@jade141319"
+account: "@the_jade_oracle"
 target: 10000  # followers
 current_phase: "0_to_500"  # Update as milestones hit
 

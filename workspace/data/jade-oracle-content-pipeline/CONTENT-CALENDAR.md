@@ -1,6 +1,6 @@
 # Jade Oracle — Weekly Content Calendar
 
-> Production schedule for @jade141319 Instagram.
+> Production schedule for @the_jade_oracle Instagram.
 > Each day has a content type, format recommendation, and hook pattern.
 > Auto-research loop optimizes within each type; this calendar provides structure.
 

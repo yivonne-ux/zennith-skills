@@ -7,7 +7,7 @@
 ## How to Use This Checklist
 
 ```
-Before publishing ANY content for @jade141319:
+Before publishing ANY content for @the_jade_oracle:
 
 1. Run through all 6 gates below
 2. Each gate is PASS or FAIL — no partial credit

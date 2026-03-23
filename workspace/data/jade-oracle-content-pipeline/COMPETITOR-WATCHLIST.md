@@ -1,5 +1,5 @@
 # Jade Oracle — Competitor Watchlist
-> **Account:** @jade141319
+> **Account:** @the_jade_oracle
 > **Purpose:** Monitor 20 accounts daily to learn patterns, benchmark performance, and identify gaps
 > **Updated:** 2026-03-22
 > **Review frequency:** Weekly deep review, daily light scan

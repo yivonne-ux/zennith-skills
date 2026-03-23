@@ -257,7 +257,7 @@ Format as JSON array with keys: account, post_type, likes, comments, saves, hook
 score_post() {
   local post_json="$1"
 
-  local system="You are a content analyst for Jade Oracle (@jade141319), a Korean-inspired spiritual guidance brand on Instagram. Score this competitor post against our 10 content criteria. Be strict but fair. Our brand targets: spiritual seekers, women 25-45, warm Korean editorial aesthetic, QMDJ/BaZi metaphysics."
+  local system="You are a content analyst for Jade Oracle (@the_jade_oracle), a Korean-inspired spiritual guidance brand on Instagram. Score this competitor post against our 10 content criteria. Be strict but fair. Our brand targets: spiritual seekers, women 25-45, warm Korean editorial aesthetic, QMDJ/BaZi metaphysics."
 
   local prompt="Score this Instagram post against Jade Oracle's 10 content criteria.
 For each criterion, give a score 0-10 and a 1-line justification.

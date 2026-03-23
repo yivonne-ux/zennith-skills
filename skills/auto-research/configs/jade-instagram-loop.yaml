@@ -9,7 +9,7 @@
 # Together they form a complete self-improving content system.
 
 objective: "engagement_rate"
-task: "Analyze Jade Oracle's Instagram post performance and generate an optimized next content piece. Use engagement data (or simulated data during cold-start) to identify what resonates with the audience. Score each post against 10 quality criteria, track patterns over time, and use accumulated learnings to inform the next content generation. Target: engagement rate > 5% (likes + comments + shares + saves / reach). Account: @jade141319."
+task: "Analyze Jade Oracle's Instagram post performance and generate an optimized next content piece. Use engagement data (or simulated data during cold-start) to identify what resonates with the audience. Score each post against 10 quality criteria, track patterns over time, and use accumulated learnings to inform the next content generation. Target: engagement rate > 5% (likes + comments + shares + saves / reach). Account: @the_jade_oracle."
 brand: "jade-oracle"
 model: "claude-sonnet-4-6"
 max_iterations: 20
@@ -148,7 +148,7 @@ feedback_sources:
   #   description: "Paste Instagram Insights data into learnings.json manually"
   #   active: false
   # - type: instagram_api
-  #   account: "jade141319"
+  #   account: "the_jade_oracle"
   #   metric: "engagement_rate"
   #   formula: "(likes + comments + shares + saves) / reach"
   #   active: false

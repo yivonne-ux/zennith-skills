@@ -1,0 +1,27 @@
+# Jade Oracle IG Pipeline — Cron Schedule
+# All times in UTC (MYT = UTC+8)
+# Install: crontab jade-ig-crontab.txt (or merge with existing)
+
+# Research at 6:00 AM MYT (22:00 UTC previous day)
+0 22 * * * /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/jade-ig-loop-runner.sh research >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-cron.log 2>&1
+
+# Morning content at 8:00 AM MYT (00:00 UTC)
+0 0 * * * /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/jade-ig-loop-runner.sh morning >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-cron.log 2>&1
+
+# Afternoon content at 2:00 PM MYT (06:00 UTC)
+0 6 * * * /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/jade-ig-loop-runner.sh afternoon >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-cron.log 2>&1
+
+# Evening post at 7:00 PM MYT (11:00 UTC) — best engagement window
+0 11 * * * /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/jade-ig-loop-runner.sh evening >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-cron.log 2>&1
+
+# Learning loop at 11:00 PM MYT (15:00 UTC)
+0 15 * * * /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/jade-ig-loop-runner.sh learn >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-cron.log 2>&1
+
+# Health check every 6 hours
+0 */6 * * * /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/jade-ig-health-check.sh >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-health.log 2>&1
+
+# Weekly audit on Sunday at 11:00 PM MYT (15:00 UTC)
+0 15 * * 0 /bin/bash /Users/jennwoeiloh/.openclaw/skills/auto-research/scripts/auto-loop.sh /Users/jennwoeiloh/.openclaw/skills/auto-research/configs/jade-ig-content-audit.yaml >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-audit.log 2>&1
+
+# Token validation every Monday at 6:00 AM MYT (22:00 UTC Sunday)
+0 22 * * 0 /bin/bash /Users/jennwoeiloh/.openclaw/skills/social-publish/scripts/meta-token-manager.sh validate >> /Users/jennwoeiloh/.openclaw/logs/jade-ig-token.log 2>&1

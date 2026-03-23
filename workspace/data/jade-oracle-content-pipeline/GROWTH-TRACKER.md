@@ -1,5 +1,5 @@
 # Jade Oracle — Growth Tracker
-> **Account:** @jade141319
+> **Account:** @the_jade_oracle
 > **Target:** 10,000 followers
 > **Engine:** Auto-research loop + daily engagement + weekly audit
 > **Started:** 2026-03-22

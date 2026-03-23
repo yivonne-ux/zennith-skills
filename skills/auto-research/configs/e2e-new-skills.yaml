@@ -1,0 +1,42 @@
+name: "E2E New Skills Quality Gate"
+objective: "score"
+description: "End-to-end quality validation for 6 new skills: product-studio, content-repurpose, campaign-translate, ai-voiceover, brand-prompt-library, notebooklm-research"
+
+skills:
+  - product-studio
+  - content-repurpose
+  - campaign-translate
+  - ai-voiceover
+  - brand-prompt-library
+  - notebooklm-research
+
+criteria:
+  - id: frontmatter_valid
+    description: "Has proper YAML frontmatter with name, description, agents, version"
+  - id: brand_coverage
+    description: "Covers all 14 GAIA brands explicitly (not just a generic mention)"
+  - id: fnb_focus
+    description: "Has specific sections/examples for core F&B brands (pinxin-vegan, mirra, wholey-wonder, rasaya, gaia-eats, dr-stan, serein)"
+  - id: workflow_sop
+    description: "Has a clear step-by-step workflow SOP with INPUT/OUTPUT defined"
+  - id: cli_usage
+    description: "Has CLI usage section with concrete bash command examples"
+  - id: integration_map
+    description: "Has integration section showing upstream/downstream skill connections"
+  - id: quality_checklist
+    description: "Has quality gate or checklist section"
+  - id: cross_skill_refs
+    description: "References other skills correctly (nanobanana, video-forge, content-supply-chain, etc.)"
+  - id: brand_dna_aware
+    description: "Loads/references brand DNA.json for brand-specific behavior"
+  - id: output_paths
+    description: "Uses canonical output paths (~/.openclaw/workspace/data/...)"
+  - id: no_placeholder
+    description: "Contains actual content (real prompts, real examples, real CTAs) — not TODO/TBD placeholders"
+  - id: malaysian_context
+    description: "Includes Malaysian market context (languages, cultural calendar, local food terms, etc.)"
+  - id: mirra_correct
+    description: "MIRRA is described as bento health food, NOT skincare"
+
+max_iterations: 5
+model: "claude-sonnet-4-6"

@@ -12,7 +12,7 @@
 
 objective: "weekly_improvement_score"
 task: |
-  Perform a weekly content audit for Jade Oracle (@jade141319).
+  Perform a weekly content audit for Jade Oracle (@the_jade_oracle).
   Analyze the past 7 days of Instagram posts and generate a comprehensive
   performance report with actionable improvements for next week.
 
@@ -24,7 +24,7 @@ task: |
   5. Content pillar performance: which day's content type resonated most
   6. Specific improvement suggestions for each day of next week
 
-  Account: @jade141319
+  Account: @the_jade_oracle
   Brand: Jade Oracle
   Content Calendar: 7 posts/week (Mon-Sun rotation)
   Target engagement rate: > 5%
@@ -40,7 +40,7 @@ keep_threshold: null
 # ═══════════════════════════════════════════════════════════════════════════════
 
 template: |
-  # WEEKLY CONTENT AUDIT — Jade Oracle @jade141319
+  # WEEKLY CONTENT AUDIT — Jade Oracle @the_jade_oracle
   ## Week of: [DATE_RANGE]
 
   ---

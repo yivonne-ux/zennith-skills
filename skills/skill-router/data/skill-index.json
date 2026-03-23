@@ -1,0 +1,326 @@
+{
+  "nanobanana": {
+    "type": "engine",
+    "description": "Core image generation engine using Gemini Image API. Character consistency, style seeds, multi-scene brand-aligned generation.",
+    "capabilities": ["image generation", "character consistency", "style seeds", "multi-scene", "brand-aligned"],
+    "accepts": ["text prompt", "reference images", "style seed ID", "aspect ratio"],
+    "outputs": ["PNG image"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "script": "nanobanana-gen.sh"
+  },
+  "product-studio": {
+    "type": "pipeline",
+    "description": "Automated product photography pipeline. Pack shots, lifestyle scenes, e-commerce assets, model shots with demographic diversity.",
+    "capabilities": ["product photography", "pack shots", "lifestyle scenes", "e-commerce images", "product placement", "model shots"],
+    "accepts": ["product name or photo", "brand name", "angle templates"],
+    "outputs": ["PNG images (6-8 pack shots, 4-6 lifestyle, 3-4 model)"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "depends_on": ["nanobanana"]
+  },
+  "ad-composer": {
+    "type": "engine",
+    "description": "Unified ad image generation CLI wrapping NanoBanana, Recraft V4, and Flux 2 Pro. Brand-aware prompt enrichment.",
+    "capabilities": ["ad image generation", "multi-model", "brand-aware prompts", "text rendering", "product mockups"],
+    "accepts": ["text prompt", "brand name", "model choice (nanobanana/recraft/flux)", "reference images"],
+    "outputs": ["PNG image"],
+    "agents": ["dreami", "taoz", "iris"],
+    "has_scripts": true,
+    "script": "ad-composer.sh"
+  },
+  "brand-studio": {
+    "type": "pipeline",
+    "description": "Brand-aware ad generation with visual QA scoring against real brand references. Generate-Audit-Refine loop.",
+    "capabilities": ["brand-aligned generation", "visual QA audit", "auto-refinement loop", "brand DNA integration"],
+    "accepts": ["brand name", "content brief", "reference images"],
+    "outputs": ["PNG images (brand-scored, QA-passed)"],
+    "agents": ["dreami", "taoz", "iris"],
+    "has_scripts": true,
+    "depends_on": ["nanobanana"]
+  },
+  "creative-studio": {
+    "type": "orchestrator",
+    "description": "Control room for character and asset creation. Orchestrates refs, generation engine, visual registry, review, and approval.",
+    "capabilities": ["character creation", "asset orchestration", "ref management", "generation control", "state tracking"],
+    "accepts": ["character spec", "ref images", "brand name"],
+    "outputs": ["approved character masters", "asset registry entries"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "script": "studio.sh",
+    "depends_on": ["nanobanana", "visual-registry", "character-lock"]
+  },
+  "ig-character-gen": {
+    "type": "generator",
+    "description": "Instagram content library generator for AI influencer characters. Authentic iPhone-quality daily life images in Western city settings.",
+    "capabilities": ["Instagram content", "daily life photos", "iPhone aesthetic", "character lifestyle", "face/body consistency"],
+    "accepts": ["character ref images", "scene type", "outfit description", "city setting"],
+    "outputs": ["PNG images (Instagram-ready)"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "depends_on": ["nanobanana", "character-lock"]
+  },
+  "jade-content-studio": {
+    "type": "pipeline",
+    "description": "Unified AI character content pipeline for Jade Oracle. Character creation, face lock, body pairing, IG content, ad hooks, quality gates.",
+    "capabilities": ["Jade character content", "QMDJ divination visuals", "IG content", "ad hooks", "face lock", "body pairing"],
+    "accepts": ["content brief", "character refs", "scene type"],
+    "outputs": ["character images", "IG posts", "ad creatives"],
+    "agents": ["dreami", "taoz", "iris"],
+    "has_scripts": true,
+    "depends_on": ["nanobanana", "character-lock", "ig-character-gen"]
+  },
+  "brand-prompt-library": {
+    "type": "data",
+    "description": "200+ curated prompt packs for AI image generation across all GAIA brands. F&B photography, wellness lifestyle, product shots, campaign visuals.",
+    "capabilities": ["prompt templates", "brand-specific prompts", "style presets", "campaign prompts"],
+    "accepts": ["brand name", "product type", "use case", "platform"],
+    "outputs": ["prompt text", "prompt pack JSON"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true
+  },
+  "style-control": {
+    "type": "tool",
+    "description": "Brand visual identity management. Explore styles, mood presets, style seeds, color palettes for consistent brand generation.",
+    "capabilities": ["style exploration", "mood presets", "style seeds", "color palette management", "brand visual consistency"],
+    "accepts": ["brand name", "style direction", "mood keywords"],
+    "outputs": ["style configuration", "mood board data"],
+    "agents": ["dreami"],
+    "has_scripts": true
+  },
+  "character-lock": {
+    "type": "protocol",
+    "description": "Face lock and body consistency rules for NanoBanana character generation. Learned from Luna Solaris v3 failures.",
+    "capabilities": ["face consistency", "body type consistency", "reference weight management", "cross-scene identity"],
+    "accepts": ["face refs", "body refs", "character spec"],
+    "outputs": ["consistency rules", "ref weight ratios"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": false
+  },
+  "clip-factory": {
+    "type": "pipeline",
+    "description": "Long video to short viral clips. Transcribe, detect scenes, score virality via LLM, extract ranked clips, apply post-production.",
+    "capabilities": ["clip extraction", "scene detection", "virality scoring", "multi-platform export", "auto-captioning"],
+    "accepts": ["long-form video file", "brand name", "target platforms"],
+    "outputs": ["short clips (TikTok 9:16, Reels, Shorts, Feed)"],
+    "agents": ["dreami", "taoz", "iris"],
+    "has_scripts": true,
+    "depends_on": ["video-forge"]
+  },
+  "video-compiler": {
+    "type": "pipeline",
+    "description": "Automated UGC video ad production. Takes brief, outputs ready-to-publish video ads. AIDA block taxonomy, combinatorial generation.",
+    "capabilities": ["video ad production", "AIDA structure", "UGC assembly", "combinatorial variants", "multi-block compilation"],
+    "accepts": ["campaign brief (brand + product + goal + tone)", "asset clips"],
+    "outputs": ["video ads (30-50s assembled, 12s single-shot, N combinatorial variants)"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "depends_on": ["video-gen", "video-forge"]
+  },
+  "video-forge": {
+    "type": "engine",
+    "description": "Automated video post-production. Captioning (Whisper), branding (logo/watermark), music mixing, effects, multi-platform export.",
+    "capabilities": ["captioning", "branding overlays", "music mixing", "color grading", "effects", "multi-platform export", "safe zones"],
+    "accepts": ["video file(s)", "brand name", "mood", "output type"],
+    "outputs": ["post-produced video files"],
+    "agents": ["dreami", "taoz", "iris"],
+    "has_scripts": true,
+    "script": "video-forge.sh"
+  },
+  "ai-voiceover": {
+    "type": "engine",
+    "description": "AI voice generation for video ads and brand audio. Multi-language (EN/BM/ZH), brand-matched voice profiles.",
+    "capabilities": ["text-to-speech", "multi-language voiceover", "brand voice matching", "video narration"],
+    "accepts": ["script text", "language (EN/BM/ZH)", "voice profile", "brand name"],
+    "outputs": ["audio file (WAV/MP3)"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "depends_on": ["video-forge"]
+  },
+  "video-gen": {
+    "type": "engine",
+    "description": "Unified video generation CLI. Kling AI, Wan 2.2 (fal.ai), Sora 2 (OpenAI). Text-to-video and image-to-video.",
+    "capabilities": ["text-to-video", "image-to-video", "multi-provider", "video generation"],
+    "accepts": ["text prompt or image", "provider (kling/wan/sora)", "duration", "aspect ratio"],
+    "outputs": ["video file (MP4)"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "script": "video-gen.sh"
+  },
+  "content-repurpose": {
+    "type": "pipeline",
+    "description": "One hero asset auto-reformatted into 10+ platform variants. IG Feed, Stories, Reels, FB, TikTok, Shopee, WhatsApp, EDM, LinkedIn, X, Pinterest.",
+    "capabilities": ["multi-platform reformatting", "aspect ratio adaptation", "copy adaptation", "platform-specific optimization"],
+    "accepts": ["hero asset (image/video/copy)", "brand name", "target platforms"],
+    "outputs": ["platform-optimized variants (10+ formats)"],
+    "agents": ["dreami", "iris", "taoz"],
+    "has_scripts": true
+  },
+  "campaign-translate": {
+    "type": "engine",
+    "description": "Multilingual transcreation engine. Adapts ad copy, captions, video subtitles across EN/BM/ZH preserving brand voice and conversion intent.",
+    "capabilities": ["transcreation", "multilingual adaptation", "brand voice preservation", "cultural nuance"],
+    "accepts": ["source content", "source language", "target languages", "brand name"],
+    "outputs": ["transcreated content per language"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true
+  },
+  "campaign-planner": {
+    "type": "generator",
+    "description": "Campaign brief generation engine. Structured ad campaign briefs from template taxonomy and strategic directions.",
+    "capabilities": ["campaign brief generation", "budget allocation", "A/B test design", "template taxonomy"],
+    "accepts": ["brand name", "product", "goal", "budget range"],
+    "outputs": ["JSON campaign brief"],
+    "agents": ["dreami", "taoz", "main"],
+    "has_scripts": true
+  },
+  "content-supply-chain": {
+    "type": "orchestrator",
+    "description": "Self-improving creative loop. Research-Strategy-Brief-Create-Produce-Distribute-Analyze-Learn-Loop. Each cycle compounds.",
+    "capabilities": ["end-to-end content pipeline", "compounding learnings", "multi-agent orchestration", "full production loop"],
+    "accepts": ["brand name", "campaign goal", "content type"],
+    "outputs": ["published content", "compounding learnings"],
+    "agents": ["main", "dreami", "taoz", "iris"],
+    "has_scripts": true
+  },
+  "audience-simulator": {
+    "type": "tool",
+    "description": "Pre-test content by simulating audience reactions with persona-based LLM agents. Score before spending budget.",
+    "capabilities": ["audience simulation", "persona-based scoring", "content pre-testing", "pass/fail/refine gate"],
+    "accepts": ["content to test", "brand name (for persona profiles)"],
+    "outputs": ["persona reactions", "aggregate score", "pass/fail/refine verdict"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true
+  },
+  "fast-iterate": {
+    "type": "optimizer",
+    "description": "Pre-ship quality multiplier. Generate N variants, score via LLM-as-judge, identify winner, rewrite prompt with learnings, repeat K rounds.",
+    "capabilities": ["variant generation", "LLM-as-judge scoring", "prompt evolution", "iterative improvement"],
+    "accepts": ["content or prompt to iterate", "scoring criteria", "number of rounds"],
+    "outputs": ["winning variant", "evolution log"],
+    "agents": ["main", "dreami", "taoz"],
+    "has_scripts": true
+  },
+  "content-tuner": {
+    "type": "optimizer",
+    "description": "Self-tuning engine. Reads winning patterns, promotes outperformers (3+ data points, >20% improvement), flags underperformers.",
+    "capabilities": ["pattern promotion", "A/B test evaluation", "winning pattern detection", "self-optimization"],
+    "accepts": ["performance data", "content-intel defaults"],
+    "outputs": ["tuning decisions", "promoted patterns", "tuning log"],
+    "agents": ["main", "taoz"],
+    "has_scripts": true
+  },
+  "notebooklm-research": {
+    "type": "pipeline",
+    "description": "Deep research pipeline using Google NotebookLM for source analysis and knowledge synthesis, feeding into Claude for content creation.",
+    "capabilities": ["deep research", "source synthesis", "knowledge extraction", "audio overview generation"],
+    "accepts": ["research topic", "source URLs/PDFs/videos"],
+    "outputs": ["synthesized knowledge", "content briefs", "audio overviews"],
+    "agents": ["taoz", "dreami"],
+    "has_scripts": true
+  },
+  "rigour": {
+    "type": "gate",
+    "description": "Mandatory quality gate for all AI-generated code. Syntax check, lint, basic tests, security scan. Must pass before shipping.",
+    "capabilities": ["syntax checking", "linting", "basic tests", "security scanning", "quality gate"],
+    "accepts": ["file path or directory"],
+    "outputs": ["pass/fail verdict", "error report"],
+    "agents": ["taoz"],
+    "has_scripts": true,
+    "script": "gate.sh"
+  },
+  "visual-registry": {
+    "type": "tool",
+    "description": "Multi-angle asset registration for SKUs, characters, models, scenes, props. Assembly engine combines assets for consistent generation.",
+    "capabilities": ["asset registration", "multi-angle tracking", "SKU management", "assembly engine", "ref combination"],
+    "accepts": ["asset images", "type (sku/character/model/scene)", "brand name", "angle labels"],
+    "outputs": ["registered assets", "assembled ref sets"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "script": "visual-registry.sh"
+  },
+  "image-seed-bank": {
+    "type": "tool",
+    "description": "Image asset management. Store, query, promote, and export generated images with metadata: brand, campaign, tags, performance.",
+    "capabilities": ["image storage", "metadata tagging", "image querying", "performance tracking", "export"],
+    "accepts": ["image file", "metadata (brand, campaign, tags)"],
+    "outputs": ["catalogued image entry", "query results"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true
+  },
+  "social-publish": {
+    "type": "pipeline",
+    "description": "Instagram publishing pipeline via Meta Graph API. Posts images, carousels, reels. Token management, scheduling, health checks.",
+    "capabilities": ["Instagram posting", "carousel publishing", "reels publishing", "scheduling", "token management"],
+    "accepts": ["image/video files", "caption", "brand account", "schedule time"],
+    "outputs": ["published post", "post URL"],
+    "agents": ["taoz", "main"],
+    "has_scripts": true
+  },
+  "creative-intake": {
+    "type": "router",
+    "description": "Reference-to-Production Machine. Any input (link, image, video, text brief) gets auto-classified, analyzed, and routed to the right production workflow.",
+    "capabilities": ["input classification", "reference analysis", "production routing", "creative triage"],
+    "accepts": ["any creative input (link, image, video, text brief)"],
+    "outputs": ["routed task to appropriate skill/workflow"],
+    "agents": ["main", "dreami"],
+    "has_scripts": true
+  },
+  "art-director": {
+    "type": "persona",
+    "description": "World-class art director with 30 years of experience. Design critique, visual review, aesthetic guidance at Pentagram/MUJI level.",
+    "capabilities": ["design critique", "art direction", "visual review", "aesthetic guidance", "brand identity review"],
+    "accepts": ["design file or image", "brand context", "design brief"],
+    "outputs": ["critique and feedback", "design direction"],
+    "agents": ["dreami", "iris"],
+    "has_scripts": false
+  },
+  "ref-picker": {
+    "type": "tool",
+    "description": "Unified catalog and picker for all reference images across GAIA OS. Browse, search, and auto-suggest best refs for any use case.",
+    "capabilities": ["ref cataloging", "ref browsing", "auto-suggestion", "NanoBanana command generation"],
+    "accepts": ["brand name", "use case", "ref type"],
+    "outputs": ["ref image paths", "suggested NanoBanana commands"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "script": "ref-picker.sh"
+  },
+  "pinterest-ref": {
+    "type": "pipeline",
+    "description": "Extract visual references from Pinterest pins and boards. Generate structured visual DNA analysis for character design and brand identity.",
+    "capabilities": ["Pinterest extraction", "visual DNA analysis", "character spec generation", "brand identity extraction"],
+    "accepts": ["Pinterest URL (pin or board)"],
+    "outputs": ["high-res images", "visual DNA document", "character spec"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true,
+    "script": "pinterest-extract.sh"
+  },
+  "grabfood-enhance": {
+    "type": "pipeline",
+    "description": "GrabFood menu photo enhancement. Background removal, pro lighting, Grab-optimized thumbnails. Replaces FoodShot AI.",
+    "capabilities": ["food photo enhancement", "background removal", "pro lighting", "thumbnail optimization"],
+    "accepts": ["food photo", "enhancement style"],
+    "outputs": ["enhanced PNG image", "Grab-optimized thumbnail"],
+    "agents": ["dreami", "taoz"],
+    "has_scripts": true
+  },
+  "ai-influencer": {
+    "type": "pipeline",
+    "description": "End-to-end AI influencer factory. Create, produce, and scale AI character content across TikTok, Reels, Shorts. Face consistency, voice cloning, lip sync, auto-posting.",
+    "capabilities": ["AI influencer creation", "face consistency", "voice cloning", "lip sync", "auto-posting", "multi-platform scaling"],
+    "accepts": ["character spec", "content brief", "target platforms"],
+    "outputs": ["influencer content library", "scheduled posts"],
+    "agents": ["dreami", "taoz", "main"],
+    "has_scripts": true,
+    "depends_on": ["character-lock", "ig-character-gen", "video-gen", "ai-voiceover"]
+  },
+  "onboard-brand": {
+    "type": "pipeline",
+    "description": "New brand creation pipeline. AI-assisted identity design — colors, voice, tone, audience, DNA.json generation, brand directory setup.",
+    "capabilities": ["brand creation", "identity design", "DNA.json generation", "color palette", "voice/tone definition"],
+    "accepts": ["brand name", "industry", "target audience", "brand values"],
+    "outputs": ["DNA.json", "brand directory", "style guide"],
+    "agents": ["main", "dreami"],
+    "has_scripts": true
+  }
+}

@@ -9,7 +9,7 @@
 # direction, caption copy, hashtags, and CTA — scored as a unified piece.
 
 objective: "engagement_rate"
-task: "Generate a complete Instagram content piece for Jade Oracle (@jade141319). The piece must include: (1) a scroll-stopping hook (first line / text overlay), (2) a visual direction prompt for Jade's face-locked character using the v22 reference, (3) a full caption with storytelling arc, (4) relevant hashtags (15-20), and (5) a CTA driving to Shopify or Telegram bot. Target audience: spiritual seekers, women 25-45, globally English-speaking. Jade is a Korean woman, 31, warm brown eyes, long dark hair with curtain bangs, jade pendant necklace (always). Palette: jade green (#00A86B), gold (#D4AF37), cream (#F5F0E8), sage (#8FA882), burgundy (#722F37). Fonts: Cormorant Garamond (headings) + Jost (body). Tone: warm wise friend over tea — NOT corporate, NOT witchy, NOT cosmic. Aesthetic: Korean beauty editorial meets cozy home studio."
+task: "Generate a complete Instagram content piece for Jade Oracle (@the_jade_oracle). The piece must include: (1) a scroll-stopping hook (first line / text overlay), (2) a visual direction prompt for Jade's face-locked character using the v22 reference, (3) a full caption with storytelling arc, (4) relevant hashtags (15-20), and (5) a CTA driving to Shopify or Telegram bot. Target audience: spiritual seekers, women 25-45, globally English-speaking. Jade is a Korean woman, 31, warm brown eyes, long dark hair with curtain bangs, jade pendant necklace (always). Palette: jade green (#00A86B), gold (#D4AF37), cream (#F5F0E8), sage (#8FA882), burgundy (#722F37). Fonts: Cormorant Garamond (headings) + Jost (body). Tone: warm wise friend over tea — NOT corporate, NOT witchy, NOT cosmic. Aesthetic: Korean beauty editorial meets cozy home studio."
 brand: "jade-oracle"
 model: "claude-sonnet-4-6"
 max_iterations: 15
@@ -72,7 +72,7 @@ output_dir: "~/.openclaw/workspace/data/auto-research/jade-content-pipeline"
 # Real-world feedback (enable when Instagram API is connected)
 # feedback_sources:
 #   - type: instagram_api
-#     account: "jade141319"
+#     account: "the_jade_oracle"
 #     metric: "engagement_rate"
 #     formula: "(likes + comments + shares + saves) / reach"
 #   - type: shopify_api
