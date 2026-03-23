@@ -45,3 +45,25 @@
 - Checkboxes wrapped in Polaris components reject Playwright `.check()`
 - Save button stays `aria-disabled="true"` until React state changes
 - **Workaround**: Use URL redirects or automated collections instead of fighting the manual UI
+
+## 2026-03-23 — Authenticated Browser E2E Testing
+
+### The Answer: Chrome CDP with ~/.chrome-cdp profile
+This is the ONE browser approach for all authenticated access.
+- Facebook: ✅ LOGGED IN
+- Meta Business Suite: ✅ LOGGED IN  
+- Shopify Admin: ✅ LOGGED IN
+- Launch: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222 --user-data-dir="$HOME/.chrome-cdp"`
+- Connect: `p.chromium.connect_over_cdp("http://127.0.0.1:9222")`
+
+### What DOESN'T Work
+- Pinchtab BRIDGE_HEADLESS=false: still headless (ignores env var)
+- gstack /browse: clean Chromium, no auth
+- Chrome Default profile + CDP: Chrome rejects CDP on default data dir
+- Cookie extraction: macOS Keychain encrypts values
+
+### Rules
+- Always use ~/.chrome-cdp as user-data-dir
+- User logs in ONCE per service, session persists
+- Must quit Chrome before launching with CDP
+- Connect via Playwright, not Pinchtab
