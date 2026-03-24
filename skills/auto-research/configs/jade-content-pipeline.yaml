@@ -9,7 +9,7 @@
 # direction, caption copy, hashtags, and CTA — scored as a unified piece.
 
 objective: "engagement_rate"
-task: "Generate a complete Instagram content piece for Jade Oracle (@the_jade_oracle). The piece must include: (1) a scroll-stopping hook (first line / text overlay), (2) a visual direction prompt for Jade's face-locked character using the v22 reference, (3) a full caption with storytelling arc, (4) relevant hashtags (15-20), and (5) a CTA driving to Shopify or Telegram bot. Target audience: spiritual seekers, women 25-45, globally English-speaking. Jade is a Korean woman, 31, warm brown eyes, long dark hair with curtain bangs, jade pendant necklace (always). Palette: jade green (#00A86B), gold (#D4AF37), cream (#F5F0E8), sage (#8FA882), burgundy (#722F37). Fonts: Cormorant Garamond (headings) + Jost (body). Tone: warm wise friend over tea — NOT corporate, NOT witchy, NOT cosmic. Aesthetic: Korean beauty editorial meets cozy home studio."
+task: "Generate a complete Instagram content piece for Jade Oracle (@the_jade_oracle). CRITICAL RULES: DO NOT mention oracle, 奇门遁甲, BaZi, 八字, or Chinese metaphysics terms. Jade is an oracle reader focused on self-love, kindness, life transitions, trusting intuition, and spiritual guidance. Use max 5-7 hashtags (not 15-20). The piece must include: (1) a scroll-stopping hook about self-love/growth/kindness (first line), (2) a visual direction prompt for Jade character, (3) a full personal caption (journal-style, warm, vulnerable), (4) 5-7 relevant hashtags, and (5) a soft CTA. Target audience: spiritual women 25-45 navigating life transitions. Jade is a Korean woman, 31, warm brown eyes, long dark hair with curtain bangs, jade pendant necklace (always). Palette: jade green (#00A86B), gold (#D4AF37), cream (#F5F0E8). Tone: warm best friend over tea — NOT corporate, NOT witchy, NOT educational, NOT preachy. Topics: self-love, kindness, vulnerability, morning rituals, oracle readings, trusting yourself, being in between chapters."
 brand: "jade-oracle"
 model: "claude-sonnet-4-6"
 max_iterations: 15
@@ -30,7 +30,7 @@ template: |
   And most people just... feel it. The unexplained heaviness. The sudden clarity.
   But they don't know WHY.
 
-  That's where Qi Men Dun Jia (奇门遁甲) comes in — an ancient Chinese
+  That's where ancient oracle wisdom comes in — an ancient Chinese
   metaphysical system that maps the exact energetic landscape of any moment.
 
   This week's chart reveals a powerful window for career decisions.
@@ -39,7 +39,7 @@ template: |
   Your personal reading is waiting. Link in bio.
 
   HASHTAGS:
-  #JadeOracle #QMDJ #QiMenDunJia #BaZi #ChineseMetaphysics #SpiritualGuidance
+  #JadeOracle #OracleReading #SpiritualGuidance #SelfLove #HealingJourney
   #OracleReading #WeeklyReading #EnergyForecast #AncientWisdom #ModernSpirituality
   #SpiritualAwakening #Divination #LifeGuidance #CosmicTiming
 
@@ -59,7 +59,7 @@ criteria:
   - id: platform_native
     description: "Feels like organic Instagram content, not an ad. Right caption length (150-300 words), natural paragraph breaks, emoji use is tasteful (0-3 max), hashtags grouped at end, story arc in caption (hook → tension → insight → CTA)."
   - id: cultural_sensitivity
-    description: "Chinese metaphysics terms (QMDJ, BaZi, 奇门遁甲, 八字) are used accurately and respectfully. No appropriation of sacred practices. No mixing incompatible traditions carelessly. Chinese characters used correctly where included."
+    description: "Oracle terminology is accessible and warm. No heavy Chinese metaphysics jargon. Max 5% of posts can reference Eastern philosophy lightly. Language should feel like a spiritual friend, not a professor."
   - id: cta_clarity
     description: "Clear single next step — book a reading, join Telegram, visit Shopify store. CTA is specific (not 'check it out'), naturally woven into the caption (not bolted on), and low-friction ($1 intro or free resource)."
   - id: social_proof
@@ -85,7 +85,7 @@ output_dir: "~/.openclaw/workspace/data/auto-research/jade-content-pipeline"
 # Override with: CONTENT_TYPE=educational bash auto-loop.sh jade-content-pipeline.yaml
 content_types:
   - id: educational
-    description: "QMDJ explainer, BaZi basics, Five Elements, how readings work"
+    description: "Self-love rituals, oracle card meanings, trusting intuition, life transitions"
     day: "Monday"
   - id: social_proof
     description: "Testimonial screenshot, review highlight, transformation story"

@@ -6,7 +6,7 @@
 #   cycle: morning | afternoon | evening | full (default: full)
 #
 # Called by: Zenni heartbeat, classify.sh SCRIPT tier, or manual
-# Requires: dispatch.sh, QMDJ engine, NanoBanana
+# Requires: dispatch.sh, oracle engine, NanoBanana
 
 set -euo pipefail
 
@@ -33,33 +33,33 @@ log() {
 morning_cycle() {
     log "Starting morning content cycle"
 
-    # 1. Generate real-time QMDJ energy for today
+    # 1. Generate real-time oracle energy for today
     local qmdj_output="$TODAY_DIR/qmdj-realtime.json"
     if [[ -f "$QMDJ_CALC" ]]; then
         python3 "$QMDJ_CALC" --mode realtime > "$qmdj_output" 2>/dev/null || true
-        log "QMDJ real-time energy generated: $qmdj_output"
+        log "oracle real-time energy generated: $qmdj_output"
     fi
 
-    # 2. Dispatch to Dreami: daily QMDJ forecast
+    # 2. Dispatch to Dreami: daily oracle forecast
     local qmdj_context=""
     [[ -f "$qmdj_output" ]] && qmdj_context=$(cat "$qmdj_output" | head -50)
 
     bash "$DISPATCH" dreami \
-        "Generate today's Jade Oracle QMDJ daily forecast for social media. Today's QMDJ energy: $qmdj_context. Write 3 variations: (1) Short TikTok caption with hook, (2) IG carousel text (5 slides), (3) Story script (15 sec). Brand voice: warm, wise, slightly mysterious. Include natural Chinese metaphysics terms. Save to $TODAY_DIR/forecast-captions.md" \
+        "Generate today's Jade Oracle daily energy reading for social media. Use the energy data as background inspiration but DO NOT mention QMDJ, 奇门遁甲, BaZi, or Chinese metaphysics terms in the output. Write as an oracle reader, not a metaphysics educator. Write 3 variations: (1) Short TikTok caption with emotional hook about self-love/growth, (2) IG carousel text (5 slides) about today's energy theme — use language like 'the cards say' or 'today's oracle energy', (3) Story script (15 sec). Brand voice: warm, personal, like a trusted friend. Topics: self-love, kindness, life transitions, trusting your intuition. Max 5-7 hashtags. Save to $TODAY_DIR/forecast-captions.md" \
         "jade-daily-forecast-$DATE" \
         "false" \
         "300" &
 
     # 3. Dispatch to Dreami: pick-a-card post
     bash "$DISPATCH" dreami \
-        "Create a pick-a-card social post for Jade Oracle. Theme: Use today's QMDJ energy to create 3 card options (Left/Center/Right). Write the reveal for each card with QMDJ + Tarot insight. Include: IG caption with CTA to link in bio, TikTok caption with hook. Brand voice: warm, mystical, encouraging. Save to $TODAY_DIR/pick-a-card.md" \
+        "Create a pick-a-card social post for Jade Oracle. Theme: 3 oracle card options (Left/Center/Right). Write the reveal for each card as a warm spiritual message about self-love, growth, or intuition. DO NOT use QMDJ or Chinese metaphysics terms — keep it accessible. Include: IG caption with soft CTA, TikTok caption with hook. Brand voice: warm, playful, encouraging. Max 5-7 hashtags. Save to $TODAY_DIR/pick-a-card.md" \
         "jade-pick-a-card-$DATE" \
         "false" \
         "300" &
 
     # 4. Dispatch to Dreami: ad copy variants
     bash "$DISPATCH" dreami \
-        "Write 3 ad copy variants for Jade Oracle \$1 intro reading. Hook types: (1) Curiosity - 'I tried a \$1 QMDJ reading...', (2) Mystery - 'Ancient Chinese generals used this...', (3) Urgency - 'Only 50 readings this week'. Each variant: headline, body (under 125 chars for FB), CTA. Target: spiritual women 25-44. Save to $TODAY_DIR/ad-copy.md" \
+        "Write 3 ad copy variants for Jade Oracle \$1 intro oracle reading. Hook types: (1) Curiosity - 'I tried a \$1 oracle reading and...', (2) Story - 'She almost did not book the reading. Here is what happened next.', (3) Urgency - 'Only 50 readings this week'. Each variant: headline, body (under 125 chars for FB), CTA. Target: spiritual women 25-44 navigating life transitions. DO NOT mention oracle or Chinese terms. Save to $TODAY_DIR/ad-copy.md" \
         "jade-ad-copy-$DATE" \
         "false" \
         "300" &
@@ -72,9 +72,9 @@ morning_cycle() {
 afternoon_cycle() {
     log "Starting afternoon content cycle"
 
-    # 1. Dispatch to Dreami: educational reel script
+    # 1. Dispatch to Dreami: reel script (oracle-focused, NOT oracle)
     bash "$DISPATCH" dreami \
-        "Write a 30-second educational TikTok/Reel script for Jade Oracle. Topics (pick one based on day of week): Mon=QMDJ origins, Tue=QMDJ vs Western Astrology, Wed=How emperors used QMDJ, Thu=Reading your birth chart, Fri=Weekend energy forecast, Sat=Tarot + QMDJ combination, Sun=Week ahead preview. Format: HOOK (0-3s) → PAIN (3-8s) → TEASE (8-15s) → VALUE (15-25s) → CTA (25-30s). Save to $TODAY_DIR/reel-script.md" \
+        "Write a 30-second TikTok/Reel script for Jade Oracle. Topics (pick one based on day of week): Mon=Self-love ritual morning routine, Tue=Signs the universe is speaking to you, Wed=How to trust your intuition, Thu=Oracle card meaning deep dive, Fri=Weekend energy forecast, Sat=Kindness as a spiritual practice, Sun=Week ahead oracle reading. DO NOT mention QMDJ, 奇门遁甲, or Chinese metaphysics. Jade is an oracle reader, not a metaphysics teacher. Format: HOOK (0-3s) → PAIN (3-8s) → TEASE (8-15s) → VALUE (15-25s) → CTA (25-30s). Save to $TODAY_DIR/reel-script.md" \
         "jade-reel-script-$DATE" \
         "false" \
         "300" &
