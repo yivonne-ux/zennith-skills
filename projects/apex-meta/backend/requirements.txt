@@ -1,0 +1,63 @@
+# Core
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+python-multipart==0.0.18
+
+# Database
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.1
+greenlet==3.1.1
+
+# Cache / Queue
+redis==5.2.1
+celery[redis]==5.4.0
+
+# HTTP
+httpx==0.28.1
+aiohttp==3.11.11
+aiofiles==24.1.0
+
+# AI / LLM
+anthropic==0.42.0
+openai==1.58.1
+langchain==0.3.13
+langchain-anthropic==0.3.4
+langchain-openai==0.3.0
+langgraph==0.2.60
+
+# Vector DB
+pinecone-client==5.0.1
+chromadb==0.5.23
+
+# Research
+feedparser==6.0.11
+youtube-transcript-api==0.6.3
+
+# Search
+google-search-results==2.4.2
+
+# AWS
+aioboto3==13.3.0
+
+# Resilience
+tenacity==9.0.0
+
+# Logging
+loguru==0.7.3
+
+# Science
+scipy==1.14.1
+numpy==2.2.1
+
+# Security
+cryptography==44.0.0
+python-jose[cryptography]==3.3.0
+
+# Dev
+pytest==8.3.4
+pytest-asyncio==0.25.0
+httpx-mock==0.34.0
