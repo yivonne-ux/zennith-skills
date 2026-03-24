@@ -1,72 +1,56 @@
 ---
 name: jade-ig-poster
-description: Complete Instagram posting pipeline for Jade Oracle. Generates oracle-focused captions, picks matching images from tagged library, scores quality, fixes weak spots, reviews visually, and posts. One command does everything.
-agents: [taoz, zenni, dreami]
-version: 1.0.0
+description: Instagram feed skill for Jade Oracle — thinks like a real social media creator. Plans grid aesthetics, mixes content types (portraits, oracle cards, quotes, flat lays, faceless hands), deduplicates images, and posts with proper spacing. Only Zenni dispatches this skill.
 ---
 
-# Jade IG Poster — Full Automated Posting Pipeline
+# Jade IG Poster v2 — Social Media Creator Brain
 
-One command to generate, score, review, and post Instagram content for @the_jade_oracle.
+This skill thinks like a real IG content creator, not a bot that spams portraits.
 
-## Trigger Conditions
-- Zenni receives "post to jade instagram", "jade ig post", "jade content"
-- Cron fires daily at scheduled times
-- Manual: `bash jade-ig-poster.sh run`
+## Content Mix (per 6 posts — two grid rows)
 
-## Agent Ownership
-- **Zenni (main)**: Dispatches the skill, monitors results
-- **Taoz**: Runs the pipeline (Claude Code CLI)
-- **Dreami**: Generates captions when dispatched separately
+| Slot | Type | Example | Image Source |
+|------|------|---------|--------------|
+| 1 | Oracle scene | Jade reading cards, candles | Jade lifestyle photo |
+| 2 | Quote graphic | Text on cream/sage bg | Generated (Pillow) |
+| 3 | Flat lay / aesthetic | Cards, crystals, tea, no person | NanoBanana or stock |
+| 4 | Faceless / hands | Hands pulling card, holding tea | NanoBanana close-up |
+| 5 | Jade lifestyle | Cafe, bookstore, walking | Jade lifestyle photo |
+| 6 | Oracle card design | Single card from 25-deck | Generated card art |
 
-## Usage
-
-### Full Pipeline (generate + score + review + post)
-```bash
-bash jade-ig-poster.sh run                    # Generate + post 5 posts
-bash jade-ig-poster.sh run --count 3          # Generate + post 3 posts
-bash jade-ig-poster.sh run --dry-run          # Preview without posting
-bash jade-ig-poster.sh run --theme self_love  # Single theme
-```
-
-### Individual Steps
-```bash
-bash jade-ig-poster.sh generate --count 5     # Generate captions only
-bash jade-ig-poster.sh pick                   # Match images to captions
-bash jade-ig-poster.sh score                  # Auto-research quality scoring
-bash jade-ig-poster.sh fix                    # Fix weak spots (low CTA, bad hooks)
-bash jade-ig-poster.sh review                 # Visual review (image-caption match)
-bash jade-ig-poster.sh post                   # Post reviewed content to IG
-bash jade-ig-poster.sh status                 # Show today's posting status
-```
-
-### Zenni Dispatch
-```bash
-bash dispatch.sh taoz "Run jade-ig-poster.sh run --count 5" "jade-ig-post"
-```
-
-## Pipeline Flow
-```
-GENERATE → PICK → SCORE → FIX → REVIEW → POST
-    ↓         ↓       ↓       ↓        ↓       ↓
-  Claude    Image   8-point  Auto-   Registry  Meta
-  CLI      Scanner  scoring  fix     tag check  Graph
-           Registry          hooks   warmth/    API
-                             +CTAs   brand_fit
-```
-
-## Content Rules (ENFORCED)
-- NO QMDJ, 奇门遁甲, BaZi, or Chinese metaphysics terms
-- Jade is an oracle reader focused on: self-love, kindness, life transitions, intuition
-- Max 5-7 hashtags per post
-- Max 1800 characters per caption
-- Image must match caption mood (verified by registry tags)
+## Rules (ENFORCED)
+- **NEVER** post same image twice (SHA256 hash tracked)
+- **NEVER** 3 portraits in a row (breaks grid)
+- **NEVER** mention QMDJ, 奇门遁甲, BaZi, Chinese metaphysics
+- **MAX** 5-7 hashtags per post
+- **MAX** 1800 chars per caption
+- **ONLY** Zenni dispatches this — no crons, no manual posting
 - Image warmth >= 7, brand_fit >= 7
-- Score >= 60/80 to post (auto-fix if below)
+- Score >= 60/80 before posting
 
-## Files
-- **Scripts**: `~/.openclaw/skills/jade-ig-poster/scripts/`
-- **Image Registry**: `~/.openclaw/workspace/data/images/jade-oracle/ig-library/image-registry.json`
-- **Content Output**: `~/.openclaw/workspace/data/content/jade-oracle/daily/YYYY-MM-DD/`
-- **Posting Log**: `~/.openclaw/workspace/data/social-publish/posting-history.jsonl`
-- **Meta Token**: `~/.openclaw/secrets/meta-marketing.env`
+## Grid Aesthetic Rules
+```
+Row pattern (every 3 posts):
+  [portrait/scene] [quote/card] [flat lay/hands]
+
+Never adjacent:
+  portrait | portrait (looks like AI spam)
+  quote | quote (looks lazy)
+
+Always adjacent to portrait:
+  flat lay OR quote (breaks up the sameness)
+```
+
+## Dispatch
+```bash
+# Zenni calls:
+bash dispatch.sh taoz "bash jade-ig-poster.sh run --count 6" "jade-ig-post"
+
+# Or directly:
+bash ~/.openclaw/skills/jade-ig-poster/scripts/jade-ig-poster.sh run --count 6
+```
+
+## Pipeline
+```
+PLAN GRID → GENERATE MIX → DEDUP CHECK → SCORE → FIX → POST
+```

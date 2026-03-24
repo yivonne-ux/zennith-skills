@@ -85,40 +85,59 @@ room_msg() {
 }
 
 ###############################################################################
-# STEP 1: GENERATE captions
+# STEP 1: GENERATE — mixed content types like a real creator
 ###############################################################################
 
 step_generate() {
-    log "=== STEP 1: GENERATE ($COUNT posts) ==="
+    log "=== STEP 1: GENERATE ($COUNT posts, mixed content) ==="
 
     if [ -z "$CLAUDE_CLI" ]; then
         err "Claude CLI not found"
         return 1
     fi
 
-    local themes="self_love kindness oracle_reading life_transitions empowerment vulnerability morning_routine inner_peace trust_intuition between_chapters"
-    if [ -n "$THEME" ]; then
-        themes="$THEME"
-    fi
+    # Content type rotation — a real creator mixes these
+    # Pattern per 6 posts: portrait, quote, flat_lay, faceless_hands, lifestyle, oracle_card
+    local content_types=""
+    local i=0
+    local types_cycle="jade_portrait quote_graphic flat_lay faceless_hands jade_lifestyle oracle_card"
+    while [ "$i" -lt "$COUNT" ]; do
+        local cycle_idx=$((i % 6))
+        local ctype
+        ctype=$(echo "$types_cycle" | cut -d' ' -f$((cycle_idx + 1)))
+        content_types="${content_types}${ctype} "
+        i=$((i + 1))
+    done
+    log "Content mix: $content_types"
 
     local prompt_file
     prompt_file=$(mktemp)
     cat > "$prompt_file" << GENEOF
-You are Jade (@the_jade_oracle), a warm oracle reader for women navigating life transitions.
+You are the social media director for Jade Oracle (@the_jade_oracle), planning an Instagram feed that looks like a REAL content creator, not a bot.
 
-Generate $COUNT Instagram posts as a JSON array. Each must have a DIFFERENT theme.
+Generate $COUNT Instagram posts as a JSON array. Each post has a DIFFERENT content type.
+The content types in order are: $content_types
+
+CONTENT TYPE GUIDE:
+- jade_portrait: Caption about Jade's personal story. Image = photo of Jade in a scene (reading, cafe, home)
+- quote_graphic: A powerful quote on a designed background. Image = text overlay on cream/sage bg. Caption = short reflection on the quote
+- flat_lay: No person. Overhead shot of cards, crystals, candles, tea, journal. Caption = aesthetic/mood caption
+- faceless_hands: Close-up of hands holding cards, pouring tea, touching crystals. No face. Caption = intimate, sensory
+- jade_lifestyle: Jade out in the world — cafe, bookstore, market. Caption = relatable daily life story
+- oracle_card: One of Jade's 25 oracle cards (The Phoenix, The Healer, The Open Road, etc). Caption = card meaning + life wisdom
+
 CRITICAL RULES:
 - DO NOT mention QMDJ, 奇门遁甲, BaZi, or Chinese metaphysics
-- Jade is an oracle reader, NOT a metaphysics educator
-- Max 5-7 hashtags per post
-- Max 1800 characters per caption
-- Voice: warm best friend, personal, journal-style, vulnerable
-- Topics from: self-love, kindness, life transitions, trusting intuition, oracle readings, morning rituals, being between chapters, vulnerability, inner peace, empowerment
+- Max 5-7 hashtags per post, max 1800 chars per caption
+- Voice: warm best friend, journal-style, vulnerable, real
+- Each post MUST be a different content_type as specified above
+- For quote_graphic: provide the quote text in a "quote" field
+- For oracle_card: provide card name in a "card_name" field
 
-For each post:
-{"theme":"...", "mood":"warm|vulnerable|mystical|contemplative|confident", "image_query":"keywords for image picker", "caption":"full caption"}
+For each post output:
+{"content_type":"jade_portrait|quote_graphic|flat_lay|faceless_hands|jade_lifestyle|oracle_card", "theme":"...", "mood":"...", "image_query":"keywords for image picker", "caption":"...", "quote":"only for quote_graphic", "card_name":"only for oracle_card"}
 
-Output ONLY valid JSON array. No explanation.
+Output ONLY valid JSON array.
 GENEOF
 
     local result
@@ -152,11 +171,12 @@ step_pick() {
     fi
 
     "$PYTHON3" << PYEOF
-import json, os, re
+import json, os, re, hashlib
 
 content_dir = "$CONTENT_DIR"
 ready_dir = "$READY_DIR"
 registry_path = "$IMG_REGISTRY"
+post_log_path = "$POST_LOG"
 
 # Load captions
 with open(f"{content_dir}/batch-captions.json") as f:
@@ -170,20 +190,85 @@ with open(registry_path) as f:
     registry = json.load(f)
 
 images = registry.get("images", [])
+
+# DEDUP: Load previously posted image hashes
+posted_hashes = set()
+posted_filenames = set()
+if os.path.exists(post_log_path):
+    with open(post_log_path) as f:
+        for line in f:
+            try:
+                d = json.loads(line.strip())
+                # Track by image filename if available
+                img = d.get("image", "")
+                if img:
+                    posted_filenames.add(os.path.basename(img))
+                # Track by hash if available
+                h = d.get("image_hash", "")
+                if h:
+                    posted_hashes.add(h)
+            except:
+                pass
+
+print(f"Dedup: {len(posted_filenames)} previously posted images tracked")
+
 used = set()
 matched = 0
 
 for i, post in enumerate(posts):
+    content_type = post.get("content_type", "jade_portrait")
     theme = post.get("theme", "self_love")
     mood = post.get("mood", "warm")
     query = post.get("image_query", f"{theme} {mood}").lower().split()
     caption = post.get("caption", "")
+    quote_text = post.get("quote", "")
+    card_name = post.get("card_name", "")
+
+    # For quote_graphic and oracle_card: mark as special (no photo needed from registry)
+    if content_type == "quote_graphic":
+        # Save caption + quote for quote generator
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-caption.txt", "w") as f:
+            f.write(caption)
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-quote.txt", "w") as f:
+            f.write(quote_text or "Your healing is not linear. Trust the process.")
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-type.txt", "w") as f:
+            f.write("quote_graphic")
+        matched += 1
+        print(f"  Post {i+1} ({content_type}): QUOTE — will generate image")
+        continue
+
+    if content_type == "oracle_card":
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-caption.txt", "w") as f:
+            f.write(caption)
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-card.txt", "w") as f:
+            f.write(card_name or "The Phoenix")
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-type.txt", "w") as f:
+            f.write("oracle_card")
+        matched += 1
+        print(f"  Post {i+1} ({content_type}): CARD '{card_name}' — will generate image")
+        continue
+
+    if content_type == "flat_lay":
+        # Flat lay: pick images tagged with scene=flat_lay or props-heavy images
+        query = ["oracle_reading", "card_of_the_day", "behind_scenes", "mystical"]
+
+    if content_type == "faceless_hands":
+        query = ["oracle_reading", "hands", "intimate", "mystical"]
 
     # Score each image
     scored = []
     for img in images:
-        if img["filename"] in used:
+        fname = img["filename"]
+        if fname in used or fname in posted_filenames:
             continue
+
+        # Hash check
+        img_path = img.get("path", os.path.join("$IMG_DIR", fname))
+        if os.path.exists(img_path):
+            h = hashlib.md5(open(img_path, "rb").read()[:4096]).hexdigest()
+            if h in posted_hashes:
+                continue
+
         score = 0
         best_for = [b.lower() for b in img.get("best_for", [])]
         avoid_for = [a.lower() for a in img.get("avoid_for", [])]
@@ -196,10 +281,16 @@ for i, post in enumerate(posts):
 
         score += img.get("quality", 5) + img.get("brand_fit", 5) + img.get("warmth", 5)
 
-        # Enforce minimums
         if img.get("warmth", 0) < 7 or img.get("brand_fit", 0) < 7:
             score -= 30
 
+        # Bonus for content type match
+        if content_type == "jade_portrait" and img.get("composition", "") in ["medium_portrait", "closeup_hands"]:
+            score += 5
+        if content_type == "jade_lifestyle" and img.get("setting", "") == "outdoor":
+            score += 5
+
+        # Check for duplicate one_liner (same description = same looking image)
         if score > 0:
             scored.append((score, img))
 
@@ -210,24 +301,27 @@ for i, post in enumerate(posts):
         used.add(best["filename"])
         img_path = best.get("path", os.path.join("$IMG_DIR", best["filename"]))
 
-        # Save caption
-        with open(f"{ready_dir}/post-{i+1}-{theme}-caption.txt", "w") as f:
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-caption.txt", "w") as f:
             f.write(caption)
 
-        # Symlink image
         ext = "jpg" if img_path.endswith(".jpg") else "png"
-        link_path = f"{ready_dir}/post-{i+1}-{theme}-image.{ext}"
+        link_path = f"{ready_dir}/post-{i+1}-{content_type}-image.{ext}"
         if os.path.exists(link_path):
             os.remove(link_path)
         os.symlink(img_path, link_path)
 
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-type.txt", "w") as f:
+            f.write(content_type)
+
         matched += 1
-        print(f"  Post {i+1} ({theme}): {best['filename']} [warmth:{best.get('warmth','?')} brand:{best.get('brand_fit','?')}]")
+        dup_note = " (NOT previously posted)" if best["filename"] not in posted_filenames else ""
+        print(f"  Post {i+1} ({content_type}): {best['filename']}{dup_note}")
     else:
-        # Save caption without image
-        with open(f"{ready_dir}/post-{i+1}-{theme}-caption.txt", "w") as f:
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-caption.txt", "w") as f:
             f.write(caption)
-        print(f"  Post {i+1} ({theme}): NO MATCH FOUND")
+        with open(f"{ready_dir}/post-{i+1}-{content_type}-type.txt", "w") as f:
+            f.write(content_type)
+        print(f"  Post {i+1} ({content_type}): NO UNUSED IMAGE — need new images")
 
 print(f"\nMatched: {matched}/{len(posts)}")
 PYEOF
@@ -515,7 +609,9 @@ step_post() {
 
         if [ -n "$post_id" ]; then
             log "  Post $idx ($theme): PUBLISHED — $post_id"
-            echo "{\"date\":\"$DATE\",\"ts\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"type\":\"$theme\",\"post_id\":\"$post_id\",\"status\":\"published\",\"pipeline\":\"jade-ig-poster\"}" >> "$POST_LOG"
+            local img_hash=""
+            [ -n "$real_img" ] && [ -f "$real_img" ] && img_hash=$(md5 -q "$real_img" 2>/dev/null | head -c 16 || echo "")
+            echo "{\"date\":\"$DATE\",\"ts\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"type\":\"$theme\",\"content_type\":\"$(cat "$READY_DIR/post-${idx}-"*"-type.txt" 2>/dev/null || echo "unknown")\",\"post_id\":\"$post_id\",\"image\":\"$(basename "$real_img")\",\"image_hash\":\"$img_hash\",\"status\":\"published\",\"pipeline\":\"jade-ig-poster\"}" >> "$POST_LOG"
             posted=$((posted + 1))
         else
             err "  Post $idx ($theme): FAILED — $result"
