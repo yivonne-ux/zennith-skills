@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page {
+  size: 1080px 1350px;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #2a2a2a;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 1080px;
+  height: 1350px;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  background: #f0bfb8;
+}
+
+/* Background texture — subtle crackle effect */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(200,150,160,0.2) 0%, transparent 40%);
+  z-index: 0;
+}
+
+/* Floral decoration — right side */
+.floral-right {
+  position: absolute;
+  right: -20px;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background: linear-gradient(
+    to left,
+    rgba(180,130,140,0.4) 0%,
+    rgba(180,130,140,0.15) 40%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+/* Floral circles representing flowers */
+.flower {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 2;
+}
+.flower.pink-lg { width: 140px; height: 140px; background: radial-gradient(circle, #e8a0a0 30%, #d4848c 60%, transparent 70%); }
+.flower.coral { width: 110px; height: 110px; background: radial-gradient(circle, #e07050 20%, #c85a48 50%, transparent 65%); }
+.flower.blue { width: 90px; height: 90px; background: radial-gradient(circle, #8ca8d4 25%, #6888b8 55%, transparent 65%); }
+.flower.cream { width: 120px; height: 120px; background: radial-gradient(circle, #f5e8e0 30%, #e8d0c4 55%, transparent 68%); }
+.flower.purple { width: 80px; height: 80px; background: radial-gradient(circle, #b098c8 25%, #9078a8 55%, transparent 65%); }
+
+/* Sparkle decorations */
+.sparkle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 3;
+}
+.sparkle::before, .sparkle::after {
+  content: '✦';
+  position: absolute;
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+}
+
+.content {
+  position: relative;
+  z-index: 4;
+  padding: 50px 60px 40px 65px;
+  max-width: 780px;
+}
+
+/* Header */
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 56px;
+  font-weight: 400;
+  color: #2a2a2a;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.week-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #2a2a2a;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+/* Day rows */
+.day-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  min-height: 70px;
+}
+
+.day-label {
+  width: 70px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.day-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #2a2a2a;
+}
+
+.day-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  font-weight: 400;
+  color: #2a2a2a;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.meals {
+  flex: 1;
+  padding-top: 2px;
+}
+
+.meal-line {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: #2a2a2a;
+  line-height: 1.45;
+  margin-bottom: 2px;
+}
+
+.meal-prefix {
+  font-weight: 700;
+}
+
+.spicy-icon {
+  display: inline;
+  font-size: 20px;
+  margin-left: 4px;
+}
+
+.new-tag {
+  font-weight: 600;
+  font-size: 18px;
+  margin-left: 4px;
+}
+
+/* Holiday row */
+.holiday-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #5a4a4a;
+  line-height: 1.5;
+}
+
+/* MIRRA logo */
+.mirra-logo {
+  position: absolute;
+  bottom: 35px;
+  right: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 42px;
+  letter-spacing: 8px;
+  color: #2a2a2a;
+  z-index: 5;
+}
+
+/* Week separator */
+.week-separator {
+  margin-top: 32px;
+  margin-bottom: 6px;
+}
+</style>
+</head>
+<body>
+{% for page in pages %}
+<div class="page">
+  <!-- Floral decorations -->
+  <div class="floral-right"></div>
+  <div class="flower pink-lg" style="right: 30px; top: -20px;"></div>
+  <div class="flower coral" style="right: 160px; top: 60px;"></div>
+  <div class="flower cream" style="right: -10px; top: 180px;"></div>
+  <div class="flower blue" style="right: 80px; top: 320px;"></div>
+  <div class="flower purple" style="right: 200px; top: 250px;"></div>
+  <div class="flower pink-lg" style="right: 20px; top: 550px;"></div>
+  <div class="flower coral" style="right: 140px; top: 700px;"></div>
+  <div class="flower cream" style="right: -20px; top: 850px;"></div>
+  <div class="flower blue" style="right: 100px; top: 980px;"></div>
+  <div class="flower pink-lg" style="right: 40px; top: 1100px;"></div>
+  <div class="flower purple" style="right: 180px; top: 1180px;"></div>
+  
+  <!-- Sparkles -->
+  <div class="sparkle" style="left: 380px; top: 55px;"></div>
+  <div class="sparkle" style="left: 120px; top: {% if page.weeks|length > 1 %}{{ 580 + 30 }}{% else %}280{% endif %}px;"></div>
+
+  <div class="content">
+    <div class="header-title">Weekly Menu</div>
+    
+    {% for week in page.weeks %}
+    {% if not loop.first %}
+    <div class="week-separator"></div>
+    {% endif %}
+    
+    <div class="week-label">{{ page.month_name }}: Week {{ week.number }}</div>
+    
+    {% for day in week.days %}
+    <div class="day-row">
+      <div class="day-label">
+        <div class="day-name">{{ day.day_short }}</div>
+        <div class="day-number">{{ day.date_num }}</div>
+      </div>
+      <div class="meals">
+        {% if day.is_holiday %}
+        <div class="holiday-text">{{ day.holiday_name }}<br>No Delivery</div>
+        {% else %}
+        <div class="meal-line">
+          <span class="meal-prefix">L</span> - {{ day.lunch.name }}{% if day.lunch.spicy %}<span class="spicy-icon">🌶️</span>{% endif %}{% if day.lunch.is_new %}<span class="new-tag"> (New)</span>{% endif %}
+        </div>
+        <div class="meal-line">
+          <span class="meal-prefix">D</span> - {{ day.dinner.name }}{% if day.dinner.spicy %}<span class="spicy-icon">🌶️</span>{% endif %}{% if day.dinner.is_new %}<span class="new-tag"> (New)</span>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+  
+  <div class="mirra-logo">MIRRA</div>
+</div>
+{% endfor %}
+</body>
+</html>
