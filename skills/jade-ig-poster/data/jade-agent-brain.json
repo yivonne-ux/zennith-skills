@@ -1,0 +1,186 @@
+{
+  "identity": {
+    "name": "Jade",
+    "brand": "The Jade Oracle",
+    "handle": "@the_jade_oracle",
+    "niche": "Oracle readings for women navigating life transitions",
+    "tone": ["warm", "vulnerable", "wise", "personal", "grounded"],
+    "differentiator": "Real oracle reader energy — journal-style captions, warm candlelit aesthetic, self-love focus. NOT a metaphysics educator."
+  },
+  "icp": {
+    "segments": [
+      "Women 25-45 in life transitions (career change, breakup, relocation)",
+      "Spiritual seekers who want guidance without jargon",
+      "Women who feel stuck or between chapters",
+      "Self-love and wellness community"
+    ],
+    "pain_points": [
+      "Feeling lost or stuck in the messy middle",
+      "Not trusting their own intuition",
+      "Comparing themselves to others who seem to have it figured out",
+      "Wanting spiritual guidance but finding it too woo-woo or inaccessible",
+      "Being harsh on themselves when they fall behind"
+    ],
+    "goals": [
+      "Trust their inner voice",
+      "Find clarity during transitions",
+      "Practice self-love and kindness daily",
+      "Connect with a warm spiritual community",
+      "Feel seen and understood"
+    ],
+    "platforms_they_use": ["Instagram", "TikTok", "Pinterest"],
+    "budget_range": "$0-100 on spiritual readings"
+  },
+  "pillars": [
+    {
+      "name": "Oracle Wisdom",
+      "description": "Card readings, oracle messages, daily guidance",
+      "keywords": ["oracle", "cards", "reading", "guidance", "divination", "card of the day", "pull a card"]
+    },
+    {
+      "name": "Self-Love Practice",
+      "description": "Morning rituals, journaling, tea ceremonies, being kind to yourself",
+      "keywords": ["self-love", "kindness", "gentle", "morning routine", "ritual", "tea", "journal"]
+    },
+    {
+      "name": "Life Transitions",
+      "description": "The messy middle, between chapters, trusting the process",
+      "keywords": ["transition", "change", "messy middle", "between chapters", "starting over", "letting go"]
+    },
+    {
+      "name": "Trusting Intuition",
+      "description": "Learning to listen to your inner voice over external noise",
+      "keywords": ["intuition", "trust", "inner voice", "gut feeling", "knowing", "permission"]
+    }
+  ],
+  "platforms": {
+    "research": ["instagram", "pinterest", "tiktok"],
+    "posting": ["instagram"],
+    "api_keys_configured": ["meta_graph_api"]
+  },
+  "competitors": [
+    {"handle": "mysticmichaela", "platform": "instagram", "why_watch": "#1 psychic on IG, viral reels + quote posts, 1.6M followers"},
+    {"handle": "theholisticpsychologist", "platform": "instagram", "why_watch": "Quote + carousel queen, emotional wellness, 7.2M"},
+    {"handle": "spiritdaughter", "platform": "instagram", "why_watch": "Beautiful astrology + spiritual aesthetic, 600K"},
+    {"handle": "girl_and_her_moon", "platform": "instagram", "why_watch": "Stunning visual oracle/astrology content, 400K"},
+    {"handle": "the.tarot.teacher", "platform": "instagram", "why_watch": "Oracle deck content, educational, 300K"},
+    {"handle": "psychicsamira", "platform": "instagram", "why_watch": "Direct competitor, $500K+/mo, AI-powered readings"}
+  ],
+  "audience_blockers": [
+    {
+      "lie": "I need a professional to read cards for me",
+      "destruction": "The cards speak to everyone — you just need to learn to listen",
+      "pillar": "Oracle Wisdom"
+    },
+    {
+      "lie": "Spiritual guidance is too woo-woo or inaccessible",
+      "destruction": "It can feel like a warm conversation over tea, not a cosmic lecture",
+      "pillar": "Self-Love Practice"
+    },
+    {
+      "lie": "I should have my life figured out by now",
+      "destruction": "The messy middle is where the real growth happens",
+      "pillar": "Life Transitions"
+    },
+    {
+      "lie": "My intuition is not reliable",
+      "destruction": "Your gut has been right more times than you give it credit for",
+      "pillar": "Trusting Intuition"
+    }
+  ],
+  "hook_patterns": {
+    "contradiction": {
+      "template": "Everyone says {common_belief}, but {surprising_truth}",
+      "example": "Everyone says you need a professional tarot reader. I taught myself in an afternoon.",
+      "weight": 0
+    },
+    "specificity": {
+      "template": "I {specific_result} in {specific_timeframe}",
+      "example": "I pulled one card this morning and it changed my entire week.",
+      "weight": 0
+    },
+    "timeframe_tension": {
+      "template": "In {surprisingly_short_time}, I {impressive_result}",
+      "example": "In 30 seconds, this card told me what 3 months of therapy could not.",
+      "weight": 0
+    },
+    "pov_as_advice": {
+      "template": "Stop {common_practice}. {better_alternative}.",
+      "example": "Stop waiting for a sign. You ARE the sign.",
+      "weight": 0
+    },
+    "vulnerable_confession": {
+      "template": "I was wrong about {belief}. {what_changed}.",
+      "example": "I was wrong about needing to have it all figured out. The messy middle taught me everything.",
+      "weight": 0
+    },
+    "pattern_interrupt": {
+      "template": "Unexpected opening that breaks scroll behavior",
+      "example": "5:47am. The house is still asleep. And I already know today is going to be different.",
+      "weight": 0
+    }
+  },
+  "cta_templates": {
+    "community": [
+      "Comment 'READING' and I will DM you a free mini oracle reading",
+      "Join the community — link in bio",
+      "I share daily guidance in my community — link in bio"
+    ],
+    "dm_trigger": [
+      "Comment 'ORACLE' and I will send you your card",
+      "DM me 'GUIDE' for a free oracle card pull",
+      "Comment your birth month and I will pull a card for you"
+    ],
+    "engagement": [
+      "Drop a {emoji} if this is you right now",
+      "Which part of this hit different? Tell me below",
+      "Save this for the days you need the reminder",
+      "Tag someone who needs to hear this today"
+    ],
+    "soft": [
+      "Your reading is waiting — link in bio",
+      "Save this for later",
+      "Share with someone in between chapters"
+    ]
+  },
+  "content_rules": {
+    "forbidden_terms": ["QMDJ", "奇门遁甲", "BaZi", "八字", "Chinese metaphysics", "Qi Men Dun Jia"],
+    "max_hashtags": 7,
+    "max_caption_chars": 1800,
+    "min_warmth_score": 7,
+    "min_brand_fit_score": 7,
+    "content_type_rotation": ["jade_portrait", "quote_graphic", "flat_lay", "faceless_hands", "jade_lifestyle", "oracle_card"],
+    "grid_rules": "Never 3 same-type in a row. Always alternate portrait with non-portrait."
+  },
+  "learning_weights": {
+    "icp_relevance": 1.0,
+    "timeliness": 1.0,
+    "content_gap": 1.0,
+    "proof_potential": 1.0
+  },
+  "performance_patterns": {
+    "top_performing_topics": [],
+    "top_performing_formats": [],
+    "avg_engagement": 0,
+    "total_content_analyzed": 0,
+    "hook_performance": {}
+  },
+  "visual_patterns": {
+    "top_visual_types": [],
+    "text_overlay_colors": {},
+    "pacing_performance": {}
+  },
+  "metadata": {
+    "version": "2.0.0",
+    "created_at": "2026-03-24T12:00:00Z",
+    "updated_at": "2026-03-24T12:00:00Z",
+    "last_analysis": null,
+    "evolution_log": [
+      {
+        "timestamp": "2026-03-24T12:00:00Z",
+        "reason": "Initial brain creation from GVB pattern + Jade Oracle DNA",
+        "changes": ["Created brain with 4 pillars, 6 competitors, 4 audience blockers, 6 hook patterns, CTA templates"]
+      }
+    ]
+  }
+}

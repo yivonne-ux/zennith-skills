@@ -33,6 +33,8 @@ SECRETS="$OPENCLAW_DIR/secrets/meta-marketing.env"
 IG_PUBLISH="$OPENCLAW_DIR/skills/social-publish/scripts/ig-publish.py"
 ROOM_FILE="$OPENCLAW_DIR/workspace/rooms/mission-jade-oracle-launch.jsonl"
 LOG_FILE="$OPENCLAW_DIR/logs/jade-ig-poster-$(date +%Y%m%d).log"
+AGENT_BRAIN="$SCRIPT_DIR/../data/jade-agent-brain.json"
+PLAYBOOK="$SCRIPT_DIR/../data/ig-creator-playbook.json"
 
 mkdir -p "$CONTENT_DIR" "$READY_DIR" "$(dirname "$POST_LOG")" "$(dirname "$LOG_FILE")"
 
@@ -110,32 +112,70 @@ step_generate() {
     done
     log "Content mix: $content_types"
 
+    # Load agent brain for brand-specific context
+    local brain_context=""
+    if [ -f "$AGENT_BRAIN" ]; then
+        brain_context=$("$PYTHON3" -c "
+import json
+b = json.load(open('$AGENT_BRAIN'))
+blockers = b.get('audience_blockers', [])
+hooks = b.get('hook_patterns', {})
+ctas = b.get('cta_templates', {})
+pillars = [p['name'] for p in b.get('pillars', [])]
+forbidden = b.get('content_rules', {}).get('forbidden_terms', [])
+print(f'PILLARS: {pillars}')
+print(f'BLOCKERS: {[bl[\"lie\"] for bl in blockers]}')
+print(f'HOOK PATTERNS: {list(hooks.keys())}')
+print(f'CTA EXAMPLES: {ctas.get(\"engagement\", [])}')
+print(f'FORBIDDEN TERMS: {forbidden}')
+" 2>/dev/null) || true
+    fi
+
     local prompt_file
     prompt_file=$(mktemp)
     cat > "$prompt_file" << GENEOF
-You are the social media director for Jade Oracle (@the_jade_oracle), planning an Instagram feed that looks like a REAL content creator, not a bot.
+You are an elite Instagram content director. You think like a real creator, not a bot.
+
+BRAND: Jade Oracle (@the_jade_oracle) — oracle reader for women navigating life transitions.
+$brain_context
 
 Generate $COUNT Instagram posts as a JSON array. Each post has a DIFFERENT content type.
-The content types in order are: $content_types
+Content types in order: $content_types
 
 CONTENT TYPE GUIDE:
-- jade_portrait: Caption about Jade's personal story. Image = photo of Jade in a scene (reading, cafe, home)
-- quote_graphic: A powerful quote on a designed background. Image = text overlay on cream/sage bg. Caption = short reflection on the quote
-- flat_lay: No person. Overhead shot of cards, crystals, candles, tea, journal. Caption = aesthetic/mood caption
-- faceless_hands: Close-up of hands holding cards, pouring tea, touching crystals. No face. Caption = intimate, sensory
-- jade_lifestyle: Jade out in the world — cafe, bookstore, market. Caption = relatable daily life story
-- oracle_card: One of Jade's 25 oracle cards (The Phoenix, The Healer, The Open Road, etc). Caption = card meaning + life wisdom
+- jade_portrait: Jade in a scene (reading cards, cafe, home). Journal-style personal caption.
+- quote_graphic: Powerful quote on designed bg. Caption = short reflection. Provide "quote" field.
+- flat_lay: Overhead aesthetic shot — cards, crystals, candles, tea. No person. Mood caption.
+- faceless_hands: Close-up hands holding cards, pouring tea, crystals. Intimate, sensory.
+- jade_lifestyle: Jade out in the world — cafe, bookstore, market. Relatable daily life.
+- oracle_card: One of 25 oracle cards (The Phoenix, The Healer, The Open Road, etc). Provide "card_name" field.
 
-CRITICAL RULES:
-- DO NOT mention QMDJ, 奇门遁甲, BaZi, or Chinese metaphysics
-- Max 5-7 hashtags per post, max 1800 chars per caption
-- Voice: warm best friend, journal-style, vulnerable, real
-- Each post MUST be a different content_type as specified above
-- For quote_graphic: provide the quote text in a "quote" field
-- For oracle_card: provide card name in a "card_name" field
+HOOK FORMULA — Every post MUST start with one of these 6 patterns:
+1. CONTRADICTION: "Everyone says {A}, but {B}"
+2. SPECIFICITY: "I {specific_result} in {specific_timeframe}"
+3. TIMEFRAME TENSION: "In {short_time}, I {result}"
+4. POV AS ADVICE: "Stop {common_practice}. {alternative}."
+5. VULNERABLE CONFESSION: "I was wrong about {belief}. {what_changed}."
+6. PATTERN INTERRUPT: Unexpected opening (mid-scene, unusual detail, time stamp)
 
-For each post output:
-{"content_type":"jade_portrait|quote_graphic|flat_lay|faceless_hands|jade_lifestyle|oracle_card", "theme":"...", "mood":"...", "image_query":"keywords for image picker", "caption":"...", "quote":"only for quote_graphic", "card_name":"only for oracle_card"}
+CONTRAST FORMULA — Each post should flip a Common Belief (A) into Surprising Truth (B):
+- Target: moderate to strong contrast
+- Audience blockers to destroy: "I should have it figured out by now", "I need a professional", "Spiritual stuff is too woo-woo"
+
+CTA — Every post ends with ONE of these:
+- Comment trigger: "Comment 'READING' and I will DM you"
+- Save prompt: "Save this for when you need it"
+- Share prompt: "Tag someone who needs this"
+- Question: "Which part hit different? Tell me below"
+
+RULES:
+- FORBIDDEN: QMDJ, 奇门遁甲, BaZi, 八字, Chinese metaphysics, Qi Men Dun Jia
+- Max 5-7 hashtags, max 1800 chars
+- Voice: warm best friend over tea. Journal-style. Vulnerable. Real.
+- Caption flow: HOOK → TENSION → INSIGHT → CTA
+
+For each post:
+{"content_type":"...", "hook_pattern":"contradiction|specificity|timeframe_tension|pov_as_advice|vulnerable_confession|pattern_interrupt", "contrast":{"common_belief":"what audience thinks","surprising_truth":"the flip"}, "theme":"...", "mood":"...", "image_query":"for picker", "caption":"full caption", "cta_type":"comment_trigger|save|share|question", "quote":"only for quote_graphic", "card_name":"only for oracle_card"}
 
 Output ONLY valid JSON array.
 GENEOF

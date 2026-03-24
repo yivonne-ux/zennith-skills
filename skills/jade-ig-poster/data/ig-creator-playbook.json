@@ -1,0 +1,190 @@
+{
+  "_meta": {
+    "name": "IG Creator Playbook",
+    "description": "Universal Instagram content creation knowledge. Brand-agnostic. Any brand loads this + their brain.json for brand-specific rules.",
+    "version": "1.0.0",
+    "source": "Adapted from GVB patterns + best practices"
+  },
+
+  "hook_patterns": {
+    "contradiction": {
+      "template": "Everyone says {common_belief}, but {surprising_truth}",
+      "when_to_use": "Challenging conventional wisdom. High engagement when proof is strong.",
+      "psychology": "Cognitive dissonance — brain can't ignore a contradiction",
+      "score_weight": 0.4
+    },
+    "specificity": {
+      "template": "I {specific_result} in {specific_timeframe}",
+      "when_to_use": "Sharing a personal result. Numbers and details build credibility.",
+      "psychology": "Concrete beats abstract. '3 days' is more believable than 'quickly'",
+      "score_weight": 0.35
+    },
+    "timeframe_tension": {
+      "template": "In {surprisingly_short_time}, I {impressive_result}",
+      "when_to_use": "When the gap between time invested and result achieved is dramatic.",
+      "psychology": "Efficiency desire — everyone wants faster results",
+      "score_weight": 0.3
+    },
+    "pov_as_advice": {
+      "template": "Stop {common_practice}. {better_alternative}.",
+      "when_to_use": "Correcting a common mistake. Authoritative but not preachy.",
+      "psychology": "Direct commands cut through scroll noise",
+      "score_weight": 0.35
+    },
+    "vulnerable_confession": {
+      "template": "I was wrong about {belief}. {what_changed}.",
+      "when_to_use": "Building trust. Admitting a mistake humanizes the creator.",
+      "psychology": "Vulnerability creates connection. Audience sees themselves.",
+      "score_weight": 0.4
+    },
+    "pattern_interrupt": {
+      "template": "Unexpected opening that breaks scroll behavior",
+      "when_to_use": "Starting mid-scene, mid-thought, or with an unusual detail.",
+      "psychology": "Novelty triggers attention — brain flags anything unexpected",
+      "score_weight": 0.25
+    }
+  },
+
+  "hook_scoring": {
+    "formula": "(contrast_fit * 0.4) + (pattern_strength * 0.35) + (platform_fit * 0.25)",
+    "dimensions": {
+      "contrast_fit": "How well does the hook leverage the A→B gap? (1-10)",
+      "pattern_strength": "How well does the chosen pattern fit this content? (1-10)",
+      "platform_fit": "How native does it feel on Instagram? Short, visual, scroll-stopping? (1-10)"
+    },
+    "three_c_check": {
+      "context": "Does the hook ground the claim?",
+      "contrarian": "Does it challenge status quo?",
+      "intrigue": "Does it create curiosity?",
+      "scoring": "All 3 present: +0.5. Only 1: -0.5. Missing: -0.5"
+    }
+  },
+
+  "contrast_formula": {
+    "description": "Every strong post flips a Common Belief (A) into a Surprising Truth (B). The bigger the gap, the stronger the content.",
+    "strength_levels": {
+      "mild": "Audience thinks 'huh, interesting'. Low engagement.",
+      "moderate": "Meaningful flip, challenges assumption. Good engagement.",
+      "strong": "Contradicts common wisdom with proof. High engagement.",
+      "extreme": "Paradigm shift. Viral potential — but must be credible."
+    },
+    "target": "moderate to strong for most content"
+  },
+
+  "content_type_mix": {
+    "description": "A real creator mixes content types. Never all the same.",
+    "types": {
+      "portrait_scene": "Person in a scene (reading, cafe, home). Shows the human.",
+      "quote_graphic": "Text on designed background. Saves + shares machine.",
+      "flat_lay": "Overhead aesthetic shot. No person. Props only. Feed beauty.",
+      "faceless_hands": "Close-up of hands doing something. Intimate, sensory.",
+      "lifestyle": "Person out in the world. Relatable daily life.",
+      "product_card": "Brand-specific card/product. Educational or collectible."
+    },
+    "rotation_rule": "Cycle through types. Never same type adjacent in feed.",
+    "grid_aesthetic": "Every row of 3 should contain 3 different types."
+  },
+
+  "caption_structure": {
+    "optimal_flow": "HOOK → TENSION → INSIGHT → CTA",
+    "hook": "First line = scroll stopper. Use one of 6 hook patterns.",
+    "tension": "2-3 sentences building the emotional stakes. Make reader feel it.",
+    "insight": "The payoff. The wisdom. The 'aha' moment. Be specific, not generic.",
+    "cta": "Soft ask. Never salesy. Earn the engagement.",
+    "line_breaks": "Use blank lines between sections. IG compresses text — space is readability.",
+    "length_guide": {
+      "quote_post": "50-150 chars (short, punchy)",
+      "personal_story": "500-1500 chars (journal entry)",
+      "educational": "300-800 chars (teach one thing)",
+      "engagement_driver": "200-500 chars (question + context)"
+    }
+  },
+
+  "cta_types": {
+    "comment_trigger": {
+      "description": "Ask for a specific comment keyword → DM them automatically",
+      "examples": ["Comment 'GUIDE' and I will DM you", "Drop your birth month below"],
+      "engagement_impact": "highest — drives comments AND DMs"
+    },
+    "save_prompt": {
+      "description": "Ask to save for later reference",
+      "examples": ["Save this for when you need the reminder", "Bookmark this"],
+      "engagement_impact": "high — saves boost algorithm ranking"
+    },
+    "share_prompt": {
+      "description": "Ask to share with someone specific",
+      "examples": ["Tag someone who needs this", "Share with your bestie who is going through it"],
+      "engagement_impact": "high — shares = organic reach"
+    },
+    "question": {
+      "description": "Ask a personal question that invites comment",
+      "examples": ["Which part hit different?", "Are you here too?", "Tell me below"],
+      "engagement_impact": "medium-high — drives meaningful comments"
+    },
+    "link_in_bio": {
+      "description": "Direct to external link",
+      "examples": ["Link in bio", "Your reading is waiting"],
+      "engagement_impact": "low engagement but high conversion"
+    }
+  },
+
+  "hashtag_strategy": {
+    "count": "5-7 per post. Never 15-20 (looks spammy).",
+    "mix": "2 branded + 2 niche + 2 discovery + 1 trending",
+    "rotation": "Never repeat exact same set twice in a row",
+    "placement": "After caption, separated by line break"
+  },
+
+  "posting_rules": {
+    "dedup": "SHA256 hash every image. Never post same image twice.",
+    "spacing": "Minimum 45 seconds between API posts. 2+ hours between feed posts.",
+    "daily_limits": {
+      "feed_posts": "3-6 for aggressive growth, 1-2 for established",
+      "reels": "1-3 per day",
+      "stories": "5-7 per day (no limit, no penalty)",
+      "api_hard_cap": "25 per 24h rolling window"
+    },
+    "timing_multi_market": {
+      "us_uk_au_overlap": "11:00 UTC — hits US morning, UK lunch, AU evening",
+      "us_uk": "17:00 UTC — US lunch, UK evening",
+      "us_au": "23:00 UTC — US evening, AU morning"
+    }
+  },
+
+  "quality_scoring": {
+    "pre_post_checklist": {
+      "hook_power": "First line stops scrolling? (1-10)",
+      "warmth": "Feels like a friend, not a brand? (1-10)",
+      "vulnerability": "Genuine emotional honesty? (1-10)",
+      "no_jargon": "Accessible to anyone? No insider terms? (1-10)",
+      "caption_length": "Right length for content type? (1-10)",
+      "hashtag_count": "5-7 hashtags? (1-10)",
+      "cta_present": "Soft CTA that earns the ask? (1-10)",
+      "image_match": "Image mood matches caption theme? (1-10)"
+    },
+    "minimum_to_post": 60,
+    "maximum_possible": 80
+  },
+
+  "feed_audit_dimensions": {
+    "cohesion": "Does the grid look intentional? Consistent palette?",
+    "variety": "Are content types mixed? No 3 same-type in a row?",
+    "warmth": "Overall warm feeling? No cold/corporate/sterile images?",
+    "brand_identity": "Would a stranger know what this account is about in 3 seconds?",
+    "engagement_hooks": "Do captions invite interaction? Comments, saves, shares?",
+    "bio_clarity": "Does the bio say what you do and who you serve?"
+  },
+
+  "learning_loop": {
+    "description": "Track what works, update weights, compound over time",
+    "metrics_to_track": ["engagement_rate", "saves", "shares", "comments", "reach"],
+    "weight_update_rules": {
+      "minimum_data": "5+ posts before adjusting any weights",
+      "adjustment_range": "+/- 0.1 to 0.3 per cycle",
+      "weight_clamp": "0.1 to 5.0",
+      "winner_definition": "Above-median engagement for that content type",
+      "dud_definition": "Below 50% of median engagement"
+    },
+    "brain_evolution": "Every analysis cycle logs what changed and why in evolution_log"
+  }
+}
