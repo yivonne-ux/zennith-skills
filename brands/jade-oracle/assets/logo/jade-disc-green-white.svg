@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="full" height="800px" version="1.1" viewBox="0 0 800 800" width="800px" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><mask id="disc-mask"><rect fill="white" height="800" width="800" x="0" y="0" /><circle cx="400.0" cy="400.0" fill="black" r="158.21670112485197" /></mask></defs><g mask="url(#disc-mask)"><circle cx="400.0" cy="400.0" fill="#2D6A4F" r="256.0" /></g></svg>

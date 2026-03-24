@@ -33,6 +33,9 @@ Past work: 221+ social posts across 6 months (Sept 2025 — Feb 2026)
 ### 8 content archetypes
 T1=schedule, T2=quote/values, T3=event poster, T4=promo, T5=photo story, T6=announcement, T7=educational, T8=hiring
 
+### Design production feedback
+- [feedback_bb_design_production.md](feedback_bb_design_production.md) — **CRITICAL.** Editorial photo enhance, sticker/chop stamp, v16 art style (not flat), purpose per post, design variety.
+
 ### v1 rejection learnings (CRITICAL — never repeat)
 1. **FLUX Kontext destroys text** — garbles dense copy after 1 pass, gibberish after 2+
 2. **FLUX hallucinated wrong brand** — injected "MarketplaceAtAvalonPark" from training data
@@ -40,6 +43,10 @@ T1=schedule, T2=quote/values, T3=event poster, T4=promo, T5=photo story, T6=anno
 4. **AI cannot draw brand mascots/logos accurately** — always composite real PNGs
 5. **Architecture for v2**: Python renders ALL text + layout + logos + mascots. AI only for bg textures/decorative non-text zones. Single-pass max. OCR validate after any AI pass.
 6. Full rejection log: `exports/rejected-v1/REJECTION-LOG.md`
+
+### Autonomous Social Media Director (NEW — 2026-03-21)
+- [project_bb_autonomous_social_media_director.md](project_bb_autonomous_social_media_director.md) — **FULL SYSTEM.** Autonomous IG management: 2 posts/day, festive calendar, design production, posting via Graph API, performance forensics, optimization loop. Brand-agnostic intelligence. User input only for ad-hoc.
+- Photo library: `assets/photos/uv-glow-play/` (13 UV blacklight play photos)
 
 ### Production pipeline v5 — Reference Adaptation (current)
 **Architecture**: Reference image in → deep analysis → brand mapping → Pillow reconstruction
@@ -76,16 +83,16 @@ Full pipeline/filter/audit details in WORKFLOW.md — read that file, not MEMORY
 - Voice: girlboss, unapologetic, no exclamation marks, viral/sendable
 - Output: 1080×1350 PNG (static), 1080×1920 (stories/reels)
 
-## LIVE Campaigns (2026-03-16)
-- [project_mirra_live_campaigns_march16.md](project_mirra_live_campaigns_march16.md) — **LIVE NOW.** EN + CN campaigns, 6 ad sets, 118 ads (84 static + 34 video), RM1,500/day, all IDs inside.
-- **RETARGET campaign deployed:** MIRRA-RETARGET-EN-MAR26 (120242895523710787) — 3 ad sets (HOT/WARM/COOL), 18 ads, RM50/day, PAUSED for review.
-- [project_mirra_lead_attribution_mar16.md](project_mirra_lead_attribution_mar16.md) — Day 1 leads: 3/6 from our campaign (BOFU-B02, TOFU-S10, BX09 converting).
+## META ADS — READ FIRST
+- **[project_mirra_meta_ads_compounding_ledger.md](project_mirra_meta_ads_compounding_ledger.md)** — **COMPOUNDING LEDGER. READ FIRST FOR ANY ADS WORK.** Single source of truth: current state, all campaign IDs/budgets/performance, daily spend trend, historical decisions log, proven winners, kill list, pending creatives. Read first, update last, every session. RM1,200/day max until ROAS recovers.
+- [feedback_mirra_attribution_gap.md](feedback_mirra_attribution_gap.md) — **CRITICAL GAP.** No ad-to-sale attribution. 97% WA convos don't convert. Cost/convo = proxy only.
+- [feedback_mirra_creative_formula.md](feedback_mirra_creative_formula.md) — Proven formula: transformation + message UI = best. EN >> CN efficiency.
 
 ---
 
 ## PINXIN VEGAN CUISINE (active)
-Working dir: `/Users/yi-vonnehooi/Desktop/BRANDS/Pinxin Vegan/`
-Brand DNA: `brand-guide/brand-DNA.md`
+Working dir: `/Users/yi-vonnehooi/Desktop/_WORK/pinxin/`
+Brand DNA: `00_brand-guide/brand-DNA.md`
 GDrive: `GoogleDrive-love@huemankind.world/My Drive/Pinxin/`
 Notion DB: `eb9453da6779419ca72728a83131dbb5`
 North Star: RM60K → RM500K/month. Marketing perfection. Million views.
@@ -103,7 +110,17 @@ Platforms: IG, TikTok, XHS, FB (MY + SG). CN primary, EN secondary.
 - [feedback_pinxin_frozen_only.md](feedback_pinxin_frozen_only.md) — Frozen dishes only, no paste/chilli/noodle
 - [feedback_pinxin_brand_constant_design_variable.md](feedback_pinxin_brand_constant_design_variable.md) — Brand constant, design variable
 - [feedback_pinxin_logo_placement_actual.md](feedback_pinxin_logo_placement_actual.md) — Logo: emblem top-right (social) or wordmark top-center (BOFU)
-- [project_pinxin_campaign_live_march19.md](project_pinxin_campaign_live_march19.md) — **LIVE CAMPAIGN.** All IDs, budgets, kill/scale rules, 3-day results, Raya strategy, transition timeline, Shopify/GSheet access.
+- [project_pinxin_campaign_state_march22.md](project_pinxin_campaign_state_march22.md) — **CURRENT STATE.** All campaign IDs, dual-channel strategy, bid findings, WA attribution, best day RM3,087/3.9x ROAS. READ FIRST.
+- [feedback_meta_ads_hard_rules_march22.md](feedback_meta_ads_hard_rules_march22.md) — **10 HARD RULES.** Stop constant changes, bid progression, dual-channel kill rules, identity gimmick formula, production rules. Compound learning from 6 days.
+- [feedback_pinxin_compound_learnings_march19.md](feedback_pinxin_compound_learnings_march19.md) — Creative production mistakes consolidated. Pre-flight checklist.
+- [feedback_pinxin_916_reference_rule.md](feedback_pinxin_916_reference_rule.md) — References MUST be 9:16 before NANO.
+- [feedback_human_approval_before_upload.md](feedback_human_approval_before_upload.md) — ALL artwork needs human review before Meta upload.
+- [feedback_output_routing_consolidated.md](feedback_output_routing_consolidated.md) — ALL outputs → _WORK/[brand]/06_exports/. Never /tmp.
+- [reference_pinxin_wa_sales_sheet.md](reference_pinxin_wa_sales_sheet.md) — WA sales Google Sheet URL + ad ID attribution.
+- [project_zennith_infrastructure_march22.md](project_zennith_infrastructure_march22.md) — Desktop _WORK structure, GDrive cleanup, Telegram reporting, repo sync.
+- [feedback_NEVER_PIL_FOR_CREATIVE.md](feedback_NEVER_PIL_FOR_CREATIVE.md) — **ABSOLUTE RULE.** NEVER use PIL for creative editing (color, grain, contrast, warmth). PIL = resize + save ONLY. All creative = AI.
+- [feedback_grabfood_pipeline_learnings_v1_v9.md](feedback_grabfood_pipeline_learnings_v1_v9.md) — GrabFood pipeline: 9 iterations, every yes/no. Scene reconstruction works. PIL grading fails. Square-in-square-out.
+- [project_pinxin_creative_forensic_mar21.md](project_pinxin_creative_forensic_mar21.md) — **CREATIVE FORENSIC Mar 21.** Proven formula (multi-dish+promo+urgency), EGC video=0 purchases, MY market ad count (8-10 sweet spot), LowestCost cut 33→9, Notion token, PX ad account ID.
 
 ---
 
@@ -133,6 +150,13 @@ AI oracle character IP. Luxury spiritual brand. Face-locked "Jade" character.
 - [march-campaign-v3-learnings.md](march-campaign-v3-learnings.md) — v3 campaign: 30 variants, BETTER OUTPUTS DNA, god mode edit-first, logo rules
 - [v2-template-learnings.md](v2-template-learnings.md) — v2/v8 template system, NANO edit architecture, design principles
 
+### Compound Learning System (CRITICAL — READ FIRST)
+- **[feedback_compound_learning_system.md](feedback_compound_learning_system.md)** — **ENFORCED RULES.** Every script MUST import preflight_check() + audit_output(). Rules in CODE at `engine/intelligence/preflight.py` + `audit.py`. No generation without gate.
+- [feedback_mirra_no_dark_mode.md](feedback_mirra_no_dark_mode.md) — No dark/charcoal backgrounds for Mirra
+- [feedback_nano_food_bowl_vs_bento.md](feedback_nano_food_bowl_vs_bento.md) — Only bento-box dishes for hero/grid. No bowls (bibimbap, congee, jawa mee, burrito).
+- [feedback_mirra_ads_v2_color_concept.md](feedback_mirra_ads_v2_color_concept.md) — Color variety (max 40% same mood), identity-first headlines, no generic copy
+- [feedback_mirra_sales_vs_engagement.md](feedback_mirra_sales_vs_engagement.md) — ALWAYS use SALES objective. EN >> CN efficiency.
+
 ### Feedback memories (design production)
 - [feedback_zero_ai_food.md](feedback_zero_ai_food.md) — ZERO AI food. Sacred real photos only.
 - [feedback_no_burnt_filter.md](feedback_no_burnt_filter.md) — No color grade on NANO. Logo + grain ONLY.
@@ -143,9 +167,12 @@ AI oracle character IP. Luxury spiritual brand. Face-locked "Jade" character.
 - [feedback_cn_ads_nano_prompting.md](feedback_cn_ads_nano_prompting.md) — CN ads: 7-layer prompt, anti-render, brand name leak.
 - [feedback_no_leann_kol.md](feedback_no_leann_kol.md) — NO LEANN KOL. Not allowed.
 - Logo: [feedback_logo_smart_placement_v2.md](feedback_logo_smart_placement_v2.md) + [feedback_logo_autocrop.md](feedback_logo_autocrop.md) + [feedback_logo_smaller.md](feedback_logo_smaller.md)
+- **[feedback_image_format_9x16.md](feedback_image_format_9x16.md)** — **UNIVERSAL RULE.** NANO at 4:5 → PIL `extend_45_to_916()` → 9:16. NEVER generate directly at 9:16. ALL brands.
+- **[feedback_creative_research_engine.md](feedback_creative_research_engine.md)** — **CRITICAL UPGRADE.** Never use refs blindly. Always visually audit. Detect reference fatigue. Proactive scraping triggers. Cross-brand intelligence. Pre-generation quality gate. ALL brands.
 - Other: google_drive_desktop, reference_quality, typography_designer_grade, typography_dominance, nano_food_limitation, ai_humans_never, nano_illustration_obsession, nano_typography_luxury, no_raw_png, no_xy_pixel_artifacts, brand_constant_design_variable
 
 ### Video production
+- [feedback_never_skip_viewing_videos.md](feedback_never_skip_viewing_videos.md) — **ABSOLUTE RULE.** Must VIEW every video before strategy/deployment. Never strategize from filenames alone.
 - [feedback_video_steal_like_artist.md](feedback_video_steal_like_artist.md) — **CRITICAL.** 1:1 reference = frame-by-frame copy. Same poses, angles, timing, momentum. Change person/food/brand only. Never try to be creative with structure. V1-V3 failures documented.
 - [feedback_video_production_v1_v6_learnings.md](feedback_video_production_v1_v6_learnings.md) — **COMPLETE V1-V6 JOURNEY.** Model routing (Sora for diversity, Kling for face lock), ultra-precision prompting specs, character sheet approach, assembly pipeline, typography gaps, cost tracking ($34 total). Read before any video production.
 - [feedback_video_sora_reverse_creative_process.md](feedback_video_sora_reverse_creative_process.md) — **BREAKTHROUGH.** Design FOR Sora's strengths (impossible camera, macro, atmosphere), not against. Edit food photos to editorial level BEFORE i2v. Three moods: high-hook creative / girlboss story / food vibes. Brand constant, format variable.
@@ -162,6 +189,8 @@ AI oracle character IP. Luxury spiritual brand. Face-locked "Jade" character.
 ### Feedback memories (Meta API + ads)
 - [feedback_meta_ads_production_rules.md](feedback_meta_ads_production_rules.md) — RM800K rules: lo-fi > polished, 0.5s message, 10+ concepts, kill criteria.
 - [feedback_meta_api_hard_lessons.md](feedback_meta_api_hard_lessons.md) — **CRITICAL.** Copy wipe bug, rate limiting, token expiry, post ID failures. Never repeat.
+- [feedback_meta_budget_algorithm_rules.md](feedback_meta_budget_algorithm_rules.md) — Budget 20% rule, restructure = reset anyway, time-of-day irrelevant, MY budget÷ads math, token management.
+- [feedback_pinxin_creative_formula.md](feedback_pinxin_creative_formula.md) — **PROVEN FORMULA.** Multi-dish static > gimmick video. Promo math + urgency = purchases. Ad copy structure (never blank headline). Apply to ALL PX creatives.
 - [feedback_creative_reasoning_engine.md](feedback_creative_reasoning_engine.md) — **HOW concepts are born.** 5-step chain: persona behavior → format hijack → collision → hook check → diversity. Universal.
 
 ### Project memories
@@ -186,3 +215,4 @@ AI oracle character IP. Luxury spiritual brand. Face-locked "Jade" character.
 - [creative-intelligence-reference-mastery.md](creative-intelligence-reference-mastery.md) — **REFERENCE MASTERY.** Rating system (5 dimensions), taxonomy, curation process, forensic analysis framework, matching engine, sourcing strategy. References = 50% of output.
 - [creative-intelligence-reference-mastery.md](creative-intelligence-reference-mastery.md) — **REFERENCE MASTERY.** Rating system, taxonomy, curation, forensic analysis, matching engine. References = 50% of output.
 - [creative-intelligence-tool-stack.md](creative-intelligence-tool-stack.md) — **TOOL STACK.** Every tool installed: fal.ai models, local Python tools, APIs, infrastructure. When to use what. Problem → tool mapping.
+- **[creative-intelligence-meta-ads-mastery-system.md](creative-intelligence-meta-ads-mastery-system.md)** — **META ADS MASTERY SYSTEM.** Compounding intelligence engine. Decision trees (objective/structure/bidding/audience), kill/scale criteria, creative testing, budget gates, attribution, brand context engine, execution protocols, compound learning loop. READ FIRST for any ads work.

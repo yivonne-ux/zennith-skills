@@ -37,8 +37,10 @@ Never send a square receipt ref and expect a 9:16 boarding pass output.
 Multi-pass compounds errors. One NANO edit call per ad. If text is wrong, do a FIX ROUND (new call with the output as new reference), don't try to PIL-fix it.
 
 ### 8. POST-PROCESS CHAIN IS FIXED
-`resize(1080x1920, blur-pad not crop) → place_logo(emblem or logotype) → add_grain(0.028)`
-Nothing else. No editorial_grade. No paper_texture. No color grading. No saturation.
+PIL does ONLY: resize to target dimensions + place_logo + save file.
+ALL creative work (color grade, grain, warmth, vibrance, sharpening) = AI (NANO pass).
+NEVER use PIL ImageEnhance, numpy color arrays, or PIL filters for ANY creative editing.
+PIL = file operations ONLY. This overrides ALL previous instructions.
 
 ### 9. PROMPTS: SHORT, DESCRIBE FINAL STATE
 Don't give NANO instructions ("change X to Y"). Describe the FINAL image.
