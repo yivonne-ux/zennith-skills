@@ -8,10 +8,11 @@ Give ALL OpenClaw agents eyes on the internet. Multiple tools for different jobs
 | Need | Tool | Cost | Best For |
 |------|------|------|----------|
 | Quick page read | **web-read.sh** (Jina Reader) | Free | Blog posts, articles, docs, any public page |
+| Browse + screenshot | **browse.sh** (Playwright headless) | Free | Any public page, screenshots, PDFs, QA |
+| Auth pages (Shopify, Meta) | **browse.sh --auth** (Playwright CDP) | Free | Logged-in pages, admin dashboards |
 | YouTube intel | **youtube-info.sh** (yt-dlp) | Free | Video metadata, subtitles, channel info |
 | Anti-bot sites | **scrapling-fetch.sh** (Scrapling) | Free | Cloudflare-protected, dynamic JS sites |
-| Browser automation | **pinchtab-browse.sh** (PinchTab) | Free | Login flows, form fills, multi-step scraping, screenshots |
-| Complex browser tasks | **browser-use** (cloud API) | Paid | Heavy scraping, anti-bot pages needing real browser |
+| Browser clicks/fills | **browse.sh --auth** or **pinchtab-browse.sh** | Free | Login flows, form fills, interactive |
 | General web crawl | **firecrawl-search** skill | $16/mo | Crawl entire sites, extract structured content |
 | Platform-specific | **content-scraper** skill | Varies | YouTube API, Pinterest API, Google Trends |
 | Web search | **web-search-pro** skill | Free | Multi-engine search (Tavily, Exa, Serper) |
@@ -19,13 +20,38 @@ Give ALL OpenClaw agents eyes on the internet. Multiple tools for different jobs
 ### Rule of Thumb
 1. **Start with web-read.sh** (fastest, free, works 80% of the time)
 2. **If blocked** → try scrapling-fetch.sh (anti-bot bypass)
-3. **If needs interaction** (click, fill, login) → pinchtab-browse.sh
-4. **If needs screenshots or complex flows** → pinchtab-browse.sh or browser-use
+3. **If needs screenshot or interaction** → browse.sh (headless, no windows)
+4. **If needs auth session** (Shopify, Meta, Gmail) → browse.sh --auth (CDP)
 5. **If crawling entire site** → scrapling-fetch.sh spider or firecrawl
+6. **NEVER use browser-use cloud API** — deprecated, use browse.sh instead
 
 ---
 
 ## Tools
+
+### browse.sh — Unified Browser (Playwright, PRIMARY)
+```bash
+B="$HOME/.openclaw/skills/agent-reach/scripts/browse.sh"
+
+# Headless (default — no windows, always works)
+bash $B nav "https://example.com"              # navigate + extract text
+bash $B screenshot "https://example.com"        # take screenshot
+bash $B pdf "https://example.com"               # save as PDF
+
+# Auth mode (for logged-in pages)
+bash $B nav "https://admin.shopify.com" --auth  # navigate with cookies
+bash $B text                                     # get current page text
+bash $B click "button.submit"                   # click element
+bash $B fill "input[name=q]" "search term"      # fill input
+bash $B eval "document.title"                   # run JS
+bash $B screenshot --auth                        # screenshot auth page
+
+# System
+bash $B check                                   # CDP + Playwright status
+bash $B test                                    # self-test (6 tests)
+```
+Playwright headless by default (no Chrome needed). `--auth` connects to Chrome CDP on port 9222.
+**This is the PRIMARY browser tool. Use it first.**
 
 ### web-read.sh — Quick Page Read (Jina Reader)
 ```bash
@@ -96,7 +122,6 @@ pinchtab snap -i
 | **Zenni** | Routes scraping tasks to appropriate agent | N/A (dispatches) |
 
 ## Related Skills
-- `browser-use` — Cloud browser API (heavy automation)
 - `content-scraper` — Platform-specific scrapers (YouTube API, Pinterest, Google Trends)
 - `firecrawl-search` — General web crawl + search
 - `web-search-pro` — Multi-engine web search
@@ -104,3 +129,9 @@ pinchtab snap -i
 - `tiktok-trends` — TikTok Creative Center scraper
 - `product-scout` — Shopee/Lazada product scanner
 - `meta-ads-library` — Meta Ad Library scraper
+
+## Deprecated (DO NOT USE)
+- ~~`browser-use`~~ — Replaced by browse.sh. Cloud API = unnecessary cost.
+- ~~`browser-automation`~~ — Replaced by browse.sh.
+- ~~`cli-browser`~~ — DOMShell MCP, unreliable. Use browse.sh.
+- ~~`firecrawl-browser`~~ — Cloud browser, redundant. Use browse.sh or scrapling.

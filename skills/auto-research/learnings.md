@@ -56,3 +56,10 @@ _How different models perform as generators vs evaluators._
 - Fix exec approval system — agents need to actually run bash scripts
 - The exec security model may need `"host": "local"` instead of `"host": "gateway"` 
 - Or exec-approvals.json needs to be pushed via the gateway socket, not file
+
+## Session Compound (Mar 18-25)
+- Temp file JSON payloads: ALWAYS use for bash→LLM calls
+- Claude CLI fallback: use `claude --print` on MacBook (/bin/zsh OAuth)
+- OpenRouter for iMac agents (auto-detect from openclaw.json)
+- NEVER Anthropic API key for loops (per-token cost)
+- Auto-detect repo root: SCRIPT_DIR → REPO_DIR → SECRETS_DIR pattern

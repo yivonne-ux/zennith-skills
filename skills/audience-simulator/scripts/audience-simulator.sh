@@ -335,43 +335,22 @@ call_llm() {
   fi
 
   # Determine API endpoint and format
-  if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
-    # Build request body from file
-    "${PYTHON3}" - "$prompt_file" "$model" "${ANTHROPIC_API_KEY}" <<'PYEOF'
-import json, sys, subprocess
-
-prompt_file = sys.argv[1]
-model = sys.argv[2]
-api_key = sys.argv[3]
-
-with open(prompt_file) as f:
-    prompt = f.read()
-
-body = json.dumps({
-    'model': model,
-    'max_tokens': 4096,
-    'messages': [{'role': 'user', 'content': prompt}]
-})
-
-result = subprocess.run(
-    ['curl', '-s', '-X', 'POST', 'https://api.anthropic.com/v1/messages',
-     '-H', 'Content-Type: application/json',
-     '-H', f'x-api-key: {api_key}',
-     '-H', 'anthropic-version: 2023-06-01',
-     '-d', body],
-    capture_output=True, text=True
-)
-
-r = json.loads(result.stdout)
-if 'content' in r and len(r['content']) > 0:
-    print(r['content'][0]['text'])
-elif 'error' in r:
-    print(f'ERROR: {r["error"].get("message", r["error"])}', file=sys.stderr)
-    sys.exit(1)
-else:
-    print(f'ERROR: Unexpected response', file=sys.stderr)
-    sys.exit(1)
-PYEOF
+  # Try Claude CLI first for claude models (uses Claude Max subscription = $0)
+  if echo "$model" | grep -q "^claude"; then
+    local claude_cli
+    claude_cli=$(command -v claude 2>/dev/null || echo "")
+    if [ -n "$claude_cli" ]; then
+      unset ANTHROPIC_API_KEY 2>/dev/null
+      local result
+      result=$(cat "$prompt_file" | "$claude_cli" --print --model "$model" 2>/dev/null)
+      if [ -n "$result" ]; then
+        echo "$result"
+        return 0
+      fi
+    fi
+    # Direct Anthropic API fallback is BANNED — bypasses Claude Max and charges real money
+    log_error "Claude model '$model' requested but CLI failed. Direct API fallback disabled."
+    return 1
 
   elif [ -n "${OPENAI_API_KEY:-}" ]; then
     local api_url="${OPENAI_BASE_URL:-https://api.openai.com/v1}/chat/completions"
@@ -414,7 +393,7 @@ else:
 PYEOF
 
   else
-    log_error "No API key found. Set ANTHROPIC_API_KEY, OPENAI_API_KEY, or OPENROUTER_API_KEY."
+    log_error "No API key found. Set OPENAI_API_KEY or OPENROUTER_API_KEY (Claude models use CLI only)."
     log_error "On Zennith OS, keys are auto-detected from openclaw.json."
     exit 1
   fi

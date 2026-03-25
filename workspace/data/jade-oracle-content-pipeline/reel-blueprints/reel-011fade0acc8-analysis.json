@@ -1,0 +1,24 @@
+{
+  "source": "/Users/jennwoeiloh/.openclaw/workspace/data/jade-oracle-content-pipeline/scrapes/reels/spiritdaughter/DWNMDtnJa5z.mp4",
+  "duration_sec": 27,
+  "resolution": "1080x1920",
+  "scene_count": 1,
+  "scenes": [
+    {
+      "timestamp": "0:00",
+      "description": "young Asian woman with long dark hair, styled as a mystic oracle figure",
+      "prompt": "young Asian woman with long dark hair, styled as a mystic oracle figure, gazing directly into camera with a calm, knowing expression, in softly lit indoor space with warm ambient tones, candles or natural elements in background, warm golden hour or candlelit glow, soft diffused light on face lighting, wearing flowing earth-toned or white dress with layered accessories, possibly crystals or gold jewelry",
+      "mood": "mystical, serene, inviting — draws viewer into a moment of stillness",
+      "camera": "medium close-up, slightly low angle to create presence"
+    }
+  ],
+  "hook_type": "emotional",
+  "transition_style": "cross_dissolve",
+  "music_style": "ambient",
+  "pacing": "breathing",
+  "cta": "none",
+  "virality_score": 57,
+  "learnings": "The single-scene, direct-gaze format creates an intimate 1-on-1 connection that stops the scroll — the viewer feels personally seen by the oracle figure. The warm golden lighting and stillness contrast sharply with typical fast-paced Reels, making it stand out in feed through calm authority rather than noise. At 27 seconds it respects attention span while holding long enough to build mystique and emotional resonance.",
+  "analysis_method": "claude",
+  "analyzed_at": "2026-03-23T16:13:13Z"
+}

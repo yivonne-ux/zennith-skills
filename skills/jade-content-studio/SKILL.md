@@ -219,8 +219,16 @@ Max 2 body refs per generation. Duplicate face refs for weight instead of adding
 **Gotcha #3: Brand injection on lifestyle shots**
 NanoBanana auto-injects brand elements (QMDJ logo, Jade Oracle box) when `--brand jade-oracle` is set. Use `--use-case character` to skip brand enrichment. If you want pure lifestyle without brand elements, use `--use-case social` or temporarily `--brand gaia-os`.
 
-**Gotcha #4: Two faces generated**
-If both face ref and body ref show clear faces, the model sometimes generates two people or a face-blend. Choose body refs where the face is partially hidden, cropped out, or add "single person, one woman only" to the prompt.
+**Gotcha #4: Face contamination from body ref (CRITICAL — learned 2026-03-24)**
+If body ref shows a different person's face (e.g., using Jade's body for Luna's face), the model creates a HYBRID face that is neither character. The auditor in brand mode scores this 10/10 face_quality because it checks photorealism, NOT identity match.
+
+**Fix (mandatory for cross-character body pairing):**
+1. ALWAYS crop body refs to remove the head: `crop_headless_body input.png output.png 25` (built into nanobanana-gen.sh)
+2. Use 80/20 face/body ratio: 4x face refs + 1x headless body ref
+3. nanobanana now auto-detects ref-image and switches to `--mode character` audit with face consistency checking
+4. If `face_consistency` score < 6, it flags as FACE-DRIFT defect
+
+**Never pass a full-body ref of a DIFFERENT character with face visible.** The model will blend the two faces.
 
 **Gotcha #5: Style seed + ref images = chaos**
 Do NOT use `--style-seed` when doing face+body pairing. Too many references confuse the model.

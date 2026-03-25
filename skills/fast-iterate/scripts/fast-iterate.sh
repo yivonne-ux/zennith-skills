@@ -156,51 +156,10 @@ call_llm() {
   fi
 
   if echo "$model" | grep -q "^claude"; then
-    local api_key="${ANTHROPIC_API_KEY:-}"
-    if [ -z "$api_key" ]; then
-      log_error "ANTHROPIC_API_KEY not set and claude CLI not available"
-      return 1
-    fi
-
-    # Build JSON payload via temp files (avoids all quoting issues)
-    local tmp_sys=$(mktemp)
-    local tmp_usr=$(mktemp)
-    local tmp_payload=$(mktemp)
-    printf '%s' "$system_prompt" > "$tmp_sys"
-    printf '%s' "$user_prompt" > "$tmp_usr"
-    "$PYTHON3" - "$tmp_sys" "$tmp_usr" "$model" << 'PYEOF' > "$tmp_payload"
-import json, sys
-with open(sys.argv[1]) as f: system = f.read()
-with open(sys.argv[2]) as f: user = f.read()
-model = sys.argv[3]
-print(json.dumps({"model": model, "max_tokens": 4096, "system": system, "messages": [{"role": "user", "content": user}]}))
-PYEOF
-
-    local response
-    response=$(curl -s --max-time 120 \
-      "https://api.anthropic.com/v1/messages" \
-      -H "x-api-key: $api_key" \
-      -H "anthropic-version: 2023-06-01" \
-      -H "content-type: application/json" \
-      -d @"$tmp_payload")
-    rm -f "$tmp_sys" "$tmp_usr" "$tmp_payload"
-
-    echo "$response" | "$PYTHON3" -c "
-import sys, json
-try:
-    data = json.load(sys.stdin)
-    if 'content' in data and len(data['content']) > 0:
-        print(data['content'][0]['text'])
-    elif 'error' in data:
-        print('ERROR: ' + data['error'].get('message', str(data['error'])), file=sys.stderr)
-        sys.exit(1)
-    else:
-        print('ERROR: Unexpected response', file=sys.stderr)
-        sys.exit(1)
-except Exception as e:
-    print('ERROR: ' + str(e), file=sys.stderr)
-    sys.exit(1)
-"
+    # Claude models MUST use CLI (Claude Max subscription = $0)
+    # Direct API calls are BANNED — they bypass subscription and charge real money
+    log_error "Claude model '$model' requested but CLI failed. Direct API fallback disabled (use Claude Max via CLI)."
+    return 1
   else
     local api_key="${OPENAI_API_KEY:-}"
     local api_base="${OPENAI_API_BASE:-https://api.openai.com/v1}"

@@ -135,6 +135,41 @@ All must exist before a run is "complete":
   review.json           # Review results
 ```
 
+## Character QA Scoring (Migrated from character-lock)
+
+**Use `--mode character` for character images** — Brand audit (`--mode brand`) checks logo, food, typography and will always fail on character shots.
+
+### 8 QA Dimensions
+
+| Dimension | What It Checks |
+|-----------|---------------|
+| `photorealism` | Overall realism score |
+| `face_quality` | Face detail and consistency |
+| `hand_quality` | Hand/finger correctness |
+| `artifacts` | Visual glitches, seams, distortion |
+| `mood` | Emotional tone match |
+| `avoid_violations` | Content policy compliance |
+| `face_consistency` | Match to reference face |
+| `body_consistency` | Match to reference body type |
+
+### Plasticky Skin Detection
+
+Standard photorealism score misses plasticky skin. Manually review for:
+- **Pore visibility** — real skin has visible pores, especially on nose and cheeks
+- **Skin texture variation** — not uniform; different zones (forehead, cheeks, chin) have different textures
+- **Subsurface scattering** — light passing through thin skin areas (ears, nostrils, fingers held to light)
+- **Specular highlights** — natural, not uniform sheen; real skin has varying reflectivity
+- **Hair strand quality** — individual strands visible, not a helmet/blob
+
+### Anti-Patterns That Break Face Lock
+
+1. Too many body refs diluting face signal — body refs push face refs below 60% threshold
+2. Body refs from different ethnicities/ages — confuses the model's understanding of the character
+3. Not duplicating primary face ref for weight — single face ref gets overridden by multiple body/scene refs
+4. Using Pro for full-body scenes — Pro drifts more than Flash in complex compositions
+5. Relying on prompt alone without ref images — text description is never enough for face consistency
+6. Changing too many elements at once — change pose OR outfit OR lighting, never all three
+
 ## Owner
 Iris (Art Director) — workflow decisions
 Taoz (CTO) — infrastructure

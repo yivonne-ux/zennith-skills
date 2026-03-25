@@ -1,0 +1,17 @@
+{
+  "name": "Pinxin Website Build",
+  "description": "Auto-improving loop for Pinxin Vegan Shopify bundle builder",
+  "locked": {
+    "pricing": "RM22.80/bowl, B5F5=RM114+RM20del, B8F8=RM182.40+RM10del, B16F16=RM364.80+FREEdel",
+    "colors": "#1C372A dark green, #d0aa7f gold, #F2EEE7 beige",
+    "checkout": "Shopify Add to Cart ONLY",
+    "dishes": "18 frozen dishes from frozen-dish-images.json"
+  },
+  "metrics": [
+    {"name": "brand_match", "target": 9, "weight": 0.25, "description": "Colors, fonts, logo match pinxinvegan.com exactly"},
+    {"name": "cro_score", "target": 9, "weight": 0.25, "description": "Price anchoring, savings display, delivery milestones, PWP"},
+    {"name": "design_quality", "target": 9, "weight": 0.25, "description": "Premium Asian food brand feel, not default/template"},
+    {"name": "mobile_ux", "target": 9, "weight": 0.15, "description": "375px first, 44px targets, sticky cart, no cropping"},
+    {"name": "accuracy", "target": 10, "weight": 0.10, "description": "Correct pricing, correct images, correct dish names, bilingual"}
+  ]
+}

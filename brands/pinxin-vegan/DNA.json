@@ -4,14 +4,38 @@
   "tagline": "Bold flavours, zero compromise",
   "visual": {
     "colors": {
-      "primary": "#4CAF50",
-      "secondary": "#8D6E63",
-      "background": "#F5F0EB",
-      "accent": "#33691E"
+      "primary": "#1C372A",
+      "primary_name": "Px Green — dark forest green (nav bar, headers, premium backgrounds, footer)",
+      "gold": "#d0aa7f",
+      "gold_name": "Px Gold — warm gold for print (logo, nav text, accents on dark green)",
+      "gold_light": "#ecba5f",
+      "gold_lighter": "#fbd4a0",
+      "background": "#F2EEE7",
+      "background_name": "Light beige (page background)",
+      "brown": "#806958",
+      "brown_name": "Dark brown (secondary text, borders)",
+      "brown_dark": "#42210B",
+      "brown_dark_name": "Darker brown (deep accents)",
+      "burgundy": "#470e23",
+      "red": "#6c0e0e",
+      "teal": "#108474",
+      "teal_note": "Used on website for interactive elements (reviews, badges) — NOT the brand primary",
+      "white": "#ffffff",
+      "text": "#333333",
+      "source": "Official Brand Colour Google Doc (Dec 3 2025) — drive.google.com/d/1arP3xYlc0vjTBvNqbt5xR214PEZ2Geo-2ddf_4W4WwI",
+      "avoid_colors": ["#4CAF50 (Material Design placeholder)", "#2D5016 (wrong green)", "#836c5f (Shopify theme meta only)", "#8D6E63 (Material brown placeholder)"]
     },
     "typography": {
-      "heading": "Bold sans-serif, confident and modern",
-      "body": "Clean sans-serif, highly readable"
+      "heading": "DM Sans 600-700 (clean, premium)",
+      "body": "Poppins 300-500 (readable, modern)",
+      "chinese": "Noto Sans SC (Chinese fallback)",
+      "display": "Shippori Mincho (elegant Japanese serif — for special headings)",
+      "google_fonts": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+    },
+    "logo": {
+      "dark_bg": "https://pinxinvegan.com/cdn/shop/files/Pinxin_Logo_-05_500x.png",
+      "light_bg": "https://pinxinvegan.com/cdn/shop/files/Pinxin_Logo-02a.png",
+      "note": "Gold wheat icon + PǏNXĪN text. Always use on dark green background for max impact."
     },
     "photography": "Bold food photography, close-up textures, Malaysian street food aesthetic",
     "lighting_default": "Warm natural light, high contrast, steam and smoke visible",

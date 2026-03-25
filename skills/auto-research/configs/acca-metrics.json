@@ -1,0 +1,76 @@
+{
+  "name": "ACCA WhatsApp Commerce Optimizer",
+  "domain": "whatsapp_social_commerce",
+  "metrics": {
+    "response_rate": {
+      "description": "% of new conversations that get a bot reply within 60 seconds",
+      "target": 95,
+      "unit": "%",
+      "source": "chatwoot_api"
+    },
+    "acca_completion_rate": {
+      "description": "% of customers who receive all 22 ACCA steps",
+      "target": 30,
+      "unit": "%",
+      "source": "n8n_flow_logs"
+    },
+    "faq_deflection_rate": {
+      "description": "% of questions answered by bot without human handoff",
+      "target": 70,
+      "unit": "%",
+      "source": "chatwoot_labels"
+    },
+    "sales_conversion_rate": {
+      "description": "% of ACCA-completed conversations that result in payment",
+      "target": 8,
+      "unit": "%",
+      "source": "chatwoot_labels_paid"
+    },
+    "avg_time_to_sale": {
+      "description": "Average minutes from first message to payment confirmed",
+      "target": 30,
+      "unit": "minutes",
+      "source": "chatwoot_timestamps"
+    },
+    "cart_abandonment_rate": {
+      "description": "% of customers who showed interest but didn't pay",
+      "target_max": 40,
+      "unit": "%",
+      "source": "chatwoot_labels"
+    },
+    "followup_recovery_rate": {
+      "description": "% of abandoned carts recovered via follow-up sequences",
+      "target": 15,
+      "unit": "%",
+      "source": "n8n_followup_logs"
+    },
+    "human_handoff_rate": {
+      "description": "% of conversations requiring human agent",
+      "target_max": 25,
+      "unit": "%",
+      "source": "chatwoot_labels_human_in_need"
+    },
+    "csat_score": {
+      "description": "Customer satisfaction score post-purchase",
+      "target": 4.5,
+      "unit": "/5",
+      "source": "chatwoot_csat"
+    },
+    "repeat_purchase_rate": {
+      "description": "% of customers who order again within 30 days",
+      "target": 20,
+      "unit": "%",
+      "source": "chatwoot_contacts_repeat"
+    }
+  },
+  "brands": ["pinxin-vegan", "mirra", "rasaya", "gaia-eats"],
+  "optimization_targets": [
+    "ACCA message copy (test variants of each step)",
+    "Follow-up timing (test 1h vs 2h vs 4h cart abandonment)",
+    "Pricing presentation (test bundle vs single vs progressive)",
+    "Social proof placement (test reviews before vs after pricing)",
+    "CTA wording (test direct vs soft ask)",
+    "Voice message frequency (test more vs fewer voice messages)",
+    "Image quality and type (test product vs lifestyle vs testimonial)"
+  ]
+}

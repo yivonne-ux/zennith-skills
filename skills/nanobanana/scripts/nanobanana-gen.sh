@@ -144,6 +144,36 @@ register_seed() {
   fi
 }
 
+# Headless body crop — removes head from body ref to prevent face contamination
+# Usage: crop_headless_body <input.png> <output.png> [crop_percent]
+# Default: removes top 25% (head area). Requires ffmpeg.
+crop_headless_body() {
+  local input="$1"
+  local output="$2"
+  local pct="${3:-25}"  # percent to crop from top
+
+  if [ ! -f "$input" ]; then
+    warn "crop_headless_body: input not found: $input"
+    return 1
+  fi
+
+  local height width crop_y new_height
+  height=$(sips -g pixelHeight "$input" 2>/dev/null | tail -1 | awk '{print $2}')
+  width=$(sips -g pixelWidth "$input" 2>/dev/null | tail -1 | awk '{print $2}')
+  crop_y=$((height * pct / 100))
+  new_height=$((height - crop_y))
+
+  if command -v ffmpeg >/dev/null 2>&1; then
+    ffmpeg -y -i "$input" -vf "crop=${width}:${new_height}:0:${crop_y}" "$output" 2>/dev/null
+  else
+    warn "crop_headless_body: ffmpeg not found, cannot crop"
+    cp "$input" "$output"
+    return 1
+  fi
+
+  log "INFO" "Headless body crop: ${width}x${new_height} (removed top ${pct}% = ${crop_y}px)"
+}
+
 # Register with image seed bank (richer metadata for creative pipeline)
 IMAGE_SEED_SH="$HOME/.openclaw/skills/image-seed-bank/scripts/image-seed.sh"
 
@@ -184,6 +214,8 @@ register_image_seed() {
 }
 
 # Auto QA hook — run visual audit if brand DNA exists
+# When ref-image is passed, auto-detects character generation and uses --mode character
+# with --face-refs to check face consistency (not just photorealism)
 auto_qa_hook() {
   local image_path="$1"
   local brand="$2"
@@ -198,9 +230,26 @@ auto_qa_hook() {
 
   local audit_out="/tmp/nb-qa-$(basename "$image_path" .png).json"
 
+  # Detect character generation: if ref_image is passed, use character audit mode
+  # This checks face_consistency against the locked face ref (not just "is face pretty?")
+  local audit_mode="brand"
+  local face_ref_arg=""
+  if [ -n "$ref_image" ]; then
+    # Extract the FIRST ref image as the face ref (face refs are always first in the array)
+    local first_ref
+    first_ref=$(echo "$ref_image" | cut -d',' -f1)
+    if [ -f "$first_ref" ]; then
+      audit_mode="character"
+      face_ref_arg="--face-refs $first_ref"
+    fi
+  fi
+
   # Run in background — don't block generation
   (
-    if [ -n "$ref_image" ] && [ -f "$ref_image" ]; then
+    if [ "$audit_mode" = "character" ]; then
+      python3 "$audit_script" "$image_path" "$dna_path" "$audit_out" "$ref_image" \
+        --mode character $face_ref_arg 2>/dev/null
+    elif [ -n "$ref_image" ] && [ -f "$ref_image" ]; then
       python3 "$audit_script" "$image_path" "$dna_path" "$audit_out" "$ref_image" 2>/dev/null
     else
       python3 "$audit_script" "$image_path" "$dna_path" "$audit_out" 2>/dev/null
@@ -219,6 +268,8 @@ if s.get('photorealism',10) < 5: issues.append('NOT-PHOTOREALISTIC')
 if s.get('face_quality',10) < 5: issues.append('FACE-DEFECT')
 if s.get('hand_quality',10) < 5: issues.append('HAND-DEFECT')
 if s.get('artifacts',10) < 5: issues.append('ARTIFACTS')
+if s.get('face_consistency',10) < 6: issues.append('FACE-DRIFT')
+if s.get('body_consistency',10) < 5: issues.append('BODY-DRIFT')
 print(','.join(issues) if issues else 'none')
 " 2>/dev/null || echo "unknown")
       if python3 -c "exit(0 if float('$score') < 7.0 else 1)" 2>/dev/null || [ "$defects" != "none" ]; then
@@ -963,10 +1014,41 @@ sys.exit(1)
     fi
   fi
 
-  # Enrich prompt with brand context and use case template (skip if --raw or prompt is detailed)
+  # Enrich prompt with brand context and use case template
+  # Skip brand/product injection when: --raw flag OR --ref-image provided (character mode)
+  # ref-image = character generation → brand names in prompt cause fake logos/books/props
   local full_prompt
-  if [ "$raw" = "true" ]; then
+  if [ "$raw" = "true" ] || [ -n "$ref_image" ]; then
     full_prompt="$prompt"
+    # Character mode: reinforce face-lock and load never-list
+    if [ -n "$ref_image" ]; then
+      # Face-lock reinforcement: tell the model which ref is the face to match
+      full_prompt="The FIRST reference image is the character's face — match it EXACTLY for all facial features, bone structure, and expression. Other reference images are for body proportions and pose only, ignore their facial features. ${full_prompt}"
+
+      # Load never-list from character spec to prevent brand leakage
+      local first_ref
+      first_ref=$(echo "$ref_image" | cut -d',' -f1)
+      local char_dir
+      char_dir=$(dirname "$first_ref")
+      local never_instructions=""
+      for spec_path in "$char_dir/ig-spec.json" "$(dirname "$char_dir")/ig-spec.json"; do
+        if [ -f "$spec_path" ]; then
+          never_instructions=$(python3 -c "
+import json, sys
+with open(sys.argv[1]) as f:
+    spec = json.load(f)
+nevers = spec.get('never', [])
+if nevers:
+    print('MUST AVOID: ' + '; '.join(nevers) + '.')
+" "$spec_path" 2>/dev/null || true)
+          break
+        fi
+      done
+      if [ -n "$never_instructions" ]; then
+        full_prompt="${full_prompt} ${never_instructions}"
+        log "INFO" "Character never-list loaded: $never_instructions"
+      fi
+    fi
   else
     # Avoid prompt duplication when using generic prompts from --use-case
     # User-provided detailed prompts should be passed as product argument
@@ -1030,8 +1112,19 @@ sys.exit(1)
 
   # Reference images — Gemini 3.x image models DO support image input + image output
   # (up to 14 ref images). Sources: --ref-image flag and/or style seed source_images.
+  # CHARACTER MODE GUARDRAIL: max 1 face + 2 body refs (3 total) to prevent face dilution.
+  # More body refs = weaker face-lock signal. Learned from character-body-pairing skill.
   local ref_images_arg=""
   if [ -n "$ref_image" ]; then
+    local ref_count_raw
+    ref_count_raw=$(echo "$ref_image" | tr ',' '\n' | wc -l | tr -d ' ')
+    if [ "$ref_count_raw" -gt 3 ]; then
+      # Keep first image (face-lock) + next 2 body refs only
+      local trimmed_refs
+      trimmed_refs=$(echo "$ref_image" | tr ',' '\n' | head -3 | tr '\n' ',' | sed 's/,$//')
+      warn "Too many ref images ($ref_count_raw). Character mode max is 3 (1 face + 2 body). Trimming to first 3."
+      ref_image="$trimmed_refs"
+    fi
     ref_images_arg="$ref_image"
     echo "  Ref image: $ref_image"
   fi
