@@ -1,179 +1,134 @@
 ---
 name: learn-youtube
-description: Learn from a YouTube video — extract transcript, categorize, analyze, map to GAIA knowledge vault. Structured knowledge extraction pipeline.
+description: Full video intelligence — transcript with timestamps, frame-by-frame screenshots, metadata. Works with YouTube, Instagram, TikTok, Twitter/X, Facebook, local files, any URL.
 agents:
   - scout
   - taoz
+evolves: true
 ---
 
-# Learn YouTube — Video Knowledge Extraction Pipeline
+# Learn Video — Universal Video Intelligence Pipeline
 
-Extract structured knowledge from YouTube videos. Fetches transcript, categorizes content, analyzes key insights, and maps findings to the GAIA knowledge vault for future reference.
+One command to fully extract and analyze any video: transcript with timestamps, frame-by-frame visual screenshots, metadata, and structured output.
 
-## When to Use
+Works with: YouTube, Instagram, TikTok, Twitter/X, Facebook, local files, direct URLs, and 1000+ sites via yt-dlp.
 
-- Learning from a competitor's video (e.g., Ali Akbar, Psychic Samira content)
-- Extracting marketing strategies from YouTube tutorials
-- Ingesting educational content for gaia-learn
-- Analyzing viral video patterns for content creation
-- Building knowledge base from industry thought leaders
-
-## Procedure
-
-### Step 1 — Video Identification
-
-Input: YouTube URL or search query
-
-If URL provided:
-- Extract video ID
-- Fetch metadata (title, channel, duration, views, publish date, description)
-
-If search query:
-- Search YouTube for relevant videos
-- Present top 5 results with metadata
-- Select target video(s)
-
-### Step 2 — Transcript Extraction
-
-Fetch the video transcript:
+## Quick Start
 
 ```bash
-# Using yt-dlp for transcript
-yt-dlp --write-auto-sub --sub-lang en --skip-download --output "%(id)s" "{url}"
+B="$HOME/.openclaw/skills/learn-youtube/scripts/learn-video.sh"
+
+# YouTube
+bash "$B" "https://youtube.com/watch?v=VIDEO_ID"
+
+# Instagram Reel
+bash "$B" "https://instagram.com/reel/ABC123/"
+
+# TikTok
+bash "$B" "https://tiktok.com/@user/video/123456"
+
+# Twitter/X video
+bash "$B" "https://x.com/user/status/123456"
+
+# Local video file
+bash "$B" /path/to/video.mp4
+
+# Transcript only
+bash "$B" "https://youtube.com/watch?v=..." --transcript-only
+
+# Frames only
+bash "$B" "https://youtube.com/watch?v=..." --frames-only
+
+# Custom frame interval (every 10s instead of scene detection)
+bash "$B" "https://youtube.com/watch?v=..." --interval 10
+
+# Keep the downloaded video (don't auto-delete)
+bash "$B" "https://youtube.com/watch?v=..." --keep-video
 ```
 
-Or use YouTube API / web scraping if available.
+## What It Extracts
 
-If no transcript available:
-- Note this limitation
-- Use video description and comments as fallback
-- Consider audio extraction + Whisper transcription
+| Output | File | Description |
+|--------|------|-------------|
+| Metadata | `metadata.json` | Title, channel/uploader, duration, views, tags, platform |
+| Transcript | `transcript.txt` | Full transcript with `[MM:SS]` timestamps |
+| Raw transcript | `transcript-raw.txt` | Plain text, no timestamps |
+| Frames | `frames/*.jpg` | Scene-change screenshots (1280x720) |
+| Manifest | `frames/manifest.txt` | Frame-by-frame index paired with nearest transcript line |
+| Summary | `summary.txt` | Quick stats |
 
-### Step 3 — Content Categorization
+Output directory: `~/.openclaw/workspace/data/video/<slug>/`
 
-Classify the video content:
+## Supported Sources
 
-| Category | Subcategories |
-|----------|--------------|
-| Marketing | Ad strategy, funnel design, copywriting, social media |
-| Business | Revenue models, scaling, operations, hiring |
-| Creative | Video production, design, content creation |
-| Technical | Code, tools, APIs, infrastructure |
-| Wellness | Health, nutrition, supplements, fitness |
-| Spiritual | Readings, astrology, metaphysics, QMDJ |
-| Education | Teaching methods, course design, learning |
-| Industry | Market trends, competitor analysis, news |
+| Platform | Source detection | Transcript method |
+|----------|-----------------|-------------------|
+| YouTube | URL pattern | youtube-transcript-api (best) + yt-dlp subtitles (fallback) |
+| Instagram | URL pattern | yt-dlp subtitles |
+| TikTok | URL pattern | yt-dlp subtitles |
+| Twitter/X | URL pattern | yt-dlp subtitles |
+| Facebook | URL pattern | yt-dlp subtitles |
+| Local file | File exists check | Embedded subtitle extraction (ffmpeg) |
+| Direct URL | File extension match | None (frames only) |
+| Any other site | yt-dlp auto-detect | yt-dlp subtitles |
 
-### Step 4 — Structured Analysis
+## How Frame Extraction Works
 
-Extract and organize:
+1. **Scene detection** (default): ffmpeg detects visual scene changes, extracts a frame at each transition. Threshold 0.4 (adjustable via `--scene`).
+2. **Interval fallback**: If scene detection yields <15 frames, auto-supplements with fixed-interval frames.
+3. **Frame cap**: Max 80 frames (adjustable via `--max-frames`). Evenly trims excess.
+4. **Manifest pairing**: Each frame is matched to the nearest transcript line within 15 seconds.
 
-```markdown
-## Video Analysis — {Title}
-### Source: {channel} | {date} | {views} views | {duration}
+## Options
 
-### TL;DR (2-3 sentences)
-...
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--transcript-only` | Transcript with timestamps only | full pipeline |
+| `--frames-only` | Frames only (no transcript) | full pipeline |
+| `--info` | Metadata only | full pipeline |
+| `--interval N` | Frame every N seconds | scene detection |
+| `--max-frames N` | Cap frame count | 80 |
+| `--scene 0.4` | Scene detection threshold | 0.4 |
+| `--keep-video` | Don't delete video after extraction | auto-delete |
 
-### Key Insights
-1. {Insight with timestamp}
-2. ...
+## For Analysis in Claude Code
 
-### Actionable Takeaways
-1. {Specific action we can take}
-2. ...
+After extraction, use Claude Code to analyze:
 
-### Quotes Worth Saving
-- "{quote}" — {timestamp}
-...
+```
+# Read the manifest to see frame-transcript pairs
+Read frames/manifest.txt
 
-### Frameworks/Models Mentioned
-- {Framework name}: {brief description}
-...
+# View individual frames (Claude is multimodal)
+Read frames/scene_0001.jpg
 
-### Tools/Resources Mentioned
-- {Tool}: {what it does, URL if given}
-...
-
-### Relevance to GAIA Brands
-| Brand | How This Applies |
-|-------|-----------------|
-| {brand} | {specific application} |
-...
-
-### Knowledge Tags
-- Primary: {main topic}
-- Secondary: {related topics}
-- Brands: {relevant GAIA brands}
+# Read full transcript
+Read transcript.txt
 ```
 
-### Step 5 — Knowledge Vault Integration
+Claude Code sees the images and reads the transcript for full forensic analysis.
 
-Ingest into the vault:
+## Dependencies
 
-```bash
-bash ~/.openclaw/skills/knowledge-compound/scripts/digest.sh \
-  --source "youtube" \
-  --url "{video_url}" \
-  --title "{video_title}" \
-  --category "{category}" \
-  --file "{analysis_file}"
-```
+All pre-installed:
+- `yt-dlp` (2026.02.04) — video download + subtitle extraction (1000+ sites)
+- `ffmpeg` (8.0.1) — frame extraction with scene detection
+- `ffprobe` — video metadata + duration detection
+- `python3` — transcript parsing + manifest generation
+- `youtube-transcript-api` (Python) — primary YouTube transcript method
 
-The vault database is at `~/.openclaw/workspace/vault/vault.db` (SQLite with FTS5).
+## Backwards Compatibility
 
-### Step 6 — Cross-Reference
-
-Check if the video connects to existing knowledge:
-- Search vault for related entries
-- Link to existing missions or strategies
-- Update relevant room with findings
-
-### Step 7 — Output
-
-Save analysis to: `~/.openclaw/workspace/rooms/logs/learn-youtube-{video_id}-{date}.md`
-
-Post summary to relevant room if this was a dispatched task.
+- `learn-youtube.sh` still works (symlinks to `learn-video.sh`)
+- Old YouTube-only output path (`~/.openclaw/workspace/data/youtube/`) is now `~/.openclaw/workspace/data/video/`
 
 ## Agent Roles
 
-- **Scout**: Primary owner. Fetches video, extracts transcript, performs initial analysis, categorizes content, ingests to vault.
-- **Taoz**: If the video contains technical content (code, tools, architecture), Taoz reviews and extracts implementation details. Also handles any scripting needed for transcript extraction.
-
-## Batch Mode
-
-For processing multiple videos (e.g., all videos from a channel):
-
-1. List all video URLs from the channel
-2. Process each through the pipeline
-3. Generate a summary report across all videos
-4. Identify recurring themes and patterns
-
-## GAIA Brand Context
-
-Priority knowledge sources by brand:
-- **jade-oracle**: Psychic Samira videos, spiritual marketing, QMDJ content
-- **All brands**: Ali Akbar playbook videos, marketing strategy content
-- **gaia-learn**: Educational content creation tutorials
-- **pinxin-vegan / gaia-eats**: Food content, recipe videos
-
-## Example
-
-```
-Learn from this Ali Akbar video on scaling with AI:
-https://youtube.com/watch?v=EXAMPLE
-
-Extract marketing frameworks and map to jade-oracle strategy.
-```
-
-```
-Analyze all Psychic Samira YouTube ads.
-Extract hook patterns, offer structures, and CTA strategies.
-Compare to our jade-oracle approach.
-```
+- **Scout**: Primary. Fetches video, extracts transcript, frames, performs initial analysis.
+- **Taoz**: Technical content — reviews and extracts implementation details.
 
 ## Related Skills
 
-- `knowledge-compound` — For deeper knowledge processing
-- `biz-scraper` — If video references a website to analyze
-- `ads-competitor` — If video is a competitor's ad
+- `youtube-video-analyst` — forensic deconstruction of viral patterns (use AFTER this skill extracts the data)
+- `knowledge-compound` — ingest analysis into knowledge vault
+- `video-forge` — process the downloaded video further
