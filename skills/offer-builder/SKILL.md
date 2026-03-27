@@ -22,221 +22,33 @@ agents:
 
 Run steps sequentially. Each step builds on the previous. Save all outputs to `~/.openclaw/workspace/data/offers/{brand-or-name}/`.
 
----
+> Load `references/step-details.md` for full templates, interview questions, ICP card fields, 99 Problems categories, MoSCoW matrix, competitor analysis dimensions, offer template, compliance checks, and landing page section specifications.
 
 ### Step 1 — IP Magic Question (Scout)
-
-Excavate the user's intellectual property using Daniel Priestley's IP framework.
-
-> **Product vs Service Fork**: If the offer is for a physical product (D2C, e-commerce), adapt IP questions: replace "what do people ask YOUR advice on" with "what problem does this product solve better than alternatives". Adjust Step 6 format options to include: Physical product bundle, Subscription box, Starter kit, Discovery set. Adjust Step 7 landing page template for e-commerce conventions (product gallery, ingredient list, shipping info, Shopify add-to-cart).
-
-Ask these questions (adapt to context):
-
-1. **What do people constantly ask your advice on?** Even casually — at parties, in DMs, at work.
-2. **What do you know that most people in your industry don't?** Insider knowledge, shortcuts, frameworks.
-3. **What have you built, created, or systematized?** Processes, templates, systems, SOPs.
-4. **What transformation have you personally gone through?** Before/after that others want.
-5. **What could you talk about for 30 minutes with zero preparation?** The thing you never shut up about.
-
-**Output**: IP Profile document — list of 5-10 IP assets ranked by monetization potential.
-
-**Agent**: Scout researches the market around each IP asset. Look for existing demand signals (Reddit, Quora, X, Google Trends).
-
----
+Excavate the user's IP using Daniel Priestley's framework — 5 questions about advice, insider knowledge, systems, transformations, and passions. Output: IP Profile with 5-10 assets ranked by monetization potential.
 
 ### Step 2 — ICP Builder (Scout)
-
-Identify ONE vivid ideal client. Not a demographic — a person.
-
-Build the ICP card:
-
-| Field | Description |
-|-------|-------------|
-| Name | Give them a real name (e.g., "Sarah") |
-| Age | Specific age, not a range |
-| Situation | What is happening in their life RIGHT NOW |
-| Frustration | The thing keeping them up at 2am |
-| Failed Attempts | What they've already tried that didn't work |
-| Secret Desire | What they want but won't say out loud |
-| Trigger Event | What makes them finally search for a solution TODAY |
-| Where They Hang Out | Specific platforms, communities, subreddits, groups |
-| Budget Reality | What they can actually spend (not what you wish they'd spend) |
-
-**Key rule**: If your ICP could be anyone, it's no one. Make it so specific it feels uncomfortable.
-
-**Agent**: Scout validates this ICP against real communities — check if these people actually exist and are actually spending money on solutions.
-
----
+Build ONE vivid ideal client card — name, age, situation, frustration, failed attempts, secret desire, trigger event, hangout spots, budget. Make it uncomfortably specific.
 
 ### Step 3 — 99 Problems (Scout + Dreami)
-
-Generate 99 problems your ICP faces, organized across 5 categories:
-
-| Category | Count | Description | Example |
-|----------|-------|-------------|---------|
-| **Surface** | ~20 | Obvious, stated problems | "I don't know what to post on social media" |
-| **Hidden** | ~20 | Problems they feel but can't articulate | "I'm copying competitors because I have no original voice" |
-| **Systemic** | ~20 | Root causes behind the symptoms | "No positioning strategy means every piece of content is a guess" |
-| **Emotional** | ~20 | How it makes them FEEL | "I feel like a fraud every time I hit publish" |
-| **Social** | ~19 | How others perceive them because of it | "My peers think I'm not serious about my business" |
-
-**Agent roles**:
-- Scout: Research real complaints from forums, reviews, Reddit, X, YouTube comments
-- Dreami: Expand into emotional and social dimensions, craft vivid language
-
-**Output**: Numbered list of 99 problems saved to `99-problems.md`.
-
----
+Generate 99 problems across 5 categories: Surface (~20), Hidden (~20), Systemic (~20), Emotional (~20), Social (~19). Scout researches real complaints; Dreami expands emotional dimensions.
 
 ### Step 4 — MoSCoW Prioritisation
-
-Sort the 99 problems into MoSCoW categories:
-
-| Priority | Meaning | Criteria |
-|----------|---------|----------|
-| **Must Have** | Non-negotiable — offer fails without solving these | ICP would NOT buy if these aren't addressed |
-| **Should Have** | Important differentiators | Makes your offer significantly better than alternatives |
-| **Could Have** | Nice-to-have bonuses | Adds perceived value but not essential |
-| **Won't Have** | Explicitly excluded (for now) | Out of scope — save for upsells or V2 |
-
-**Rules**:
-- Must Have should be 5-8 problems maximum (focus)
-- Won't Have is strategic — it defines your boundaries
-- Every Must Have needs a clear deliverable that solves it
-
-**Output**: MoSCoW matrix saved to `moscow.md`.
-
----
+Sort 99 problems into Must Have (5-8 max), Should Have, Could Have, Won't Have. Every Must Have needs a clear deliverable.
 
 ### Step 5 — Competitor Deep Dive (Scout)
-
-Map the competitive landscape across 4 dimensions:
-
-#### A. Direct Competitors
-Who sells a similar offer to a similar audience?
-
-| Competitor | Offer | Price | Strengths | Weaknesses | Gap You Can Fill |
-|-----------|-------|-------|-----------|------------|-----------------|
-| ... | ... | ... | ... | ... | ... |
-
-#### B. Indirect Alternatives
-Different solution to the same problem (e.g., hiring a consultant, buying a course, using a free tool).
-
-#### C. DIY Option
-What happens if the ICP tries to solve this themselves? List the real costs: time, mistakes, opportunity cost, stress.
-
-#### D. "Do Nothing" Option
-What happens if the ICP does nothing? Paint the cost of inaction vividly — this becomes your urgency lever.
-
-**Agent**: Scout scrapes competitor offers, pricing pages, and reviews. Use firecrawl or agent-reach for research.
-
-**Output**: Competitive landscape document saved to `competitors.md`.
-
----
+Map competitive landscape: Direct competitors (table), Indirect alternatives, DIY option (real costs), "Do Nothing" option (urgency lever).
 
 ### Step 6 — Offer Builder (Dreami)
-
-Construct the signature offer using this template:
-
-```markdown
-## [OFFER NAME]
-
-**Who it's for**: [One sentence describing your ICP from Step 2]
-
-**The problem**: [Core Must Have problem from Step 4]
-
-**Before → After**:
-| Before (Current State) | After (Desired State) |
-|----------------------|---------------------|
-| [Specific pain point] | [Specific outcome] |
-| [Specific pain point] | [Specific outcome] |
-| [Specific pain point] | [Specific outcome] |
-
-**What's included**:
-1. [Core deliverable that solves Must Have #1]
-2. [Core deliverable that solves Must Have #2]
-3. [Bonus that solves Should Have #1]
-4. [Bonus that solves Should Have #2]
-
-**Format**: [Live cohort / Self-paced / 1:1 / Hybrid / Productized service / SaaS]
-
-**Duration**: [Timeline]
-
-**Price**: [Specific number — not a range]
-
-**Guarantee**: [Risk reversal — what happens if it doesn't work]
-```
-
-**Cold-Friendly Test**: Can a stranger who has never heard of you understand what this is, who it's for, and why they should care — in under 10 seconds? If not, simplify.
-
-**Agent**: Dreami writes the offer copy. Run `brand-voice-check.sh` if this is for a GAIA brand.
-
-**Output**: Offer document saved to `offer.md`.
-
----
+Construct the signature offer: who it's for, the problem, before/after table, what's included, format, duration, price (specific number), guarantee. Apply Cold-Friendly Test.
 
 ### Step 6.5 — Compliance Check
-
-Before building the landing page, verify regulatory compliance:
-
-- **Health/wellness/supplements brands**: Verify all claims comply with Malaysian NPRA, KKM, and advertising regulations. No unsubstantiated health claims. Use "supports" not "cures". Check if MeSTI/halal certification is required.
-- **F&B brands**: Verify nutritional claims are accurate.
-- **Skincare brands**: Verify ingredient safety claims.
-
-Flag any claims in the offer document (Step 6) that need softening or evidence. Revise offer copy before proceeding to the landing page.
-
-**Output**: Compliance notes appended to `offer.md` or saved to `compliance-check.md`.
-
----
+Verify regulatory compliance for health/wellness/F&B brands (Malaysian NPRA, KKM, MeSTI/halal). Flag claims that need softening.
 
 ### Step 7 — Landing Page (Dreami)
-
-Generate high-converting landing page copy with these sections:
-
-#### Hero Section
-- **Headline**: Speaks to the ICP's #1 desire (from Step 2 Secret Desire)
-- **Subheadline**: Adds specificity — who, what, timeframe
-- **CTA**: Clear, action-oriented button text
-
-#### Problem Section
-- Paint the "before" state using emotional language from Step 3
-- 3-5 bullet points of pain (Surface + Emotional problems)
-- End with: "Sound familiar?"
-
-#### Solution Section
-- Introduce the offer as the bridge from Before to After
-- Use the Before/After table from Step 6
-
-#### Benefits (Not Features)
-- Reframe each deliverable as an outcome
-- "You get X" → "You'll finally Y"
-
-#### Social Proof
-- Placeholder slots for testimonials, case studies, logos
-- If new offer: use "As featured in" or credibility markers
-
-#### Objection Handling
-- Address top 3-5 objections the ICP will have
-- Format: "But what if [objection]?" → "[Counter]"
-- Common: "I don't have time", "I've tried this before", "It's too expensive", "Will this work for me?"
-
-#### Pricing Section
-- Anchor against the cost of the problem (from Step 5D — Do Nothing option)
-- Stack the value: list everything included with individual values
-- Show the total value vs. the actual price
-
-#### Final CTA
-- Urgency lever (scarcity, deadline, or bonus expiration)
-- Repeat the CTA button
-- One-line guarantee reminder
-
-**Output**: Landing page copy saved to `landing-page.md`.
-
----
+Generate high-converting copy: Hero (headline + CTA), Problem (paint the pain), Solution (before/after bridge), Benefits (outcomes not features), Social Proof, Objection Handling, Pricing (anchor + stack), Final CTA.
 
 ## Output Summary
-
-At the end of the pipeline, the user has:
 
 | Deliverable | File |
 |-------------|------|

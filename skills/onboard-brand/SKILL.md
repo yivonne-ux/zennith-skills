@@ -192,11 +192,4 @@ Learned from NanoBanana brand injection bugs (2026-03-12):
 
 ## Example
 
-```
-Onboard a new brand: "serene-kitchen"
-Category: Meal prep delivery for busy professionals
-Audience: Working professionals 28-40, health-conscious, no time to cook
-Tone: Clean, efficient, trustworthy, slightly premium
-Competitors: Factor, HelloFresh, Trifecta
-Unique angle: AI-personalized weekly menus based on health goals
-```
+> Example: `onboard-brand "serene-kitchen"` — meal prep delivery, professionals 28-40, clean/efficient tone, vs Factor/HelloFresh, AI-personalized menus.

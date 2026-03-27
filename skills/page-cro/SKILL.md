@@ -164,69 +164,8 @@ For key elements (headlines, CTAs, product descriptions), provide 2-3 alternativ
 
 ## Page-Specific Frameworks
 
-### Homepage / Brand Landing Page
-- Clear positioning for cold visitors (from Meta ads, Google, or IG bio)
-- Quick path to most common conversion (order, subscribe, consult)
-- Handle both "ready to buy" and "still researching" visitors
+> See `references/page-frameworks.md` for Homepage, Product/Menu, Pricing, Collection, Blog, and WhatsApp landing page CRO checklists.
 
-### Product / Menu Page
-- Appetite appeal through photography and description
-- Clear pricing with no surprises
-- Easy add-to-cart or order flow
-- Dietary/allergen info visible without extra clicks
+## Experiment Ideas, Task Questions & Related Skills
 
-### Pricing / Subscription Page
-- Clear plan comparison (if multiple tiers)
-- Recommended plan highlighted
-- Per-meal or per-day cost breakdown
-- Address "which plan is right for me?" anxiety
-- Commitment flexibility (weekly vs. monthly)
-
-### Collection / Category Page
-- Filter by dietary need, price range, or occasion
-- Quick-view or add-to-cart without leaving page
-- Bestseller or "most popular" indicators
-
-### Blog / Content Page
-- Contextual CTAs matching content topic
-- Inline CTAs at natural stopping points
-- Recipe-to-product connection (if applicable)
-
-### WhatsApp Landing Page
-- Pre-filled WhatsApp message with context
-- Minimal friction between landing and messaging
-- Clear expectation of response time
-
----
-
-## Experiment Ideas
-
-When recommending experiments, consider tests for:
-- Hero section (headline, hero image, CTA)
-- Social proof placement and format
-- Pricing presentation (per-meal vs. total, with/without comparison)
-- Menu layout (grid vs. list, with/without filters)
-- Trust signals (certifications, reviews, founder story)
-- Mobile UX (sticky CTA, bottom navigation, swipe galleries)
-
----
-
-## Task-Specific Questions
-
-1. What is the brand and page URL?
-2. What is the current conversion rate and goal?
-3. Where is traffic coming from? (Meta ads, Google, WhatsApp, IG bio, organic)
-4. What does the order/signup flow look like after this page?
-5. Do you have heatmaps, session recordings, or analytics data?
-6. What have you already tried?
-7. What is the primary market? (Malaysia, Singapore, regional)
-
----
-
-## Related Skills
-
-- **ads-landing**: For landing pages specifically tied to paid ad campaigns
-- **ads-creative**: For ad creative quality audit
-- **seo-audit**: For organic search optimization
-- **growth**: For combined SEO + CRO + SMO growth strategy
-- **shopify-expert**: For Shopify theme and conversion optimization
+> See `references/experiments-and-questions.md` for experiment test ideas, task-specific intake questions, and related skills (ads-landing, ads-creative, seo-audit, growth, shopify-expert).

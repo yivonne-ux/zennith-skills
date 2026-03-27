@@ -194,8 +194,4 @@ EOF
 All session learnings go to `learnings.md` — raw, unfiltered. Periodically review and promote patterns to SKILL.md gotchas or scripts.
 
 ### Patch Format
-Patches in `patches/` follow this structure:
-- `PATCH-NNN-short-name.md` — description, problem, solution, where to apply
-- `CHANGELOG.md` — version log
-
-This lets any agent (Taoz, Zenni, Claude Code) apply patches independently.
+Patches in `patches/`: `PATCH-NNN-short-name.md` (description, problem, solution, where to apply) + `CHANGELOG.md` (version log). Any agent can apply patches independently.

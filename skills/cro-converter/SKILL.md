@@ -120,23 +120,13 @@ $497 Year Ahead      ← anchor that makes $97 feel reasonable
 - Spacing between tappable elements: minimum 8px
 
 ### Sticky Bottom Bar
-```html
-<div class="sticky-cta">
-  <a href="#">Your first reading — $1</a>
-</div>
-```
-- Fixed to bottom of viewport
-- Appears after scrolling past hero
-- Disappears when pricing section is in view (avoid redundancy)
-- 60px height, jade green background, cream text
+- Fixed to bottom of viewport, appears after scrolling past hero, disappears at pricing section
+- 60px height, jade green background, cream text. Simple: `<div class="sticky-cta"><a href="#">Your first reading — $1</a></div>`
 
 ### Mobile-Specific
-- Pricing cards: STACK vertically (not side-by-side)
-- Gallery: 2 columns max
+- Pricing cards: STACK vertically | Gallery: 2 columns max
 - Text: minimum 16px body, 14px minimum anywhere
-- Images: lazy load ALL below the fold
-- Hero image: compress to <200KB
-- Total page weight target: <3MB
+- Images: lazy load ALL below fold | Hero image: <200KB | Total page weight: <3MB
 
 ---
 
@@ -202,30 +192,7 @@ Before launching any page, verify:
 
 ## REFERENCE: WHAT THE BEST DO
 
-### Co-Star's Conversion Philosophy
-- ONE CTA: download the app. Total focus.
-- Trust through aesthetics, not badges
-- Social proof is organic (screenshots shared on social media)
-- The "non-salesy" approach works because the PRODUCT is the conversion tool
-
-### Moon Omens' Content-Commerce Model
-- Free content → email list → product sales
-- Articles drive SEO traffic (free acquisition)
-- Books + crystals + membership = multiple price points
-- Community (comments, likes) creates belonging
-
-### Psychic Samira's Conversion Machine
-- Trustpilot + Loox photo reviews + Instagram feed + chat = FULL trust stack
-- Hot pink CTAs on cream = maximum contrast
-- Zero section spacing = immersive scroll
-- 30+ country domains = "everyone trusts her"
-- SMS + email + referral = triple retention
-- Facebook + TikTok + Google = triple acquisition
-
-### The Jade Synthesis
-Take Co-Star's intentionality + Moon Omens' warmth + Samira's conversion stack.
-Wrap it in Jade's world: jade green, Instrument Serif, organic motifs, QMDJ precision, feminine warmth.
-The design IS the conversion — when a site feels this considered, trust is built through craft, not badges.
+> See `references/competitor-philosophies.md` for detailed breakdowns of Co-Star, Moon Omens, Psychic Samira, and the Jade Synthesis.
 
 ---
 

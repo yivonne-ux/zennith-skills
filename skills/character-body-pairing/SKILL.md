@@ -22,8 +22,8 @@ metadata:
 
 ## Purpose
 Take a locked character face reference and combine it with body/fashion reference
-images to generate photorealistic full-body lifestyle shots. This is the bridge
-between "we have a face" and "we have a full content library."
+images to generate photorealistic full-body lifestyle shots. Bridge between
+"we have a face" and "we have a full content library."
 
 ## When to Use
 - Character face is locked (approved by Jenn/art director)
@@ -36,25 +36,18 @@ between "we have a face" and "we have a full content library."
 ## Step-by-Step Workflow
 
 ### Step 1: Classify the Face Variants
-Before pairing, tag each face with a **vibe category**:
+Tag each face with a **vibe category**:
 
-| Vibe | Signals | Example |
-|------|---------|---------|
-| **Spiritual** | Crystals, candles, meditation setting, serene expression, natural makeup | Luna-Wise-C |
-| **Edgy/Street** | Urban background, leather, messy hair, confident gaze, minimal setting | Luna-Chic-H |
-| **Warm/Lifestyle** | Bookshelf, cream tones, warm smile, cozy setting, natural light | Luna-Blonde-A |
-| **Editorial/Minimal** | Gallery, silk, sharp features, pulled-back hair, clean background | Luna-Chic-C |
+| Vibe | Signals |
+|------|---------|
+| **Spiritual** | Crystals, candles, meditation setting, serene expression, natural makeup |
+| **Edgy/Street** | Urban background, leather, messy hair, confident gaze, minimal setting |
+| **Warm/Lifestyle** | Bookshelf, cream tones, warm smile, cozy setting, natural light |
+| **Editorial/Minimal** | Gallery, silk, sharp features, pulled-back hair, clean background |
 
 ### Step 2: Classify Body References
-Tag each body ref with the same vibe categories:
-
-| Vibe | Body Ref Signals |
-|------|-----------------|
-| **Spiritual** | Meditation pose, white/cream linen, incense, candles, gold bangles, barefoot, floor-seated |
-| **Edgy/Street** | B&W photography, tee + jeans, leather, standing/leaning, urban setting, film grain |
-| **Warm/Lifestyle** | Cardigan, blouse + trousers, books, elegant interior, warm window light, seated relaxed |
-| **Editorial/Minimal** | Jumpsuit, structured bags, heels, stone/concrete, clean lines, walking pose, sunglasses |
-| **Boho/Oracle** | Kaftan, flowy dress, earth tones, outdoor garden, statement earrings, barefoot |
+Tag each body ref with the same vibe categories plus:
+- **Boho/Oracle**: Kaftan, flowy dress, earth tones, outdoor garden, statement earrings, barefoot
 
 ### Step 3: Match by Vibe (CRITICAL RULE)
 
@@ -63,9 +56,7 @@ pick one and ignore the other.
 
 ```
 GOOD:  Spiritual face + Spiritual body = consistent character
-GOOD:  Editorial face + Editorial body = consistent character
 BAD:   Editorial face + Boho body = model confused, loses face OR outfit
-BAD:   Edgy face + Spiritual body = uncanny mismatch
 ```
 
 **Each face gets exactly 2 body pairings** — enough variety without diluting consistency.
@@ -81,25 +72,16 @@ Photorealistic [shot type] photograph of a young woman with [FACE DETAILS FROM R
 [DEPTH OF FIELD]. No illustration, no cartoon, no CG.
 ```
 
-**Face details to always include:**
-- Hair color + style + length
-- Eye color
-- Expression type
-- Skin tone (if distinctive)
+**Face details to always include:** Hair color + style + length, eye color, expression, skin tone
+**Body details to always include:** Exact outfit (fabric, color, cut), pose, accessories, setting
 
-**Body details to always include:**
-- Exact outfit description (fabric, color, cut)
-- Pose (seated, standing, walking, meditation)
-- Accessories (jewelry, bags, shoes)
-- Setting/environment
-
-**Lens Guide by Shot Type:**
-| Shot | Lens | Notes |
-|------|------|-------|
-| Full body standing/walking | 35mm f/1.8 | Shows environment |
-| Medium shot seated | 50mm f/1.4 | Balanced |
-| Close portrait + body | 85mm f/1.4 | Flattering compression |
-| Editorial fashion | 50mm f/1.4 | Clean, minimal distortion |
+**Lens Guide:**
+| Shot | Lens |
+|------|------|
+| Full body standing/walking | 35mm f/1.8 |
+| Medium shot seated | 50mm f/1.4 |
+| Close portrait + body | 85mm f/1.4 |
+| Editorial fashion | 50mm f/1.4 |
 
 ### Step 5: Generate with NanoBanana
 
@@ -111,173 +93,23 @@ nanobanana-gen.sh generate \
   --ref-image "<FACE_REF_PATH>,<BODY_REF_PATH>" \
   --model pro \
   --size 2K \
-  --ratio <see ratio guide below>
+  --ratio <see ratio guide>
 ```
 
-**Ratio Guide:**
-| Content Type | Ratio | Why |
-|-------------|-------|-----|
-| Full body standing | 9:16 | Vertical, shows full outfit |
-| Seated/medium | 1:1 or 4:3 | Balanced framing |
-| Street style walking | 9:16 | Shows stride + outfit |
-| Editorial fashion | 4:3 or 3:2 | Magazine feel |
-| Social media story | 9:16 | IG/TikTok native |
+**Ratio Guide:** Full body/street/story = 9:16 | Seated/medium = 1:1 or 4:3 | Editorial = 4:3 or 3:2
 
 ### Step 6: QA Check
 
-After generation, verify:
-
 | Check | Pass Criteria | Common Fail |
 |-------|--------------|-------------|
-| **Face match** | Hair color/style matches face ref | Body ref hair dominates (see Gotcha #1) |
+| **Face match** | Hair color/style matches face ref | Body ref hair dominates |
 | **Outfit match** | Outfit matches body ref | Outfit simplified or wrong color |
 | **Photorealism** | Real skin, pores, natural light | Illustration/cartoon style |
 | **Hands** | Correct finger count, natural pose | Extra fingers, melted hands |
 | **Accessories** | Jewelry/bags as specified | Missing or wrong items |
 | **Setting** | Environment matches body ref | Generic background substituted |
 
----
-
-## Gotchas & Hard-Won Learnings
-
-### Gotcha #1: Body Ref Hair OVERRIDES Face Ref Hair
-**Problem:** If body ref has dark hair and face ref has silver/blonde hair,
-the model often generates dark hair (body ref dominates for hair).
-
-**Fix:** In prompt, EMPHASIZE hair color with extra specificity:
-```
-"with DISTINCTIVE silver-grey hair pulled back in a low ponytail"
-```
-Add "DISTINCTIVE" or "STRIKING" before unusual hair colors.
-
-**If still failing:** Use a body ref where the model's hair is similar to
-your face ref, OR crop the body ref to exclude the head.
-
-### Gotcha #2: Content Refusal on B&W / Intimate Poses
-**Problem:** Gemini may refuse prompts with "black and white" + certain
-body poses (reads as potentially sensitive content).
-
-**Fix:** Replace "black and white photograph" with:
-```
-"documentary style portrait, film grain texture"
-```
-Avoid words: intimate, bedroom, lingerie, revealing. Use: relaxed, casual, confident.
-
-### Gotcha #3: Brand Injection (FIXED 2026-03-25)
-**Problem:** NanoBanana auto-injects brand elements (QMDJ logo, Jade Oracle book/cards)
-when `--brand` is set, even for pure lifestyle shots.
-
-**Status:** FIXED in nanobanana-gen.sh. When `--ref-image` is passed, brand enrichment
-and use-case templates are now skipped automatically. Character `never` list from
-ig-spec.json is loaded and appended as negative prompt.
-
-### Gotcha #4: Two Faces / Face Blend from Body Refs
-**Problem:** If body refs show partial face (chin, jaw, lips), model blends those
-facial features with the face-lock, producing a hybrid face that matches NEITHER.
-
-**Fix (ENFORCED 2026-03-25):**
-- Body refs MUST be cropped torso-only — no chin, no jaw, no lips visible
-- NanoBanana now prepends: "The FIRST reference image is the character's face —
-  match it EXACTLY. Other references are for body proportions only."
-- Choose body refs where face is fully cropped out
-
-### Gotcha #5: Style Seed Interference
-**Problem:** If `--style-seed` is also passed alongside ref images,
-style seed refs + your refs = too many references, confusing the model.
-
-**Fix:** Do NOT use `--style-seed` when doing face+body pairing.
-Let the ref images speak for themselves.
-
-### Gotcha #6: Too Many Body Refs Dilute Face Signal (ADDED 2026-03-25)
-**Problem:** Passing 4+ body refs with 1 face-lock = 4:1 body-to-face ratio.
-Model treats all refs with roughly equal weight, so face signal gets drowned out.
-
-**Fix (ENFORCED in nanobanana-gen.sh):**
-- Max 3 ref images total (1 face + 2 body). Script auto-trims if more passed.
-- If you need variety, generate multiple batches with different body pairs.
-- Quality > quantity: 1 face + 1 well-matched body > 1 face + 4 mixed bodies.
-
-### Gotcha #7: Body Ref Hair Color Conflicts (REINFORCED 2026-03-25)
-**Problem:** Body refs with dark/brown hair cause the model to override the
-face-lock's platinum blonde hair. Even partial hair visibility in body refs
-pulls the output toward the body ref's hair color.
-
-**Fix:**
-- ONLY use body refs with blonde/light hair if character has blonde hair
-- If body ref has wrong hair color, crop the image to exclude ALL hair
-- In prompt, use "DISTINCTIVE platinum blonde" (emphasis word helps)
-
----
-
-## Proven Prompt Templates
-
-### Template 1: Spiritual/Meditation
-```
-Photorealistic full body photograph of a young woman with [HAIR] and [EYES],
-seated cross-legged on wooden floor in meditation pose, eyes closed peacefully,
-wearing a white ribbed tank top and sage linen wide-leg pants, wisps of incense
-smoke curling around her, warm golden sunlight streaming through window,
-real skin with pores, 35mm f/1.8, shallow depth of field.
-No illustration, no cartoon, no CG.
-```
-**Success rate:** 100% (1/1) | **Ratio:** 9:16
-
-### Template 2: Fashion Street Style
-```
-Photorealistic street style photograph of a young woman with [HAIR],
-walking on a European cobblestone street, wearing [OUTFIT DETAILS],
-aviator sunglasses, [BAG], [EARRINGS], confident stride, old stone
-buildings in background, natural daylight, real skin with pores,
-35mm f/1.8. No illustration, no cartoon, no CG.
-```
-**Success rate:** 100% (1/1) | **Ratio:** 9:16
-**Note:** Silver hair was overridden to dark — see Gotcha #1.
-
-### Template 3: Elegant Interior
-```
-Photorealistic photograph of a young woman with [HAIR], sitting on a
-leather ottoman in an elegant Parisian apartment, wearing [OUTFIT],
-warm natural light from tall windows, Persian rug on floor, bookshelves
-in background, serene confident expression, real skin with pores,
-35mm f/1.8, cinematic. No illustration, no cartoon, no CG.
-```
-**Success rate:** 100% (1/1) | **Ratio:** 9:16
-
-### Template 4: Casual/Edgy
-```
-Photorealistic photograph of a young woman with [HAIR], wearing a classic
-white t-shirt and dark denim jeans, leaning casually against a concrete wall,
-relaxed confident expression, natural daylight, film grain texture,
-50mm f/1.8, documentary style portrait. No illustration, no cartoon, no CG.
-```
-**Success rate:** 100% after retry (initial B&W prompt was refused) | **Ratio:** 1:1
-
----
-
-## Batch Generation Pattern
-
-For efficiency, generate all pairs in parallel:
-
-```bash
-# Launch all 8 in parallel (4 faces × 2 bodies each)
-for i in 1 2 3 4 5 6 7 8; do
-  nanobanana-gen.sh generate \
-    --brand <brand> \
-    --use-case lifestyle \
-    --prompt "<prompt_$i>" \
-    --ref-image "<face_$i>,<body_$i>" \
-    --model pro \
-    --size 2K \
-    --ratio <ratio_$i> &
-done
-wait
-echo "All pairs complete"
-```
-
-**Rate limit:** NanoBanana handles slot-based rate limiting internally (6s between calls).
-15 parallel slots max. 8 pairs = well within limits.
-
----
+> Load `references/gotchas-and-templates.md` for all 7 gotchas (hair override, content refusal, brand injection, face blend, style seed interference, ref dilution, hair color conflicts), 4 proven prompt templates with success rates, and batch generation pattern.
 
 ## File Organization
 
@@ -285,29 +117,9 @@ echo "All pairs complete"
 workspace/data/images/{brand}/
   ├── {date}_{time}_lifestyle_{pid}.png     # Raw outputs
   └── {character}-body-pairs/               # Organized pairs
-      ├── 01-{face}-{body-desc}.png
-      ├── 02-{face}-{body-desc}.png
-      └── ...
 ```
-
-Copy to Desktop for Jenn's review:
-```bash
-mkdir -p ~/Desktop/{character}-body-pairs/
-cp <outputs> ~/Desktop/{character}-body-pairs/
-```
-
----
 
 ## Compounding: After Every Session
 
-After generating body pairs, update this skill with:
-1. New gotchas discovered
-2. Updated success rates on templates
-3. New proven prompt templates
-4. Face-body vibe combos that worked/failed
-
+Update this skill with new gotchas, template success rates, and vibe combos.
 Log to: `skills/character-body-pairing/learnings.jsonl`
-```json
-{"date":"2026-03-12","face":"Luna-Wise-C","body":"meditation-incense","result":"PASS","notes":"perfect spiritual match"}
-{"date":"2026-03-12","face":"Luna-Chic-C","body":"olive-vneck-street","result":"PARTIAL","notes":"hair color overridden by body ref"}
-```
