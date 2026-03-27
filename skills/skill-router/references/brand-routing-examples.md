@@ -75,6 +75,38 @@ The 7 core F&B/wellness brands have specialised routing rules because food conte
 - "serein mindful morning routine reel" -> video-compiler (0.87) — lifestyle content
 - "serein calming ritual product shots" -> product-studio (0.93) — product photography
 
+## New Skills Routing (added 2026-03-27)
+
+| Keywords | Skill | Agent | Confidence |
+|----------|-------|-------|------------|
+| "CRO", "conversion", "page not converting", "landing page audit", "bounce rate" | **page-cro** | scout | 0.92 |
+| "pricing", "how much to charge", "meal plan price", "subscription pricing", "tier" | **pricing-strategy** | scout | 0.90 |
+| "AI SEO", "show up in ChatGPT", "AI search", "get cited", "Perplexity", "AI visibility" | **ai-seo** | scout | 0.93 |
+| "churn", "cancel", "subscribers leaving", "retention", "save offer", "dunning" | **churn-prevention** | scout | 0.91 |
+| "build offer", "signature offer", "productize", "what should I sell", "landing page copy" | **offer-builder** | scout, dreami | 0.88 |
+| "create skill", "new skill", "skillify", "turn into a skill" | **skill-creator** | taoz | 0.95 |
+| "optimize context", "token cost", "context too long", "KV-cache" | **context-optimization** | taoz | 0.94 |
+| "humanize", "AI slop", "sounds too AI", "make it human", "quality gate" | **humanizer** | dreami | 0.93 |
+| "wrap up", "session learnings", "what did we learn", "capture feedback" | **wrap-up** | taoz, main | 0.90 |
+
+### New Skills — Brand Examples
+
+| Brand | Task | Routed Skill | Confidence |
+|-------|------|-------------|------------|
+| **mirra** | "subscribers canceling after 2 weeks, food boring" | churn-prevention | 0.95 |
+| **mirra** | "restructure meal plan pricing, RM15 too expensive" | pricing-strategy | 0.92 |
+| **pinxin-vegan** | "audit pinxin.com landing page conversions" | page-cro | 0.93 |
+| **pinxin-vegan** | "get pinxin to show up when people ask AI about vegan food" | ai-seo | 0.91 |
+| **jade-oracle** | "build signature offer for psychic readings" | offer-builder | 0.89 |
+| **jade-oracle** | "get cited by ChatGPT for online psychic readings" | ai-seo | 0.93 |
+| **dr-stan** | "create 30-day gut reset program offer" | offer-builder | 0.90 |
+| **dr-stan** | "price the gut reset — how much to charge" | pricing-strategy | 0.91 |
+| **aerthera** | "build D2C launch offer for botanical skincare" | offer-builder | 0.88 |
+| **(any brand)** | "this caption sounds too AI" | humanizer | 0.95 |
+| **(any brand)** | "wrap up, what did we learn today" | wrap-up | 0.92 |
+| **(system)** | "scout sessions are blowing past 100K tokens" | context-optimization | 0.96 |
+| **(system)** | "create a new skill for whatsapp broadcasts" | skill-creator | 0.95 |
+
 ## Malaysian Market Routing
 
 Malaysian market tasks have specialised routing rules:

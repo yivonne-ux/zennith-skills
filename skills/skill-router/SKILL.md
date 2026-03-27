@@ -49,11 +49,15 @@ skill-router reads brand DNA.json (`~/.openclaw/brands/{brand}/DNA.json`) to und
 are most relevant per brand category:
 
 - **F&B/wellness brands** (pinxin-vegan, wholey-wonder, mirra, rasaya, gaia-eats, dr-stan, serein)
-  prioritize product-studio, grabfood-enhance, content-repurpose, campaign-translate.
+  prioritize product-studio, grabfood-enhance, content-repurpose, campaign-translate,
+  **page-cro**, **pricing-strategy**, **churn-prevention**.
 - **Digital/tech brands** (jade-oracle, gaia-os, gaia-learn) prioritize content-supply-chain,
-  ad-composer, campaign-planner.
+  ad-composer, campaign-planner, **ai-seo**, **offer-builder**.
 - **Print/recipe brands** (gaia-print, gaia-recipes) prioritize brand-studio, creative-studio.
-- **Supplement brands** (gaia-supplements, iris) prioritize product-studio, ad-composer.
+- **Supplement brands** (gaia-supplements, iris) prioritize product-studio, ad-composer,
+  **offer-builder**, **pricing-strategy**.
+- **All brands:** **humanizer** (before publishing), **wrap-up** (end of session).
+- **System/meta:** **context-optimization** (token issues), **skill-creator** (new skills).
 
 ## Usage
 
