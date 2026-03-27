@@ -2,7 +2,7 @@
 name: ads-google
 description: Google Ads deep analysis covering Search, Performance Max, Display, YouTube, Shopping. Evaluate Quality Score, structure, keywords.
 agents:
-  - main
+  - hermes
 ---
 
 # Ads Google — Google Ads Deep Analysis

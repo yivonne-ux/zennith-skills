@@ -11,6 +11,8 @@ metadata:
     requires:
       bins: [node, python3]
     agents: [taoz]
+agents:
+  - taoz
 ---
 
 # Rigour — Quality Gates for GAIA Code

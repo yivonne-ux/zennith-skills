@@ -2,6 +2,7 @@
 name: ads-budget
 description: Budget allocation and bidding strategy review across all ad platforms. Evaluate spend efficiency, ROAS, CPA targets.
 agents:
+  - hermes
   - main
 ---
 

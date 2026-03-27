@@ -1,3 +1,10 @@
+---
+name: visual-registry
+agents:
+  - iris
+  - dreami
+---
+
 # visual-registry — Visual Asset Registry
 
 ## What

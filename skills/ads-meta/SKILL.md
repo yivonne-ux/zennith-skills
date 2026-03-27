@@ -2,8 +2,7 @@
 name: ads-meta
 description: Meta Ads deep analysis covering Facebook and Instagram advertising. Evaluate Pixel/CAPI, EMQ, creative diversity, Advantage+, audience.
 agents:
-  - main
-  - dreami
+  - hermes
 ---
 
 # Ads Meta — Meta (Facebook & Instagram) Ads Deep Analysis

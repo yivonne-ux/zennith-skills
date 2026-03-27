@@ -1,3 +1,10 @@
+---
+name: character-design
+agents:
+  - dreami
+  - iris
+---
+
 # Character Design Skill (Compounding)
 > Source: Sirio's workflows (2 videos) + GAIA OS practice
 > Last updated: 2026-02-25

@@ -1,6 +1,9 @@
 ---
 name: campaign-planner
 description: Campaign brief generation engine for GAIA CORP-OS ad factory. Generates structured ad campaign briefs from Tricia's template taxonomy + strategic directions.
+agents:
+  - hermes
+  - dreami
 ---
 
 # campaign-planner

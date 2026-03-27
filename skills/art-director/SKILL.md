@@ -1,3 +1,10 @@
+---
+name: art-director
+agents:
+  - dreami
+  - iris
+---
+
 # World-Class Art Director + Ultra Creative Designer
 
 > **TRIGGER:** "art direction", "creative direction", "brand identity", "logo design", "visual identity", "design system", "brand mark"

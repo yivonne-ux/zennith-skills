@@ -1,3 +1,10 @@
+---
+name: self-diagnose
+agents:
+  - taoz
+  - main
+---
+
 # Self-Diagnose Skill
 
 ## Description

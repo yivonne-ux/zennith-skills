@@ -3,7 +3,6 @@ name: identity-gimmick-promo
 description: Create identity-based promo ads where the same offer is personalized to different audience segments via copy hooks. Proven RM33 CPA (4.78x ROAS) on Pinxin. Apply to any brand.
 agents:
   - dreami
-  - main
 ---
 
 # Identity Gimmick Promo — Creative Method

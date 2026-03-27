@@ -1,3 +1,9 @@
+---
+name: taoz-auditor
+agents:
+  - taoz
+---
+
 # Taoz Auditor — Self-Improving Routing Intelligence
 
 ## What This Is

@@ -13,6 +13,8 @@ metadata:
       - No budget limits (unlimited for review, unlimited for build)
       - Do not pass secrets, API keys, or credentials in the prompt text.
       - If Claude Code returns an error or empty output, report failure to the orchestrator — do not retry silently.
+agents:
+  - taoz
 ---
 
 # Claude Code (GAIA CORP-OS Tool)

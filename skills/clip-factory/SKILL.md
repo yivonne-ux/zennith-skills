@@ -2,6 +2,9 @@
 name: clip-factory
 display_name: ClipForge
 description: Long video -> short viral clips pipeline for GAIA CORP-OS. Transcribes, detects scene boundaries, scores segments for virality via LLM, extracts ranked clips, applies VideoForge post-production (caption, brand, effects), and exports multi-platform (TikTok 9:16, Reels, Shorts, Feed). Registers clips in seed-store.
+agents:
+  - dreami
+  - taoz
 ---
 
 # ClipForge — Video Clip Factory (v1)

@@ -2,6 +2,7 @@
 name: ads-tiktok
 description: TikTok Ads deep analysis covering creative quality, tracking, bidding, catalog, Spark Ads.
 agents:
+  - hermes
   - dreami
 ---
 

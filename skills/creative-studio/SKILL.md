@@ -1,3 +1,10 @@
+---
+name: creative-studio
+agents:
+  - dreami
+  - iris
+---
+
 # creative-studio — GAIA Creative Studio
 
 Control room for character and asset creation workflows.

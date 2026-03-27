@@ -1,3 +1,9 @@
+---
+name: psychic-reading-engine
+agents:
+  - taoz
+---
+
 # Psychic Reading Engine
 
 ## Overview

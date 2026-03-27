@@ -1,3 +1,10 @@
+---
+name: pinterest-ref
+agents:
+  - dreami
+  - scout
+---
+
 # Pinterest Visual Reference Extraction
 
 ## Purpose

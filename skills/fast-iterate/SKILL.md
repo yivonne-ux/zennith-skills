@@ -32,6 +32,9 @@ metadata:
           action: "Run fast-iterate on content before publishing"
         - topic: "creative.draft.ready"
           action: "Quality-multiply the draft through iteration rounds"
+agents:
+  - taoz
+  - dreami
 ---
 
 # Fast-Iterate — Pre-Ship Quality Multiplier

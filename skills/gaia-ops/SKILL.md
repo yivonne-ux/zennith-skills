@@ -4,8 +4,6 @@ description: Background knowledge about GAIA CORP-OS operations — how to inter
 agents:
   - main
   - taoz
-  - dreami
-  - scout
 ---
 
 # GAIA Ops — Zennith OS Operations Guide

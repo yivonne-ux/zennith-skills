@@ -5,6 +5,8 @@ metadata:
   openclaw:
     requires:
       bins: [python3]
+agents:
+  - scout
 ---
 
 # site-scraper

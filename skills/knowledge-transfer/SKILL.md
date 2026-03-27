@@ -13,6 +13,9 @@ metadata:
       - Include gotchas, failure modes, and proven prompts — not just happy path
       - Update classify.sh routing for new skills
     agents: [taoz, scout]
+agents:
+  - taoz
+  - main
 ---
 
 # Knowledge Transfer — Claude Code → OpenClaw Agents

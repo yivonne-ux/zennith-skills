@@ -1,6 +1,11 @@
+---
+name: creative-intake
+agents:
+  - dreami
+---
+
 # creative-intake
 
-**agents**: [zenni, dreami, scout]
 **version**: 1.0
 **created**: 2026-02-27
 

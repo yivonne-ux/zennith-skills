@@ -1,3 +1,10 @@
+---
+name: evomap
+agents:
+  - taoz
+  - main
+---
+
 # EvoMap — Global AI Evolution Network Integration
 
 ## What This Is

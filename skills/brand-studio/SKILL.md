@@ -1,3 +1,10 @@
+---
+name: brand-studio
+agents:
+  - dreami
+  - iris
+---
+
 # Brand Studio — Generate → Audit → Refine Loop
 
 Brand-aware ad generation with visual QA scoring against real brand references.

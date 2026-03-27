@@ -10,6 +10,9 @@ description: |
 allowed-tools:
   - Bash
   - Read
+agents:
+  - taoz
+  - scout
 ---
 
 # Unified Browse — Zennith OS Browser

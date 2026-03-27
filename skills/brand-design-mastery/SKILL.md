@@ -1,3 +1,10 @@
+---
+name: brand-design-mastery
+agents:
+  - dreami
+  - iris
+---
+
 # Brand Design Mastery -- World-Class Craft Knowledge
 
 Complete forensic reference for brand design at the highest level. Not AI image generation -- the CRAFT of brand design: principles, techniques, masters, and concrete examples across 12 domains.

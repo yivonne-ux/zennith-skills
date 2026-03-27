@@ -1,3 +1,10 @@
+---
+name: agent-vitality
+agents:
+  - taoz
+  - main
+---
+
 # Agent Vitality — Hive Self-Evolution System
 
 _Each agent is a living cell. It reflects, learns, evolves, and synchronizes with the organism._

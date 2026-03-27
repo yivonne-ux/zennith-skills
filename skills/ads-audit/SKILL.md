@@ -2,6 +2,7 @@
 name: ads-audit
 description: Full multi-platform paid advertising audit with parallel subagent delegation. Comprehensive scoring across all ad platforms.
 agents:
+  - hermes
   - main
 ---
 

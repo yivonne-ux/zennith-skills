@@ -1,6 +1,9 @@
 ---
 name: video-forge
 description: Automated video post-production pipeline for GAIA CORP-OS. Captioning (Whisper + ASS), branding (logo/watermark/LUT), music mixing (auto-duck), effects (grain/vignette/color grade/zoom/shaky), multi-clip assembly, multi-platform export with safe zones, and full produce pipeline that chains operations by output type + brand DNA + mood.
+agents:
+  - dreami
+  - taoz
 ---
 
 # VideoForge (v1)

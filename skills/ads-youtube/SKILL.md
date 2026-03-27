@@ -2,6 +2,7 @@
 name: ads-youtube
 description: YouTube Ads specific analysis covering campaign types, creative quality, targeting, bumper/skippable/discovery formats.
 agents:
+  - hermes
   - dreami
 ---
 

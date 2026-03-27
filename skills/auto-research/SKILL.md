@@ -32,6 +32,9 @@ metadata:
       listens:
         - topic: "pipeline.content.needs-optimization"
           action: "Start auto-research loop with provided config"
+agents:
+  - taoz
+  - scout
 ---
 
 # Auto-Research — Self-Improving Loop Engine

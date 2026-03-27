@@ -14,6 +14,9 @@ metadata:
       - "what did we learn"
       - "capture learnings"
       - "session review"
+agents:
+  - taoz
+  - main
 ---
 
 # Wrap-Up -- Per-Skill Learning Capture

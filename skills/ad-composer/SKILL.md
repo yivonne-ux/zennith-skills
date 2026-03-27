@@ -1,6 +1,9 @@
 ---
 name: ad-composer
 description: Unified ad image generation CLI wrapping NanoBanana (Gemini), Recraft V4, and Flux 2 Pro (fal.ai) for GAIA CORP-OS brand content.
+agents:
+  - dreami
+  - iris
 ---
 
 # Ad Composer — Unified Image Generation

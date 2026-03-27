@@ -1,3 +1,10 @@
+---
+name: cro-converter
+agents:
+  - hermes
+  - scout
+---
+
 # World-Class CRO + Web Conversion Skill
 
 > Turn beautifully designed sites into revenue machines.

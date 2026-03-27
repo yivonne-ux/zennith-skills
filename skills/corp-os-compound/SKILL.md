@@ -10,6 +10,9 @@ metadata:
       - Learning entries are permanent records
       - Gap files trigger skill-building only when priority is "high"
       - Max 1 auto-build per night
+agents:
+  - taoz
+  - main
 ---
 
 # CORP-OS Compound — Self-Improvement Loop

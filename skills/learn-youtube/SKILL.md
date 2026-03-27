@@ -1,10 +1,10 @@
 ---
 name: learn-youtube
 description: Full video intelligence — transcript with timestamps, frame-by-frame screenshots, metadata. Works with YouTube, Instagram, TikTok, Twitter/X, Facebook, local files, any URL.
+evolves: true
 agents:
   - scout
   - taoz
-evolves: true
 ---
 
 # Learn Video — Universal Video Intelligence Pipeline

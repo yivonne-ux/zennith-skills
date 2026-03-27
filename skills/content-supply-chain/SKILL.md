@@ -1,3 +1,10 @@
+---
+name: content-supply-chain
+agents:
+  - dreami
+  - main
+---
+
 # Content Supply Chain — Self-Improving Creative Loop
 
 **Owner:** Zenni (orchestration), all agents participate

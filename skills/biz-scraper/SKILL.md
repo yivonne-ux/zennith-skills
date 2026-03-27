@@ -1,6 +1,8 @@
 ---
 name: biz-scraper
 description: GAIA E-Commerce Flywheel — Ali Akbar "Spy -> Clone -> Scale" method with AI agents. Scrapes competitors, clones winning funnels, generates content at scale, launches, measures, compounds.
+agents:
+  - scout
 ---
 
 # Biz Scraper — GAIA E-Commerce Flywheel

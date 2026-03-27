@@ -19,6 +19,9 @@ metadata:
         command: "bash ~/.openclaw/skills/content-tuner/scripts/ab-framework.sh evaluate"
         agent: main
         description: "Daily A/B test evaluation — 10:00 MYT"
+agents:
+  - dreami
+  - main
 ---
 
 # Content Tuner — Phase 4 of the Content Factory

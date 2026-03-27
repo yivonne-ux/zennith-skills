@@ -2,7 +2,9 @@
 name: knowledge-compound
 description: Self-learning loop — intake external knowledge, digest into patterns, compound into agent capabilities
 version: 1.0.0
-agent: main
+agents:
+  - taoz
+  - main
 ---
 
 # Knowledge Compound Loop

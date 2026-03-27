@@ -16,6 +16,8 @@ metadata:
       - "remove AI patterns"
       - "humanizer"
       - "quality gate"
+agents:
+  - dreami
 ---
 
 # Humanizer -- AI Slop Detection Gate

@@ -1,3 +1,10 @@
+---
+name: video-compiler
+agents:
+  - dreami
+  - taoz
+---
+
 # Video Compiler — GAIA OS Skill
 
 ## What This Is

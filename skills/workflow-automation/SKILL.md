@@ -13,6 +13,9 @@ metadata:
       - All changes are announced to creative.jsonl room for visibility
       - skill-registry.json is rebuilt nightly or on-demand — never hand-edited
       - production-chains.json is append-only for new chains — existing chains are not modified by registration
+agents:
+  - taoz
+  - main
 ---
 
 # Workflow Automation — Agent Self-Registration System

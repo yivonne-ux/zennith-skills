@@ -1,6 +1,9 @@
 ---
 name: jade-ig-poster
 description: Instagram feed skill for Jade Oracle — thinks like a real social media creator. Plans grid aesthetics, mixes content types (portraits, oracle cards, quotes, flat lays, faceless hands), deduplicates images, and posts with proper spacing. Only Zenni dispatches this skill.
+agents:
+  - dreami
+  - taoz
 ---
 
 # Jade IG Poster v2 — Social Media Creator Brain

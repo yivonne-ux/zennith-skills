@@ -1,3 +1,10 @@
+---
+name: agent-reach
+agents:
+  - taoz
+  - scout
+---
+
 # Agent-Reach — Unified Web Intelligence for GAIA OS Agents
 
 ## Purpose

@@ -15,6 +15,8 @@ metadata:
       - ">3 tool calls = DELEGATE (no exceptions)"
       - Cheapest capable agent always wins
       - "Simple tasks (< 3 tool calls, no judgment) = Scout"
+agents:
+  - main
 ---
 
 # Orchestrate v2 — Zenni's Orchestration Discipline

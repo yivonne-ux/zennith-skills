@@ -1,3 +1,10 @@
+---
+name: grabfood-enhance
+agents:
+  - taoz
+  - scout
+---
+
 # GrabFood Photo Enhancement Pipeline
 > Replaces: FoodShot AI ($9-99/mo) + ChatGPT + manual phone editing
 > Built on: NANO Banana Pro (fal.ai) + rembg + PIL

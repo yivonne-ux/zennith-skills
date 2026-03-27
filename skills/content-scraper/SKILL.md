@@ -1,3 +1,10 @@
+---
+name: content-scraper
+agents:
+  - scout
+  - dreami
+---
+
 # Content Scraper — Multi-Platform Trend & Inspiration Pipeline
 
 _Zenni queues scrape jobs. Scout + Dreami execute. Learnings flow into the organism._

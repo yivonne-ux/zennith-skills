@@ -1,6 +1,9 @@
 ---
 name: site-health-auditor
 description: Automated health checking for GAIA OS web properties. Runs URL audits, validates content, checks SSL, reports outages.
+agents:
+  - taoz
+  - scout
 ---
 
 # Site Health Auditor

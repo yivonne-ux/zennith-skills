@@ -1,3 +1,9 @@
+---
+name: shopsteal
+agents:
+  - scout
+---
+
 # ShopSteal — E-Commerce Clone & Improve Pipeline
 
 ## What This Does

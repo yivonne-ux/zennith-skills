@@ -2,8 +2,8 @@
 name: ads
 description: Comprehensive paid advertising audit and optimization for any business type. Covers Google, Meta, LinkedIn, TikTok, Microsoft. Multi-platform analysis with scoring.
 agents:
+  - hermes
   - main
-  - dreami
 ---
 
 # Ads — Multi-Platform Advertising Audit & Optimization
