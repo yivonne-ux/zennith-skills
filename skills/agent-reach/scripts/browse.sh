@@ -1,69 +1,90 @@
 #!/usr/bin/env bash
-# browse.sh — Unified browser for Zennith OS (Claude Code + OpenClaw)
-# Single entry point. Headless by default. CDP for auth pages. No visible windows.
+# browse.sh — Unified headless browser for Zennith OS
+# ALWAYS headless. Persistent auth via saved cookies (no visible Chrome).
 #
 # Usage:
-#   browse.sh nav "https://example.com"              # headless navigate + get text
-#   browse.sh nav "https://example.com" --auth        # use CDP (logged-in Chrome)
-#   browse.sh screenshot "https://example.com"        # headless screenshot
-#   browse.sh screenshot "https://example.com" --auth # auth screenshot
-#   browse.sh text                                    # get current page text (auth mode)
-#   browse.sh click "selector"                        # click element (auth mode)
-#   browse.sh fill "selector" "value"                 # fill input (auth mode)
-#   browse.sh eval "document.title"                   # run JS
-#   browse.sh wait "selector" [timeout_ms]            # wait for element
-#   browse.sh pdf "https://example.com" [output.pdf]  # save page as PDF
-#   browse.sh check                                   # check CDP status
-#   browse.sh test                                    # run self-test loop
+#   browse.sh nav "https://example.com"                    # navigate + get text
+#   browse.sh screenshot "https://example.com"             # take screenshot
+#   browse.sh screenshot "https://example.com" out.png     # screenshot to file
+#   browse.sh pdf "https://example.com"                    # save as PDF
+#   browse.sh login "https://accounts.google.com"          # interactive login (saves session)
+#   browse.sh click "selector"                             # click element on current page
+#   browse.sh fill "selector" "value"                      # fill input
+#   browse.sh eval "document.title"                        # run JS
+#   browse.sh wait "selector" [timeout_ms]                 # wait for element
+#   browse.sh cookies list                                 # list saved auth domains
+#   browse.sh cookies clear [domain]                       # clear saved cookies
+#   browse.sh check                                        # show status
+#   browse.sh test                                         # run self-test
+#
+# Auth: First run `browse.sh login <url>` to log in (opens ONE visible window, saves cookies).
+#        All subsequent `nav`, `screenshot`, etc. reuse saved cookies HEADLESSLY.
+#        Cookie state saved at: ~/.openclaw/browser/auth-state.json
+#
+# Google services: Run `browse.sh login "https://accounts.google.com"` once.
+#                  Then `browse.sh nav "https://drive.google.com"` works headlessly forever.
 
 set -euo pipefail
 
 P3="$(command -v python3 || echo /usr/bin/python3)"
-CDP_PORT="${CDP_PORT:-9222}"
-CDP_URL="http://127.0.0.1:${CDP_PORT}"
+AUTH_DIR="$HOME/.openclaw/browser"
+AUTH_STATE="$AUTH_DIR/auth-state.json"
+USER_DATA_DIR="$AUTH_DIR/chromium-profile"
 SCREENSHOT_DIR="${SCREENSHOT_DIR:-/tmp}"
+
+mkdir -p "$AUTH_DIR"
 
 # ─── Helpers ────────────────────────────────────────────────────────
 log() { echo "[browse $(date +%H:%M:%S)] $*" >&2; }
 
-check_cdp() {
-  curl -s "${CDP_URL}/json/version" 2>/dev/null | "$P3" -c "import sys,json;print(json.loads(sys.stdin.read()).get('Browser',''))" 2>/dev/null || echo ""
-}
+has_auth() { [[ -f "$AUTH_STATE" ]] && [[ -s "$AUTH_STATE" ]]; }
 
-use_auth() {
-  # Check if --auth flag is present in any argument
-  for arg in "$@"; do
-    [[ "$arg" == "--auth" ]] && return 0
-  done
-  return 1
-}
-
-strip_flags() {
-  # Remove --auth and other flags from args
-  local result=()
-  for arg in "$@"; do
-    [[ "$arg" == --* ]] || result+=("$arg")
-  done
-  echo "${result[@]}"
-}
-
-# ─── HEADLESS MODE (default) — Playwright launches its own Chromium ─
+# ─── HEADLESS NAV (with persistent auth) ────────────────────────────
 headless_nav() {
   local url="$1"
-  local max_chars="${2:-3000}"
-  "$P3" << PYEOF
+  local max_chars="${2:-5000}"
+  "$P3" - "$url" "$max_chars" "$AUTH_STATE" "$USER_DATA_DIR" << 'PYEOF'
+import sys, os, json
+
+url = sys.argv[1]
+max_chars = int(sys.argv[2])
+auth_state = sys.argv[3]
+user_data_dir = sys.argv[4]
+
 from playwright.sync_api import sync_playwright
-import sys
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    page = browser.new_page()
+    # Use persistent context for cookie reuse
+    ctx = p.chromium.launch_persistent_context(
+        user_data_dir,
+        headless=True,
+        viewport={"width": 1280, "height": 720},
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        locale="en-US",
+        timezone_id="Asia/Kuala_Lumpur",
+        ignore_https_errors=True,
+    )
+
+    # Load saved auth state if available
+    if os.path.exists(auth_state):
+        try:
+            with open(auth_state) as f:
+                state = json.load(f)
+            for cookie in state.get("cookies", []):
+                try:
+                    ctx.add_cookies([cookie])
+                except:
+                    pass
+        except:
+            pass
+
+    page = ctx.pages[0] if ctx.pages else ctx.new_page()
     try:
-        page.goto("${url}", timeout=30000, wait_until="domcontentloaded")
+        page.goto(url, timeout=30000, wait_until="domcontentloaded")
         page.wait_for_timeout(2000)
         title = page.title()
         url_final = page.url
-        text = page.inner_text("body")[:${max_chars}]
+        text = page.inner_text("body")[:max_chars]
         print(f"TITLE: {title}")
         print(f"URL: {url_final}")
         print(f"---")
@@ -72,187 +93,322 @@ with sync_playwright() as p:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
     finally:
-        browser.close()
+        # Save updated cookies back
+        try:
+            cookies = ctx.cookies()
+            storage = {"cookies": cookies}
+            with open(auth_state, "w") as f:
+                json.dump(storage, f, indent=2)
+        except:
+            pass
+        ctx.close()
 PYEOF
 }
 
+# ─── HEADLESS SCREENSHOT ────────────────────────────────────────────
 headless_screenshot() {
   local url="$1"
   local outfile="${2:-${SCREENSHOT_DIR}/browse-$(date +%s).png}"
-  "$P3" << PYEOF
+  "$P3" - "$url" "$outfile" "$AUTH_STATE" "$USER_DATA_DIR" << 'PYEOF'
+import sys, os, json
+
+url = sys.argv[1]
+outfile = sys.argv[2]
+auth_state = sys.argv[3]
+user_data_dir = sys.argv[4]
+
 from playwright.sync_api import sync_playwright
-import sys
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    page = browser.new_page(viewport={"width": 1280, "height": 720})
+    ctx = p.chromium.launch_persistent_context(
+        user_data_dir,
+        headless=True,
+        viewport={"width": 1280, "height": 720},
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        locale="en-US",
+        timezone_id="Asia/Kuala_Lumpur",
+        ignore_https_errors=True,
+    )
+
+    if os.path.exists(auth_state):
+        try:
+            with open(auth_state) as f:
+                state = json.load(f)
+            for cookie in state.get("cookies", []):
+                try:
+                    ctx.add_cookies([cookie])
+                except:
+                    pass
+        except:
+            pass
+
+    page = ctx.pages[0] if ctx.pages else ctx.new_page()
     try:
-        page.goto("${url}", timeout=30000, wait_until="domcontentloaded")
+        page.goto(url, timeout=30000, wait_until="domcontentloaded")
         page.wait_for_timeout(2000)
-        page.screenshot(path="${outfile}", full_page=False)
-        print("${outfile}")
+        page.screenshot(path=outfile, full_page=False)
+        print(outfile)
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
     finally:
-        browser.close()
+        try:
+            cookies = ctx.cookies()
+            with open(auth_state, "w") as f:
+                json.dump({"cookies": cookies}, f, indent=2)
+        except:
+            pass
+        ctx.close()
 PYEOF
 }
 
+# ─── HEADLESS PDF ───────────────────────────────────────────────────
 headless_pdf() {
   local url="$1"
   local outfile="${2:-${SCREENSHOT_DIR}/browse-$(date +%s).pdf}"
-  "$P3" << PYEOF
+  "$P3" - "$url" "$outfile" "$AUTH_STATE" "$USER_DATA_DIR" << 'PYEOF'
+import sys, os, json
+
+url = sys.argv[1]
+outfile = sys.argv[2]
+auth_state = sys.argv[3]
+user_data_dir = sys.argv[4]
+
 from playwright.sync_api import sync_playwright
-import sys
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    page = browser.new_page()
+    ctx = p.chromium.launch_persistent_context(
+        user_data_dir,
+        headless=True,
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        ignore_https_errors=True,
+    )
+
+    if os.path.exists(auth_state):
+        try:
+            with open(auth_state) as f:
+                state = json.load(f)
+            for cookie in state.get("cookies", []):
+                try:
+                    ctx.add_cookies([cookie])
+                except:
+                    pass
+        except:
+            pass
+
+    page = ctx.pages[0] if ctx.pages else ctx.new_page()
     try:
-        page.goto("${url}", timeout=30000, wait_until="domcontentloaded")
+        page.goto(url, timeout=30000, wait_until="domcontentloaded")
         page.wait_for_timeout(3000)
-        page.pdf(path="${outfile}")
-        print("${outfile}")
+        page.pdf(path=outfile)
+        print(outfile)
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
     finally:
-        browser.close()
+        try:
+            cookies = ctx.cookies()
+            with open(auth_state, "w") as f:
+                json.dump({"cookies": cookies}, f, indent=2)
+        except:
+            pass
+        ctx.close()
 PYEOF
 }
 
-# ─── AUTH MODE — Connect to existing Chrome via CDP (for logged-in pages) ─
-cdp_ensure() {
-  local browser
-  browser=$(check_cdp)
-  if [[ -z "$browser" ]]; then
-    log "ERROR: Chrome CDP not running on port ${CDP_PORT}"
-    log "Start it: /Users/jennwoeiloh/.openclaw/skills/auth-browser/scripts/browser.sh start"
-    exit 1
-  fi
-}
+# ─── LOGIN (one-time, visible browser, saves cookies) ───────────────
+do_login() {
+  local url="${1:-https://accounts.google.com}"
+  log "Opening visible browser for login. Log in manually, then close the browser."
+  log "Cookies will be saved to: $AUTH_STATE"
+  "$P3" - "$url" "$AUTH_STATE" "$USER_DATA_DIR" << 'PYEOF'
+import sys, os, json, time
 
-cdp_nav() {
-  local url="$1"
-  local max_chars="${2:-3000}"
-  cdp_ensure
-  "$P3" << PYEOF
+url = sys.argv[1]
+auth_state = sys.argv[2]
+user_data_dir = sys.argv[3]
+
 from playwright.sync_api import sync_playwright
-import sys
 
 with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    ctx = b.contexts[0]
-    page = ctx.new_page()
+    # VISIBLE browser for manual login
+    ctx = p.chromium.launch_persistent_context(
+        user_data_dir,
+        headless=False,
+        viewport={"width": 1280, "height": 900},
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        locale="en-US",
+        timezone_id="Asia/Kuala_Lumpur",
+        ignore_https_errors=True,
+    )
+
+    page = ctx.pages[0] if ctx.pages else ctx.new_page()
+    page.goto(url, timeout=60000, wait_until="domcontentloaded")
+
+    print(f"Browser opened at: {url}")
+    print("Log in manually. When done, close the browser window.")
+    print("Waiting for browser to close...")
+
+    # Wait for user to close browser
     try:
-        page.goto("${url}", timeout=30000, wait_until="domcontentloaded")
-        page.wait_for_timeout(2000)
-        title = page.title()
-        url_final = page.url
-        text = page.inner_text("body")[:${max_chars}]
-        print(f"TITLE: {title}")
-        print(f"URL: {url_final}")
-        print(f"---")
-        print(text)
+        while True:
+            try:
+                _ = page.title()
+                time.sleep(1)
+            except:
+                break
+    except:
+        pass
+
+    # Save all cookies
+    try:
+        cookies = ctx.cookies()
+        storage = {"cookies": cookies, "logged_in_at": time.strftime("%Y-%m-%d %H:%M:%S")}
+        with open(auth_state, "w") as f:
+            json.dump(storage, f, indent=2)
+        print(f"Saved {len(cookies)} cookies to {auth_state}")
+        domains = set()
+        for c in cookies:
+            d = c.get("domain", "").lstrip(".")
+            if d:
+                domains.add(d)
+        print(f"Domains: {', '.join(sorted(domains)[:20])}")
+    except Exception as e:
+        print(f"Warning: could not save cookies: {e}", file=sys.stderr)
+    finally:
+        ctx.close()
+PYEOF
+}
+
+# ─── INTERACTIVE ACTIONS (headless, uses persistent context) ────────
+headless_action() {
+  local action="$1"
+  shift
+  "$P3" - "$action" "$AUTH_STATE" "$USER_DATA_DIR" "$@" << 'PYEOF'
+import sys, os, json
+
+action = sys.argv[1]
+auth_state = sys.argv[2]
+user_data_dir = sys.argv[3]
+args = sys.argv[4:]
+
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    ctx = p.chromium.launch_persistent_context(
+        user_data_dir,
+        headless=True,
+        viewport={"width": 1280, "height": 720},
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        ignore_https_errors=True,
+    )
+
+    if os.path.exists(auth_state):
+        try:
+            with open(auth_state) as f:
+                state = json.load(f)
+            for cookie in state.get("cookies", []):
+                try:
+                    ctx.add_cookies([cookie])
+                except:
+                    pass
+        except:
+            pass
+
+    page = ctx.pages[0] if ctx.pages else ctx.new_page()
+
+    try:
+        if action == "click":
+            selector = args[0]
+            page.click(selector, timeout=10000)
+            print(f"Clicked: {selector}")
+            print(f"URL: {page.url}")
+
+        elif action == "fill":
+            selector = args[0]
+            value = args[1]
+            page.fill(selector, value, timeout=10000)
+            print(f"Filled: {selector}")
+
+        elif action == "eval":
+            js = args[0]
+            result = page.evaluate(js)
+            print(result)
+
+        elif action == "wait":
+            selector = args[0]
+            timeout = int(args[1]) if len(args) > 1 else 10000
+            page.wait_for_selector(selector, timeout=timeout)
+            print(f"Found: {selector}")
+
+        elif action == "text":
+            print(page.inner_text("body")[:5000])
+
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
     finally:
-        page.close()
+        try:
+            cookies = ctx.cookies()
+            with open(auth_state, "w") as f:
+                json.dump({"cookies": cookies}, f, indent=2)
+        except:
+            pass
+        ctx.close()
 PYEOF
 }
 
-cdp_text() {
-  cdp_ensure
-  "$P3" << PYEOF
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    page = b.contexts[0].pages[-1]
-    print(page.inner_text("body")[:5000])
-PYEOF
+# ─── Cookie management ──────────────────────────────────────────────
+manage_cookies() {
+  local subcmd="${1:-list}"
+  case "$subcmd" in
+    list)
+      if has_auth; then
+        "$P3" -c "
+import json
+with open('$AUTH_STATE') as f:
+    data = json.load(f)
+cookies = data.get('cookies', [])
+domains = {}
+for c in cookies:
+    d = c.get('domain', '').lstrip('.')
+    domains[d] = domains.get(d, 0) + 1
+print(f'Total cookies: {len(cookies)}')
+print(f'Logged in at: {data.get(\"logged_in_at\", \"unknown\")}')
+print(f'Domains ({len(domains)}):')
+for d in sorted(domains):
+    print(f'  {d} ({domains[d]} cookies)')
+"
+      else
+        echo "No saved auth state. Run: browse.sh login <url>"
+      fi
+      ;;
+    clear)
+      local domain="${2:-}"
+      if [[ -z "$domain" ]]; then
+        rm -f "$AUTH_STATE"
+        rm -rf "$USER_DATA_DIR"
+        echo "All cookies and browser profile cleared"
+      else
+        "$P3" -c "
+import json
+with open('$AUTH_STATE') as f:
+    data = json.load(f)
+before = len(data.get('cookies', []))
+data['cookies'] = [c for c in data.get('cookies', []) if '$domain' not in c.get('domain', '')]
+after = len(data['cookies'])
+with open('$AUTH_STATE', 'w') as f:
+    json.dump(data, f, indent=2)
+print(f'Removed {before - after} cookies for $domain')
+"
+      fi
+      ;;
+  esac
 }
 
-cdp_screenshot() {
-  local outfile="${1:-${SCREENSHOT_DIR}/browse-cdp-$(date +%s).png}"
-  cdp_ensure
-  "$P3" << PYEOF
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    page = b.contexts[0].pages[-1]
-    page.screenshot(path="${outfile}")
-    print("${outfile}")
-PYEOF
-}
-
-cdp_click() {
-  local selector="$1"
-  cdp_ensure
-  "$P3" << PYEOF
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    page = b.contexts[0].pages[-1]
-    page.click("${selector}", timeout=10000)
-    print(f"Clicked: ${selector}")
-    print(f"URL: {page.url}")
-PYEOF
-}
-
-cdp_fill() {
-  local selector="$1"
-  local value="$2"
-  cdp_ensure
-  "$P3" << PYEOF
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    page = b.contexts[0].pages[-1]
-    page.fill("${selector}", "${value}", timeout=10000)
-    print(f"Filled: ${selector} = ${value}")
-PYEOF
-}
-
-cdp_eval() {
-  local js="$1"
-  cdp_ensure
-  "$P3" << PYEOF
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    page = b.contexts[0].pages[-1]
-    result = page.evaluate("${js}")
-    print(result)
-PYEOF
-}
-
-cdp_wait() {
-  local selector="$1"
-  local timeout="${2:-10000}"
-  cdp_ensure
-  "$P3" << PYEOF
-from playwright.sync_api import sync_playwright
-
-with sync_playwright() as p:
-    b = p.chromium.connect_over_cdp("${CDP_URL}")
-    page = b.contexts[0].pages[-1]
-    page.wait_for_selector("${selector}", timeout=${timeout})
-    print(f"Found: ${selector}")
-PYEOF
-}
-
-# ─── Self-test loop ─────────────────────────────────────────────────
+# ─── Self-test ──────────────────────────────────────────────────────
 run_test() {
-  local pass=0
-  local fail=0
-  local total=0
+  local pass=0 fail=0 total=0
 
   test_case() {
     local name="$1"
@@ -263,32 +419,28 @@ run_test() {
       log "  PASS"
       pass=$((pass + 1))
     else
-      log "  FAIL: $output"
+      log "  FAIL: $(echo "$output" | head -3)"
       fail=$((fail + 1))
     fi
   }
 
   log "=== BROWSE.SH SELF-TEST ==="
-  log ""
+  test_case "Headless nav (example.com)" bash "$0" nav "https://example.com"
+  test_case "Headless screenshot" bash "$0" screenshot "https://example.com"
+  test_case "Headless nav (httpbin)" bash "$0" nav "https://httpbin.org/get"
 
-  # Headless tests
-  test_case "Headless navigate" bash "$0" nav "https://httpbin.org/get"
-  test_case "Headless screenshot" bash "$0" screenshot "https://httpbin.org/get"
-  test_case "Headless navigate (complex page)" bash "$0" nav "https://example.com"
-
-  # CDP tests (only if running)
-  if [[ -n "$(check_cdp)" ]]; then
-    test_case "CDP navigate" bash "$0" nav "https://httpbin.org/get" --auth
-    test_case "CDP text" bash "$0" text
-    test_case "CDP screenshot" bash "$0" screenshot --auth
+  # Test auth if state exists
+  if has_auth; then
+    log "Auth state found — testing authenticated access"
+    test_case "Auth nav (Google)" bash "$0" nav "https://drive.google.com"
+    test_case "Auth screenshot (Google)" bash "$0" screenshot "https://drive.google.com"
   else
-    log "SKIP: CDP tests (Chrome not running on port ${CDP_PORT})"
+    log "SKIP: No auth state. Run 'browse.sh login https://accounts.google.com' first."
   fi
 
   log ""
   log "=== RESULTS: $pass/$total passed, $fail failed ==="
-
-  [[ "$fail" -eq 0 ]] && return 0 || return 1
+  [[ "$fail" -eq 0 ]]
 }
 
 # ─── Command router ─────────────────────────────────────────────────
@@ -297,54 +449,14 @@ shift || true
 
 case "$cmd" in
   nav|navigate)
-    url="${1:?Usage: browse.sh nav <url> [--auth]}"
-    if use_auth "$@"; then
-      cdp_nav "$url"
-    else
-      headless_nav "$url"
-    fi
+    url="${1:?Usage: browse.sh nav <url>}"
+    headless_nav "$url"
     ;;
 
   screenshot|ss)
-    if use_auth "$@"; then
-      # Auth screenshot of current page
-      outfile=""
-      for arg in "$@"; do
-        [[ "$arg" != --* ]] && outfile="$arg" && break
-      done
-      cdp_screenshot "${outfile:-}"
-    else
-      url="${1:?Usage: browse.sh screenshot <url> [output.png] [--auth]}"
-      outfile="${2:-}"
-      [[ "$outfile" == --* ]] && outfile=""
-      headless_screenshot "$url" ${outfile:+"$outfile"}
-    fi
-    ;;
-
-  text)
-    cdp_text
-    ;;
-
-  click)
-    selector="${1:?Usage: browse.sh click <selector>}"
-    cdp_click "$selector"
-    ;;
-
-  fill)
-    selector="${1:?Usage: browse.sh fill <selector> <value>}"
-    value="${2:?Usage: browse.sh fill <selector> <value>}"
-    cdp_fill "$selector" "$value"
-    ;;
-
-  eval|js)
-    js="${1:?Usage: browse.sh eval <js-expression>}"
-    cdp_eval "$js"
-    ;;
-
-  wait)
-    selector="${1:?Usage: browse.sh wait <selector> [timeout_ms]}"
-    timeout="${2:-10000}"
-    cdp_wait "$selector" "$timeout"
+    url="${1:?Usage: browse.sh screenshot <url> [output.png]}"
+    outfile="${2:-}"
+    headless_screenshot "$url" ${outfile:+"$outfile"}
     ;;
 
   pdf)
@@ -352,20 +464,48 @@ case "$cmd" in
     headless_pdf "$url" "${2:-}"
     ;;
 
+  login|auth)
+    url="${1:-https://accounts.google.com}"
+    do_login "$url"
+    ;;
+
+  text)
+    headless_action "text"
+    ;;
+
+  click)
+    selector="${1:?Usage: browse.sh click <selector>}"
+    headless_action "click" "$selector"
+    ;;
+
+  fill)
+    selector="${1:?Usage: browse.sh fill <selector> <value>}"
+    value="${2:?Usage: browse.sh fill <selector> <value>}"
+    headless_action "fill" "$selector" "$value"
+    ;;
+
+  eval|js)
+    js="${1:?Usage: browse.sh eval <js-expression>}"
+    headless_action "eval" "$js"
+    ;;
+
+  wait)
+    selector="${1:?Usage: browse.sh wait <selector> [timeout_ms]}"
+    timeout="${2:-10000}"
+    headless_action "wait" "$selector" "$timeout"
+    ;;
+
+  cookies)
+    manage_cookies "$@"
+    ;;
+
   check|status)
-    browser=$(check_cdp)
-    if [[ -n "$browser" ]]; then
-      echo "CDP: RUNNING ($browser) on port ${CDP_PORT}"
-      curl -s "${CDP_URL}/json" 2>/dev/null | "$P3" -c "
-import sys,json
-tabs=json.loads(sys.stdin.read())
-for t in tabs:
-    if t.get('type')=='page': print(f'  {t.get(\"title\",\"?\")[:40]} — {t.get(\"url\",\"?\")[:60]}')" 2>/dev/null
-    else
-      echo "CDP: NOT RUNNING"
-    fi
     echo "Playwright: $(python3 -c 'import playwright; print("installed")' 2>/dev/null || echo 'NOT INSTALLED')"
-    echo "Headless: always available (no Chrome needed)"
+    echo "Auth state: $(has_auth && echo "YES ($AUTH_STATE)" || echo "NO — run: browse.sh login <url>")"
+    if has_auth; then
+      manage_cookies list
+    fi
+    echo "Mode: ALWAYS headless (persistent context at $USER_DATA_DIR)"
     ;;
 
   test)
@@ -374,28 +514,38 @@ for t in tabs:
 
   help|--help|-h|*)
     cat << 'HELP'
-browse.sh — Unified Zennith OS Browser
+browse.sh — Unified Headless Browser (Zennith OS)
 
-HEADLESS (default, no windows, always works):
+ALL HEADLESS (no visible windows):
   nav <url>                    Navigate + extract text
   screenshot <url> [file]      Take screenshot
   pdf <url> [file]             Save as PDF
-
-AUTH MODE (--auth flag, uses Chrome CDP for logged-in pages):
-  nav <url> --auth             Navigate with auth session
-  screenshot --auth [file]     Screenshot current auth page
-  text                         Get current page text
   click <selector>             Click element
   fill <selector> <value>      Fill input
   eval <js>                    Run JavaScript
   wait <selector> [timeout]    Wait for element
+  text                         Get current page text
+
+AUTH (one-time setup, then everything stays headless):
+  login [url]                  Open visible browser to log in (saves cookies)
+                               Default: https://accounts.google.com
+                               After login, close browser — cookies saved forever.
+                               All subsequent commands use saved cookies headlessly.
+
+COOKIE MANAGEMENT:
+  cookies list                 Show saved auth domains
+  cookies clear [domain]       Clear cookies (all or by domain)
 
 SYSTEM:
-  check                        Show CDP + Playwright status
+  check                        Show status + saved auth info
   test                         Run self-test loop
 
+How Google services work:
+  1. Run: browse.sh login       (log into Google once, close browser)
+  2. Then: browse.sh nav "https://drive.google.com"  (works headlessly!)
+  3. Cookies persist at: ~/.openclaw/browser/auth-state.json
+
 Environment:
-  CDP_PORT=9222                Chrome DevTools Protocol port
   SCREENSHOT_DIR=/tmp          Where screenshots are saved
 HELP
     ;;
