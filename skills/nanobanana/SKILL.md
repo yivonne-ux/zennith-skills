@@ -95,7 +95,7 @@ bash /Users/jennwoeiloh/.openclaw/skills/nanobanana/scripts/nanobanana-gen.sh ge
 ```bash
 bash /Users/jennwoeiloh/.openclaw/skills/nanobanana/scripts/nanobanana-gen.sh generate \
   --brand mirra --use-case lifestyle \
-  --prompt "Mirra skincare routine morning scene" \
+  --prompt "Mirra weekly bento meal prep, warm appetizing scene" \
   --style-seed ss-1709000000 --size 2K --ratio 9:16
 ```
 

@@ -733,10 +733,23 @@ EOF
 # --- Run pipeline ---
 case "$MODE" in
   info)
-    fetch_metadata
+    if [[ "$SOURCE_TYPE" == "instagram" ]]; then
+      fetch_metadata || true
+      # If yt-dlp failed (empty metadata), try instaloader
+      if [[ ! -s "$OUTDIR/metadata.json" ]]; then
+        echo "yt-dlp failed for Instagram — using instaloader for metadata"
+        fetch_instagram_slides
+      fi
+    else
+      fetch_metadata
+    fi
     ;;
   transcript-only)
-    fetch_metadata
+    if [[ "$SOURCE_TYPE" == "instagram" ]]; then
+      fetch_metadata || true
+    else
+      fetch_metadata
+    fi
     fetch_transcript
     echo ""
     echo "--- Transcript ---"
