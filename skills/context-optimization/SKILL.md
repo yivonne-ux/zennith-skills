@@ -315,6 +315,16 @@ WHEN QUALITY DROPS:
 
 ---
 
+## Companion Script
+
+```bash
+bash ~/.openclaw/skills/context-optimization/scripts/context-audit.sh {agent-id}
+```
+
+Runs a quick token audit on any agent's context. Reports breakdown, warnings at 70% threshold, and top consumers.
+
+---
+
 ## Skill Metadata
 
 **Created**: 2026-03-27

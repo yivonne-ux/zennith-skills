@@ -9,6 +9,21 @@ agents:
 
 Expert in pricing and monetization strategy for consumer brands, with deep focus on F&B meal delivery, wellness subscriptions, supplements, and direct-to-consumer products. Designs pricing that captures value, drives retention, and aligns with customer willingness to pay.
 
+## How to Run This Analysis
+
+Follow these steps in order for a complete pricing strategy engagement:
+
+1. **Load brand DNA** -- Read `~/.openclaw/brands/{brand}/DNA.json` to understand positioning, audience, and tier
+2. **Gather business context** -- Collect product type, current pricing, target market, sales channel, and current performance metrics (see Business Context section below)
+3. **Analyze value metric** -- Determine the right unit to charge for based on how customers receive value (see Value Metrics section)
+4. **Design tier structure** -- Build Good-Better-Best tiers with meaningful differentiation (see Tier Structure section)
+5. **Apply pricing psychology** -- Layer in anchoring, decoy effect, per-unit framing, and loss framing appropriate to the brand
+6. **Design delivery fee strategy** -- Choose the delivery fee model that maximizes conversion for this brand type
+7. **Plan migration/rollout** -- If changing existing pricing, design the transition: grandfather existing customers, advance notice timeline, value-tied justification
+8. **Measure** -- Define success metrics (conversion rate, AOV, LTV, churn rate) and set a review cadence (30/60/90 days)
+
+---
+
 ## When to Use
 
 - Setting prices for a new product, menu, or subscription plan
@@ -217,6 +232,41 @@ Delivery fees are a major conversion lever for F&B brands:
 | Flat fee | Simple, predictable for customer |
 | Distance-based | Fair but complex, may deter far customers |
 | Free for subscribers | Incentivize subscription commitment |
+
+---
+
+## Subscription Retention Pricing
+
+Retention pricing prevents churn and protects LTV. Design these mechanisms into any subscription offering:
+
+### Commitment Discounts
+- **Weekly (no lock-in)**: Full price -- flexibility premium
+- **Monthly commitment**: 10-15% discount -- the sweet spot for most F&B brands
+- **Quarterly commitment**: 15-20% discount -- best for supplements and wellness programs
+- Frame as "you save RMX/month" not just a percentage
+
+### Pause Instead of Cancel
+- Always offer a pause option (1-4 weeks) before allowing cancellation
+- Pre-fill the pause screen with: "Pause for 1 week" as the default
+- Send a "we miss you" WhatsApp/email 2 days before pause ends with a reason to return (new menu, special item)
+- Track pause rates separately from churn -- paused customers return at 60-70% vs. cancelled at 10-15%
+
+### Loyalty Pricing Locks
+- Lock in the subscription price at signup -- when prices increase, existing subscribers keep their original rate
+- Communicate this explicitly: "Your price is locked at RM299/month as a founding subscriber"
+- Creates switching cost: leaving means losing the locked rate
+- For long-term subscribers (6+ months), offer a loyalty bonus (free delivery upgrade, extra meal, priority menu access)
+
+### Downgrade Tiers to Prevent Churn
+- When a customer tries to cancel, offer a smaller plan instead of losing them entirely
+- Example: "Before you go -- would a 3-meal/week plan at RM99 work better for now?"
+- Create a specific "lite" or "maintenance" tier that exists primarily as a churn-prevention safety net
+- A customer paying RM99/month is infinitely more valuable than a cancelled customer paying RM0
+
+### Win-Back Pricing
+- For cancelled subscribers, offer a limited-time return discount (first month back at 20% off)
+- Time win-back campaigns around menu refreshes or seasonal launches
+- Track win-back conversion rate as a key retention metric
 
 ---
 

@@ -28,6 +28,8 @@ Run steps sequentially. Each step builds on the previous. Save all outputs to `~
 
 Excavate the user's intellectual property using Daniel Priestley's IP framework.
 
+> **Product vs Service Fork**: If the offer is for a physical product (D2C, e-commerce), adapt IP questions: replace "what do people ask YOUR advice on" with "what problem does this product solve better than alternatives". Adjust Step 6 format options to include: Physical product bundle, Subscription box, Starter kit, Discovery set. Adjust Step 7 landing page template for e-commerce conventions (product gallery, ingredient list, shipping info, Shopify add-to-cart).
+
 Ask these questions (adapt to context):
 
 1. **What do people constantly ask your advice on?** Even casually — at parties, in DMs, at work.
@@ -170,6 +172,20 @@ Construct the signature offer using this template:
 **Agent**: Dreami writes the offer copy. Run `brand-voice-check.sh` if this is for a GAIA brand.
 
 **Output**: Offer document saved to `offer.md`.
+
+---
+
+### Step 6.5 — Compliance Check
+
+Before building the landing page, verify regulatory compliance:
+
+- **Health/wellness/supplements brands**: Verify all claims comply with Malaysian NPRA, KKM, and advertising regulations. No unsubstantiated health claims. Use "supports" not "cures". Check if MeSTI/halal certification is required.
+- **F&B brands**: Verify nutritional claims are accurate.
+- **Skincare brands**: Verify ingredient safety claims.
+
+Flag any claims in the offer document (Step 6) that need softening or evidence. Revise offer copy before proceeding to the landing page.
+
+**Output**: Compliance notes appended to `offer.md` or saved to `compliance-check.md`.
 
 ---
 

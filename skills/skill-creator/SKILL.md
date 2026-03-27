@@ -171,6 +171,17 @@ Compare the two outputs:
 | Trigger accuracy | ... | ... | Y/N |
 | Edge case handling | ... | ... | Y/N |
 
+#### Automated Scoring Rubric
+
+| Dimension | Score 0 | Score 1 | Weight |
+|-----------|---------|---------|--------|
+| Correct trigger | Agent ignores skill when it should fire | Agent invokes skill on trigger phrases | 25% |
+| Procedure followed | Agent freestyles, ignores steps | Agent follows steps in order | 25% |
+| Output quality | Generic, no brand context | Brand-specific, actionable | 25% |
+| Edge cases | Fails on unusual inputs | Handles gracefully | 25% |
+
+Overall pass threshold: 75%. If baseline already scores 75%+, the skill may not be worth shipping — the model already handles this well.
+
 If any dimension fails, proceed to Step 5.
 
 ---
@@ -258,6 +269,10 @@ Before shipping any skill, verify:
 - [ ] Eval run completed (baseline vs with-skill)
 - [ ] Symlink created to `~/.claude/skills/`
 - [ ] Git committed
+
+## Versioning
+
+When updating an existing skill, increment the version in frontmatter. Keep a CHANGELOG.md in the skill directory if changes are significant.
 
 ## Common Mistakes
 

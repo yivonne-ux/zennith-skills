@@ -35,7 +35,19 @@ Gather before analyzing:
 
 ## CRO Analysis Framework
 
-Analyze the page across these 7 dimensions, in order of impact:
+### Step 0 — Access the Page
+
+Before analyzing anything, fetch the actual page content so the analysis is grounded in real data, not assumptions:
+
+```bash
+bash ~/.openclaw/skills/agent-reach/scripts/web-read.sh "URL"
+```
+
+Read the returned content carefully. Identify the page structure, copy, CTAs, images, and any interactive elements. Then proceed with the 7-dimension analysis below.
+
+---
+
+Analyze the page across these 7 dimensions, in order of impact. **After each dimension, assign a score from 1 (critical issues) to 10 (excellent) with a one-line justification.**
 
 ### 1. Value Proposition Clarity (Highest Impact)
 
@@ -49,6 +61,7 @@ Analyze the page across these 7 dimensions, in order of impact:
 - Too vague ("healthy food") or too clever (sacrificing clarity for branding)
 - Trying to say everything instead of the most compelling thing
 - Not addressing the "why switch from my current option?" question
+- **Stale or seasonal content** -- outdated promotions, expired menus, old dates, or seasonal messaging left up past its relevance window. This is one of the most common and damaging CRO issues (e.g., a CNY banner still live in March)
 
 ### 2. Headline Effectiveness
 
@@ -123,6 +136,11 @@ Analyze the page across these 7 dimensions, in order of impact:
 - Poor mobile experience (most Malaysian traffic is mobile-first)
 - Slow load times on images
 - No clear operating hours or cut-off times
+- **Multilingual consistency** -- if the site serves EN/BM/ZH, check that all UI elements (buttons, labels, nav, footer, error messages) match the selected language. Mixed-language interfaces destroy trust
+
+### Overall CRO Score
+
+After completing all 7 dimensions, calculate the **Overall CRO Score** as the average of all 7 dimension scores (1-10). Present as: `Overall CRO Score: X.X / 10` with a summary table of all dimension scores.
 
 ---
 
