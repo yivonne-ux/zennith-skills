@@ -112,13 +112,19 @@ sys.exit(1)
 " "$SOURCE" 2>/dev/null) || { echo "Could not extract YouTube video ID" >&2; exit 1; }
     echo "Source: YouTube ($VIDEO_SLUG)"
   elif [[ "$SOURCE" =~ instagram\.com ]]; then
-    SOURCE_TYPE="ytdlp"
+    SOURCE_TYPE="instagram"
     VIDEO_SLUG=$("$P3" -c "
 import re, sys
 m = re.search(r'/(reel|p|tv)/([A-Za-z0-9_-]+)', sys.argv[1])
 print(f'ig-{m.group(2)}' if m else 'ig-' + sys.argv[1][-11:].replace('/',''))
 " "$SOURCE")
-    echo "Source: Instagram ($VIDEO_SLUG)"
+    # Detect reel vs image post from URL
+    if [[ "$SOURCE" =~ /reel/ ]]; then
+      IG_TYPE="reel"
+    else
+      IG_TYPE="post"
+    fi
+    echo "Source: Instagram $IG_TYPE ($VIDEO_SLUG)"
   elif [[ "$SOURCE" =~ tiktok\.com ]]; then
     SOURCE_TYPE="ytdlp"
     VIDEO_SLUG=$("$P3" -c "
@@ -352,12 +358,12 @@ PYEOF
   echo "Trying yt-dlp subtitles..."
   local tmpdir
   tmpdir=$(mktemp -d)
-  "$YTDLP" --write-auto-sub --write-sub --sub-lang "en,en-orig" \
+  "$YTDLP" --write-auto-sub --write-sub --sub-lang "en,en-orig,zh,zh-Hans,zh-Hant,zh-CN,zh-TW,ja,ko" \
     --skip-download --sub-format vtt \
     -o "$tmpdir/%(id)s" "$SOURCE" 2>/dev/null || true
 
   local vtt_file
-  vtt_file=$(ls "$tmpdir"/*.vtt 2>/dev/null | head -1)
+  vtt_file=$(ls "$tmpdir"/*.vtt 2>/dev/null | head -1 || true)
 
   if [[ -z "$vtt_file" ]]; then
     echo "No transcript/subtitles available for this video"
@@ -404,6 +410,97 @@ PYEOF
   rm -rf "$tmpdir"
 }
 
+# --- Step 2b: Instagram carousel download (instaloader) ---
+fetch_instagram_slides() {
+  echo "--- Downloading Instagram slides (instaloader) ---"
+  local shortcode
+  shortcode=$("$P3" -c "
+import re, sys
+m = re.search(r'/(reel|p|tv)/([A-Za-z0-9_-]+)', sys.argv[1])
+print(m.group(2) if m else '')
+" "$SOURCE")
+
+  if [[ -z "$shortcode" ]]; then
+    echo "Could not extract shortcode from IG URL" >&2
+    return 1
+  fi
+
+  local ig_dir="$OUTDIR/ig-raw"
+  mkdir -p "$ig_dir"
+
+  # Use instaloader to download all slides
+  cd "$ig_dir"
+  /opt/homebrew/bin/instaloader \
+    --no-profile-pic --no-metadata-json --no-compress-json \
+    --filename-pattern="{shortcode}_{mediaid}" \
+    -- "-${shortcode}" 2>&1 | tail -5 || true
+  cd - > /dev/null
+
+  # Find the downloaded directory
+  local dl_dir
+  dl_dir=$(find "$ig_dir" -maxdepth 1 -type d -name "-${shortcode}" 2>/dev/null | head -1)
+  [[ -z "$dl_dir" ]] && dl_dir="$ig_dir"
+
+  # Move images to frames/ directory with clean names
+  local slide_num=1
+  for img in $(ls "$dl_dir"/*.jpg 2>/dev/null | sort); do
+    local dest="$OUTDIR/frames/slide_$(printf '%02d' $slide_num).jpg"
+    cp "$img" "$dest"
+    ((slide_num++))
+  done
+
+  # Also grab any videos from carousel
+  for vid in $(ls "$dl_dir"/*.mp4 2>/dev/null | sort); do
+    local dest="$OUTDIR/video.mp4"
+    cp "$vid" "$dest"
+    echo "Found video in carousel, saved to video.mp4"
+    break  # Only take first video
+  done
+
+  # Extract caption from instaloader's text file
+  local caption_file
+  caption_file=$(ls "$dl_dir"/*.txt 2>/dev/null | head -1)
+  if [[ -n "$caption_file" ]]; then
+    cp "$caption_file" "$OUTDIR/caption.txt"
+    echo "Caption saved to caption.txt"
+  fi
+
+  local slide_count
+  slide_count=$(ls "$OUTDIR/frames"/slide_*.jpg 2>/dev/null | wc -l | tr -d ' ')
+  echo "Instagram slides downloaded: $slide_count"
+
+  # Build metadata from instaloader if yt-dlp failed
+  if [[ ! -s "$OUTDIR/metadata.json" ]]; then
+    "$P3" -c "
+import json, sys, os, glob
+outdir = sys.argv[1]
+shortcode = sys.argv[2]
+slides = sorted(glob.glob(os.path.join(outdir, 'frames', 'slide_*.jpg')))
+caption = ''
+cap_file = os.path.join(outdir, 'caption.txt')
+if os.path.exists(cap_file):
+    with open(cap_file) as f:
+        caption = f.read()[:2000]
+meta = {
+    'id': shortcode,
+    'title': f'Instagram post {shortcode}',
+    'source': 'instagram',
+    'slides': len(slides),
+    'description': caption,
+    'type': 'carousel' if len(slides) > 1 else 'single',
+}
+with open(os.path.join(outdir, 'metadata.json'), 'w') as f:
+    json.dump(meta, f, indent=2, ensure_ascii=False)
+print(f'Metadata: {len(slides)} slides, type={meta[\"type\"]}')
+" "$OUTDIR" "$shortcode"
+  fi
+
+  # Clean up raw downloads
+  rm -rf "$ig_dir"
+
+  return 0
+}
+
 # --- Step 3: Get/download video ---
 get_video() {
   local video_file="$OUTDIR/video.mp4"
@@ -432,7 +529,7 @@ get_video() {
   else
     echo "--- Downloading video (720p max) ---"
     "$YTDLP" \
-      -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best[height<=720]" \
+      -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best[height<=720]/best" \
       --merge-output-format mp4 \
       -o "$video_file" \
       "$SOURCE" 2>&1 | tail -5
@@ -657,18 +754,39 @@ case "$MODE" in
     write_summary
     ;;
   full)
-    fetch_metadata
-    fetch_transcript
-    get_video
-    extract_frames
-    build_manifest
-    write_summary
+    if [[ "$SOURCE_TYPE" == "instagram" ]]; then
+      # Instagram path: try yt-dlp metadata first, then instaloader for slides
+      fetch_metadata || true
+      fetch_transcript || true
+      fetch_instagram_slides
 
-    # Cleanup: remove downloaded video to save disk (not local files)
-    if [[ "$KEEP_VIDEO" == false ]] && [[ "$SOURCE_TYPE" != "local" ]]; then
-      echo ""
-      echo "Cleaning up video file to save disk..."
-      rm -f "$OUTDIR/video.mp4"
+      # If carousel had a video, extract frames from it too
+      if [[ -f "$OUTDIR/video.mp4" ]]; then
+        extract_frames || true
+      fi
+
+      build_manifest
+      write_summary
+
+      # Cleanup video if present
+      if [[ "$KEEP_VIDEO" == false ]]; then
+        rm -f "$OUTDIR/video.mp4"
+      fi
+    else
+      # Standard path: YouTube, TikTok, local files, etc.
+      fetch_metadata
+      fetch_transcript
+      get_video
+      extract_frames
+      build_manifest
+      write_summary
+
+      # Cleanup: remove downloaded video to save disk (not local files)
+      if [[ "$KEEP_VIDEO" == false ]] && [[ "$SOURCE_TYPE" != "local" ]]; then
+        echo ""
+        echo "Cleaning up video file to save disk..."
+        rm -f "$OUTDIR/video.mp4"
+      fi
     fi
 
     echo ""

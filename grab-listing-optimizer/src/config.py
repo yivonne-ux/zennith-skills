@@ -32,14 +32,14 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 # Proxy
 PROXY_URL = os.getenv("PROXY_URL", "")
 
-# GrabFood URLs
+# GrabFood URLs (verified via E2E testing 2026-03-23)
 GRAB_MERCHANT_URL = "https://merchant.grab.com"
-GRAB_MERCHANT_LOGIN = f"{GRAB_MERCHANT_URL}/portal/sign-in"
-GRAB_MERCHANT_DASHBOARD = f"{GRAB_MERCHANT_URL}/portal/dashboard"
-GRAB_MERCHANT_MENU = f"{GRAB_MERCHANT_URL}/portal/food-menu"
-GRAB_MERCHANT_PROMOS = f"{GRAB_MERCHANT_URL}/portal/promotions"
-GRAB_MERCHANT_REVIEWS = f"{GRAB_MERCHANT_URL}/portal/reviews"
-GRAB_MERCHANT_ANALYTICS = f"{GRAB_MERCHANT_URL}/portal/analytics"
+GRAB_MERCHANT_LOGIN = "https://weblogin.grab.com/merchant/login?service_id=MEXUSERS&redirect=https%3A%2F%2Fmerchant.grab.com%2Fportal"
+GRAB_MERCHANT_DASHBOARD = f"{GRAB_MERCHANT_URL}/dashboard"
+GRAB_MERCHANT_MENU = f"{GRAB_MERCHANT_URL}/food-menu"  # Needs store selected first; actual URL becomes /food/menu/{store_id}
+GRAB_MERCHANT_PROMOS = f"{GRAB_MERCHANT_URL}/marketing"
+GRAB_MERCHANT_REVIEWS = f"{GRAB_MERCHANT_URL}/feedback"
+GRAB_MERCHANT_ANALYTICS = f"{GRAB_MERCHANT_URL}/insights"
 GRAB_CONSUMER_URL = "https://food.grab.com/my/en"
 
 # Browser settings
