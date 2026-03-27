@@ -2,7 +2,6 @@
 name: brand-design-mastery
 agents:
   - dreami
-  - iris
 ---
 
 # Brand Design Mastery -- World-Class Craft Knowledge

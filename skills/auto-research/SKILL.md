@@ -20,9 +20,7 @@ metadata:
     agents:
       - main
       - dreami
-      - apollo
-      - hermes
-      - artemis
+      - scout
     pubsub:
       emits:
         - topic: "auto-research.variant.improved"

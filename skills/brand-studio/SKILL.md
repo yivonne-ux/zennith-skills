@@ -2,7 +2,6 @@
 name: brand-studio
 agents:
   - dreami
-  - iris
 ---
 
 # Brand Studio — Generate → Audit → Refine Loop

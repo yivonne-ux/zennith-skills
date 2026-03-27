@@ -2,7 +2,6 @@
 name: art-director
 agents:
   - dreami
-  - iris
 ---
 
 # World-Class Art Director + Ultra Creative Designer

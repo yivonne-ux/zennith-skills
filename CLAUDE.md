@@ -63,13 +63,13 @@ classify.sh uses keyword matching -- zero LLM cost, 100% deterministic.
 **Dispatch rules by domain:**
 - Code/build/fix/deploy/scripts --> CODE tier (Claude Code CLI, NOT Taoz subagent)
 - Image generation --> SCRIPT tier (NanoBanana CLI, no LLM needed)
-- Research/scraping --> DISPATCH to Artemis
+- Research/scraping --> DISPATCH to Scout
 - Creative/copy/scripts --> DISPATCH to Dreami
-- Visual QA/social --> DISPATCH to Iris
-- Strategy/analysis --> DISPATCH to Athena
-- Ads/pricing/revenue --> DISPATCH to Hermes
-- Bulk ops/git/config --> DISPATCH to Myrmidons
-- Testing/QA --> DISPATCH to Argus
+- Visual QA/social --> DISPATCH to Dreami
+- Strategy/analysis --> DISPATCH to Scout
+- Ads/pricing/revenue --> DISPATCH to Dreami
+- Bulk ops/git/config --> DISPATCH to Taoz (spawn subagent)
+- Testing/QA --> DISPATCH to Taoz (spawn subagent)
 - Orchestration --> Zenni (main)
 
 ## 5. File Rules & Canonical Paths

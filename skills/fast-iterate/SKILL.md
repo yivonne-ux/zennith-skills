@@ -19,10 +19,7 @@ metadata:
     agents:
       - main
       - dreami
-      - apollo
-      - hermes
-      - artemis
-      - calliope
+      - scout
     pubsub:
       emits:
         - topic: "fast-iterate.complete"

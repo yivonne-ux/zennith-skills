@@ -2,7 +2,6 @@
 name: character-design
 agents:
   - dreami
-  - iris
 ---
 
 # Character Design Skill (Compounding)

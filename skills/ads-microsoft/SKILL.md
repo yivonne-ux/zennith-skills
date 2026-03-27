@@ -2,7 +2,7 @@
 name: ads-microsoft
 description: Microsoft/Bing Ads deep analysis covering Search, Performance Max, Audience Network. Import quality from Google.
 agents:
-  - hermes
+  - dreami
 ---
 
 # Ads Microsoft — Microsoft (Bing) Ads Deep Analysis

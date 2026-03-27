@@ -3,7 +3,6 @@ name: ads-landing
 description: Landing page quality assessment for paid advertising campaigns. Evaluate message match, load speed, conversion elements, mobile UX.
 agents:
   - dreami
-  - hermes
 ---
 
 # Ads Landing — Landing Page Quality Assessment

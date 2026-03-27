@@ -1,7 +1,6 @@
 ---
 name: visual-registry
 agents:
-  - iris
   - dreami
 ---
 

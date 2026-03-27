@@ -3,7 +3,6 @@ name: pricing-strategy
 description: When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions "pricing", "pricing tiers", "meal plan pricing", "subscription pricing", "price increase", "value metric", "how much should I charge", "my pricing is wrong", "pricing page", "weekly vs monthly", "per meal pricing", "should I offer a trial", "bundle pricing", "delivery fee strategy", or "willingness to pay".
 agents:
   - scout
-  - hermes
 ---
 
 # Pricing Strategy -- F&B, Wellness, and D2C Brands

@@ -2,7 +2,7 @@
 name: klaviyo-engine
 description: Full Klaviyo automation CLI. Create flows, templates, lists, manage subscribers, send campaigns. Just setup your API key and go.
 version: 1.0.0
-agents: [main, dreami, hermes]
+agents: [main, dreami]
 evolves: true
 ---
 

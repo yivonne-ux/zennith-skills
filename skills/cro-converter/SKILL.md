@@ -1,7 +1,6 @@
 ---
 name: cro-converter
 agents:
-  - hermes
   - scout
 ---
 

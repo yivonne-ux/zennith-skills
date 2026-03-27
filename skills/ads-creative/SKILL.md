@@ -3,7 +3,6 @@ name: ads-creative
 description: Cross-platform creative quality audit covering ad copy, video, image, and landing pages. Creative scoring framework.
 agents:
   - dreami
-  - hermes
 ---
 
 # Ads Creative — Cross-Platform Creative Quality Audit

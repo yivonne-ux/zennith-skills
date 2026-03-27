@@ -1,7 +1,7 @@
 ---
 name: skill-router
 description: Intra-agent skill selector. Given a task description, returns the best skill(s) to use. Zero-cost keyword matching with LLM fallback. Used by all agents after classify.sh routes to them.
-agents: [main, dreami, taoz, iris]
+agents: [main, dreami, taoz]
 version: 1.1.0
 ---
 

@@ -11,7 +11,6 @@ metadata:
       - Max 1000 seed entries (prevent unbounded growth)
 agents:
   - dreami
-  - iris
 ---
 
 # Image Seed Bank — Image Asset Management

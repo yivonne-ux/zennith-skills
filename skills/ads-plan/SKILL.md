@@ -2,7 +2,6 @@
 name: ads-plan
 description: Strategic paid advertising planning with industry-specific templates. Create campaign structures, budget allocations, audience strategies.
 agents:
-  - hermes
   - dreami
 ---
 

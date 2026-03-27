@@ -4,7 +4,7 @@ description: |
   TRIGGER: "repurpose", "resize for", "reformat for", "adapt for platforms", "one image to all platforms", "multi-platform variants"
   ANTI-TRIGGER: creating original content from scratch, translating copy between languages (use campaign-translate), brand identity design
   OUTCOME: 10-20 platform-ready asset variants (images, videos, copy) from one hero asset + manifest.json
-agents: [dreami, iris, taoz]
+agents: [dreami, taoz]
 version: 1.1.0
 ---
 

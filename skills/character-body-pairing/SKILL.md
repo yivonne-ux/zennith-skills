@@ -18,7 +18,6 @@ metadata:
     learned_from: "claude-code-session-2026-03-12 (Luna v3 body pairing)"
 agents:
   - dreami
-  - iris
 ---
 
 # Character Body Pairing — Face + Fashion Reference Fusion

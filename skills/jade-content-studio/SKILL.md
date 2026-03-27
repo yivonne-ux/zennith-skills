@@ -1,7 +1,7 @@
 ---
 name: jade-content-studio
 description: Unified AI character content pipeline for Jade Oracle. Character creation, face lock, body pairing, IG content generation, ad hooks, quality gates, and growth engine — all proven workflows from 5 months of production experience.
-agents: [dreami, taoz, iris]
+agents: [dreami, taoz]
 version: 1.0.0
 triggers: jade content, jade oracle, jade ig, jade post, jade ad, jade character, jade face lock, jade video, oracle content, psychic content, QMDJ content, jade reading
 anti-triggers: translate, brand design, product studio, shopify, code deploy, campaign translate

@@ -2,7 +2,6 @@
 name: ref-picker
 agents:
   - dreami
-  - iris
 ---
 
 # ref-picker — Visual Reference Image Picker

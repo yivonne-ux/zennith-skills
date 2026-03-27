@@ -2,7 +2,7 @@
 name: auth-browser
 description: Universal authenticated browser. Access Facebook, Meta, Instagram, Shopify, Google Ads — any service you're logged into. Chrome CDP with persistent sessions.
 version: 1.0.0
-agents: [main, taoz, dreami, scout, hermes]
+agents: [main, taoz, dreami, scout]
 evolves: true
 ---
 

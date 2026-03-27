@@ -2,7 +2,6 @@
 name: ads-competitor
 description: Competitor ad intelligence analysis across Google, Meta, LinkedIn, TikTok, Microsoft. Spy on competitor ad copy, targeting, spend.
 agents:
-  - hermes
   - scout
 ---
 

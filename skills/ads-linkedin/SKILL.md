@@ -2,7 +2,7 @@
 name: ads-linkedin
 description: LinkedIn Ads deep analysis for B2B advertising. Evaluate 25 checks across targeting, creative, bidding, tracking.
 agents:
-  - hermes
+  - dreami
 ---
 
 # Ads LinkedIn — LinkedIn Ads Deep Analysis
