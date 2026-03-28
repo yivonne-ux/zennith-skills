@@ -19,7 +19,7 @@
 set -uo pipefail
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
-HOME_DIR="/Users/jennwoeiloh"
+HOME_DIR="$HOME"
 OPENCLAW="${HOME_DIR}/.openclaw"
 OUTPUT_DIR="${OPENCLAW}/workspace/data/content/reels/$(date +%Y-%m-%d)"
 LOG_FILE="${OPENCLAW}/logs/kinetic-reel.log"
@@ -67,7 +67,7 @@ while [[ $# -gt 0 ]]; do
     --output)     OUTPUT_FILE="$2"; shift 2 ;;
     --font-color) FONT_COLOR="$2"; shift 2 ;;
     --accent)     ACCENT_COLOR="$2"; shift 2 ;;
-    *) shift ;;
+    *) echo "Unknown option: $1" >&2; exit 1 ;;
   esac
 done
 
@@ -76,14 +76,14 @@ done
 
 log() { echo "[kinetic $(date +%H:%M:%S)] $1" | tee -a "$LOG_FILE"; }
 
-# Brand color presets
+# Brand color presets (only apply if user didn't override with explicit flags)
 if [[ -n "$BRAND" ]]; then
   case "$BRAND" in
-    jade-oracle)  BG_COLOR="1A1A1A"; ACCENT_COLOR="00A86B"; FONT_COLOR="white" ;;
-    luna)         BG_COLOR="FAF8F5"; ACCENT_COLOR="D4A5A5"; FONT_COLOR="3A3A3A" ;;
-    mirra)        BG_COLOR="FFFFFF"; ACCENT_COLOR="2E7D32"; FONT_COLOR="1A1A1A" ;;
-    pinxin-vegan) BG_COLOR="F5F0E8"; ACCENT_COLOR="4CAF50"; FONT_COLOR="333333" ;;
-    *)            BG_COLOR="1A1A1A"; FONT_COLOR="white" ;;
+    jade-oracle)  [[ -z "$BG_COLOR_ARG" ]] && BG_COLOR="1A1A1A"; ACCENT_COLOR="00A86B"; [[ "$FONT_COLOR" == "white" ]] && FONT_COLOR="white" ;;
+    luna)         [[ -z "$BG_COLOR_ARG" ]] && BG_COLOR="FAF8F5"; ACCENT_COLOR="D4A5A5"; [[ "$FONT_COLOR" == "white" ]] && FONT_COLOR="3A3A3A" ;;
+    mirra)        [[ -z "$BG_COLOR_ARG" ]] && BG_COLOR="FFFFFF"; ACCENT_COLOR="2E7D32"; [[ "$FONT_COLOR" == "white" ]] && FONT_COLOR="1A1A1A" ;;
+    pinxin-vegan) [[ -z "$BG_COLOR_ARG" ]] && BG_COLOR="F5F0E8"; ACCENT_COLOR="4CAF50"; [[ "$FONT_COLOR" == "white" ]] && FONT_COLOR="333333" ;;
+    *)            [[ -z "$BG_COLOR_ARG" ]] && BG_COLOR="1A1A1A" ;;
   esac
 fi
 

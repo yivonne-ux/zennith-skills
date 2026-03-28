@@ -16,7 +16,7 @@
 set -uo pipefail
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
-SKILLS_DIR="/Users/jennwoeiloh/.openclaw/skills"
+SKILLS_DIR="$HOME/.openclaw/skills"
 OUTPUT_JSON=false
 FIX_MODE=false
 SINGLE_SKILL=""
@@ -83,20 +83,18 @@ check_skill() {
   # ── Layer 2: Dependency health (referenced scripts exist?) ──
   local scripts_dir="${skill_dir}/scripts"
   if [[ -d "$scripts_dir" ]]; then
-    for script in "${scripts_dir}"/*.sh; do
-      [[ -f "$script" ]] || continue
+    # Use grep to extract absolute paths (fast, single pass per skill)
+    # Skip paths containing $ (variable refs like $HOME, $OPENCLAW)
+    local ref_paths
+    ref_paths=$(grep -rhoE '/[^ "]+\.(sh|py|json|md|yaml)' "$scripts_dir" 2>/dev/null | grep -v '[${}]' | sort -u || true)
 
-      # Check if script references other files that should exist
-      while IFS= read -r line; do
-        # Extract paths from variable assignments and bash commands
-        local ref_path
-        ref_path=$(echo "$line" | grep -oE '/Users/[^ "]+\.(sh|py|json|md|yaml)' | head -1)
-        if [[ -n "$ref_path" && ! -f "$ref_path" ]]; then
-          BROKEN_DEPS=$((BROKEN_DEPS + 1))
-          issues="${issues}  BROKEN DEP: ${skill_name} references missing file: ${ref_path}\n"
-        fi
-      done < "$script"
-    done
+    while IFS= read -r ref_path; do
+      [[ -z "$ref_path" ]] && continue
+      if [[ ! -f "$ref_path" ]]; then
+        BROKEN_DEPS=$((BROKEN_DEPS + 1))
+        issues="${issues}  BROKEN DEP: ${skill_name} references missing file: ${ref_path}\n"
+      fi
+    done <<< "$ref_paths"
   fi
 
   # ── Layer 3: Security scan (hardcoded credentials) ──
@@ -134,7 +132,7 @@ check_skill() {
     HEALTHY=$((HEALTHY + 1))
     [[ "$OUTPUT_JSON" != "true" ]] && echo "  OK  ${skill_name} (${age_days}d old)"
   else
-    [[ "$OUTPUT_JSON" != "true" ]] && printf "  !!  ${skill_name} (${age_days}d old)\n${issues}"
+    printf "  !!  %s (%sd old)\n%b" "$skill_name" "$age_days" "$issues"
   fi
 }
 

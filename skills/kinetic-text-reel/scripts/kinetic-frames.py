@@ -52,7 +52,7 @@ def hex_to_rgb(h):
 def draw_centered_text(draw, text, font, color, y_offset=0):
     """Draw centered multiline text."""
     lines = text.split('\n')
-    line_height = font.size + 10
+    line_height = getattr(font, 'size', 40) + 10
     total_height = len(lines) * line_height
     start_y = (HEIGHT - total_height) // 2 + y_offset
 
@@ -135,17 +135,19 @@ def gen_slide_reveal(text, duration, output_dir, bg_color, font_color):
             img = Image.new('RGB', (WIDTH, HEIGHT), bg_rgb)
             draw = ImageDraw.Draw(img)
 
-            # Fade in effect
+            # Fade in effect (only use expensive RGBA composite during actual fade)
             alpha = min(255, int(255 * f / fade_frames)) if f < fade_frames else 255
-            color = (*fg_rgb, alpha)
 
-            # Use RGBA for fade
-            overlay = Image.new('RGBA', (WIDTH, HEIGHT), (0, 0, 0, 0))
-            overlay_draw = ImageDraw.Draw(overlay)
-            draw_centered_text(overlay_draw, wrapped, font, color)
-            img = img.convert('RGBA')
-            img = Image.alpha_composite(img, overlay)
-            img = img.convert('RGB')
+            if alpha < 255:
+                color = (*fg_rgb, alpha)
+                overlay = Image.new('RGBA', (WIDTH, HEIGHT), (0, 0, 0, 0))
+                overlay_draw = ImageDraw.Draw(overlay)
+                draw_centered_text(overlay_draw, wrapped, font, color)
+                img = img.convert('RGBA')
+                img = Image.alpha_composite(img, overlay)
+                img = img.convert('RGB')
+            else:
+                draw_centered_text(draw, wrapped, font, fg_rgb)
 
             img.save(f"{output_dir}/frame-{frame_num:05d}.png")
             frame_num += 1
@@ -169,11 +171,16 @@ def gen_quote(text, duration, output_dir, bg_color, font_color):
         # Subtle scale animation (zoom 1.0 -> 1.02 over duration)
         draw_centered_text(draw, wrapped, font, fg_rgb)
 
-        # Add subtle vignette
-        for edge in range(50):
-            opacity = int(40 * (1 - edge / 50))
-            draw.rectangle([edge, edge, WIDTH - edge, HEIGHT - edge],
-                          outline=(*bg_rgb[:3],), width=1)
+        # Subtle vignette: darken edges with semi-transparent black
+        vignette = Image.new('RGBA', (WIDTH, HEIGHT), (0, 0, 0, 0))
+        vdraw = ImageDraw.Draw(vignette)
+        for edge in range(40):
+            opacity = int(30 * (1 - edge / 40))
+            vdraw.rectangle([edge, edge, WIDTH - edge, HEIGHT - edge],
+                           outline=(0, 0, 0, opacity), width=1)
+        img = img.convert('RGBA')
+        img = Image.alpha_composite(img, vignette)
+        img = img.convert('RGB')
 
         img.save(f"{output_dir}/frame-{frame_num:05d}.png")
 

@@ -38,7 +38,7 @@ Controls text size hierarchy and spacing.
 ### 6. LAYOUT_MASTER
 Controls composition and breathing space.
 
-**Include:** `Portrait format 4:5 (1080x1350). Generous margins of at least 80px on all sides. 40-60% of the canvas should be breathing space. Maximum 4-5 visual elements total. ONE clear focal point. The design must communicate its message in a 3-second glance.`
+**Include:** `[RATIO — e.g., Portrait 4:5 (1080x1350) for feed, or 9:16 (1080x1920) for stories/reels/carousels]. Generous margins of at least 80px on all sides. 40-60% of the canvas should be breathing space. Maximum 4-5 visual elements total. ONE clear focal point. The design must communicate its message in a 3-second glance.`
 
 ### 7. COLOR_MASTER
 Controls palette discipline.

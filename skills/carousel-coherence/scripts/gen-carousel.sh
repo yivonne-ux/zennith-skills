@@ -12,7 +12,7 @@
 set -uo pipefail
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
 
-HOME_DIR="/Users/jennwoeiloh"
+HOME_DIR="$HOME"
 OPENCLAW="${HOME_DIR}/.openclaw"
 NANOBANANA="${OPENCLAW}/skills/nanobanana/scripts/nanobanana-gen.sh"
 OUTPUT_BASE="${OPENCLAW}/workspace/data/content"
