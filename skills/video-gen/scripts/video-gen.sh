@@ -2,7 +2,7 @@
 # video-gen.sh — Unified video generation CLI for GAIA CORP-OS
 # Usage: bash video-gen.sh <provider|command> [subcommand] [options]
 #
-# Providers: kling, wan, sora, luma
+# Providers: kling, wan, sora, luma, seedance
 # Commands:  pipeline, reverse-prompt, status
 #
 # macOS Bash 3.2 compatible — no declare -A, no ${var,,}, no timeout, no jq
@@ -1738,6 +1738,11 @@ pipeline() {
           --duration "$duration" --aspect-ratio "$ratio" --output "$clip_path" \
           ${brand:+--brand "$brand"} 2>&1 | while IFS= read -r line; do echo "    $line"; done || true
         ;;
+      seedance)
+        bash "$SCRIPT_DIR/seedance-gen.sh" --image "$scene_image" --prompt "$scene_prompt" \
+          --duration "$duration" --aspect "$ratio" --output "$clip_path" \
+          2>&1 | while IFS= read -r line; do echo "    $line"; done || true
+        ;;
     esac
 
     if [ -f "$clip_path" ]; then
@@ -2979,6 +2984,25 @@ main() {
         download)    shift; luma_download "$@" ;;
         *) echo "Usage: video-gen.sh luma text2video|image2video|status|download"; exit 1 ;;
       esac
+      ;;
+    seedance)
+      shift
+      # Delegate to seedance-gen.sh (PiAPI provider)
+      SEEDANCE_SCRIPT="$SCRIPT_DIR/seedance-gen.sh"
+      if [ -f "$SEEDANCE_SCRIPT" ]; then
+        case "${1:-}" in
+          text2video|generate)
+            shift; bash "$SEEDANCE_SCRIPT" "$@" ;;
+          image2video)
+            shift; bash "$SEEDANCE_SCRIPT" "$@" ;;
+          *)
+            # Pass all args directly
+            bash "$SEEDANCE_SCRIPT" "$@" ;;
+        esac
+      else
+        echo "ERROR: seedance-gen.sh not found at $SEEDANCE_SCRIPT"
+        exit 1
+      fi
       ;;
     sora-ugc)       shift; sora_ugc_pipeline "$@" ;;
     pipeline)       shift; pipeline "$@" ;;
