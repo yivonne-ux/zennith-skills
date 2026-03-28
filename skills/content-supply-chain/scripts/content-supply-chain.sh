@@ -93,17 +93,17 @@ post_room() {
 
 # ═══════════════════════════════════════════
 # STAGE 1: RESEARCH
-# Owner: Artemis
+# Owner: Scout
 # Skills: content-seed-bank, web-search-pro, meta-ads-library, tiktok-trends, ig-reels-trends
 # ═══════════════════════════════════════════
 stage_research() {
-  echo -e "${CYAN}[1/8] RESEARCH${NC} — Artemis scouting trends + competitor intel"
+  echo -e "${CYAN}[1/8] RESEARCH${NC} — Scout scouting trends + competitor intel"
   log_event "research" "started" "Scouting for $BRAND"
 
   if $DRY_RUN; then
-    echo "  [dry-run] Would run: seed-store.sh query --source artemis --brand $BRAND --top 10"
+    echo "  [dry-run] Would run: seed-store.sh query --source scout --brand $BRAND --top 10"
     echo "  [dry-run] Would run: biz-scout.sh scan (if discovery mode)"
-    echo "  [dry-run] Would dispatch Artemis for trend scouting"
+    echo "  [dry-run] Would dispatch Scout for trend scouting"
     return 0
   fi
 
@@ -117,9 +117,9 @@ stage_research() {
   # Check latest research in build room
   local recent_research=""
   if [ -f "$ROOMS_DIR/build.jsonl" ]; then
-    recent_research=$(grep -c "artemis.*$BRAND" "$ROOMS_DIR/build.jsonl" 2>/dev/null | tr -d ' ' || echo "0")
+    recent_research=$(grep -c "scout.*$BRAND" "$ROOMS_DIR/build.jsonl" 2>/dev/null | tr -d ' ' || echo "0")
   fi
-  echo "  Build room: $recent_research Artemis entries for $BRAND"
+  echo "  Build room: $recent_research Scout entries for $BRAND"
 
   log_event "research" "completed" "Seeds: $seed_count, Room entries: $recent_research"
   echo -e "  ${GREEN}✓ Research data available${NC}"
@@ -127,11 +127,11 @@ stage_research() {
 
 # ═══════════════════════════════════════════
 # STAGE 2: STRATEGY
-# Owner: Athena + Hermes
+# Owner: Scout + Dreami
 # Skills: campaign-planner, creative-taxonomy, cso-pipeline, funnel-playbook
 # ═══════════════════════════════════════════
 stage_strategy() {
-  echo -e "${CYAN}[2/8] STRATEGY${NC} — Athena analyzing + Hermes planning"
+  echo -e "${CYAN}[2/8] STRATEGY${NC} — Scout analyzing + Dreami planning"
   log_event "strategy" "started" "Strategy for $BRAND direction=$DIRECTION"
 
   if $DRY_RUN; then
@@ -164,7 +164,7 @@ stage_strategy() {
 
 # ═══════════════════════════════════════════
 # STAGE 3: BRIEF
-# Owner: Hermes (structure) + Dreami (copy angle)
+# Owner: Dreami (structure) + Dreami (copy angle)
 # Skills: campaign-planner, ideation-engine, content-ideation-workflow
 # ═══════════════════════════════════════════
 stage_brief() {
@@ -230,17 +230,17 @@ stage_create() {
 
 # ═══════════════════════════════════════════
 # STAGE 5: PRODUCE
-# Owner: Iris (visuals) + ad-composer (images)
+# Owner: Dreami (visuals) + ad-composer (images)
 # Skills: ad-composer (nanobanana/recraft/flux), creative-factory, video-gen
 # ═══════════════════════════════════════════
 stage_produce() {
-  echo -e "${CYAN}[5/8] PRODUCE${NC} — Iris producing visuals"
+  echo -e "${CYAN}[5/8] PRODUCE${NC} — Dreami producing visuals"
   log_event "produce" "started" "Producing assets for $BRAND"
 
   if $DRY_RUN; then
     echo "  [dry-run] Would run: creative-factory.sh quick --brand $BRAND --direction ${DIRECTION:-en-1} --count 3"
     echo "  [dry-run] Would run: ad-image-gen.sh generate --model nanobanana --brand $BRAND"
-    echo "  [dry-run] Would dispatch Iris for visual QA"
+    echo "  [dry-run] Would dispatch Dreami for visual QA"
     return 0
   fi
 
@@ -257,7 +257,7 @@ stage_produce() {
 
 # ═══════════════════════════════════════════
 # STAGE 6: DISTRIBUTE
-# Owner: Iris (social) + Hermes (ads)
+# Owner: Dreami (social) + Dreami (ads)
 # Skills: social-publish, meta-ads-manager
 # ═══════════════════════════════════════════
 stage_distribute() {
@@ -284,7 +284,7 @@ stage_distribute() {
 
 # ═══════════════════════════════════════════
 # STAGE 7: ANALYZE
-# Owner: Athena + Hermes
+# Owner: Scout + Dreami
 # Skills: ad-performance, growth-engine, content-tuner
 # ═══════════════════════════════════════════
 stage_analyze() {

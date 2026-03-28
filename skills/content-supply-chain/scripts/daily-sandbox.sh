@@ -60,10 +60,10 @@ phase_scout() {
   local scout_file="$DATA/$TODAY/scout-report.json"
   local findings=0
 
-  # 1a. Full Artemis scout via Gemini CLI (trends + competitors + ads + new models)
-  if [ -f "$SKILLS/gemini-cli/scripts/artemis-scout.sh" ]; then
-    log "Running Artemis daily scout (Gemini CLI, \$0)..."
-    bash "$SKILLS/gemini-cli/scripts/artemis-scout.sh" daily --brand mirra >> "$LOG" 2>&1 || true
+  # 1a. Full Scout scout via Gemini CLI (trends + competitors + ads + new models)
+  if [ -f "$SKILLS/gemini-cli/scripts/scout-scout.sh" ]; then
+    log "Running Scout daily scout (Gemini CLI, \$0)..."
+    bash "$SKILLS/gemini-cli/scripts/scout-scout.sh" daily --brand mirra >> "$LOG" 2>&1 || true
     findings=$((findings + 1))
   fi
 
@@ -111,7 +111,7 @@ phase_test() {
 
   # 2b. Gateway agent dispatch (real E2E, costs API tokens)
   log "Testing gateway dispatches..."
-  local agents=("artemis" "dreami" "hermes" "athena")
+  local agents=("scout" "dreami" "dreami" "scout")
   local messages=("status check" "hello, quick ack" "campaign status for mirra" "how are mirra ads performing")
 
   for i in 0 1 2 3; do
@@ -162,7 +162,7 @@ phase_test() {
   # 2e. SOUL.md obsession check (canonical 9 agents only)
   log "Testing SOUL.md obsessions..."
   local soul_pass=0 soul_total=0
-  for agent_id in main taoz dreami artemis athena hermes iris argus myrmidons; do
+  for agent_id in main taoz dreami scout scout dreami dreami scout scout; do
     local soul_file="$HOME/.openclaw/workspace-${agent_id}/SOUL.md"
     soul_total=$((soul_total + 1))
     if grep -q "Obsession" "$soul_file" 2>/dev/null; then
