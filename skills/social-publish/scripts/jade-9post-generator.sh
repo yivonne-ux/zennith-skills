@@ -16,7 +16,7 @@
 #     slot-1-oracle_card.png           slot-1-caption.txt
 #     slot-2-lifestyle.png             slot-2-caption.txt
 #     slot-3-spiritual_quote.png       slot-3-caption.txt
-#     slot-4-qmdj_carousel-1.png ...   slot-4-caption.txt
+#     slot-4-oracle_insight-1.png ...   slot-4-caption.txt
 #     slot-5-aesthetic_flatlay.png     slot-5-caption.txt
 #     slot-6-reading_scene.png        slot-6-caption.txt
 #     slot-7-subtle_animation.mp4     slot-7-caption.txt
@@ -243,44 +243,44 @@ generate_image() {
     nb_path="$(resolve_nanobanana)" || true
 
     if [ -n "$nb_path" ]; then
-        local nb_args="generate --brand jade-oracle --use-case character"
-        nb_args="$nb_args --prompt \"$prompt\""
-
-        if [ -n "$ref_images" ]; then
-            nb_args="$nb_args --ref-image \"$ref_images\""
-        fi
-
-        nb_args="$nb_args --model pro --ratio \"$ratio\" --size 2K --output \"$output_file\""
-
         log "Generating image via NanoBanana: $(basename "$output_file")"
 
-        # Build and run the command (eval needed for quoted args)
+        # NanoBanana auto-saves to ~/.openclaw/workspace/data/images/brand/timestamp.png
+        # It does NOT accept --output. Capture stdout to find the saved path, then move.
+        local nb_output=""
         if [ -n "$ref_images" ]; then
-            bash "$nb_path" generate \
+            nb_output=$(bash "$nb_path" generate \
                 --brand jade-oracle \
                 --use-case character \
                 --prompt "$prompt" \
                 --ref-image "$ref_images" \
                 --model pro \
                 --ratio "$ratio" \
-                --size 2K \
-                --output "$output_file" >> "$LOG_FILE" 2>&1
+                --size 2K 2>>"$LOG_FILE") || true
         else
-            bash "$nb_path" generate \
+            nb_output=$(bash "$nb_path" generate \
                 --brand jade-oracle \
                 --use-case character \
                 --prompt "$prompt" \
                 --model pro \
                 --ratio "$ratio" \
-                --size 2K \
-                --output "$output_file" >> "$LOG_FILE" 2>&1
+                --size 2K 2>>"$LOG_FILE") || true
         fi
 
-        if [ -f "$output_file" ]; then
+        # Extract generated image path from NanoBanana output
+        local generated_path=""
+        generated_path=$(echo "$nb_output" | grep -oE '/[^ ]+\.png' | tail -1)
+
+        if [ -n "$generated_path" ] && [ -f "$generated_path" ]; then
+            cp "$generated_path" "$output_file"
+            log "  Generated + copied: $output_file (from $generated_path)"
+            return 0
+        elif [ -f "$output_file" ]; then
             log "  Generated: $output_file"
             return 0
         else
-            err "  NanoBanana returned success but no file produced"
+            err "  NanoBanana failed or no image produced"
+            echo "$nb_output" >> "$LOG_FILE"
         fi
     fi
 
@@ -368,7 +368,8 @@ ${extra_context:+CONTEXT: $extra_context}
 
 BRAND VOICE RULES:
 - Warm, wise, slightly mysterious — like a trusted spiritual advisor over tea
-- Mix English with natural Chinese metaphysics terms (QMDJ, 奇门遁甲, BaZi, 八字, 气 qi, 天盘 heaven plate)
+- Use oracle cards, tarot, and numerology language ONLY
+- NEVER mention QMDJ, Qi Men, astronomical, celestial calculation, or Chinese metaphysics terms
 - Korean cultural references welcome but not forced
 - NEVER use cosmic/celestial/galaxy language
 - NEVER sound like a generic horoscope
@@ -401,36 +402,36 @@ CAPTION_PROMPT
     log "  Claude CLI unavailable — generating template caption for slot $slot_num"
     {
         case "$post_type" in
-            oracle_card)
+            oracle_card|story_card_reveal|story_oracle_tip)
                 echo "Your card for today has arrived."
                 echo ""
                 echo "Sometimes the universe whispers before it speaks. Today's oracle card is a gentle nudge — pay attention to the patterns unfolding around you."
                 echo ""
                 echo "What does this card stir in you? Tell me below."
                 ;;
-            lifestyle)
+            lifestyle|story_lifestyle)
                 echo "Between readings, there is this."
                 echo ""
                 echo "Tea steeping. Morning light through the window. A quiet moment before the world rushes in."
                 echo ""
                 echo "How are you starting your day?"
                 ;;
-            spiritual_quote)
+            spiritual_quote|story_quote)
                 echo "The ancients knew: timing is everything."
                 echo ""
-                echo "奇门遁甲 teaches us that every moment carries its own energy — and the wise ones learn to ride the wave rather than fight the current."
+                echo "The oracle cards remind us: every moment carries its own energy. The wise learn to read the signs and move with the current, not against it."
                 echo ""
                 echo "Save this for when you need the reminder."
                 ;;
-            qmdj_carousel)
-                echo "QMDJ Energy Breakdown for $(date -d "$DATE" +%A 2>/dev/null || date -j -f %Y-%m-%d "$DATE" +%A 2>/dev/null || echo "today")"
+            oracle_insight)
+                echo "Oracle Energy Reading for $(date -d "$DATE" +%A 2>/dev/null || date -j -f %Y-%m-%d "$DATE" +%A 2>/dev/null || echo "today")"
                 echo ""
-                echo "Swipe through to decode today's cosmic architecture. The 天盘 (Heaven Plate) reveals what's possible — save this post to reference throughout your day."
+                echo "Swipe through today's oracle insight. The cards reveal the energy patterns around you — save this post to reference throughout your day."
                 ;;
-            aesthetic_flatlay)
+            aesthetic_flatlay|story_aesthetic)
                 echo "Jade, smoke, stillness."
                 ;;
-            reading_scene)
+            reading_scene|jade_reading_reel)
                 echo "The cards are already turning."
                 echo ""
                 echo "Every reading begins before the cards are drawn — in the question you carry, in the energy you bring to the table."
@@ -440,17 +441,17 @@ CAPTION_PROMPT
             subtle_animation)
                 echo "Breathe. The oracle is listening."
                 ;;
-            pick_a_card)
+            pick_a_card|story_pick_a_card)
                 echo "Pick a card — left, center, or right."
                 echo ""
                 echo "Trust the first one your eye is drawn to. Your intuition already knows."
                 echo ""
                 echo "Comment 1, 2, or 3 — I'll reveal the messages in Stories tonight."
                 ;;
-            behind_scenes)
+            behind_scenes|story_behind_scenes)
                 echo "Behind the veil."
                 echo ""
-                echo "People ask what a QMDJ reading actually looks like. It's charts, calculation, intuition — and a lot of tea."
+                echo "People ask what an oracle reading looks like behind the scenes. It's cards, intuition, reflection — and a lot of tea."
                 echo ""
                 echo "Swipe to see the process."
                 ;;
@@ -560,12 +561,12 @@ gen_spiritual_quote() {
     dow=$(date -j -f %Y-%m-%d "$DATE" +%u 2>/dev/null || date -d "$DATE" +%u 2>/dev/null || date +%u)
     local quote_text=""
     case "$dow" in
-        1) quote_text="The right door opens at the right time. Your only job is to keep walking. — 奇门遁甲" ;;
+        1) quote_text="The right door opens at the right time. Your only job is to keep walking. — Ancient Oracle Wisdom" ;;
         2) quote_text="Water does not resist. It flows around every obstacle and still reaches the sea." ;;
         3) quote_text="When the student is ready, the teacher appears. When the student is truly ready, the teacher disappears." ;;
         4) quote_text="Your energy introduces you before you even speak. 气 (Qi) knows no language barrier." ;;
-        5) quote_text="Ancient wisdom is not old. It is timeless. 奇门遁甲 has been waiting 4,000 years for you." ;;
-        6) quote_text="The universe is not punishing you. It is redirecting you. Trust the 天盘 — the Heaven Plate always turns." ;;
+        5) quote_text="Ancient wisdom is not old. It is timeless. The oracle cards have been waiting for your question." ;;
+        6) quote_text="The universe is not punishing you. It is redirecting you. Trust the turning of the cards — the oracle always reveals what you need." ;;
         7) quote_text="Rest is not giving up. Rest is gathering 气 for your next move." ;;
     esac
 
@@ -581,7 +582,7 @@ gen_qmdj_carousel() {
     slide_count="$(json_get_slot "$slot_num" "slides")"
     slide_count="${slide_count:-5}"
 
-    log "  Generating $slide_count carousel slides for QMDJ education"
+    log "  Generating $slide_count carousel slides for oracle insight"
 
     local i=1
     while [ "$i" -le "$slide_count" ]; do
@@ -589,14 +590,14 @@ gen_qmdj_carousel() {
 
         local slide_content=""
         case "$i" in
-            1) slide_content="Cover slide: Bold headline 'Your QMDJ Energy Map for $(date -j -f %Y-%m-%d "$DATE" +%A 2>/dev/null || date -d "$DATE" +%A 2>/dev/null || echo "Today")' with jade green background, gold accents, The Jade Oracle branding. Swipe arrow hint at bottom." ;;
-            2) slide_content="Slide 2: 'The Heaven Plate (天盘)' — diagram showing today's energy configuration. Clean infographic style, jade green icons on cream background, educational layout with brief explanatory text." ;;
+            1) slide_content="Cover slide: Bold headline 'Your Oracle Energy Reading for $(date -j -f %Y-%m-%d "$DATE" +%A 2>/dev/null || date -d "$DATE" +%A 2>/dev/null || echo "Today")' with jade green background, gold accents, The Jade Oracle branding. Swipe arrow hint at bottom." ;;
+            2) slide_content="Slide 2: 'Today's Oracle Spread' — diagram showing today's oracle card energy. Clean infographic style, jade green icons on cream background, educational layout with brief explanatory text." ;;
             3) slide_content="Slide 3: 'Key Energies Today' — three energy highlights with icons. Warm editorial style, jade green and burgundy color blocks on cream. Clear readable serif typography." ;;
-            4) slide_content="Slide 4: 'Your Action Guide' — practical advice based on QMDJ reading. Three actionable tips with checkmark icons. Clean card layout, warm tones." ;;
-            5) slide_content="Slide 5: CTA slide — 'Want your personal QMDJ reading?' with link-in-bio prompt. Jade green background with gold text. @the_jade_oracle handle. Warm, inviting design." ;;
+            4) slide_content="Slide 4: 'Your Action Guide' — practical advice based on today's oracle reading. Three actionable tips with checkmark icons. Clean card layout, warm tones." ;;
+            5) slide_content="Slide 5: CTA slide — 'Want your personal oracle reading?' with link-in-bio prompt. Jade green background with gold text. @the_jade_oracle handle. Warm, inviting design." ;;
         esac
 
-        local prompt="Instagram carousel slide ($i of $slide_count) for The Jade Oracle QMDJ education post. $slide_content Style: editorial, warm, educational infographic — NOT generic, NOT cluttered. Colors: jade green (#00A86B), cream (#F5F0E8), burgundy (#722F37), gold (#D4AF37). 4:5 aspect ratio."
+        local prompt="Instagram carousel slide ($i of $slide_count) for The Jade Oracle oracle insight post. $slide_content Style: editorial, warm, educational infographic — NOT generic, NOT cluttered. Colors: jade green (#00A86B), cream (#F5F0E8), burgundy (#722F37), gold (#D4AF37). 4:5 aspect ratio."
 
         generate_image "$prompt" "$output_img" "4:5" ""
         i=$((i + 1))
@@ -615,7 +616,7 @@ gen_aesthetic_flatlay() {
         1) scene="Oracle cards fanned on dark wood desk, jade stone paperweight, burning incense stick, morning window light, shadow play" ;;
         2) scene="Jade bracelet on marble tray next to matcha in a ceramic cup, dried eucalyptus sprig, cream linen underneath, overhead shot" ;;
         3) scene="Three crystals (clear quartz, jade, amethyst) arranged on cream fabric with candle flame reflection, close-up macro feel" ;;
-        4) scene="Old QMDJ reference book open to a chart page, reading glasses nearby, tea cup half empty, warm desk lamp light, scholarly" ;;
+        4) scene="Old oracle reference book open to a chart page, reading glasses nearby, tea cup half empty, warm desk lamp light, scholarly" ;;
         5) scene="Gold-rimmed jade bowl filled with oracle card collection, burgundy velvet underneath, scattered dried rose petals, editorial" ;;
         6) scene="Incense holder with curling smoke, jade pendant necklace coiled beside it, cream marble surface, golden hour side-light" ;;
         7) scene="Sunday reset spread: journal, jade gua sha, herbal tea, dried flowers, warm bedside lamp, cozy textiles, overhead angle" ;;
@@ -639,7 +640,7 @@ gen_reading_scene() {
     case "$dow" in
         1) scene="Jade seated at dark wood table, spreading oracle cards in arc formation, single candle lit, concentrated expression, moody warm lighting" ;;
         2) scene="Jade's hands close-up, turning over a jade oracle card, rings visible, candlelight casting warm glow on cream table surface" ;;
-        3) scene="Jade studying a QMDJ chart on paper, pen in hand, reference books stacked, deep in thought, warm desk lamp, evening mood" ;;
+        3) scene="Jade studying oracle card layouts on paper, pen in hand, reference books stacked, deep in thought, warm desk lamp, evening mood" ;;
         4) scene="Jade mid-reading, looking directly at camera as if reading the viewer, oracle cards between them, intimate warm lighting, powerful" ;;
         5) scene="Jade cleansing oracle deck with incense smoke, eyes closed, peaceful expression, soft backlight, burgundy shawl draped over shoulders" ;;
         6) scene="Over-the-shoulder view of Jade arranging crystals around oracle cards on velvet cloth, warm tones, ritualistic, beautiful composition" ;;
@@ -785,10 +786,10 @@ gen_behind_scenes() {
 
         local scene=""
         case "$i" in
-            1) scene="Jade's workspace from the doorway — desk with oracle cards laid out, laptop open to a QMDJ chart, warm lamp, tea, cozy evening setup. 'Behind the veil' text overlay." ;;
-            2) scene="Close-up of Jade's hands writing in a leather journal, oracle cards spread nearby, handwritten notes about QMDJ calculations, warm candlelight." ;;
+            1) scene="Jade's workspace from the doorway — desk with oracle cards laid out, laptop with oracle cards spread, warm lamp, tea, cozy evening setup. 'Behind the veil' text overlay." ;;
+            2) scene="Close-up of Jade's hands writing in a leather journal, oracle cards spread nearby, handwritten notes about card interpretations, warm candlelight." ;;
             3) scene="Jade's phone showing an Instagram DM conversation (blurred names) — she's replying to a client, warm smile reflected in screen, casual home setting." ;;
-            4) scene="A messy-beautiful desk scene: QMDJ reference books stacked, multiple tea cups, crystals, sticky notes with Chinese characters, real working space energy." ;;
+            4) scene="A messy-beautiful desk scene: oracle reading journals stacked, multiple tea cups, crystals, sticky notes with card meanings, real working space energy." ;;
             5) scene="Jade at her desk looking at camera with warm smile, slightly tired but fulfilled end-of-day energy, warm lamp light, 'Thank you for being here' mood." ;;
         esac
 
@@ -829,33 +830,38 @@ generate_slot() {
     log "Slot $slot_num | $post_type ($post_format) | $time_myt MYT | $purpose"
 
     # Generate image(s)
+    # Map schedule types (story_* prefixed) to generator functions
     case "$post_type" in
-        oracle_card)
+        oracle_card|story_card_reveal)
             gen_oracle_card "$slot_num"
             ;;
-        lifestyle)
+        lifestyle|story_lifestyle)
             gen_lifestyle "$slot_num"
             ;;
-        spiritual_quote)
+        spiritual_quote|story_quote)
             gen_spiritual_quote "$slot_num"
             ;;
-        qmdj_carousel)
+        oracle_insight)
             gen_qmdj_carousel "$slot_num"
             ;;
-        aesthetic_flatlay)
+        aesthetic_flatlay|story_aesthetic)
             gen_aesthetic_flatlay "$slot_num"
             ;;
-        reading_scene)
+        reading_scene|jade_reading_reel)
             gen_reading_scene "$slot_num"
             ;;
         subtle_animation)
             gen_subtle_animation "$slot_num"
             ;;
-        pick_a_card)
+        pick_a_card|story_pick_a_card)
             gen_pick_a_card "$slot_num"
             ;;
-        behind_scenes)
+        behind_scenes|story_behind_scenes)
             gen_behind_scenes "$slot_num"
+            ;;
+        story_oracle_tip)
+            # Oracle tip stories use the oracle card generator with simpler prompts
+            gen_oracle_card "$slot_num"
             ;;
         *)
             err "Unknown post type: $post_type for slot $slot_num"
