@@ -184,15 +184,26 @@
   },
 
   "hooks_library": [
-    {"hook": "If you're seeing this|it's *not* a coincidence", "type": "fate"},
-    {"hook": "The universe has a|*message* for you today", "type": "fate"},
-    {"hook": "Stop scrolling|This is *your* sign", "type": "fate"},
-    {"hook": "Something is about to|*shift* in your life", "type": "prediction"},
-    {"hook": "Your energy right now|says *everything*", "type": "moment_gate"},
-    {"hook": "The cards pulled you here|for a *reason*", "type": "fate"},
-    {"hook": "Someone is thinking|about you *right now*", "type": "prediction"},
-    {"hook": "What your soul needs|to hear *today*", "type": "daily"},
-    {"hook": "This message will make|*complete sense* to you", "type": "fate"},
-    {"hook": "The gate that's open|for you *right now*", "type": "moment_gate"}
+    {"hook": "If you're seeing this|it's *not* a coincidence", "type": "fate", "source": "top performer across all spiritual creators"},
+    {"hook": "Stop scrolling|The cards pulled *you* here", "type": "fate", "source": "pattern interrupt + exclusivity"},
+    {"hook": "Something is *shifting*|in your life this week", "type": "prediction", "source": "prediction hook format"},
+    {"hook": "Your energy right now|says *everything*", "type": "moment_gate", "source": "QMDJ unique - no competitor can do this"},
+    {"hook": "The gate that's open|for you *right now*", "type": "moment_gate", "source": "QMDJ real-time divination hook"},
+    {"hook": "Someone from your past|is about to *return*", "type": "prediction", "source": "specificity trigger - feels targeted"},
+    {"hook": "This is the *sign*|you've been waiting for", "type": "fate", "source": "validates viewer's desire to act"},
+    {"hook": "You're going through something|this card was *pulled for you*", "type": "fate", "source": "emotional mirror + divine targeting"},
+    {"hook": "Don't scroll past this|This message is *specifically for you*", "type": "fate", "source": "pattern interrupt + exclusivity"},
+    {"hook": "What your soul needs|to hear *today*", "type": "daily", "source": "daily message series anchor"},
+    {"hook": "Pick a card|Trust your *intuition*", "type": "pick_a_card", "source": "dominant format - forces engagement"},
+    {"hook": "The cosmos computed this|for the *exact moment*|you're watching", "type": "moment_gate", "source": "QMDJ unique - mathematical precision"}
+  ],
+
+  "cta_library": [
+    {"cta": "Type *YES* to claim this message", "type": "comment", "source": "spiritual commitment language drives comments"},
+    {"cta": "Save this — check back in *7 days*", "type": "save", "source": "prediction verification loop"},
+    {"cta": "Comment your *pile number* below", "type": "comment", "source": "pick-a-card engagement driver"},
+    {"cta": "Share with someone who *needs this*", "type": "share", "source": "utility sharing trigger"},
+    {"cta": "Follow for your *daily reading*", "type": "follow", "source": "habit loop builder"},
+    {"cta": "Take what resonates|leave what doesn't", "type": "soft_close", "source": "removes pressure, feels authentic"}
   ]
 }
