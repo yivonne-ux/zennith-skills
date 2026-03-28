@@ -1,0 +1,198 @@
+{
+  "_description": "Jade Oracle Remotion video templates — $0/render, auto-generate daily content",
+  "_brand": "jade-oracle",
+  "_updated": "2026-03-28",
+
+  "templates": {
+    "daily_oracle": {
+      "name": "Daily Oracle Card Message",
+      "duration_s": 12,
+      "description": "Single oracle card pull with kinetic text reveal. Daily automated content.",
+      "blocks": [
+        {
+          "id": "intro",
+          "type": "kinetic_text",
+          "duration_s": 3,
+          "kinetic_lines": [{"text": "Today's Oracle"}, {"text": "*Message*"}],
+          "kinetic_animation": "scale_bounce",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "fade"
+        },
+        {
+          "id": "card_reveal",
+          "type": "kinetic_text",
+          "duration_s": 5,
+          "kinetic_lines": [{"text": "{{CARD_NAME}}"}, {"text": "{{CARD_KEYWORDS}}"}],
+          "kinetic_animation": "word_pop",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "slide_up"
+        },
+        {
+          "id": "message",
+          "type": "kinetic_text",
+          "duration_s": 4,
+          "kinetic_lines": [{"text": "{{CARD_MESSAGE}}"}],
+          "kinetic_animation": "typewriter",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#00A86B"
+        }
+      ]
+    },
+
+    "pick_a_card": {
+      "name": "Pick A Card Oracle Reading",
+      "duration_s": 15,
+      "description": "3 face-down cards, viewer picks, reveal each. Post as 3-part series.",
+      "blocks": [
+        {
+          "id": "hook",
+          "type": "kinetic_text",
+          "duration_s": 3,
+          "kinetic_lines": [{"text": "Pick A Card"}, {"text": "*1*  *2*  or  *3*"}],
+          "kinetic_animation": "slam",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "fade"
+        },
+        {
+          "id": "card_reveal",
+          "type": "kinetic_text",
+          "duration_s": 4,
+          "kinetic_lines": [{"text": "Card {{CARD_NUM}}"}, {"text": "*{{CARD_NAME}}*"}],
+          "kinetic_animation": "scale_bounce",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "slide_up"
+        },
+        {
+          "id": "message",
+          "type": "kinetic_text",
+          "duration_s": 5,
+          "kinetic_lines": [{"text": "{{CARD_MESSAGE_LINE1}}"}, {"text": "{{CARD_MESSAGE_LINE2}}"}],
+          "kinetic_animation": "typewriter",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#00A86B"
+        },
+        {
+          "id": "cta",
+          "type": "end_card",
+          "duration_s": 3,
+          "end_card": {
+            "headline": "Your Oracle Awaits",
+            "subHeadline": "Follow for daily readings",
+            "ctaText": "FOLLOW @THE_JADE_ORACLE",
+            "bgColor": "#00A86B"
+          }
+        }
+      ]
+    },
+
+    "hook_reel": {
+      "name": "Spiritual Hook Reel",
+      "duration_s": 10,
+      "description": "Fate hook + message + CTA. Generic template for any hook text.",
+      "blocks": [
+        {
+          "id": "hook",
+          "type": "kinetic_text",
+          "duration_s": 3,
+          "kinetic_lines": [{"text": "{{HOOK_LINE1}}"}, {"text": "{{HOOK_LINE2}}"}],
+          "kinetic_animation": "slam",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "fade"
+        },
+        {
+          "id": "message",
+          "type": "kinetic_text",
+          "duration_s": 4,
+          "kinetic_lines": [{"text": "{{MESSAGE_LINE1}}"}, {"text": "*{{MESSAGE_LINE2}}*"}],
+          "kinetic_animation": "word_pop",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#00A86B",
+          "transition": "slide_up"
+        },
+        {
+          "id": "cta",
+          "type": "end_card",
+          "duration_s": 3,
+          "end_card": {
+            "headline": "{{CTA_HEADLINE}}",
+            "ctaText": "FOLLOW @THE_JADE_ORACLE",
+            "bgColor": "#00A86B"
+          }
+        }
+      ]
+    },
+
+    "moment_gate": {
+      "name": "QMDJ Moment Gate Reading",
+      "duration_s": 15,
+      "description": "The moment you see this IS the reading. Unique QMDJ-powered hook.",
+      "blocks": [
+        {
+          "id": "fate_hook",
+          "type": "kinetic_text",
+          "duration_s": 3,
+          "kinetic_lines": [{"text": "If you're seeing this"}, {"text": "it's *not* a coincidence"}],
+          "kinetic_animation": "blur_reveal",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "fade"
+        },
+        {
+          "id": "gate_reveal",
+          "type": "kinetic_text",
+          "duration_s": 4,
+          "kinetic_lines": [{"text": "The {{GATE_NAME}}"}, {"text": "is *open* for you"}],
+          "kinetic_animation": "scale_bounce",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#C9B037",
+          "transition": "slide_up"
+        },
+        {
+          "id": "meaning",
+          "type": "kinetic_text",
+          "duration_s": 5,
+          "kinetic_lines": [{"text": "{{GATE_MESSAGE_LINE1}}"}, {"text": "{{GATE_MESSAGE_LINE2}}"}],
+          "kinetic_animation": "typewriter",
+          "kinetic_bg_color": "#1A1A1A",
+          "kinetic_accent_color": "#00A86B"
+        },
+        {
+          "id": "cta",
+          "type": "end_card",
+          "duration_s": 3,
+          "end_card": {
+            "headline": "Your Gate Is Open",
+            "subHeadline": "The moment you asked was the answer",
+            "ctaText": "GET YOUR READING",
+            "bgColor": "#00A86B"
+          }
+        }
+      ]
+    }
+  },
+
+  "card_deck": {
+    "_note": "25 cards from jade-oracle-card-system.json — use for daily pulls",
+    "archetypes": ["The Drifter", "The Healer", "The Warrior", "The Sage", "The Emperor", "The Architect", "The Blade", "The Mountain", "The Phoenix"],
+    "pathways": ["The Rest", "The Tomb", "The Strike", "The Veil", "The Stage", "The Open Road", "The Alarm", "The Garden"],
+    "guardians": ["The Crown", "The Serpent", "The Moon Mother", "The Union", "The White Tiger", "The Dark Warrior", "The Earth Mother", "The Sky Father"]
+  },
+
+  "hooks_library": [
+    {"hook": "If you're seeing this|it's *not* a coincidence", "type": "fate"},
+    {"hook": "The universe has a|*message* for you today", "type": "fate"},
+    {"hook": "Stop scrolling|This is *your* sign", "type": "fate"},
+    {"hook": "Something is about to|*shift* in your life", "type": "prediction"},
+    {"hook": "Your energy right now|says *everything*", "type": "moment_gate"},
+    {"hook": "The cards pulled you here|for a *reason*", "type": "fate"},
+    {"hook": "Someone is thinking|about you *right now*", "type": "prediction"},
+    {"hook": "What your soul needs|to hear *today*", "type": "daily"},
+    {"hook": "This message will make|*complete sense* to you", "type": "fate"},
+    {"hook": "The gate that's open|for you *right now*", "type": "moment_gate"}
+  ]
+}
