@@ -100,7 +100,7 @@ scrape_competitors() {
   log "=== COMPETITORS ==="
   local dir="${TODAY_DIR}/competitors"
 
-  # -- Spiritual / Psychic --
+  # -- Spiritual / Psychic (LOCAL + INTERNATIONAL) --
   log "--- Spiritual/Psychic Vertical ---"
 
   # Psychic Samira IG (via instaloader for public profiles)
@@ -112,34 +112,80 @@ scrape_competitors() {
       -- psychicsamira 2>>"$LOG_FILE" || log "  instaloader failed for psychicsamira"
   fi
 
-  # Top tarot creators IG (public web scrape)
-  for account in taaborchi mysticmicah thetarotlady spiritdaughter; do
+  # Top tarot/spiritual creators IG — local + international
+  for account in taaborchi mysticmicah thetarotlady spiritdaughter mattfraserpsychic tylerhenrymedium blueflowertarot; do
     safe_fetch "https://www.instagram.com/${account}/" \
       "${dir}/ig-${account}.md" "IG: ${account}"
+  done
+
+  # LOA (Law of Attraction) mega accounts
+  for account in lawofattractionlive lovetheloa; do
+    safe_fetch "https://www.instagram.com/${account}/" \
+      "${dir}/ig-loa-${account}.md" "IG LOA: ${account}"
   done
 
   # Spiritual influencer blogs/sites
   safe_fetch "https://www.mindbodygreen.com/articles/daily-horoscope" \
     "${dir}/mindbodygreen-horoscope.md" "MindBodyGreen horoscope"
 
-  # -- F&B Malaysia (MIRRA competitors) --
+  # -- F&B MIRRA competitors (MALAYSIA) --
   log "--- F&B Malaysia (MIRRA competitors) ---"
 
   safe_scrape "https://www.taiso.my/" "${dir}/taiso.md" "Taiso"
   safe_scrape "https://www.hishinxslim.com/" "${dir}/hishin-xslim.md" "Hishin XSlim"
   safe_scrape "https://simpleeats.com.my/" "${dir}/simple-eats.md" "Simple Eats"
   safe_scrape "https://www.dahmakan.com/" "${dir}/dahmakan.md" "Dahmakan"
+  safe_scrape "https://www.yolofoods.co/" "${dir}/yolofoods.md" "YoloFoods"
+  safe_scrape "https://www.dietmonsta.com/" "${dir}/dietmonsta.md" "DietMonsta"
+  safe_scrape "https://www.fuelgood.co/" "${dir}/fuelgood.md" "Fuel Good"
+  safe_scrape "https://www.medofu.com/" "${dir}/medofu.md" "Medofu"
 
-  # -- Vegan Malaysia (Pinxin competitors) --
+  # IG for MY F&B competitors
+  for account in taisomalaysia dahmakan simpleeatsmy yolofoodsco dietmonsta fuelgoodco; do
+    safe_fetch "https://www.instagram.com/${account}/" \
+      "${dir}/ig-${account}.md" "IG: ${account}"
+  done
+
+  # -- F&B MIRRA competitors (INTERNATIONAL — Chinese market) --
+  log "--- F&B International Chinese Market ---"
+
+  safe_scrape "https://www.hellofresh.cn/" "${dir}/intl-hellofresh-cn.md" "HelloFresh CN"
+  safe_scrape "https://www.fitmeals.hk/" "${dir}/intl-fitmeals-hk.md" "FitMeals HK"
+  safe_scrape "https://www.nosh.jp/" "${dir}/intl-nosh-jp.md" "Nosh JP"
+
+  for account in hellofreshcn nosh_fresh; do
+    safe_fetch "https://www.instagram.com/${account}/" \
+      "${dir}/ig-intl-${account}.md" "IG Intl: ${account}"
+  done
+
+  # -- F&B MIRRA competitors (INTERNATIONAL — English market) --
+  log "--- F&B International English Market ---"
+
+  safe_scrape "https://www.sakara.com/" "${dir}/intl-sakara.md" "Sakara Life (US)"
+  safe_scrape "https://www.daily-harvest.com/" "${dir}/intl-daily-harvest.md" "Daily Harvest (US)"
+  safe_scrape "https://www.mindfulchef.com/" "${dir}/intl-mindful-chef.md" "Mindful Chef (UK)"
+  safe_scrape "https://www.youfoodz.com/" "${dir}/intl-youfoodz.md" "Youfoodz (AU)"
+  safe_scrape "https://www.hellofresh.com/" "${dir}/intl-hellofresh-us.md" "HelloFresh (US)"
+
+  for account in sakara dailyharvest mindfulchefuk youfoodz hellofresh; do
+    safe_fetch "https://www.instagram.com/${account}/" \
+      "${dir}/ig-intl-${account}.md" "IG Intl: ${account}"
+  done
+
+  # -- Vegan (MALAYSIA + INTERNATIONAL) --
   log "--- Vegan Malaysia (Pinxin competitors) ---"
 
   safe_scrape "https://www.goveganmalaysia.com/" "${dir}/govegan-my.md" "GoVegan MY"
   safe_scrape "https://veggieplanet.my/" "${dir}/veggie-planet.md" "Veggie Planet"
 
-  # IG for F&B competitors
-  for account in taisomalaysia dahmakan simpleeatsmy; do
+  log "--- Vegan International ---"
+
+  safe_scrape "https://www.greencommon.com/" "${dir}/intl-greencommon-hk.md" "Green Common (HK)"
+  safe_scrape "https://www.allplants.com/" "${dir}/intl-allplants-uk.md" "Allplants (UK)"
+
+  for account in greencommon allplants; do
     safe_fetch "https://www.instagram.com/${account}/" \
-      "${dir}/ig-${account}.md" "IG: ${account}"
+      "${dir}/ig-intl-${account}.md" "IG Intl: ${account}"
   done
 
   log "=== COMPETITORS DONE ==="
@@ -152,7 +198,7 @@ scrape_trends() {
 
   # -- Reddit (top posts last 24h via old.reddit JSON) --
   log "--- Reddit ---"
-  for sub in psychic tarot vegan malaysia; do
+  for sub in psychic tarot vegan malaysia mealprep HealthyFood weightloss; do
     safe_fetch "https://old.reddit.com/r/${sub}/top/.json?t=day&limit=15" \
       "${dir}/reddit-${sub}-raw.json" "Reddit r/${sub} top/day"
 
@@ -164,7 +210,7 @@ scrape_trends() {
   done
 
   # Additional subreddits for niche signals
-  for sub in lawofattraction spirituality MealPrepSunday; do
+  for sub in lawofattraction spirituality MealPrepSunday EatCheapAndHealthy 1200isplenty intermittentfasting; do
     safe_fetch "https://old.reddit.com/r/${sub}/top/.json?t=day&limit=10" \
       "${dir}/reddit-${sub}-raw.json" "Reddit r/${sub} top/day"
 
@@ -181,6 +227,8 @@ scrape_trends() {
     bash "$TWITTER_SCAN" search "vegan malaysia" > "${dir}/twitter-vegan-my.md" 2>/dev/null || true
     bash "$TWITTER_SCAN" search "meal plan malaysia" > "${dir}/twitter-mealplan.md" 2>/dev/null || true
     bash "$TWITTER_SCAN" search "wellness spiritual" > "${dir}/twitter-wellness.md" 2>/dev/null || true
+    bash "$TWITTER_SCAN" search "healthy meal delivery" > "${dir}/twitter-meal-delivery.md" 2>/dev/null || true
+    bash "$TWITTER_SCAN" search "weight management food" > "${dir}/twitter-weight-mgmt.md" 2>/dev/null || true
   else
     # Fallback: scrape nitter or web-read
     safe_fetch "https://nitter.privacydev.net/search?q=tarot+reading&f=tweets&since=${TODAY}" \
@@ -195,7 +243,7 @@ scrape_trends() {
     "${dir}/google-trends-my.md" "Google Trends MY"
 
   # Specific queries
-  for query in "tarot+reading" "vegan+food" "meal+plan" "weight+loss" "self+love"; do
+  for query in "tarot+reading" "vegan+food" "meal+plan" "weight+loss" "self+love" "healthy+meal+delivery" "meal+subscription+box"; do
     safe_fetch "https://trends.google.com/trends/explore?q=${query}&geo=MY&date=now+1-d" \
       "${dir}/gtrends-${query//+/-}.md" "Google Trends: ${query}"
   done
@@ -255,8 +303,8 @@ scrape_inspiration() {
     fi
   done
 
-  # -- Romance / self-love IG content --
-  for account in thegoodquote positiveenergy lfromanticist; do
+  # -- Romance / self-love / LOA IG content --
+  for account in thegoodquote positiveenergy lfromanticist lawofattractionlive lovetheloa; do
     safe_fetch "https://www.instagram.com/${account}/" \
       "${dir}/ig-${account}.md" "IG: ${account}"
   done
@@ -290,8 +338,10 @@ HEADER
     echo "" >> "$digest"
 
     # List what we got
-    echo "### Spiritual/Psychic" >> "$digest"
-    for f in "${comp_dir}"/ig-psychicsamira* "${comp_dir}"/ig-taaborchi* "${comp_dir}"/ig-mysticmicah* "${comp_dir}"/mindbodygreen*; do
+    echo "### Spiritual/Psychic + LOA" >> "$digest"
+    for f in "${comp_dir}"/ig-psychicsamira* "${comp_dir}"/ig-taaborchi* "${comp_dir}"/ig-mysticmicah* \
+             "${comp_dir}"/ig-mattfraserpsychic* "${comp_dir}"/ig-tylerhenrymedium* "${comp_dir}"/ig-blueflowertarot* \
+             "${comp_dir}"/ig-loa-* "${comp_dir}"/mindbodygreen*; do
       [[ -f "$f" ]] || continue
       local size
       size=$(wc -c < "$f" | tr -d ' ')
@@ -300,7 +350,8 @@ HEADER
     echo "" >> "$digest"
 
     echo "### F&B Malaysia (MIRRA competitors)" >> "$digest"
-    for f in "${comp_dir}"/taiso* "${comp_dir}"/hishin* "${comp_dir}"/simple-eats* "${comp_dir}"/dahmakan*; do
+    for f in "${comp_dir}"/taiso* "${comp_dir}"/hishin* "${comp_dir}"/simple-eats* "${comp_dir}"/dahmakan* \
+             "${comp_dir}"/yolofoods* "${comp_dir}"/dietmonsta* "${comp_dir}"/fuelgood* "${comp_dir}"/medofu*; do
       [[ -f "$f" ]] || continue
       local size
       size=$(wc -c < "$f" | tr -d ' ')
@@ -308,8 +359,27 @@ HEADER
     done
     echo "" >> "$digest"
 
-    echo "### Vegan MY (Pinxin competitors)" >> "$digest"
-    for f in "${comp_dir}"/govegan* "${comp_dir}"/veggie*; do
+    echo "### F&B International (Chinese Market)" >> "$digest"
+    for f in "${comp_dir}"/intl-hellofresh-cn* "${comp_dir}"/intl-fitmeals* "${comp_dir}"/intl-nosh*; do
+      [[ -f "$f" ]] || continue
+      local size
+      size=$(wc -c < "$f" | tr -d ' ')
+      echo "- $(basename "$f"): ${size}b" >> "$digest"
+    done
+    echo "" >> "$digest"
+
+    echo "### F&B International (English Market)" >> "$digest"
+    for f in "${comp_dir}"/intl-sakara* "${comp_dir}"/intl-daily-harvest* "${comp_dir}"/intl-mindful-chef* \
+             "${comp_dir}"/intl-youfoodz* "${comp_dir}"/intl-hellofresh-us*; do
+      [[ -f "$f" ]] || continue
+      local size
+      size=$(wc -c < "$f" | tr -d ' ')
+      echo "- $(basename "$f"): ${size}b" >> "$digest"
+    done
+    echo "" >> "$digest"
+
+    echo "### Vegan (MY + International)" >> "$digest"
+    for f in "${comp_dir}"/govegan* "${comp_dir}"/veggie* "${comp_dir}"/intl-greencommon* "${comp_dir}"/intl-allplants*; do
       [[ -f "$f" ]] || continue
       local size
       size=$(wc -c < "$f" | tr -d ' ')
@@ -326,7 +396,7 @@ HEADER
   if [[ -d "$trends_dir" ]]; then
     # Reddit highlights
     echo "### Reddit Hot Topics" >> "$digest"
-    for sub in psychic tarot vegan malaysia lawofattraction spirituality MealPrepSunday; do
+    for sub in psychic tarot vegan malaysia mealprep HealthyFood weightloss lawofattraction spirituality MealPrepSunday EatCheapAndHealthy 1200isplenty intermittentfasting; do
       local rfile="${trends_dir}/reddit-${sub}.md"
       if [[ -f "$rfile" ]] && [[ -s "$rfile" ]]; then
         echo "" >> "$digest"
@@ -385,16 +455,19 @@ HEADER
   all_text=$(find "$TODAY_DIR" -name '*.md' -exec cat {} + 2>/dev/null | tr '[:upper:]' '[:lower:]')
 
   # Count keyword hits
-  local tarot_hits vegan_hits meal_hits weight_hits selflove_hits
+  local tarot_hits vegan_hits meal_hits weight_hits selflove_hits delivery_hits subscription_hits
   tarot_hits=$(echo "$all_text" | grep -c 'tarot\|oracle\|psychic\|reading' 2>/dev/null || echo 0)
   vegan_hits=$(echo "$all_text" | grep -c 'vegan\|plant.based\|meatless' 2>/dev/null || echo 0)
   meal_hits=$(echo "$all_text" | grep -c 'meal.plan\|meal.prep\|bento\|lunch.box' 2>/dev/null || echo 0)
   weight_hits=$(echo "$all_text" | grep -c 'weight.loss\|slim\|diet\|calorie' 2>/dev/null || echo 0)
   selflove_hits=$(echo "$all_text" | grep -c 'self.love\|self.care\|wellness\|healing' 2>/dev/null || echo 0)
+  delivery_hits=$(echo "$all_text" | grep -c 'meal.delivery\|food.delivery\|subscription.box\|meal.kit' 2>/dev/null || echo 0)
+  subscription_hits=$(echo "$all_text" | grep -c 'subscribe\|subscription\|recurring\|weekly.plan\|monthly.plan' 2>/dev/null || echo 0)
 
   echo "| Jade Oracle | ${tarot_hits} tarot/psychic mentions | All sources |" >> "$digest"
   echo "| Pinxin Vegan | ${vegan_hits} vegan/plant-based mentions | All sources |" >> "$digest"
-  echo "| MIRRA | ${meal_hits} meal plan mentions, ${weight_hits} weight mgmt | All sources |" >> "$digest"
+  echo "| MIRRA | ${meal_hits} meal plan + ${weight_hits} weight mgmt + ${delivery_hits} delivery | All sources |" >> "$digest"
+  echo "| MIRRA (subscription) | ${subscription_hits} subscription/recurring mentions | All sources |" >> "$digest"
   echo "| Serein/Rasaya | ${selflove_hits} self-love/wellness mentions | All sources |" >> "$digest"
   echo "" >> "$digest"
 
@@ -422,7 +495,7 @@ HEADER
     echo "## Reddit Engagement Delta" >> "$compound"
     echo "" >> "$compound"
 
-    for sub in psychic tarot vegan malaysia; do
+    for sub in psychic tarot vegan malaysia mealprep HealthyFood weightloss lawofattraction spirituality MealPrepSunday; do
       local today_file="${TODAY_DIR}/trends/reddit-${sub}.md"
       local yesterday_file="${YESTERDAY_DIR}/trends/reddit-${sub}.md"
 
