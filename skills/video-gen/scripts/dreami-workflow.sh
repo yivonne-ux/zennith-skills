@@ -85,7 +85,7 @@ VISION_OUTPUT="$WORKFLOW_DIR/vision-dna.json"
 
 bash "$SCRIPT_DIR/vision-analyze.sh" "$MAIN_IMAGE" "${REF_IMAGES[@]}" > "$VISION_OUTPUT" 2>&1
 
-if [ $? -ne 0 ]; || [ ! -f "$VISION_OUTPUT" ]; then
+if [ $? -ne 0 ] || [ ! -f "$VISION_OUTPUT" ]; then
   echo "ERROR: Vision analysis failed"
   echo "Check output: $VISION_OUTPUT"
   exit 1
