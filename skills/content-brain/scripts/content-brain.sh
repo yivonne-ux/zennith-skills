@@ -384,11 +384,19 @@ for s in all_specs:
   mkdir -p "$ref_dir"
 
   if [[ -f "$NANOBANANA" && "$DRY_RUN" -eq 0 ]]; then
-    # Generate 3 scene references
-    local scene_prompts=("${PRODUCT} being prepared, overhead shot, warm kitchen lighting" "${PRODUCT} being enjoyed by person, close-up reaction, natural light" "${PRODUCT} packaging beauty shot, minimal background, studio light")
+    # FACE-LOCK ENFORCEMENT: Always pass character refs to NanoBanana
+    local ref_flag=""
+    if [[ -n "$char_refs" ]]; then
+      ref_flag="--ref-image $char_refs"
+      echo "  🔒 Face-lock refs loaded for scene generation"
+    fi
+
+    # Generate 3 scene references WITH face-lock refs
+    local scene_prompts=("${PRODUCT}, overhead shot, warm lighting. $char_suffix" "${PRODUCT}, close-up reaction, natural light. $char_suffix" "${PRODUCT}, beauty shot, minimal background. $char_suffix")
     local ref_count=0
     for sp in "${scene_prompts[@]}"; do
-      nb_output=$(bash "$NANOBANANA" generate --brand "$BRAND" --prompt "$sp" 2>&1) || true
+      nb_output=$(bash "$NANOBANANA" generate --brand "$BRAND" --prompt "$sp" \
+        --use-case character $ref_flag 2>&1) || true
       local ref_img
       ref_img=$(echo "$nb_output" | grep -oE '/[^ ]+\.png' | tail -1)
       if [[ -n "$ref_img" && -f "$ref_img" ]]; then
@@ -396,7 +404,7 @@ for s in all_specs:
         ref_count=$((ref_count + 1))
       fi
     done
-    ok "Generated $ref_count scene references"
+    ok "Generated $ref_count scene references (face-locked: $([ -n "$char_refs" ] && echo 'YES' || echo 'NO'))"
   else
     skip "Reference generation skipped"
   fi
@@ -418,7 +426,23 @@ for s in all_specs:
     local block_count
     block_count=$("$PYTHON3" -c "import json; print(len(json.load(open('$plan_file'))['blocks']))")
 
-    log "Generating $block_count clips via $PROVIDER..."
+    # FACE-LOCK ENFORCEMENT: Find scene ref images for image-to-video
+    local scene_refs=()
+    if [[ -d "$ref_dir" ]]; then
+      while IFS= read -r f; do
+        scene_refs+=("$f")
+      done < <(find "$ref_dir" -name "*.png" -o -name "*.jpg" 2>/dev/null | sort)
+    fi
+
+    if [[ ${#scene_refs[@]} -gt 0 ]]; then
+      echo "  🔒 FACE-LOCK: Using ${#scene_refs[@]} scene refs for image-to-video (face stays locked)"
+    else
+      echo "  ⚠️  WARNING: No scene refs found — will use text-to-video (face NOT locked)"
+      echo "  ⚠️  For character content, generate scene refs in Step 6 first"
+    fi
+
+    log "Generating $block_count clips via $PROVIDER (i2v: ${#scene_refs[@]} refs)..."
+    local scene_idx=0
     for i in $(seq 0 $((block_count - 1))); do
       local block_code
       block_code=$("$PYTHON3" -c "import json; print(json.load(open('$plan_file'))['blocks'][$i]['block_code'])")
@@ -429,14 +453,26 @@ for s in all_specs:
         continue
       fi
 
-      local clip_prompt="${PRODUCT}, ${block_code} scene, natural UGC style, 9:16 vertical, iPhone quality"
+      local clip_prompt="${PRODUCT}, ${block_code} scene, natural UGC style, 9:16 vertical. $char_suffix"
       local clip_output="$clips_dir/clip-${block_code}-$(printf '%02d' $((i+1))).mp4"
 
       echo "  Generating block $((i+1))/$block_count ($block_code) via $PROVIDER..."
       if [[ -f "$VIDEO_GEN" ]]; then
-        bash "$VIDEO_GEN" "$PROVIDER" text2video --prompt "$clip_prompt" \
-          --duration 5 --aspect-ratio 9:16 --output "$clip_output" \
-          --brand "$BRAND" 2>&1 | sed 's/^/    /' || true
+        # USE IMAGE-TO-VIDEO when scene refs exist (face-locked)
+        if [[ ${#scene_refs[@]} -gt 0 ]]; then
+          local ref_img="${scene_refs[$((scene_idx % ${#scene_refs[@]}))]}"
+          scene_idx=$((scene_idx + 1))
+          echo "    🔒 Using ref: $(basename "$ref_img")"
+          bash "$VIDEO_GEN" "$PROVIDER" image2video --image "$ref_img" \
+            --prompt "$clip_prompt" \
+            --duration 5 --aspect-ratio 9:16 --output "$clip_output" \
+            --brand "$BRAND" 2>&1 | sed 's/^/    /' || true
+        else
+          # Fallback: text-to-video (NO face lock — warns above)
+          bash "$VIDEO_GEN" "$PROVIDER" text2video --prompt "$clip_prompt" \
+            --duration 5 --aspect-ratio 9:16 --output "$clip_output" \
+            --brand "$BRAND" 2>&1 | sed 's/^/    /' || true
+        fi
       fi
 
       if [[ -f "$clip_output" ]]; then
