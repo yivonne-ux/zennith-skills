@@ -30,6 +30,7 @@ REMOTION="$SKILLS/remotion-renderer/scripts/remotion-render.sh"
 VIDEO_FORGE="$SKILLS/video-forge/scripts/video-forge.sh"
 BLOCK_LIB="$SKILLS/video-block-library/scripts/block-library.sh"
 SOCIAL_PUB="$SKILLS/social-publish/scripts/social-publish.sh"
+CHAR_LOCK="$SKILLS/character-lock/scripts/character-lock.sh"
 
 mkdir -p "$(dirname "$LOG_FILE")"
 
@@ -294,12 +295,60 @@ PYEOF
     skip "QA skipped (--skip-qa or creative-qa not found)"
   fi
 
-  # ── STEP 5: CHARACTER PLANNING ──
+  # ── STEP 5: CHARACTER + SCENE PLANNING ──
   step "5" "CHARACTER + SCENE PLANNING"
   local char_dir="$WORK_DIR/05-characters"
   mkdir -p "$char_dir"
 
-  # Load brand DNA for character specs
+  # Load character lock spec (MANDATORY before any generation)
+  local char_suffix=""
+  local char_refs=""
+  if [[ -f "$CHAR_LOCK" ]]; then
+    # Try to find a character for this brand
+    local char_name
+    char_name=$("$PYTHON3" -c "
+import json, os, glob
+# Check brand characters dir
+brand_chars = glob.glob('$BRANDS_DIR/$BRAND/characters/*/spec.json')
+# Check skill schemas
+skill_chars = glob.glob('$(dirname "$SCRIPT_DIR")/schemas/*.character.json')
+# Also check character-lock skill schemas
+lock_chars = glob.glob('$SKILLS/character-lock/schemas/*.character.json')
+all_specs = brand_chars + skill_chars + lock_chars
+for s in all_specs:
+    try:
+        d = json.load(open(s))
+        if d.get('brand') == '$BRAND':
+            print(d.get('name', ''))
+            break
+    except: pass
+" 2>/dev/null) || true
+
+    if [[ -n "$char_name" ]]; then
+      echo "  Loading character lock: $BRAND / $char_name"
+      bash "$CHAR_LOCK" load --brand "$BRAND" --character "$char_name" 2>&1 | sed 's/^/  /'
+
+      # Get prompt suffix
+      char_suffix=$(bash "$CHAR_LOCK" load --brand "$BRAND" --character "$char_name" --json 2>/dev/null | "$PYTHON3" -c "import json,sys; print(json.load(sys.stdin).get('rules',{}).get('prompt_suffix',''))" 2>/dev/null) || true
+
+      # Get reference images
+      char_refs=$(bash "$CHAR_LOCK" refs --brand "$BRAND" --character "$char_name" 2>/dev/null) || true
+
+      if [[ -n "$char_suffix" ]]; then
+        ok "Character locked: $char_name (suffix + refs loaded)"
+        echo "$char_suffix" > "$char_dir/prompt-suffix.txt"
+        echo "$char_refs" > "$char_dir/ref-images.txt"
+      else
+        skip "Character spec found but no prompt suffix"
+      fi
+    else
+      skip "No character spec for brand $BRAND (brand-only content)"
+    fi
+  else
+    skip "character-lock.sh not found"
+  fi
+
+  # Load brand DNA
   local dna_file="$BRANDS_DIR/$BRAND/DNA.json"
   if [[ -f "$dna_file" ]]; then
     ok "Brand DNA loaded: $dna_file"
@@ -307,10 +356,10 @@ PYEOF
     skip "No DNA.json for $BRAND"
   fi
 
-  # Generate character reference if NanoBanana available
-  if [[ -f "$NANOBANANA" && "$DRY_RUN" -eq 0 ]]; then
-    log "Generating character reference..."
-    local char_prompt="Professional UGC-style portrait of a young Malaysian woman, natural makeup, warm lighting, iPhone quality, 9:16 vertical"
+  # Generate character reference if NanoBanana available AND no locked refs
+  if [[ -f "$NANOBANANA" && "$DRY_RUN" -eq 0 && -z "$char_refs" ]]; then
+    log "Generating character reference (no locked refs found)..."
+    local char_prompt="Professional UGC-style portrait, natural makeup, warm lighting, iPhone quality, 9:16 vertical. $char_suffix"
     local nb_output
     nb_output=$(bash "$NANOBANANA" generate --brand "$BRAND" \
       --prompt "$char_prompt" 2>&1) || true
@@ -319,10 +368,12 @@ PYEOF
     char_img=$(echo "$nb_output" | grep -oE '/[^ ]+\.png' | tail -1)
     if [[ -n "$char_img" && -f "$char_img" ]]; then
       cp "$char_img" "$char_dir/character-ref.png"
-      ok "Character ref: $char_dir/character-ref.png"
+      ok "Character ref generated: $char_dir/character-ref.png"
     else
-      skip "Character generation skipped (NanoBanana output: ${nb_output:0:100})"
+      skip "Character generation failed"
     fi
+  elif [[ -n "$char_refs" ]]; then
+    ok "Using locked character refs (face-lock enforced)"
   else
     skip "Character generation skipped (dry-run or NanoBanana not found)"
   fi

@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Zennith OS Character Specification",
+  "description": "Standardized schema for AI character identity lock. Every character MUST have this spec filled before any generation.",
+  "type": "object",
+  "required": ["name", "brand", "identity", "face", "photography", "rules"],
+  "properties": {
+    "name": { "type": "string", "description": "Character name (e.g., 'Jade')" },
+    "brand": { "type": "string", "description": "Brand slug (e.g., 'jade-oracle')" },
+    "version": { "type": "string", "description": "Spec version (e.g., 'v3')" },
+    "updated": { "type": "string", "format": "date" },
+
+    "identity": {
+      "type": "object",
+      "required": ["ethnicity", "age", "gender"],
+      "properties": {
+        "ethnicity": { "type": "string" },
+        "age": { "type": "integer" },
+        "age_appearance": { "type": "string" },
+        "gender": { "type": "string" },
+        "personality": { "type": "string" },
+        "signature_item": { "type": "string", "description": "Item that MUST appear in EVERY image (e.g., jade pendant)" }
+      }
+    },
+
+    "face": {
+      "type": "object",
+      "required": ["shape", "eyes", "skin", "expression"],
+      "properties": {
+        "shape": { "type": "string" },
+        "eyes": { "type": "string" },
+        "nose": { "type": "string" },
+        "lips": { "type": "string" },
+        "skin": { "type": "string" },
+        "expression": { "type": "string", "description": "Default expression" }
+      }
+    },
+
+    "hair": {
+      "type": "object",
+      "required": ["description_allcaps"],
+      "properties": {
+        "color": { "type": "string" },
+        "length": { "type": "string" },
+        "style": { "type": "string" },
+        "description_allcaps": { "type": "string", "description": "ALL CAPS hair description for prompts (prevents drift)" }
+      }
+    },
+
+    "body": {
+      "type": "object",
+      "properties": {
+        "build": { "type": "string" },
+        "height": { "type": "string" }
+      }
+    },
+
+    "fashion": {
+      "type": "object",
+      "properties": {
+        "palette": { "type": "array", "items": { "type": "string" } },
+        "approved_tops": { "type": "array", "items": { "type": "string" } },
+        "approved_bottoms": { "type": "array", "items": { "type": "string" } },
+        "jewelry": { "type": "string" },
+        "fabrics": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "photography": {
+      "type": "object",
+      "required": ["style", "lighting", "lens"],
+      "properties": {
+        "style": { "type": "string", "description": "EXACT style (e.g., 'iPhone candid' NOT 'editorial')" },
+        "lighting": { "type": "string" },
+        "color_temp_k": { "type": "integer", "description": "Color temperature in Kelvin" },
+        "lens": { "type": "string", "description": "e.g., '35mm f/1.8'" },
+        "camera_height_cm": { "type": "integer", "description": "80=UGC, 150=neutral, 10=dramatic" },
+        "background_rules": { "type": "string" },
+        "mood": { "type": "string" }
+      }
+    },
+
+    "voice": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "provider": { "type": "string", "description": "elevenlabs, edge-tts, openai" },
+        "voice_id": { "type": "string" },
+        "voice_id_cn": { "type": "string" },
+        "tone_keywords": { "type": "array", "items": { "type": "string" } },
+        "pace": { "type": "string" }
+      }
+    },
+
+    "environments": {
+      "type": "array",
+      "description": "Approved environments/locations",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "lighting": { "type": "string" },
+          "props": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+
+    "locked_refs": {
+      "type": "object",
+      "description": "Paths to canonical locked reference images",
+      "properties": {
+        "face_primary": { "type": "string" },
+        "face_angle2": { "type": "string" },
+        "face_angle3": { "type": "string" },
+        "body_ref": { "type": "string" },
+        "body_headless": { "type": "string" },
+        "style_anchors": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "rules": {
+      "type": "object",
+      "required": ["anti_drift", "never"],
+      "properties": {
+        "anti_drift": {
+          "type": "array",
+          "description": "Rules appended to EVERY prompt",
+          "items": { "type": "string" }
+        },
+        "never": {
+          "type": "array",
+          "description": "Things that must NEVER appear",
+          "items": { "type": "string" }
+        },
+        "face_ref_min_pct": {
+          "type": "integer",
+          "description": "Minimum % of ref images that must be face refs (default 60)",
+          "default": 60
+        },
+        "prompt_suffix": {
+          "type": "string",
+          "description": "ALWAYS appended to every generation prompt"
+        }
+      }
+    },
+
+    "lora": {
+      "type": "object",
+      "properties": {
+        "model_name": { "type": "string" },
+        "trigger_word": { "type": "string" },
+        "strength": { "type": "number" },
+        "trained": { "type": "boolean" }
+      }
+    }
+  }
+}

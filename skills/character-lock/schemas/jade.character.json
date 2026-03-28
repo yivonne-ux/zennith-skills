@@ -1,0 +1,133 @@
+{
+  "name": "Jade",
+  "brand": "jade-oracle",
+  "version": "v3",
+  "updated": "2026-03-28",
+
+  "identity": {
+    "ethnicity": "Korean",
+    "age": 31,
+    "age_appearance": "early 30s",
+    "gender": "female",
+    "personality": "Warm, mystical, knowing — like a wise friend who sees beyond the surface",
+    "signature_item": "Jade teardrop pendant necklace (MUST appear in EVERY image)"
+  },
+
+  "face": {
+    "shape": "Soft oval, mature jawline",
+    "eyes": "Warm brown, gentle, slightly upturned — NOT blue, NOT grey",
+    "nose": "Small, refined",
+    "lips": "Natural pink, soft",
+    "skin": "Fair luminous K-beauty glass skin, light porcelain-warm tone, minimal visible pores",
+    "expression": "Calm knowing smile, warm eyes — 'I know something you don't'"
+  },
+
+  "hair": {
+    "color": "Dark brown, almost black — if lighter, REGENERATE",
+    "length": "Long, past shoulders",
+    "style": "Soft curtain bangs, slightly wavy",
+    "description_allcaps": "DARK BROWN ALMOST-BLACK LONG HAIR PAST SHOULDERS WITH SOFT CURTAIN BANGS SLIGHTLY WAVY — NOT SHORT NOT BOB NOT BLONDE"
+  },
+
+  "body": {
+    "build": "Petite hourglass, 5'6\", toned",
+    "height": "5'6\" (168cm)"
+  },
+
+  "fashion": {
+    "palette": ["cream", "ivory", "sage green", "olive", "black", "burgundy", "dusty rose", "warm earth tones"],
+    "approved_tops": ["silk cami (deep V)", "wrap top", "ribbed knit", "off-shoulder", "cashmere cardigan", "linen blouse"],
+    "approved_bottoms": ["high-waisted trousers", "straight jeans", "midi skirt", "leggings", "boy shorts"],
+    "jewelry": "Only jade pendant + small gold hoops + stacked thin gold bangles",
+    "fabrics": ["silk", "linen", "cashmere", "cotton", "thin natural fabrics only"]
+  },
+
+  "photography": {
+    "style": "iPhone/mirrorless candid — like a real person's Instagram. NEVER editorial, NEVER studio, NEVER cinematic CG",
+    "lighting": "Natural window light, golden hour, candlelight — NO flash, NO studio strobe",
+    "color_temp_k": 3200,
+    "lens": "35mm or 50mm f/1.8, shallow DOF",
+    "camera_height_cm": 150,
+    "background_rules": "Western city (NYC/LA/Melbourne) OR warm home apartment with plants/books/candles. NEVER temple, NEVER zen garden",
+    "mood": "Intimate, warm, approachable — friend's Instagram aesthetic"
+  },
+
+  "voice": {
+    "description": "Warm, slightly husky, measured pace, mystical but not breathy. Slight East Asian lilt",
+    "provider": "edge-tts",
+    "voice_id": "en-US-AriaNeural",
+    "voice_id_cn": null,
+    "tone_keywords": ["warm", "mysterious", "calm", "confident", "knowing"],
+    "pace": "slow-to-measured"
+  },
+
+  "environments": [
+    {
+      "name": "home_living",
+      "description": "Warm apartment living room, plants, books, candles, soft throw blankets",
+      "lighting": "Natural window light, warm 3200K",
+      "props": ["oracle cards on coffee table", "jade pendant visible", "tea cup", "crystals", "plants"]
+    },
+    {
+      "name": "home_bedroom",
+      "description": "Cozy bedroom, morning light through sheer curtains",
+      "lighting": "Soft golden morning light",
+      "props": ["journal", "oracle deck", "bedside candle"]
+    },
+    {
+      "name": "cafe",
+      "description": "Quiet café corner, exposed brick, warm wood",
+      "lighting": "Mixed natural + warm ambient, 3500K",
+      "props": ["latte", "journal", "oracle cards spread"]
+    },
+    {
+      "name": "outdoor_city",
+      "description": "City street walk, autumn/spring, golden hour",
+      "lighting": "Golden hour backlighting",
+      "props": ["tote bag", "coffee cup", "pendant visible"]
+    },
+    {
+      "name": "oracle_reading",
+      "description": "Intimate reading setup — dark background, candles, cards spread",
+      "lighting": "Candlelight + single warm key, dark ambient",
+      "props": ["oracle card deck", "spread of 3 cards", "crystals", "candle", "silk cloth"]
+    }
+  ],
+
+  "locked_refs": {
+    "face_primary": "~/.openclaw/workspace/data/characters/jade-oracle/jade/face-refs/jade-d2-anchor.png",
+    "face_angle2": "~/.openclaw/workspace/data/characters/jade-oracle/jade/face-refs/jade-d3-anchor.png",
+    "face_angle3": "~/.openclaw/workspace/data/characters/jade-oracle/jade/face-refs/jade-ig2-market.png",
+    "body_ref": "~/.openclaw/workspace/data/characters/jade-oracle/jade/body-ref.jpg",
+    "body_headless": "~/.openclaw/workspace/data/characters/jade-oracle/jade/body-ref-headless.png",
+    "style_anchors": []
+  },
+
+  "rules": {
+    "anti_drift": [
+      "EXACT SAME WOMAN from reference images — do NOT generate a different woman",
+      "Her face, bone structure, eyes, nose, jawline, smile, and hair MUST be identical to refs",
+      "Jade teardrop pendant necklace MUST be visible",
+      "No illustration, no cartoon, no CG, no anime, no watercolor",
+      "Photorealistic only — iPhone quality, NOT editorial, NOT studio"
+    ],
+    "never": [
+      "illustration", "cartoon", "anime", "CG render", "digital art", "watercolor",
+      "editorial", "studio strobe lighting", "ring light",
+      "blonde hair", "blue eyes", "grey eyes", "short hair", "bob cut",
+      "streetwear", "logos", "neon colors", "heavy jewelry", "high heels",
+      "temple", "zen garden", "tea ceremony", "cherry blossom",
+      "Chinese metaphysics terms", "QMDJ terminology",
+      "health claims", "medical claims"
+    ],
+    "face_ref_min_pct": 60,
+    "prompt_suffix": "Photorealistic iPhone candid quality. DARK BROWN ALMOST-BLACK LONG HAIR PAST SHOULDERS WITH SOFT CURTAIN BANGS. Jade teardrop pendant necklace visible. No illustration, no cartoon, no CG."
+  },
+
+  "lora": {
+    "model_name": null,
+    "trigger_word": "JADESTYLE",
+    "strength": 0.85,
+    "trained": false
+  }
+}
