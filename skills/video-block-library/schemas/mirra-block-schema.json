@@ -1,0 +1,94 @@
+{
+  "extends": "block_schema.json",
+  "brand": "mirra",
+  "product_type": "food",
+  "categories": [
+    "Dish",
+    "Ingredient",
+    "Reaction",
+    "Problem",
+    "Promo",
+    "Gift",
+    "Unbox"
+  ],
+  "subtypes": {
+    "Dish": [
+      "Signature",
+      "BentoBox",
+      "GrainBowl",
+      "NoodleDish",
+      "KatsuRice",
+      "SteamyCloseup",
+      "Collage"
+    ],
+    "Ingredient": [
+      "Kombu",
+      "Tofu",
+      "Quinoa",
+      "OrganicVeg",
+      "PlantProtein",
+      "FreshPrep"
+    ],
+    "Reaction": [
+      "Surprise",
+      "Confession",
+      "Empowerment",
+      "Relief",
+      "Positive",
+      "SocialProof"
+    ],
+    "Problem": [
+      "NoTimeToCook",
+      "BlandDiet",
+      "WeightGain",
+      "Bloat",
+      "DietFatigue",
+      "Sluggishness"
+    ],
+    "Promo": [
+      "CNY",
+      "MonthlyDeal",
+      "FirstOrder",
+      "EndCard"
+    ],
+    "Gift": [
+      "Office",
+      "Family",
+      "Friend"
+    ],
+    "Unbox": [
+      "Standard",
+      "GiftSet",
+      "ProductReveal"
+    ]
+  },
+  "default_category_for_framework": {
+    "pas": "Problem",
+    "slap": "Problem",
+    "myth_buster": "Problem",
+    "confession": "Reaction",
+    "convenience_solve": "Reaction",
+    "single_shot": "Dish",
+    "ugc_testimonial": "Reaction"
+  },
+  "default_block_code_for_scene": {
+    "hook": "A5",
+    "product_reveal": "D3",
+    "brand_proof": "I1",
+    "emotion_reaction": "A3",
+    "social_proof": "A4",
+    "ingredient_proof": "I3",
+    "cta": "Act6",
+    "ugc_block": "D1"
+  },
+  "subtype_keywords": {
+    "WeightGain": ["weight", "CNY", "bloat", "heavy", "size", "pants", "clothes", "fat", "kg", "胖", "秤"],
+    "NoTimeToCook": ["busy", "time", "cook", "schedule", "work", "office", "energy", "crashes"],
+    "BlandDiet": ["bland", "boring", "tasteless", "stereotype", "perception", "diet food"],
+    "Bloat": ["bloat", "sluggish", "sluggishness", "heavy feeling"],
+    "Surprise": ["surprised", "surprise", "skepticism", "skeptic"],
+    "Confession": ["confess", "admit", "confession", "skeptic", "past struggle"],
+    "Empowerment": ["empower", "overcome", "solution", "lighter", "better"],
+    "Relief": ["relief", "lighter", "feel good", "digestion"]
+  }
+}

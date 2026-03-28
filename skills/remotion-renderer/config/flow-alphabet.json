@@ -1,0 +1,120 @@
+{
+  "_description": "13 evidence-based video flows (A-M). Each flow earned its letter from 15+ weighted occurrences in reference ad analysis. Ported from Tricia's video-compiler system.",
+  "_updated": "2026-03-28",
+
+  "flows": {
+    "A": {
+      "name": "testimonial",
+      "default_intent": "MOFU",
+      "description": "Customer testimonial with authentic reaction and product discovery arc",
+      "structure": "hook → discovery → experience → result → CTA",
+      "typical_duration_s": "30-45",
+      "block_pattern": ["A3", "I6", "D1", "D2", "Act6"]
+    },
+    "B": {
+      "name": "PAS",
+      "default_intent": "MOFU/BOFU",
+      "description": "Problem-Agitate-Solve framework — start with pain, amplify, present solution",
+      "structure": "problem → agitate → solution intro → proof → CTA",
+      "typical_duration_s": "30-50",
+      "block_pattern": ["A5", "A5", "I3", "D1", "Act6"]
+    },
+    "C": {
+      "name": "challenge",
+      "default_intent": "MOFU",
+      "description": "Challenge format — dare the viewer, show the attempt, reveal the result",
+      "structure": "challenge intro → attempt → struggle → success → CTA",
+      "typical_duration_s": "25-40",
+      "block_pattern": ["A3", "D1", "D3", "Act6"]
+    },
+    "D": {
+      "name": "slap",
+      "default_intent": "MOFU/BOFU",
+      "description": "Pattern interrupt (SLAP) — stop scrolling with unexpected visual, then pivot to product",
+      "structure": "stop → look → act → purchase",
+      "typical_duration_s": "12-25",
+      "block_pattern": ["A3", "I3", "D1", "Act6"]
+    },
+    "E": {
+      "name": "convenience_solve",
+      "default_intent": "MOFU",
+      "description": "Convenience-focused — the busy person's salvation. Show the problem (no time), show the solution (easy prep)",
+      "structure": "pain (no time) → discovery → ease of use → satisfaction → CTA",
+      "typical_duration_s": "25-40",
+      "block_pattern": ["A5", "I4", "D2", "D1", "Act6"]
+    },
+    "F": {
+      "name": "compiled_montage",
+      "default_intent": "MOFU",
+      "description": "Multi-KOL compiled montage — many voices saying the same thing = social proof wall",
+      "structure": "KOL 1 reaction → KOL 2 reaction → ... → product → CTA",
+      "typical_duration_s": "20-35",
+      "block_pattern": ["A3", "A3", "A4", "D1", "Act6"]
+    },
+    "G": {
+      "name": "brand_story",
+      "default_intent": "MOFU",
+      "description": "Brand narrative — origin story, mission, why this exists. Emotional connection.",
+      "structure": "origin → mission → process → impact → CTA",
+      "typical_duration_s": "30-60",
+      "block_pattern": ["I1", "I2", "I3", "D1", "Act6"]
+    },
+    "H": {
+      "name": "what_i_eat",
+      "default_intent": "MOFU",
+      "description": "Day-in-life food diary format — what I eat in a day/week. Aspirational lifestyle.",
+      "structure": "morning → lunch → dinner → result → CTA",
+      "typical_duration_s": "30-50",
+      "block_pattern": ["D1", "D1", "D1", "A6", "Act6"]
+    },
+    "I": {
+      "name": "sales_hype",
+      "default_intent": "BOFU",
+      "description": "Hard sales push — urgency, scarcity, limited time offer. Bottom of funnel.",
+      "structure": "hook (urgency) → offer → proof → scarcity → CTA",
+      "typical_duration_s": "15-25",
+      "block_pattern": ["A5", "Act1", "I6", "Act6"]
+    },
+    "J": {
+      "name": "curiosity_reveal",
+      "default_intent": "TOFU",
+      "description": "Open loop — tease a secret/discovery, delay the reveal to retain attention.",
+      "structure": "tease → buildup → reveal → reaction → CTA",
+      "typical_duration_s": "20-35",
+      "block_pattern": ["A3", "I2", "D3", "A3", "Act6"]
+    },
+    "K": {
+      "name": "before_after",
+      "default_intent": "MOFU",
+      "description": "Before/after transformation — show the contrast. Weight loss, skin, energy, lifestyle.",
+      "structure": "before state → transition → after state → proof → CTA",
+      "typical_duration_s": "20-35",
+      "block_pattern": ["A5", "A6", "D1", "Act6"]
+    },
+    "L": {
+      "name": "brand_montage",
+      "default_intent": "MOFU",
+      "description": "Kinetic text + visual montage. No voiceover — text carries the narrative. Music-driven.",
+      "structure": "kinetic text blocks + product visuals + music sync",
+      "typical_duration_s": "15-30",
+      "block_pattern": ["kinetic_text", "product_image", "kinetic_text", "Act6"]
+    },
+    "M": {
+      "name": "vo_montage",
+      "default_intent": "MOFU",
+      "description": "Full voiceover montage — narrator speaks over muted KOL/product clips. Professional feel.",
+      "structure": "VO narrative over visual sequence (all blocks muted)",
+      "typical_duration_s": "30-50",
+      "block_pattern": ["A1", "I1", "I3", "D1", "Act6"]
+    }
+  },
+
+  "flow_rules": {
+    "minimum_evidence": "15+ weighted occurrences in reference analysis before earning a letter",
+    "funnel_mapping": {
+      "TOFU": ["J"],
+      "MOFU": ["A", "B", "C", "E", "F", "G", "H", "K", "L", "M"],
+      "BOFU": ["D", "I"]
+    }
+  }
+}

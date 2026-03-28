@@ -1,0 +1,115 @@
+{
+  "_comment": "Two-layer color system: (1) DECOMPOSE uses rescue presets to fix source problems, (2) ASSEMBLY uses cohesive_soft on ALL blocks for visual unity. Never double-process.",
+  "presets": {
+    "_comment_decompose": "=== DECOMPOSE PRESETS (source correction) === Used by _auto_color_correct_block() in decompose_video.py",
+    "warm_food_rescue": {
+      "description": "Decompose: fix flat/desaturated kitchen footage. Stretches tonal range, corrects warm cast, boosts vibrance.",
+      "colorlevels": {
+        "rimin": 0.02, "gimin": 0.02, "bimin": 0.02,
+        "rimax": 0.92, "gimax": 0.92, "bimax": 0.92
+      },
+      "colortemperature": { "temperature": 6800 },
+      "vibrance": { "intensity": 0.25, "rbal": 1.0, "gbal": 1.2, "bbal": 0.8 },
+      "curves": "curves=master='0/0 0.25/0.20 0.5/0.55 0.75/0.82 1/1'",
+      "eq": null,
+      "colorbalance": null,
+      "unsharp": { "luma_x": 5, "luma_y": 5, "luma_amount": 0.4 }
+    },
+    "dark_food_rescue": {
+      "description": "Decompose: fix very dark footage (YAVG < 85). Aggressive level stretch + shadow lift + moderate vibrance.",
+      "colorlevels": {
+        "rimin": 0.03, "gimin": 0.03, "bimin": 0.03,
+        "rimax": 0.88, "gimax": 0.88, "bimax": 0.90
+      },
+      "colortemperature": { "temperature": 6800 },
+      "vibrance": { "intensity": 0.3, "rbal": 1.0, "gbal": 1.1, "bbal": 0.8 },
+      "curves": "curves=master='0/0 0.15/0.22 0.4/0.50 0.75/0.83 1/1'",
+      "eq": null,
+      "colorbalance": null,
+      "unsharp": { "luma_x": 5, "luma_y": 5, "luma_amount": 0.5 }
+    },
+
+    "_comment_assembly": "=== ASSEMBLY PRESET (cohesion only) === One preset for ALL blocks. Blocks already corrected at decompose.",
+    "cohesive_soft": {
+      "description": "Assembly: gentle unifying look across all blocks. Very light S-curve for consistent contrast + tiny vibrance for color cohesion. No level stretching, no WB correction (decompose already did that).",
+      "colorlevels": null,
+      "colortemperature": null,
+      "vibrance": { "intensity": 0.08 },
+      "curves": "curves=master='0/0 0.25/0.23 0.5/0.53 0.75/0.79 1/1'",
+      "eq": null,
+      "colorbalance": null,
+      "unsharp": null
+    },
+
+    "none": {
+      "description": "No grading — pass through as-is.",
+      "colorlevels": null,
+      "colortemperature": null,
+      "vibrance": null,
+      "eq": null,
+      "colorbalance": null,
+      "curves": null,
+      "unsharp": null
+    }
+  },
+  "adaptive_grading": {
+    "_comment": "DECOMPOSE ONLY. Assembly doesn't use adaptive grading — it applies cohesive_soft uniformly.",
+    "enabled": false
+  },
+  "block_routing": {
+    "_comment": "ALL blocks get cohesive_soft during assembly. No per-block differentiation — decompose already corrected source issues.",
+    "by_code": {
+      "A1": "cohesive_soft",
+      "A2": "cohesive_soft",
+      "A3": "cohesive_soft",
+      "A4": "cohesive_soft",
+      "A5": "cohesive_soft",
+      "A6": "cohesive_soft",
+      "I1": "cohesive_soft",
+      "I2": "cohesive_soft",
+      "I3": "cohesive_soft",
+      "I4": "cohesive_soft",
+      "I5": "cohesive_soft",
+      "I6": "cohesive_soft",
+      "D1": "cohesive_soft",
+      "D2": "cohesive_soft",
+      "D3": "cohesive_soft",
+      "Act": "none"
+    },
+    "by_category": {
+      "DishSlideshow": "cohesive_soft",
+      "DishCollage": "cohesive_soft",
+      "FoodCollage": "cohesive_soft",
+      "GoodReactions": "cohesive_soft",
+      "FacesCollage": "cohesive_soft",
+      "Scenario": "cohesive_soft",
+      "Results": "cohesive_soft",
+      "KitchenBTS": "cohesive_soft",
+      "CookingMethod": "cohesive_soft",
+      "PremiumIngredients": "cohesive_soft",
+      "PackingLine": "cohesive_soft",
+      "Delivery": "cohesive_soft",
+      "ReviewRaw": "cohesive_soft",
+      "EatingScene": "cohesive_soft",
+      "Packaging": "cohesive_soft",
+      "UnboxReveal": "cohesive_soft",
+      "ReceiveScene": "cohesive_soft"
+    },
+    "by_type": {
+      "kol_video": "cohesive_soft",
+      "broll_video": "cohesive_soft",
+      "product_image": "none",
+      "food_collage": "cohesive_soft",
+      "kinetic_text": "none",
+      "text_card": "none",
+      "logo_sting": "none",
+      "end_card": "none"
+    }
+  },
+  "defaults": {
+    "variant_grade": "cohesive_soft",
+    "cta_grade": "none",
+    "template_grade": "none",
+    "logo_grade": "none"
+  }
+}

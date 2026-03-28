@@ -1,0 +1,147 @@
+{
+  "extends": "block_schema.json",
+  "brand": "pinxin",
+  "product_type": "food",
+  "categories": [
+    "FrozenDish",
+    "PasteDish",
+    "SatayDish",
+    "NoodleDish",
+    "ChilliSauce",
+    "Ingredient",
+    "Reaction",
+    "Problem",
+    "Promo",
+    "Heritage",
+    "Convenience"
+  ],
+  "subtypes": {
+    "FrozenDish": [
+      "Rendang",
+      "BakKutTeh",
+      "ClassicCurry",
+      "GreenCurry",
+      "SambalPetaiTempeh",
+      "AsamLaksa",
+      "BlackVinegarHericium",
+      "NamyuTofu",
+      "MeiCaiHericium",
+      "LotusRootSoup",
+      "BlackBeanSoup",
+      "WatercressSoup",
+      "OldCucumberSoup",
+      "MultiDishSpread",
+      "Collage"
+    ],
+    "PasteDish": [
+      "HarMeePaste",
+      "CurryMeePaste",
+      "LaksaPaste",
+      "TomYamPaste"
+    ],
+    "SatayDish": [
+      "ClassicSatay",
+      "SpicySatay",
+      "HoneySatay",
+      "GrillingScene"
+    ],
+    "NoodleDish": [
+      "DryNoodle",
+      "SoupNoodle",
+      "StirFried"
+    ],
+    "ChilliSauce": [
+      "SambalBelacan",
+      "GarlicChilli",
+      "LaksaChilli",
+      "ChilliOil"
+    ],
+    "Ingredient": [
+      "HericiumMushroom",
+      "OrganicVeg",
+      "LakeSalt",
+      "HeritageSpice",
+      "PlantProtein"
+    ],
+    "Reaction": [
+      "FamilyReaction",
+      "AuntieTasting",
+      "FirstTimeTry",
+      "SurprisedVegan",
+      "KOLReview"
+    ],
+    "Problem": [
+      "ExpensiveTakeaway",
+      "NoTimeToCook",
+      "BoringVegetarian",
+      "FrozenFoodStigma",
+      "UnhealthyConvenience"
+    ],
+    "Promo": [
+      "Buy8Get8",
+      "LimitedTime",
+      "FreeDelivery",
+      "EndCard",
+      "PriceMath"
+    ],
+    "Heritage": [
+      "KitchenPrep",
+      "TraditionalMethod",
+      "ThreeGenerations",
+      "GeorgetownRoots"
+    ],
+    "Convenience": [
+      "FrozenToTable",
+      "Timer15Min",
+      "EasyPrep",
+      "FamilyDinner"
+    ]
+  },
+  "default_category_for_framework": {
+    "pas": "Problem",
+    "slap": "Problem",
+    "myth_buster": "Problem",
+    "confession": "Reaction",
+    "convenience_solve": "Convenience",
+    "single_shot": "FrozenDish",
+    "ugc_testimonial": "Reaction"
+  },
+  "default_block_code_for_scene": {
+    "hook": "A5",
+    "product_reveal": "D3",
+    "brand_proof": "I1",
+    "emotion_reaction": "A3",
+    "social_proof": "A4",
+    "ingredient_proof": "I3",
+    "cta": "Act6",
+    "ugc_block": "D1",
+    "heritage_scene": "I1",
+    "convenience_demo": "I2",
+    "multi_dish_spread": "A2",
+    "price_comparison": "A5"
+  },
+  "subtype_keywords": {
+    "Rendang": ["rendang", "仁当", "椰浆", "猴头菇仁当"],
+    "BakKutTeh": ["bak kut teh", "肉骨茶", "bkt", "herbal"],
+    "ClassicCurry": ["curry", "咖喱", "classic curry", "经典咖喱"],
+    "GreenCurry": ["green curry", "青咖喱", "泰式"],
+    "SambalPetaiTempeh": ["sambal", "petai", "tempeh", "叁巴", "臭豆"],
+    "AsamLaksa": ["asam laksa", "亚参叻沙", "酸辣"],
+    "BlackVinegarHericium": ["black vinegar", "黑醋", "猴头菇"],
+    "HericiumMushroom": ["hericium", "猴头菇", "mushroom", "lion's mane", "菇"],
+    "ExpensiveTakeaway": ["expensive", "mahal", "贵", "外卖", "RM25", "RM30", "grab"],
+    "NoTimeToCook": ["no time", "busy", "忙", "没时间", "来不及煮"],
+    "BoringVegetarian": ["boring", "vegetarian", "素食", "无聊", "没味道", "bland"],
+    "FrozenFoodStigma": ["frozen", "冷冻", "不新鲜", "加工", "防腐剂", "preservative"],
+    "Buy8Get8": ["买8送8", "买八送八", "buy 8", "free 8"],
+    "LimitedTime": ["限时", "limited", "最后", "countdown", "还剩"],
+    "FrozenToTable": ["15分钟", "15 minutes", "frozen to table", "quick", "简单"],
+    "Timer15Min": ["timer", "计时", "倒计时", "15min"],
+    "FamilyReaction": ["family", "家人", "一家人", "团聚"],
+    "AuntieTasting": ["aunty", "阿姨", "auntie", "tasting"],
+    "FirstTimeTry": ["first time", "第一次", "try", "试"],
+    "KitchenPrep": ["kitchen", "厨房", "prep", "准备"],
+    "TraditionalMethod": ["traditional", "传统", "古法", "heritage"],
+    "ThreeGenerations": ["generation", "代", "grandmother", "奶奶", "外婆"]
+  }
+}

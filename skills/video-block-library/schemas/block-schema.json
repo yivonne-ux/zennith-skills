@@ -1,0 +1,116 @@
+{
+  "schema_version": "2.0",
+  "description": "Universal AIDA Video Block Taxonomy. Block codes are product-agnostic anchors. Categories match the Drive folder structure. KOL name is part of the naming convention.",
+  "naming_format": "{block_code}_{category}_{kol}_{nn}",
+  "naming_examples": [
+    "A1_DishSlideshow_Vivian_01.mp4",
+    "A3_GoodReaction_Christine_02.mp4",
+    "D1_EatingScene_ChuiEng_01.mp4",
+    "I1_KitchenBTS_01.mp4"
+  ],
+  "aida_phases": {
+    "attention": {
+      "description": "Stop scrolling — grab attention immediately",
+      "code_prefix": "A",
+      "block_codes": {
+        "A1": {
+          "name": "DishSlideshow",
+          "description": "Hero food beauty shot or dish slideshow. Close-up of the actual meal looking appetizing."
+        },
+        "A2": {
+          "name": "DishCollage",
+          "description": "Multi-dish grid or collage layout showing variety of meals."
+        },
+        "A3": {
+          "name": "GoodReaction",
+          "description": "Positive reaction — person showing genuine delight, surprise, or satisfaction after tasting/seeing food."
+        },
+        "A4": {
+          "name": "FacesCollage",
+          "description": "Multiple faces or testimonial grid for social proof."
+        },
+        "A5": {
+          "name": "Scenario",
+          "description": "Relatable problem scenario — person talking about a struggle (weight, no time to cook, diet boredom, skin issues)."
+        },
+        "A6": {
+          "name": "Results",
+          "description": "Before/after or transformation reveal — person showing or talking about results achieved."
+        }
+      }
+    },
+    "interest": {
+      "description": "Build trust — show why this product is worth attention",
+      "code_prefix": "I",
+      "block_codes": {
+        "I1": {
+          "name": "KitchenBTS",
+          "description": "Behind-the-scenes kitchen footage — food prep, cooking process, kitchen environment."
+        },
+        "I2": {
+          "name": "CookingMethod",
+          "description": "Specific cooking technique or method being demonstrated."
+        },
+        "I3": {
+          "name": "PremiumIngredients",
+          "description": "Quality ingredients close-up — fresh vegetables, premium proteins, etc."
+        },
+        "I4": {
+          "name": "PackingLine",
+          "description": "Packing, portioning, sealing lids, stacking bentos, assembly line."
+        },
+        "I5": {
+          "name": "Delivery",
+          "description": "Delivery process — courier, package in transit, doorstep delivery."
+        },
+        "I6": {
+          "name": "ReviewRaw",
+          "description": "Raw unedited review or testimonial clip."
+        }
+      }
+    },
+    "desire": {
+      "description": "Create want — show the experience and outcome",
+      "code_prefix": "D",
+      "block_codes": {
+        "D1": {
+          "name": "EatingScene",
+          "description": "Person eating, tasting, or enjoying the meal on camera."
+        },
+        "D2": {
+          "name": "ReceiveScene",
+          "description": "Person receiving the package — handover, pickup, doorstep moment."
+        },
+        "D3": {
+          "name": "UnboxReveal",
+          "description": "Unboxing and first product reveal — opening the bag/box, seeing the meal."
+        }
+      }
+    },
+    "action": {
+      "description": "Close — drive the viewer to act",
+      "code_prefix": "Act",
+      "block_codes": {
+        "Act1": {
+          "name": "Packaging",
+          "description": "Product packaging beauty shot or branded container."
+        },
+        "Act2": {
+          "name": "GiftGroup",
+          "description": "Bundle, gift set, or multi-item group shot."
+        },
+        "Act3": {
+          "name": "PromoPic",
+          "description": "Promotional image, offer card, or deal visual."
+        },
+        "Act6": {
+          "name": "EndCard",
+          "description": "CTA closing card — PM us, WhatsApp us, logo, QR code."
+        }
+      }
+    }
+  },
+  "phase_order": ["attention", "interest", "desire", "action"],
+  "phase_order_note": "Sequences must follow strict A-I-D-Act ordering. Repeats within a phase are allowed but phase order is never violated.",
+  "kol_note": "KOL name is included in filename for KOL-featuring clips. B-roll/kitchen/product clips without a specific person use sequential numbering only (e.g. I1_KitchenBTS_01.mp4)."
+}

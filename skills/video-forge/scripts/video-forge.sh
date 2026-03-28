@@ -1438,8 +1438,10 @@ if [ $# -eq 0 ]; then
   echo "  bash video-forge.sh assemble <clips...> [options]     Concatenate clips"
   echo "  bash video-forge.sh export <input.mp4> [options]      Multi-platform export"
   echo "  bash video-forge.sh produce <input.mp4> [options]     Full auto pipeline"
+  echo "  bash video-forge.sh remotion <subcommand> [options]  Remotion renderer (Tier 1, \$0)"
   echo ""
   echo "Produce types: aroll, broll, promotion, ugc, lofi, hero, education, channel"
+  echo "Remotion: render, kinetic, brand-reveal, preview, studio"
   echo ""
   echo "Examples:"
   echo "  bash video-forge.sh caption my_video.mp4 --style tiktok --word-level"
@@ -1463,9 +1465,20 @@ case "$(to_lower "$COMMAND")" in
   assemble) cmd_assemble "$@" ;;
   export)   cmd_export "$@" ;;
   produce)  cmd_produce "$@" ;;
+  remotion)
+    # Delegate to Remotion renderer (Tier 1: $0/render, pixel-perfect)
+    REMOTION_SCRIPT="$HOME/.openclaw/skills/remotion-renderer/scripts/remotion-render.sh"
+    if [ -f "$REMOTION_SCRIPT" ]; then
+      info "Delegating to Remotion renderer..."
+      bash "$REMOTION_SCRIPT" "$@"
+    else
+      error "Remotion renderer not installed. Expected: $REMOTION_SCRIPT"
+      exit 1
+    fi
+    ;;
   *)
     error "Unknown command: $COMMAND"
-    echo "Available: caption, brand, music, effects, assemble, export, produce" >&2
+    echo "Available: caption, brand, music, effects, assemble, export, produce, remotion" >&2
     exit 1
     ;;
 esac

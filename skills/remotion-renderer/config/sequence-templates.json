@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "description": "Sequence recipes for assembled mode. Strict A-I-D-Act ordering. Templates are product-agnostic; brand schema determines which categories/subtypes fill each slot.",
+  "templates": {
+    "standard_ugc_40s": {
+      "name": "Standard UGC Ad (40s)",
+      "total_duration_range": [38, 50],
+      "intent": ["awareness", "conversion"],
+      "sequence": [
+        {"position": 1, "aida_phase": "attention", "preferred_codes": ["A5", "A3"], "duration_range": [3, 5], "description": "Hook — relatable scenario or reaction"},
+        {"position": 2, "aida_phase": "interest", "preferred_codes": ["I1", "I3"], "duration_range": [5, 8], "description": "Behind the scenes or premium materials"},
+        {"position": 3, "aida_phase": "interest", "preferred_codes": ["I2", "I4"], "duration_range": [5, 7], "description": "Process or production method"},
+        {"position": 4, "aida_phase": "desire", "preferred_codes": ["D1"], "duration_range": [8, 12], "description": "Person using/enjoying product"},
+        {"position": 5, "aida_phase": "desire", "preferred_codes": ["D1", "D2"], "duration_range": [5, 8], "description": "Additional usage or receive scene"},
+        {"position": 6, "aida_phase": "action", "preferred_codes": ["Act6"], "duration_range": [3, 5], "description": "CTA end card"}
+      ]
+    },
+    "quick_ugc_12s": {
+      "name": "Single Shot UGC (12s)",
+      "total_duration_range": [11, 13],
+      "intent": ["awareness", "conversion"],
+      "sequence": [
+        {"position": 1, "aida_phase": "desire", "preferred_codes": ["D1"], "duration_range": [11, 13], "description": "Full 12s testimonial — contains all AIDA beats internally"}
+      ]
+    },
+    "awareness_30s": {
+      "name": "Awareness Hook (30s)",
+      "total_duration_range": [28, 35],
+      "intent": ["awareness"],
+      "sequence": [
+        {"position": 1, "aida_phase": "attention", "preferred_codes": ["A5", "A6"], "duration_range": [3, 5], "description": "Pain scenario or transformation tease"},
+        {"position": 2, "aida_phase": "interest", "preferred_codes": ["I3", "I5"], "duration_range": [5, 8], "description": "Premium materials or raw reviews"},
+        {"position": 3, "aida_phase": "desire", "preferred_codes": ["D1"], "duration_range": [8, 12], "description": "Usage scene testimonial"},
+        {"position": 4, "aida_phase": "action", "preferred_codes": ["Act6"], "duration_range": [3, 5], "description": "CTA end card"}
+      ]
+    },
+    "conversion_45s": {
+      "name": "Conversion Full Funnel (45s)",
+      "total_duration_range": [40, 50],
+      "intent": ["conversion"],
+      "sequence": [
+        {"position": 1, "aida_phase": "attention", "preferred_codes": ["A3"], "duration_range": [3, 5], "description": "Positive reactions compilation"},
+        {"position": 2, "aida_phase": "attention", "preferred_codes": ["A5"], "duration_range": [3, 5], "description": "Pain scenario setup"},
+        {"position": 3, "aida_phase": "interest", "preferred_codes": ["I3"], "duration_range": [5, 8], "description": "Premium materials closeup"},
+        {"position": 4, "aida_phase": "interest", "preferred_codes": ["I2"], "duration_range": [5, 7], "description": "Process method demo"},
+        {"position": 5, "aida_phase": "desire", "preferred_codes": ["D1"], "duration_range": [8, 12], "description": "Usage scene testimonial"},
+        {"position": 6, "aida_phase": "desire", "preferred_codes": ["D3"], "duration_range": [5, 8], "description": "Unbox reveal"},
+        {"position": 7, "aida_phase": "action", "preferred_codes": ["Act1"], "duration_range": [3, 5], "description": "Packaging beauty shot"},
+        {"position": 8, "aida_phase": "action", "preferred_codes": ["Act6"], "duration_range": [3, 5], "description": "CTA end card"}
+      ]
+    },
+    "transformation_30s": {
+      "name": "Transformation Before/After (30s)",
+      "total_duration_range": [28, 35],
+      "intent": ["awareness", "conversion"],
+      "note": "Best for skincare, fitness, weight loss verticals",
+      "sequence": [
+        {"position": 1, "aida_phase": "attention", "preferred_codes": ["A5"], "duration_range": [3, 5], "description": "Pain scenario — before state"},
+        {"position": 2, "aida_phase": "interest", "preferred_codes": ["I2"], "duration_range": [5, 8], "description": "Process — how they used the product"},
+        {"position": 3, "aida_phase": "desire", "preferred_codes": ["D4"], "duration_range": [8, 12], "description": "Before/after transformation reveal"},
+        {"position": 4, "aida_phase": "action", "preferred_codes": ["Act6"], "duration_range": [3, 5], "description": "CTA end card"}
+      ]
+    },
+    "lifestyle_30s": {
+      "name": "Lifestyle Aspirational (30s)",
+      "total_duration_range": [28, 35],
+      "intent": ["awareness"],
+      "note": "Best for premium, aesthetic, or lifestyle products",
+      "sequence": [
+        {"position": 1, "aida_phase": "attention", "preferred_codes": ["A1"], "duration_range": [3, 5], "description": "Product showcase beauty shot"},
+        {"position": 2, "aida_phase": "interest", "preferred_codes": ["I3"], "duration_range": [5, 8], "description": "Premium materials closeup"},
+        {"position": 3, "aida_phase": "desire", "preferred_codes": ["D5"], "duration_range": [8, 12], "description": "Lifestyle shot — product in context"},
+        {"position": 4, "aida_phase": "action", "preferred_codes": ["Act3"], "duration_range": [3, 5], "description": "Promo visual or offer"}
+      ]
+    },
+    "comparison_40s": {
+      "name": "Comparison / Competitor (40s)",
+      "total_duration_range": [35, 45],
+      "intent": ["conversion"],
+      "note": "Best for products with clear competitive advantages",
+      "sequence": [
+        {"position": 1, "aida_phase": "attention", "preferred_codes": ["A5"], "duration_range": [3, 5], "description": "Pain scenario with old/competitor product"},
+        {"position": 2, "aida_phase": "interest", "preferred_codes": ["I3"], "duration_range": [5, 8], "description": "Premium materials — why this is better"},
+        {"position": 3, "aida_phase": "desire", "preferred_codes": ["D6"], "duration_range": [5, 8], "description": "Side-by-side comparison demo"},
+        {"position": 4, "aida_phase": "desire", "preferred_codes": ["D1"], "duration_range": [8, 12], "description": "Usage scene — enjoying the better product"},
+        {"position": 5, "aida_phase": "action", "preferred_codes": ["Act6"], "duration_range": [3, 5], "description": "CTA end card"}
+      ]
+    }
+  }
+}

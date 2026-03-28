@@ -1,0 +1,44 @@
+{
+  "whoosh": {
+    "files": ["唰.mp3", "嗖_咻.mp3", "嗖嗖.mp3"],
+    "trigger": "transition",
+    "volume_range": [0.3, 0.8],
+    "timing_offset_s": -0.1
+  },
+  "pop_ding": {
+    "files": ["叮.mp3", "啵1.mp3", "叮铃_闪亮效果音2.mp3", "提示正确声.mp3", "闪的一声.mp3"],
+    "trigger": "emphasis_word",
+    "volume_range": [0.3, 0.6],
+    "timing_offset_s": 0.0
+  },
+  "chime_cta": {
+    "files": ["叮_关注_点赞.mp3", "游戏任务完成.mp3", "iphone消息提示音.mp3"],
+    "trigger": "cta_block",
+    "volume_range": [0.4, 0.6],
+    "timing_offset_s": 0.0
+  },
+  "page_flip": {
+    "files": ["书本翻页声.mp3"],
+    "trigger": "image_transition",
+    "volume_range": [0.3, 0.5],
+    "timing_offset_s": 0.0
+  },
+  "magic_reveal": {
+    "files": ["闪光_魔法音效.mp3", "梦幻魔法声效.mp3", "光.mp3"],
+    "trigger": "reveal_moment",
+    "volume_range": [0.3, 0.5],
+    "timing_offset_s": 0.0
+  },
+  "variety_boom": {
+    "files": ["综艺嘭字幕音效震撼出场.mp3", "综艺_咚.mp3", "砰_拳击声.mp3"],
+    "trigger": "stat_emphasis",
+    "volume_range": [0.4, 0.7],
+    "timing_offset_s": 0.0
+  },
+  "reaction": {
+    "files": ["嗯(Hmmm).mp3", "女声舒缓_嗯_.mp3", "闻起来味道很好.mp3"],
+    "trigger": "reaction_moment",
+    "volume_range": [0.3, 0.5],
+    "timing_offset_s": 0.0
+  }
+}

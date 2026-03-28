@@ -1,0 +1,483 @@
+{
+  "_meta": {
+    "description": "Text style presets extracted from Jianying project 'Mirra text style'. Each preset defines 4 text scenarios: headline, body (with emphasis), body_single (with emoji), full_emphasis.",
+    "source_project": "Mirra text style",
+    "safe_zone": {
+      "top_pct": 8,
+      "bottom_pct": 27,
+      "left_pct": 6,
+      "right_pct": 6,
+      "note": "From user's 9-16 ads safe zone.png. Text anchored to bottom of safe zone."
+    },
+    "canvas": {
+      "width": 1080,
+      "height": 1920
+    }
+  },
+
+  "presets": {
+    "cn_black_outline": {
+      "language": "zh",
+      "brand": "mirra",
+      "source_jianying_project": "Mirra text style",
+      "timeline_section": "0-4s",
+
+      "headline": {
+        "font": "SourceHanSerifCN-Bold.otf",
+        "font_fallback": "Noto Serif SC",
+        "jianying_size": 18,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "letter_spacing": 0.05,
+        "line_spacing": 0.17,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "position_y": -0.076,
+        "note": "Serif bold headline. Dark outline + downward shadow. Emojis on separate layers."
+      },
+
+      "body": {
+        "font": "FZZCHJW.TTF",
+        "font_regular": "FZZHJW.TTF",
+        "font_fallback": "Noto Sans SC",
+        "jianying_size": 11,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "letter_spacing": 0.05,
+        "line_spacing": 0.07,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "position_y": -0.218,
+        "note": "White text with dark outline. Used for 1-line and 2-line scenarios."
+      },
+
+      "emphasis": {
+        "font": "FZZCHJW.TTF",
+        "font_fallback": "Noto Sans SC",
+        "jianying_size": 14,
+        "font_weight": 900,
+        "color": "#f7ab9f",
+        "use_letter_color": true,
+        "scale_ratio": 1.27,
+        "letter_spacing": 0.05,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "note": "Inline emphasis — salmon color, size jumps 11→14 (1.27× scale). Dark outline preserved."
+      },
+
+      "full_emphasis": {
+        "font": "FZZCHJW.TTF",
+        "font_fallback": "Noto Sans SC",
+        "jianying_size": 14,
+        "font_weight": 900,
+        "color": "#ffffff",
+        "use_letter_color": true,
+        "letter_spacing": 0.10,
+        "line_spacing": 0.07,
+        "stroke": {
+          "color": "#e88a7e",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#bc6236",
+          "distance": 8.03,
+          "angle": -45.0,
+          "alpha": 1.0
+        },
+        "position_y": -0.257,
+        "note": "Entire phrase highlighted. Salmon stroke + brown directional shadow at -45°. Wider letter-spacing (0.10)."
+      },
+
+      "emoji": {
+        "font": "SourceHanSerifCN-Bold.otf",
+        "jianying_size": 18,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "placement": "separate_layer",
+        "position": "relative_to_text",
+        "note": "Emojis on separate layers. Position adapts to text content."
+      }
+    },
+
+    "cn_polished": {
+      "language": "zh",
+      "brand": "mirra",
+      "source_jianying_project": "Mirra text style",
+      "timeline_section": "6-10s",
+
+      "headline": {
+        "font": "SourceHanSerifCN-Bold.otf",
+        "font_fallback": "Noto Serif SC",
+        "jianying_size": 18,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "bold_width": 0.008,
+        "letter_spacing": 0.05,
+        "line_spacing": 0.17,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 4.04,
+          "angle": -90.8,
+          "alpha": 0.839,
+          "smoothing": 0.9
+        },
+        "position_y": -0.076,
+        "note": "Soft embossed look. High shadow_smoothing (0.9) creates blurred/diffused shadow, not hard outline. Subtle 3D depth effect."
+      },
+
+      "body": {
+        "font": "FZZCHJW.TTF",
+        "font_regular": "FZZHJW.TTF",
+        "font_fallback": "Noto Sans SC",
+        "jianying_size": 11,
+        "font_weight": 700,
+        "color": "#ffd9c6",
+        "letter_spacing": 0.05,
+        "line_spacing": 0.07,
+        "stroke": {
+          "color": "#584c4c",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533,
+          "smoothing": 0.49
+        },
+        "position_y": -0.218,
+        "note": "Warm peach body text (#ffd9c6) with soft dark brown stroke (#584c4c). Moderate shadow smoothing."
+      },
+
+      "emphasis": {
+        "font": "FZZCHJW.TTF",
+        "font_fallback": "Noto Sans SC",
+        "jianying_size": 14,
+        "font_weight": 900,
+        "color": "#ffffff",
+        "use_letter_color": true,
+        "scale_ratio": 1.25,
+        "letter_spacing": 0.05,
+        "stroke": {
+          "color": "#584c4c",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533,
+          "smoothing": 0.49
+        },
+        "note": "White emphasis (#ffffff) with soft brown stroke (#584c4c). Visible against warm peach body text. Size jumps 11→14 (1.25× scale)."
+      },
+
+      "full_emphasis": {
+        "font": "FZZCHJW.TTF",
+        "font_fallback": "Noto Sans SC",
+        "jianying_size": 14,
+        "font_weight": 900,
+        "color": "#FFFFFF",
+        "use_letter_color": true,
+        "letter_spacing": 0.0,
+        "line_spacing": 0.07,
+        "stroke": {
+          "color": "#000000",
+          "width": 0.08
+        },
+        "has_shadow": false,
+        "background": {
+          "color": "#f7ab9f",
+          "style": 1,
+          "round_radius": 0.553,
+          "alpha": 1.0
+        },
+        "position_y": -0.257,
+        "note": "White text on SALMON BACKGROUND PILL (#f7ab9f). Rounded corners (radius 0.553). No shadow. Background-driven emphasis."
+      },
+
+      "emoji": {
+        "font": "SourceHanSerifCN-Bold.otf",
+        "jianying_size": 18,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "placement": "separate_layer",
+        "position": "relative_to_text",
+        "note": "Same emoji style as cn_black_outline."
+      }
+    },
+
+    "en_black_outline": {
+      "language": "en",
+      "brand": "mirra",
+      "source_jianying_project": "Mirra text style",
+      "timeline_section": "12-16s",
+
+      "headline": {
+        "font": "AwesomeSerif-BoldRegular.otf",
+        "font_fallback": "Georgia",
+        "jianying_size": 19,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "letter_spacing": 0.0,
+        "line_spacing": -0.23,
+        "stroke": {
+          "color": "#fe8a80",
+          "width": 0.041
+        },
+        "shadow": {
+          "color": "#c25d54",
+          "distance": 5.79,
+          "angle": -66.4,
+          "alpha": 1.0
+        },
+        "position_y": -0.076,
+        "note": "Serif headline with SALMON stroke (#fe8a80) + deeper salmon shadow (#c25d54). Tight line-spacing (-0.23) for multi-line. No letter-spacing."
+      },
+
+      "body": {
+        "font": "MabryPro-Bold.ttf",
+        "font_fallback": "system-ui",
+        "jianying_size": 9,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "letter_spacing": 0.0,
+        "line_spacing": 0.22,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "position_y": -0.218,
+        "note": "MabryPro-Bold body text. Wide line-spacing (0.22) for readability. No letter-spacing."
+      },
+
+      "emphasis": {
+        "font": "MabryPro-Bold.ttf",
+        "font_fallback": "system-ui",
+        "jianying_size": 9,
+        "font_weight": 700,
+        "color": "#f7ab9f",
+        "use_letter_color": true,
+        "scale_ratio": 1.0,
+        "letter_spacing": 0.0,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "note": "Salmon emphasis (#f7ab9f) — same size as body (no scale jump in EN). Color change only."
+      },
+
+      "full_emphasis": {
+        "font": "MabryPro-Bold.ttf",
+        "font_fallback": "system-ui",
+        "jianying_size": 11,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "use_letter_color": true,
+        "letter_spacing": 0.0,
+        "line_spacing": 0.07,
+        "stroke": {
+          "color": "#e88a7e",
+          "width": 0.08
+        },
+        "shadow": {
+          "color": "#bc6236",
+          "distance": 8.03,
+          "angle": -45.0,
+          "alpha": 1.0
+        },
+        "position_y": -0.257,
+        "note": "Salmon stroke + brown directional shadow (same formula as CN). Size bumps to 11 (from body 9). No letter-spacing."
+      },
+
+      "emoji": {
+        "font": "SourceHanSerifCN-Bold.otf",
+        "jianying_size": 18,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "placement": "separate_layer",
+        "position": "relative_to_text",
+        "note": "Same emoji layer style."
+      }
+    },
+
+    "en_polished": {
+      "language": "en",
+      "brand": "mirra",
+      "source_jianying_project": "Mirra text style",
+      "timeline_section": "18-22s",
+
+      "headline": {
+        "font": "AwesomeSerif-BoldRegular.otf",
+        "font_fallback": "Georgia",
+        "jianying_size": 19,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "letter_spacing": 0.0,
+        "line_spacing": -0.23,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#252525",
+          "distance": 3.44,
+          "angle": -90.8,
+          "alpha": 0.833,
+          "smoothing": 0.56
+        },
+        "position_y": -0.076,
+        "note": "Soft embossed serif headline. Shadow_smoothing 0.56 creates diffused depth. Both stroke & shadow are #252525 for subtle elegance."
+      },
+
+      "body": {
+        "font": "MabryPro-Bold.ttf",
+        "font_fallback": "system-ui",
+        "jianying_size": 9,
+        "font_weight": 700,
+        "color": "#ffffff",
+        "letter_spacing": 0.0,
+        "line_spacing": 0.22,
+        "has_stroke": false,
+        "shadow": {
+          "color": "#000000",
+          "distance": 7.08,
+          "angle": -90.8,
+          "alpha": 0.801,
+          "smoothing": 1.38
+        },
+        "position_y": -0.218,
+        "note": "White text, NO stroke. Very high shadow_smoothing (1.38) creates soft diffused shadow — text appears to glow/float."
+      },
+
+      "emphasis": {
+        "font": "MabryPro-Bold.ttf",
+        "font_fallback": "system-ui",
+        "jianying_size": 9,
+        "font_weight": 700,
+        "color": "#584c4c",
+        "use_letter_color": true,
+        "scale_ratio": 1.0,
+        "letter_spacing": 0.0,
+        "stroke": {
+          "color": "#ffffff",
+          "width": 0.06
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 7.08,
+          "angle": -90.8,
+          "alpha": 0.801,
+          "smoothing": 1.38
+        },
+        "note": "Inverted emphasis — dark brown fill (#584c4c) with WHITE stroke (material border_color=#fff). Keywords become darker/bolder against soft white body."
+      },
+
+      "full_emphasis": {
+        "font": "MabryPro-Bold.ttf",
+        "font_fallback": "system-ui",
+        "jianying_size": 9,
+        "font_weight": 700,
+        "color": "#ffcdd2",
+        "use_letter_color": true,
+        "letter_spacing": 0.0,
+        "line_spacing": 0.07,
+        "stroke": {
+          "color": "#e88a7e",
+          "width": 0.08
+        },
+        "has_shadow": false,
+        "background": {
+          "color": "#584c4c",
+          "style": 1,
+          "round_radius": 0.0,
+          "alpha": 1.0
+        },
+        "position_y": -0.257,
+        "note": "Pink text (#ffcdd2) on DARK BROWN BACKGROUND BOX (#584c4c). No rounding (rectangular). No shadow. Background-driven emphasis."
+      },
+
+      "emoji": {
+        "font": "SourceHanSerifCN-Bold.otf",
+        "jianying_size": 18,
+        "stroke": {
+          "color": "#252525",
+          "width": 0.058
+        },
+        "shadow": {
+          "color": "#000000",
+          "distance": 6.12,
+          "angle": -90.8,
+          "alpha": 0.533
+        },
+        "placement": "separate_layer",
+        "position": "relative_to_text",
+        "note": "Same emoji layer style."
+      }
+    }
+  }
+}
