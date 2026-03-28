@@ -8,7 +8,7 @@ agents:
 
 # Image Prompt Framework — 5-Layer Structured Prompts
 
-Generate professional-quality NanoBanana prompts using a 5-layer framework. Replaces ad-hoc prompting with structured, repeatable photography-grade prompts across all brands.
+MASTER prompt framework for all NanoBanana/Gemini image generation. Supersedes ad-hoc prompting. Genre-specific extensions: food-photography (F&B shots), brand-prompt-library (200+ tested prompts by brand). This skill defines THE canonical structure — others extend it.
 
 ## When to Use
 

@@ -103,7 +103,7 @@ gen_via_pil() {
   local pil_text="$2"
   local pil_duration="$3"
   local frames_dir
-  frames_dir=$(mktemp -d /tmp/kinetic-frames-XXXXXX)
+  frames_dir=$(mktemp -d "${OPENCLAW}/workspace/data/content/reels/tmp-frames-XXXXXX")
 
   # Cleanup on exit/error
   trap "rm -rf '$frames_dir' 2>/dev/null" EXIT
