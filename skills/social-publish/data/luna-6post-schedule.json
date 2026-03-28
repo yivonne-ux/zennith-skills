@@ -1,0 +1,106 @@
+{
+  "account": "@luna.solaris",
+  "total_daily_content": 6,
+  "timezone": "UTC",
+  "markets": ["US_EST", "UK_GMT"],
+  "strategy": "2 feed + 1 reel + 3 stories = 6 pieces/day. Slow living, not content factory.",
+  "api_limit_24h": 25,
+  "safe_daily_posts": 6,
+
+  "slots": [
+    {
+      "slot": 1,
+      "time_utc": "12:00",
+      "time_myt": "20:00",
+      "markets_hit": "US morning (7AM EST) + UK lunch (12PM GMT)",
+      "format": "feed_image",
+      "pillar": "slow_mornings",
+      "type": "morning_ritual",
+      "ratio": "4:5",
+      "purpose": "Morning ritual photo — coffee, journaling, golden light. Core pillar. Saves machine.",
+      "generator": "luna-content-gen.sh",
+      "caption_style": "warm_relatable",
+      "hashtag_set": "slow_living"
+    },
+    {
+      "slot": 2,
+      "time_utc": "18:00",
+      "time_myt": "02:00",
+      "markets_hit": "US afternoon (1PM EST) + UK evening (6PM GMT)",
+      "format": "feed_image",
+      "pillar": "thrifted_styled",
+      "type": "outfit_of_day",
+      "ratio": "4:5",
+      "purpose": "OOTD / thrift find / styled look. Visual hook + save-worthy styling tips.",
+      "generator": "luna-content-gen.sh",
+      "caption_style": "casual_storytelling",
+      "hashtag_set": "thrifted"
+    },
+    {
+      "slot": 3,
+      "time_utc": "23:00",
+      "time_myt": "07:00",
+      "markets_hit": "US evening (6PM EST)",
+      "format": "reel",
+      "pillar": "romanticizing_mundane",
+      "type": "aesthetic_reel",
+      "ratio": "9:16",
+      "duration_sec": 15,
+      "purpose": "Aesthetic vibe reel — rainy window, cooking, market, golden hour. Ken Burns + lo-fi music.",
+      "generator": "luna-content-gen.sh",
+      "caption_style": "poetic_minimal",
+      "hashtag_set": "romanticize"
+    },
+    {
+      "slot": 4,
+      "time_utc": "10:00",
+      "time_myt": "18:00",
+      "format": "story",
+      "pillar": "soft_ambition",
+      "type": "story_day_in_life",
+      "ratio": "9:16",
+      "purpose": "Story: day-in-the-life moment. Freelance desk, cafe work, errands. Relatable authenticity.",
+      "generator": "luna-content-gen.sh"
+    },
+    {
+      "slot": 5,
+      "time_utc": "15:00",
+      "time_myt": "23:00",
+      "format": "story",
+      "pillar": "oracle_spiritual",
+      "type": "story_tarot_pull",
+      "ratio": "9:16",
+      "purpose": "Story: evening tarot/oracle card pull. Poll sticker. Comments driver.",
+      "generator": "luna-content-gen.sh"
+    },
+    {
+      "slot": 6,
+      "time_utc": "20:00",
+      "time_myt": "04:00",
+      "format": "story",
+      "pillar": "romanticizing_mundane",
+      "type": "story_aesthetic",
+      "ratio": "9:16",
+      "purpose": "Story: cozy evening aesthetic. Reading, fairy lights, tea. Wind-down content.",
+      "generator": "luna-content-gen.sh"
+    }
+  ],
+
+  "hashtag_sets": {
+    "slow_living": "#SlowLiving #SlowMorning #MorningRitual #RomanticizeYourLife #IntentionalLiving",
+    "thrifted": "#ThriftedStyle #VintageFinds #SecondhandFirst #ThriftFlip #SustainableFashion",
+    "romanticize": "#RomanticizeTheMundane #SoftAesthetic #CozyVibes #DreamyLife #SlowLivingDaily",
+    "spiritual": "#TarotDaily #OracleCards #MoonRituals #CrystalHealing #SpiritualPractice",
+    "soft_ambition": "#SoftAmbition #FreelanceLife #WorkLifeBalance #SlowProductivity #GentleLiving"
+  },
+  "caption_rules": {
+    "tone": "Warm older sister. Not preachy. Not try-hard. Feels like a text from your coolest friend.",
+    "hashtag_count": "5-6 per post max. Always rotate.",
+    "avoid": "Hustle culture, aggressive CTA, luxury flex, AI disclosure in character, brand jargon",
+    "voice_examples": [
+      "If you need a sign to cancel your evening plans and just read a book — this is it.",
+      "Found this jacket for $15 at a thrift store. Best outfits tell a story.",
+      "The goal isn't to get everything done perfectly. The goal is grace."
+    ]
+  }
+}
