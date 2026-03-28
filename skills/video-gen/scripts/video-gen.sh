@@ -2884,35 +2884,10 @@ USAGE
 
 # ============================================================
 # ============================================================
-# LIP SYNC (stub — routes to appropriate provider)
+# LIP SYNC — Real implementation via EachLabs Sync v2 + FAL
 # ============================================================
 
 lip_sync() {
-  echo "=== Lip Sync / Talking Head ==="
-  echo ""
-  echo "Usage: video-gen.sh lip-sync --image <face.png> --audio <speech.mp3> [--provider sync|kling|wan] [--output <out.mp4>]"
-  echo ""
-  echo "Providers:"
-  echo "  sync   — Sync v2 Pro via EachLabs (best quality, ~\$0.50/video)"
-  echo "           Requires: EACHLABS_API_KEY"
-  echo "  kling  — Kling 3.0 Elements via fal.ai (face-locked, ~\$0.28-1.40)"
-  echo "           Requires: FAL_API_KEY + KLING_ACCESS_KEY + KLING_SECRET_KEY"
-  echo "  wan    — Wan 2.6 via fal.ai (budget option, ~\$0.20)"
-  echo "           Requires: FAL_API_KEY"
-  echo ""
-  echo "Pipeline:"
-  echo "  1. Generate TTS audio (ElevenLabs / OpenAI TTS / Edge TTS)"
-  echo "  2. Send face image + audio to lip sync model"
-  echo "  3. Post-process with video-forge (captions, logo, watermark)"
-  echo ""
-  echo "Example:"
-  echo "  bash video-gen.sh lip-sync --image character.png --audio speech.mp3 --provider sync --output talking.mp4"
-  echo ""
-  echo "STATUS: Not yet implemented. This is a planned feature."
-  echo "See SKILL.md 'Lip Sync / Talking Head' section for model comparison and best practices."
-  echo ""
-
-  # Parse args to give helpful feedback
   local image="" audio="" provider="sync" output=""
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -2924,16 +2899,184 @@ lip_sync() {
     esac
   done
 
-  if [ -n "$image" ] || [ -n "$audio" ]; then
-    echo "ERROR: lip-sync generation is not yet implemented."
-    echo "Required API keys for '$provider' provider:"
-    case "$provider" in
-      sync)  echo "  - EACHLABS_API_KEY (set in ~/.openclaw/.env)" ;;
-      kling) echo "  - FAL_API_KEY + KLING_ACCESS_KEY + KLING_SECRET_KEY" ;;
-      wan)   echo "  - FAL_API_KEY" ;;
-    esac
+  if [ -z "$image" ] || [ -z "$audio" ]; then
+    echo "Usage: video-gen.sh lip-sync --image <face.png> --audio <speech.mp3> [--provider sync|wan] [--output <out.mp4>]"
+    echo ""
+    echo "Providers: sync (EachLabs, best), wan (FAL, budget)"
     exit 1
   fi
+
+  [ -z "$output" ] && output="${OUTPUT_DIR}/lipsync-$(date +%Y%m%d_%H%M%S).mp4"
+
+  # Load keys
+  local fal_key="" eachlabs_key=""
+  [ -f "$HOME/.env" ] && source "$HOME/.env" 2>/dev/null || true
+  [ -f "$HOME/.openclaw/secrets/fal.env" ] && source "$HOME/.openclaw/secrets/fal.env" 2>/dev/null || true
+  [ -f "$HOME/.openclaw/secrets/eachlabs.env" ] && source "$HOME/.openclaw/secrets/eachlabs.env" 2>/dev/null || true
+  fal_key="${FAL_KEY:-}"
+  eachlabs_key="${EACHLABS_API_KEY:-}"
+
+  echo "=== Lip Sync ==="
+  echo "  Image: $image"
+  echo "  Audio: $audio"
+  echo "  Provider: $provider"
+  echo "  Output: $output"
+
+  log "lip-sync: provider=$provider image=$image audio=$audio"
+
+  case "$provider" in
+    sync)
+      [ -z "$eachlabs_key" ] && { echo "ERROR: EACHLABS_API_KEY not set"; exit 1; }
+
+      # EachLabs Sync v2 Pro — submit via their API
+      # Upload image and audio, get synced video back
+      "$PYTHON3" - "$image" "$audio" "$output" "$eachlabs_key" << 'PYEOF'
+import sys, os, json, time, base64, requests
+
+image_path = sys.argv[1]
+audio_path = sys.argv[2]
+output_path = sys.argv[3]
+api_key = sys.argv[4]
+
+# Base64 encode inputs
+with open(image_path, 'rb') as f:
+    img_b64 = base64.b64encode(f.read()).decode()
+with open(audio_path, 'rb') as f:
+    aud_b64 = base64.b64encode(f.read()).decode()
+
+img_ext = os.path.splitext(image_path)[1].lower().lstrip('.')
+aud_ext = os.path.splitext(audio_path)[1].lower().lstrip('.')
+img_mime = f"image/{img_ext}" if img_ext != "jpg" else "image/jpeg"
+aud_mime = f"audio/{aud_ext}" if aud_ext != "mp3" else "audio/mpeg"
+
+print("Submitting to EachLabs Sync v2 Pro...")
+
+# Submit job
+resp = requests.post(
+    "https://api.sync.so/v2/generate",
+    headers={"x-api-key": api_key, "Content-Type": "application/json"},
+    json={
+        "model": "sync-2.0-pro",
+        "input": [
+            {"type": "image", "url": f"data:{img_mime};base64,{img_b64}"},
+            {"type": "audio", "url": f"data:{aud_mime};base64,{aud_b64}"}
+        ],
+        "options": {"output_format": "mp4"}
+    }
+)
+
+if resp.status_code not in (200, 201):
+    print(f"ERROR: {resp.status_code} {resp.text[:300]}")
+    sys.exit(1)
+
+result = resp.json()
+job_id = result.get("id", "")
+print(f"  Job ID: {job_id}")
+
+# Poll for completion
+for i in range(60):
+    time.sleep(5)
+    check = requests.get(
+        f"https://api.sync.so/v2/generate/{job_id}",
+        headers={"x-api-key": api_key}
+    )
+    data = check.json()
+    status = data.get("status", "")
+    if status == "COMPLETED":
+        video_url = data.get("output", [{}])[0].get("url", "")
+        if video_url:
+            vid = requests.get(video_url)
+            os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+            with open(output_path, 'wb') as f:
+                f.write(vid.content)
+            print(f"  Done: {output_path} ({len(vid.content) // 1024}KB)")
+        break
+    elif status == "FAILED":
+        print(f"  FAILED: {data.get('error', 'unknown')}")
+        sys.exit(1)
+    else:
+        print(f"  Polling... ({status})")
+PYEOF
+      ;;
+
+    wan)
+      [ -z "$fal_key" ] && { echo "ERROR: FAL_KEY not set"; exit 1; }
+
+      # Wan 2.6 lip sync via FAL
+      "$PYTHON3" - "$image" "$audio" "$output" "$fal_key" << 'PYEOF'
+import sys, os, json, time, base64, requests
+
+image_path = sys.argv[1]
+audio_path = sys.argv[2]
+output_path = sys.argv[3]
+fal_key = sys.argv[4]
+
+headers = {"Authorization": f"Key {fal_key}", "Content-Type": "application/json"}
+
+# Upload files to FAL
+print("Uploading to FAL...")
+img_resp = requests.post("https://fal.run/fal-ai/file-upload",
+    headers={"Authorization": f"Key {fal_key}"},
+    files={"file": open(image_path, 'rb')})
+img_url = img_resp.json().get("url", "") if img_resp.status_code in (200, 201) else ""
+
+aud_resp = requests.post("https://fal.run/fal-ai/file-upload",
+    headers={"Authorization": f"Key {fal_key}"},
+    files={"file": open(audio_path, 'rb')})
+aud_url = aud_resp.json().get("url", "") if aud_resp.status_code in (200, 201) else ""
+
+if not img_url or not aud_url:
+    print("ERROR: File upload failed")
+    sys.exit(1)
+
+print(f"  Image: {img_url[:60]}...")
+print(f"  Audio: {aud_url[:60]}...")
+
+# Submit to Wan audio-to-lip
+resp = requests.post(
+    "https://queue.fal.run/fal-ai/wan/audio-to-lip",
+    headers=headers,
+    json={"image_url": img_url, "audio_url": aud_url}
+)
+
+if resp.status_code not in (200, 201):
+    print(f"ERROR: {resp.status_code} {resp.text[:200]}")
+    sys.exit(1)
+
+result = resp.json()
+request_id = result.get("request_id", "")
+status_url = result.get("status_url", "")
+print(f"  Request: {request_id}")
+
+# Poll
+for i in range(60):
+    time.sleep(5)
+    check = requests.get(status_url, headers={"Authorization": f"Key {fal_key}"})
+    data = check.json()
+    status = data.get("status", "")
+    if status == "COMPLETED":
+        result_url = status_url.replace("/status", "")
+        final = requests.get(result_url, headers={"Authorization": f"Key {fal_key}"}).json()
+        video_url = final.get("video", {}).get("url", "")
+        if video_url:
+            vid = requests.get(video_url)
+            os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+            with open(output_path, 'wb') as f:
+                f.write(vid.content)
+            print(f"  Done: {output_path} ({len(vid.content) // 1024}KB)")
+        break
+    elif status in ("FAILED", "ERROR"):
+        print(f"  FAILED: {data}")
+        sys.exit(1)
+    print(f"  Polling... ({status})")
+PYEOF
+      ;;
+
+    *)
+      echo "Unknown provider: $provider (use sync or wan)"
+      exit 1
+      ;;
+  esac
 }
 
 # ============================================================

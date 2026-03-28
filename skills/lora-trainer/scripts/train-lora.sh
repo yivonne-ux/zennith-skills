@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # train-lora.sh — LoRA Training Pipeline for Zennith OS
-# Based on timkoda method: 80-120 images → Replicate Flux LoRA → $2 in 20 min
+# Supports FAL.ai (primary) and Replicate (fallback)
+# FAL: fal-ai/flux-lora-fast-training (~$2, ~10-15 min)
+# Replicate: ostris/flux-dev-lora-trainer (~$2, ~20 min)
 #
 # Usage:
 #   train-lora.sh prepare  --input <dir> --output <zip>
 #   train-lora.sh train    --zip <file> --model-name <name> --trigger <word> [options]
-#   train-lora.sh status   --model-name <name>
-#   train-lora.sh generate --model-name <name> --prompt <text> [--strength 0.8]
+#   train-lora.sh status   --request-id <id>
+#   train-lora.sh generate --prompt <text> [--lora-url <url>] [--strength 0.8]
 
 set -euo pipefail
 export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
@@ -17,13 +19,11 @@ OUTPUT_DIR="${OPENCLAW}/workspace/data/lora-models"
 LOG_FILE="${OPENCLAW}/logs/lora-trainer.log"
 PYTHON3="$(command -v python3 2>/dev/null || echo "/usr/bin/python3")"
 
-# Load API token
-if [[ -f "$HOME/.env" ]]; then
-  source "$HOME/.env" 2>/dev/null || true
-fi
-if [[ -f "${OPENCLAW}/.env" ]]; then
-  source "${OPENCLAW}/.env" 2>/dev/null || true
-fi
+# Load API keys
+for envfile in "$HOME/.env" "${OPENCLAW}/.env" "${OPENCLAW}/secrets/fal.env" "${OPENCLAW}/secrets/replicate.env"; do
+  [[ -f "$envfile" ]] && source "$envfile" 2>/dev/null || true
+done
+FAL_KEY="${FAL_KEY:-}"
 REPLICATE_TOKEN="${REPLICATE_API_TOKEN:-}"
 
 mkdir -p "$OUTPUT_DIR" "$(dirname "$LOG_FILE")"
@@ -145,12 +145,108 @@ PYEOF
     [[ -z "$ZIP_FILE" ]] && { echo "ERROR: --zip required"; exit 1; }
     [[ -z "$MODEL_NAME" ]] && { echo "ERROR: --model-name required"; exit 1; }
     [[ -z "$TRIGGER" ]] && { echo "ERROR: --trigger required (unique word like MYSTYLE)"; exit 1; }
-    [[ -z "$REPLICATE_TOKEN" ]] && { echo "ERROR: REPLICATE_API_TOKEN not set. Add to .env or export."; exit 1; }
 
-    log "=== TRAIN LORA ==="
-    log "Model: $MODEL_NAME | Trigger: $TRIGGER | Steps: $STEPS | Rank: $RANK"
+    # FAL is primary, Replicate is fallback
+    if [[ -n "$FAL_KEY" ]]; then
+      log "=== TRAIN LORA (FAL) ==="
+      log "Model: $MODEL_NAME | Trigger: $TRIGGER | Steps: $STEPS | Rank: $RANK"
 
-    "$PYTHON3" - "$ZIP_FILE" "$MODEL_NAME" "$TRIGGER" "$STEPS" "$RANK" "$LEARNING_RATE" "$REPLICATE_TOKEN" "$OUTPUT_DIR" << 'PYEOF'
+      "$PYTHON3" - "$ZIP_FILE" "$MODEL_NAME" "$TRIGGER" "$STEPS" "$RANK" "$FAL_KEY" "$OUTPUT_DIR" << 'PYEOF'
+import sys, os, json, time, base64
+from datetime import datetime
+
+zip_file = sys.argv[1]
+model_name = sys.argv[2]
+trigger = sys.argv[3]
+steps = int(sys.argv[4])
+rank = int(sys.argv[5])
+fal_key = sys.argv[6]
+output_dir = sys.argv[7]
+
+try:
+    import requests
+except ImportError:
+    print("ERROR: pip3 install requests"); sys.exit(1)
+
+headers = {"Authorization": f"Key {fal_key}", "Content-Type": "application/json"}
+
+# Upload images as data URL (FAL accepts zip via URL or base64)
+zip_size = os.path.getsize(zip_file) / (1024 * 1024)
+print(f"Training LoRA via FAL.ai")
+print(f"  ZIP: {zip_file} ({zip_size:.1f}MB)")
+print(f"  Trigger: {trigger} | Steps: {steps} | Rank: {rank}")
+
+# First upload to FAL storage
+print(f"\nUploading to FAL storage...")
+upload_resp = requests.post(
+    "https://fal.run/fal-ai/file-upload",
+    headers={"Authorization": f"Key {fal_key}"},
+    files={"file": (os.path.basename(zip_file), open(zip_file, 'rb'), "application/zip")}
+)
+if upload_resp.status_code in (200, 201):
+    file_url = upload_resp.json().get("url", "")
+    print(f"  Uploaded: {file_url[:80]}...")
+else:
+    # Fallback: use base64 data URI
+    print(f"  Direct upload failed ({upload_resp.status_code}), using data URI...")
+    with open(zip_file, 'rb') as f:
+        b64 = base64.b64encode(f.read()).decode()
+    file_url = f"data:application/zip;base64,{b64}"
+    print(f"  Encoded as data URI ({len(b64) // 1024}KB)")
+
+# Submit training job
+print(f"\nSubmitting training job...")
+train_resp = requests.post(
+    "https://queue.fal.run/fal-ai/flux-lora-fast-training",
+    headers=headers,
+    json={
+        "images_data_url": file_url,
+        "trigger_word": trigger,
+        "steps": steps,
+        "rank": rank,
+        "learning_rate": 0.0004,
+        "is_style": True if rank <= 16 else False,
+        "create_masks": False
+    }
+)
+
+if train_resp.status_code not in (200, 201):
+    print(f"ERROR: {train_resp.status_code} {train_resp.text[:200]}")
+    sys.exit(1)
+
+result = train_resp.json()
+request_id = result.get("request_id", "")
+status_url = result.get("status_url", "")
+
+print(f"\n  Training queued!")
+print(f"  Request ID: {request_id}")
+print(f"  Status URL: {status_url}")
+print(f"  Estimated: 10-15 minutes, ~$2")
+print(f"\n  Check: train-lora.sh status --request-id {request_id}")
+
+# Save info
+info = {
+    "provider": "fal",
+    "model_name": model_name,
+    "request_id": request_id,
+    "status_url": status_url,
+    "trigger": trigger,
+    "steps": steps,
+    "rank": rank,
+    "started": datetime.now().isoformat() + "Z"
+}
+info_file = os.path.join(output_dir, f"{model_name}-training.json")
+os.makedirs(output_dir, exist_ok=True)
+with open(info_file, 'w') as f:
+    json.dump(info, f, indent=2)
+print(f"  Info: {info_file}")
+PYEOF
+
+    elif [[ -n "$REPLICATE_TOKEN" ]]; then
+      log "=== TRAIN LORA (Replicate fallback) ==="
+      log "Model: $MODEL_NAME | Trigger: $TRIGGER | Steps: $STEPS | Rank: $RANK"
+
+      "$PYTHON3" - "$ZIP_FILE" "$MODEL_NAME" "$TRIGGER" "$STEPS" "$RANK" "$LEARNING_RATE" "$REPLICATE_TOKEN" "$OUTPUT_DIR" << 'PYEOF'
 import sys, os, json, subprocess, time
 from datetime import datetime
 
@@ -281,7 +377,6 @@ PYEOF
 
   status)
     [[ -z "$MODEL_NAME" ]] && { echo "ERROR: --model-name required"; exit 1; }
-    [[ -z "$REPLICATE_TOKEN" ]] && { echo "ERROR: REPLICATE_API_TOKEN not set"; exit 1; }
 
     INFO_FILE="${OUTPUT_DIR}/${MODEL_NAME}-training.json"
     if [[ ! -f "$INFO_FILE" ]]; then
@@ -289,38 +384,66 @@ PYEOF
       exit 1
     fi
 
-    "$PYTHON3" - "$INFO_FILE" "$REPLICATE_TOKEN" << 'PYEOF'
+    "$PYTHON3" - "$INFO_FILE" "$FAL_KEY" "$REPLICATE_TOKEN" << 'PYEOF'
 import sys, json, requests
 
 with open(sys.argv[1]) as f:
     info = json.load(f)
 
-token = sys.argv[2]
-training_id = info["training_id"]
+fal_key = sys.argv[2]
+replicate_token = sys.argv[3]
+provider = info.get("provider", "replicate")
 
-resp = requests.get(
-    f"https://api.replicate.com/v1/trainings/{training_id}",
-    headers={"Authorization": f"Bearer {token}"}
-)
+print(f"Model: {info.get('model_name', info.get('model', '?'))}")
+print(f"Trigger: {info['trigger']}")
+print(f"Provider: {provider}")
 
-if resp.status_code == 200:
-    data = resp.json()
-    status = data.get("status")
-    print(f"Model: {info['model']}")
-    print(f"Trigger: {info['trigger']}")
-    print(f"Status: {status}")
-    if status == "succeeded":
-        print(f"  Training complete! Model ready to use.")
-        print(f"  Generate: train-lora.sh generate --model-name {info['model'].split('/')[-1]} --prompt \"{info['trigger']}, your description\"")
-    elif status == "failed":
-        print(f"  Error: {data.get('error', 'unknown')}")
+if provider == "fal":
+    status_url = info.get("status_url", "")
+    if not status_url:
+        request_id = info.get("request_id", "")
+        status_url = f"https://queue.fal.run/fal-ai/flux-lora-fast-training/requests/{request_id}/status"
+    resp = requests.get(status_url, headers={"Authorization": f"Key {fal_key}"})
+    if resp.status_code == 200:
+        data = resp.json()
+        status = data.get("status", "UNKNOWN")
+        print(f"Status: {status}")
+        if status == "COMPLETED":
+            # Get the result
+            result_url = status_url.replace("/status", "")
+            result = requests.get(result_url, headers={"Authorization": f"Key {fal_key}"}).json()
+            lora_url = result.get("diffusers_lora_file", {}).get("url", "")
+            if lora_url:
+                print(f"  LoRA weights: {lora_url}")
+                print(f"  Generate: train-lora.sh generate --prompt \"{info['trigger']}, description\" --lora-url \"{lora_url}\"")
+                # Save lora URL
+                info["lora_url"] = lora_url
+                info["status"] = "completed"
+                with open(sys.argv[1], 'w') as f:
+                    json.dump(info, f, indent=2)
+        elif status == "FAILED":
+            print(f"  Error: {data.get('error', 'unknown')}")
+        else:
+            pos = data.get("queue_position", "?")
+            print(f"  Queue position: {pos}")
     else:
-        logs = data.get("logs", "")
-        if logs:
-            last_lines = logs.strip().split('\n')[-3:]
-            for line in last_lines:
-                print(f"  {line}")
+        print(f"ERROR: {resp.status_code}")
 else:
+    # Replicate fallback
+    training_id = info.get("training_id", "")
+    resp = requests.get(
+        f"https://api.replicate.com/v1/trainings/{training_id}",
+        headers={"Authorization": f"Bearer {replicate_token}"}
+    )
+    if resp.status_code == 200:
+        data = resp.json()
+        status = data.get("status")
+        print(f"Status: {status}")
+        if status == "succeeded":
+            print(f"  Training complete!")
+        elif status == "failed":
+            print(f"  Error: {data.get('error', 'unknown')}")
+    else:
     print(f"ERROR: {resp.status_code} {resp.text}")
 PYEOF
     ;;
