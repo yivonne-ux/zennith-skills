@@ -165,6 +165,7 @@ gen_slide_reveal() {
 
 ###############################################################################
 # TYPE 3: Style Showcase (rapid images + labels — @ohneis652 format)
+# Uses PIL to composite label onto each image, then FFmpeg to stitch
 ###############################################################################
 gen_style_showcase() {
   [[ -z "$IMAGES" ]] && { echo "ERROR: --images required (comma-separated paths)"; exit 1; }
@@ -175,50 +176,103 @@ gen_style_showcase() {
   IFS=',' read -ra IMG_LIST <<< "$IMAGES"
   IFS=',' read -ra LABEL_LIST <<< "$LABELS"
   local count=${#IMG_LIST[@]}
-  local per_image
-  per_image=$(python3 -c "print(round(${DURATION} / ${count}, 2))")
+  local frames_per_image
+  frames_per_image=$(( (DURATION * FPS) / count ))
 
-  log "Generating showcase: ${count} styles in ${DURATION}s..."
+  log "Generating showcase: ${count} styles in ${DURATION}s (${frames_per_image} frames each)..."
 
-  # Generate individual segments then concatenate
-  local concat_list="${OUTPUT_DIR}/concat-list.txt"
-  > "$concat_list"
+  local frames_dir
+  frames_dir=$(mktemp -d "${OPENCLAW}/workspace/data/content/reels/tmp-showcase-XXXXXX")
+  trap "rm -rf '$frames_dir' 2>/dev/null" EXIT
 
+  # Use PIL to composite label onto each image, generate frames
+  local frame_num=0
   for i in "${!IMG_LIST[@]}"; do
     local img="${IMG_LIST[$i]}"
-    local label
-    label=$(echo "${LABEL_LIST[$i]:-Style $((i+1))}" | sed 's/^ *//;s/ *$//' | sed "s/'/\\\\'/g" | sed 's/:/\\:/g')
-    local segment="${OUTPUT_DIR}/seg-${i}.mp4"
+    local label="${LABEL_LIST[$i]:-Style $((i+1))}"
 
-    if [[ ! -f "$img" ]]; then
-      log "WARN: Image not found: $img — using color placeholder"
-      "$FFMPEG" -y \
-        -f lavfi -i "color=c=0x${BG_COLOR}:s=${WIDTH}x${HEIGHT}:d=${per_image}:r=${FPS}" \
-        -vf "drawtext=fontfile=${FONT_IMPACT}:text='${label}':fontsize=96:fontcolor=${FONT_COLOR}:x=(w-text_w)/2:y=(h-text_h)/2" \
-        -c:v libx264 -preset fast -crf 23 -pix_fmt yuv420p \
-        -t "$per_image" "$segment" 2>>"$LOG_FILE"
-    else
-      # Scale image to fill frame + add label overlay
-      "$FFMPEG" -y \
-        -loop 1 -i "$img" \
-        -f lavfi -i "color=c=0x000000@0.5:s=${WIDTH}x${HEIGHT}:d=${per_image}:r=${FPS}" \
-        -filter_complex "[0:v]scale=${WIDTH}:${HEIGHT}:force_original_aspect_ratio=increase,crop=${WIDTH}:${HEIGHT},setpts=PTS-STARTPTS[bg];[bg]drawtext=fontfile=${FONT_IMPACT}:text='${label}':fontsize=80:fontcolor=white:borderw=3:bordercolor=black:x=(w-text_w)/2:y=h*0.15[out]" \
-        -map "[out]" \
-        -c:v libx264 -preset fast -crf 23 -pix_fmt yuv420p \
-        -t "$per_image" "$segment" 2>>"$LOG_FILE"
-    fi
+    # Generate frames for this image via Python/PIL
+    "$PYTHON3" - "$img" "$label" "$frames_per_image" "$frames_dir" "$frame_num" "$BG_COLOR" "${FONT_COLOR/white/FFFFFF}" << 'PYEOF'
+import sys, os, shutil
+try:
+    from PIL import Image, ImageDraw, ImageFont
+except ImportError:
+    sys.exit(1)
 
-    [[ -f "$segment" ]] && echo "file '${segment}'" >> "$concat_list"
+img_path = sys.argv[1]
+label = sys.argv[2]
+num_frames = int(sys.argv[3])
+output_dir = sys.argv[4]
+start_frame = int(sys.argv[5])
+bg_hex = sys.argv[6]
+fg_hex = sys.argv[7]
+
+W, H = 1080, 1920
+
+def hex_to_rgb(h):
+    h = h.lstrip('#')
+    return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+def get_font(size):
+    for f in ["/System/Library/Fonts/Supplemental/Impact.ttf",
+              "/System/Library/Fonts/Supplemental/Verdana Bold.ttf"]:
+        if os.path.exists(f):
+            try: return ImageFont.truetype(f, size)
+            except: continue
+    return ImageFont.load_default()
+
+bg_rgb = hex_to_rgb(bg_hex)
+font = get_font(72)
+
+# Load and resize image, or create placeholder
+if os.path.exists(img_path):
+    src = Image.open(img_path).convert('RGB')
+    # Scale to fill
+    scale = max(W / src.width, H / src.height)
+    src = src.resize((int(src.width * scale), int(src.height * scale)), Image.LANCZOS)
+    # Center crop
+    left = (src.width - W) // 2
+    top = (src.height - H) // 2
+    src = src.crop((left, top, left + W, top + H))
+else:
+    src = Image.new('RGB', (W, H), bg_rgb)
+
+# Add label at top 15%
+draw = ImageDraw.Draw(src)
+bbox = draw.textbbox((0, 0), label, font=font)
+tw = bbox[2] - bbox[0]
+x = (W - tw) // 2
+y = int(H * 0.12)
+# Shadow
+draw.text((x+2, y+2), label, font=font, fill=(0, 0, 0))
+draw.text((x, y), label, font=font, fill=(255, 255, 255))
+
+# Save first frame, copy for rest
+first = f"{output_dir}/frame-{start_frame:05d}.bmp"
+src.save(first)
+for f in range(1, num_frames):
+    shutil.copy2(first, f"{output_dir}/frame-{start_frame + f:05d}.bmp")
+
+print(f"Generated {num_frames} frames for '{label}'")
+PYEOF
+
+    frame_num=$((frame_num + frames_per_image))
   done
 
-  # Concatenate all segments
-  "$FFMPEG" -y \
-    -f concat -safe 0 -i "$concat_list" \
-    -c:v libx264 -preset fast -crf 23 -pix_fmt yuv420p \
-    "$OUTPUT_FILE" 2>>"$LOG_FILE"
+  # Stitch all frames
+  local total_frames
+  total_frames=$(find "$frames_dir" -name "frame-*.bmp" 2>/dev/null | wc -l | tr -d ' ')
 
-  # Cleanup segments
-  rm -f "${OUTPUT_DIR}"/seg-*.mp4 "$concat_list"
+  if [[ "${total_frames:-0}" -gt 0 ]]; then
+    log "Stitching ${total_frames} frames..."
+    "$FFMPEG" -y -framerate "$FPS" \
+      -i "${frames_dir}/frame-%05d.bmp" \
+      -c:v libx264 -preset fast -crf 23 -pix_fmt yuv420p \
+      "$OUTPUT_FILE" 2>>"$LOG_FILE"
+  fi
+
+  rm -rf "$frames_dir"
+  trap - EXIT
 
   [[ -f "$OUTPUT_FILE" ]] && log "Generated: $OUTPUT_FILE ($(wc -c < "$OUTPUT_FILE" | tr -d ' ')b)" || log "ERROR: Failed"
 }
