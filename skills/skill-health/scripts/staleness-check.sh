@@ -97,27 +97,14 @@ check_skill() {
     done <<< "$ref_paths"
   fi
 
-  # ── Layer 3: Security scan (hardcoded credentials) ──
-  local security_patterns=(
-    'sk-[a-zA-Z0-9]{20,}'          # OpenAI API key
-    'AKIA[A-Z0-9]{16}'             # AWS Access Key
-    'ghp_[a-zA-Z0-9]{36}'          # GitHub PAT
-    'gho_[a-zA-Z0-9]{36}'          # GitHub OAuth
-    'xoxb-[0-9]+-[0-9]+-[a-zA-Z0-9]+' # Slack bot token
-    'xoxp-[0-9]+-[0-9]+-[a-zA-Z0-9]+' # Slack user token
-    'AIza[0-9A-Za-z_-]{35}'        # Google API key
-    'ya29\.[0-9A-Za-z_-]+'         # Google OAuth token
-    'EAAz[0-9A-Za-z]+'             # Meta access token
-  )
-
-  for pattern in "${security_patterns[@]}"; do
-    local matches
-    matches=$(grep -rE "$pattern" "$skill_dir" --include="*.sh" --include="*.py" --include="*.md" -l 2>/dev/null | grep -v "\.env" | grep -v "secrets" || true)
-    if [[ -n "$matches" ]]; then
-      SECURITY_ISSUES=$((SECURITY_ISSUES + 1))
-      issues="${issues}  SECURITY: ${skill_name} has hardcoded credential pattern in: $(echo "$matches" | head -1)\n"
-    fi
-  done
+  # ── Layer 3: Security scan (hardcoded credentials) — single combined grep ──
+  local combined_pattern='sk-[a-zA-Z0-9]{20,}|AKIA[A-Z0-9]{16}|ghp_[a-zA-Z0-9]{36}|gho_[a-zA-Z0-9]{36}|xoxb-[0-9]+-[0-9]+-[a-zA-Z0-9]+|xoxp-[0-9]+-[0-9]+-[a-zA-Z0-9]+|AIza[0-9A-Za-z_-]{35}|ya29\.[0-9A-Za-z_-]+|EAAz[0-9A-Za-z]+'
+  local sec_matches
+  sec_matches=$(grep -rE "$combined_pattern" "$skill_dir" --include="*.sh" --include="*.py" --include="*.md" -l 2>/dev/null | grep -v "\.env" | grep -v "secrets" || true)
+  if [[ -n "$sec_matches" ]]; then
+    SECURITY_ISSUES=$((SECURITY_ISSUES + 1))
+    issues="${issues}  SECURITY: ${skill_name} has hardcoded credential pattern in: $(echo "$sec_matches" | head -1)\n"
+  fi
 
   # ── Layer 4: Agent assignment check ──
   local agents_line

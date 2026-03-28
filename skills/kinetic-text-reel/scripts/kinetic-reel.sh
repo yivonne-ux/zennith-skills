@@ -105,21 +105,31 @@ gen_via_pil() {
   local frames_dir
   frames_dir=$(mktemp -d /tmp/kinetic-frames-XXXXXX)
 
+  # Cleanup on exit/error
+  trap "rm -rf '$frames_dir' 2>/dev/null" EXIT
+
   log "Generating frames via PIL (${pil_mode})..."
   "$PYTHON3" "$FRAMES_SCRIPT" "$pil_mode" "$pil_text" "$pil_duration" "$frames_dir" "$BG_COLOR" "${FONT_COLOR/white/FFFFFF}" 2>>"$LOG_FILE"
 
+  # Detect frame format (BMP preferred for speed, PNG fallback)
+  local frame_ext="bmp"
   local frame_count
-  frame_count=$(find "$frames_dir" -name "frame-*.png" 2>/dev/null | wc -l | tr -d ' ')
+  frame_count=$(find "$frames_dir" -name "frame-*.bmp" 2>/dev/null | wc -l | tr -d ' ')
+  if [[ "${frame_count:-0}" -eq 0 ]]; then
+    frame_ext="png"
+    frame_count=$(find "$frames_dir" -name "frame-*.png" 2>/dev/null | wc -l | tr -d ' ')
+  fi
 
-  if [[ "$frame_count" -gt 0 ]]; then
-    log "Stitching ${frame_count} frames into video..."
+  if [[ "${frame_count:-0}" -gt 0 ]]; then
+    log "Stitching ${frame_count} ${frame_ext} frames into video..."
     "$FFMPEG" -y -framerate "$FPS" \
-      -i "${frames_dir}/frame-%05d.png" \
+      -i "${frames_dir}/frame-%05d.${frame_ext}" \
       -c:v libx264 -preset fast -crf 23 -pix_fmt yuv420p \
       "$OUTPUT_FILE" 2>>"$LOG_FILE"
   fi
 
   rm -rf "$frames_dir"
+  trap - EXIT
 
   if [[ -f "$OUTPUT_FILE" ]]; then
     local size

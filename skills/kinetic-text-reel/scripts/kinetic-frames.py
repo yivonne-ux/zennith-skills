@@ -84,7 +84,9 @@ def wrap_text(text, max_chars=25):
 
 
 def gen_word_by_word(text, duration, output_dir, bg_color, font_color):
-    """Generate frames where words appear one at a time."""
+    """Generate frames where words appear one at a time.
+    Optimization: render each unique state ONCE, then copy for duplicate frames."""
+    import shutil
     words = text.split()
     total_frames = duration * FPS
     frames_per_word = max(1, total_frames // len(words))
@@ -94,24 +96,33 @@ def gen_word_by_word(text, duration, output_dir, bg_color, font_color):
 
     frame_num = 0
     for word_idx in range(len(words)):
-        # Show cumulative words
         visible = ' '.join(words[:word_idx + 1])
         wrapped = wrap_text(visible, 20)
 
-        for f in range(frames_per_word):
-            img = Image.new('RGB', (WIDTH, HEIGHT), bg_rgb)
-            draw = ImageDraw.Draw(img)
-            draw_centered_text(draw, wrapped, font, fg_rgb)
-            img.save(f"{output_dir}/frame-{frame_num:05d}.png")
+        # Render unique state ONCE
+        img = Image.new('RGB', (WIDTH, HEIGHT), bg_rgb)
+        draw = ImageDraw.Draw(img)
+        draw_centered_text(draw, wrapped, font, fg_rgb)
+        first_path = f"{output_dir}/frame-{frame_num:05d}.bmp"
+        img.save(first_path)
+        frame_num += 1
+
+        # Copy for remaining frames in this word's duration
+        for f in range(1, frames_per_word):
+            shutil.copy2(first_path, f"{output_dir}/frame-{frame_num:05d}.bmp")
             frame_num += 1
 
-    # Hold final frame for remaining duration
-    while frame_num < total_frames:
+    # Hold final frame — render once, copy rest
+    if frame_num < total_frames:
         img = Image.new('RGB', (WIDTH, HEIGHT), bg_rgb)
         draw = ImageDraw.Draw(img)
         draw_centered_text(draw, wrap_text(text, 20), font, fg_rgb)
-        img.save(f"{output_dir}/frame-{frame_num:05d}.png")
+        first_path = f"{output_dir}/frame-{frame_num:05d}.bmp"
+        img.save(first_path)
         frame_num += 1
+        while frame_num < total_frames:
+            shutil.copy2(first_path, f"{output_dir}/frame-{frame_num:05d}.bmp")
+            frame_num += 1
 
     print(f"Generated {frame_num} frames in {output_dir}")
     return frame_num
@@ -157,32 +168,36 @@ def gen_slide_reveal(text, duration, output_dir, bg_color, font_color):
 
 
 def gen_quote(text, duration, output_dir, bg_color, font_color):
-    """Generate frames for a single quote with subtle animation."""
+    """Generate frames for a single quote with vignette.
+    Optimization: static quote = render once + copy for all frames."""
+    import shutil
     total_frames = duration * FPS
     font = get_font(64)
     bg_rgb = hex_to_rgb(bg_color)
     fg_rgb = hex_to_rgb(font_color)
     wrapped = wrap_text(text, 25)
 
-    for frame_num in range(total_frames):
-        img = Image.new('RGB', (WIDTH, HEIGHT), bg_rgb)
-        draw = ImageDraw.Draw(img)
+    # Render the single frame once
+    img = Image.new('RGB', (WIDTH, HEIGHT), bg_rgb)
+    draw = ImageDraw.Draw(img)
+    draw_centered_text(draw, wrapped, font, fg_rgb)
 
-        # Subtle scale animation (zoom 1.0 -> 1.02 over duration)
-        draw_centered_text(draw, wrapped, font, fg_rgb)
+    # Apply vignette once
+    vignette = Image.new('RGBA', (WIDTH, HEIGHT), (0, 0, 0, 0))
+    vdraw = ImageDraw.Draw(vignette)
+    for edge in range(40):
+        opacity = int(30 * (1 - edge / 40))
+        vdraw.rectangle([edge, edge, WIDTH - edge, HEIGHT - edge],
+                       outline=(0, 0, 0, opacity), width=1)
+    img = img.convert('RGBA')
+    img = Image.alpha_composite(img, vignette)
+    img = img.convert('RGB')
 
-        # Subtle vignette: darken edges with semi-transparent black
-        vignette = Image.new('RGBA', (WIDTH, HEIGHT), (0, 0, 0, 0))
-        vdraw = ImageDraw.Draw(vignette)
-        for edge in range(40):
-            opacity = int(30 * (1 - edge / 40))
-            vdraw.rectangle([edge, edge, WIDTH - edge, HEIGHT - edge],
-                           outline=(0, 0, 0, opacity), width=1)
-        img = img.convert('RGBA')
-        img = Image.alpha_composite(img, vignette)
-        img = img.convert('RGB')
-
-        img.save(f"{output_dir}/frame-{frame_num:05d}.png")
+    # Save first frame, copy for rest (BMP for speed)
+    first_path = f"{output_dir}/frame-00000.bmp"
+    img.save(first_path)
+    for frame_num in range(1, total_frames):
+        shutil.copy2(first_path, f"{output_dir}/frame-{frame_num:05d}.bmp")
 
     print(f"Generated {total_frames} frames in {output_dir}")
     return total_frames
