@@ -1,0 +1,17 @@
+[package]
+name = "stylekingdom/style-kingdom"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[server-dependencies]
+# ProfileStore: install manually from https://github.com/MadStudioRoblox/ProfileStore
+# Place the module in ServerStorage/ProfileStore
+
+[dependencies]
+Knit = "sleitnick/knit@1.6.0"
+Promise = "evaera/promise@4.0.0"
+Signal = "sleitnick/signal@2.0.1"
+Trove = "sleitnick/trove@1.1.0"
+
+[dev-dependencies]

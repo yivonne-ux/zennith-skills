@@ -1,0 +1,75 @@
+{
+    "name": "StyleKingdom",
+    "emitLegacyScripts": false,
+    "tree": {
+        "$className": "DataModel",
+
+        "Workspace": {
+            "$className": "Workspace",
+            "$properties": {
+                "StreamingEnabled": true
+            }
+        },
+
+        "ReplicatedStorage": {
+            "Shared": {
+                "$path": "src/ReplicatedStorage/Shared"
+            },
+            "Remotes": {
+                "$className": "Folder"
+            },
+            "Assets": {
+                "$className": "Folder"
+            },
+            "Packages": {
+                "$path": "Packages"
+            }
+        },
+
+        "ServerScriptService": {
+            "$path": "src/ServerScriptService"
+        },
+
+        "ServerStorage": {
+            "$className": "ServerStorage",
+            "BoutiqueModels": { "$className": "Folder" },
+            "FurnitureModels": { "$className": "Folder" },
+            "NPCModels": { "$className": "Folder" }
+        },
+
+        "StarterGui": {
+            "$className": "StarterGui",
+            "$properties": {
+                "ScreenOrientation": "Sensor"
+            }
+        },
+
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+            "StarterPlayerScripts": {
+                "$path": "src/StarterPlayerScripts"
+            },
+            "StarterCharacterScripts": {
+                "$path": "src/StarterCharacterScripts"
+            }
+        },
+
+        "SoundService": {
+            "$className": "SoundService",
+            "$properties": {
+                "RespectFilteringEnabled": true
+            }
+        },
+
+        "Lighting": {
+            "$className": "Lighting",
+            "$properties": {
+                "Technology": "Future",
+                "Ambient": [0.2, 0.2, 0.2],
+                "Brightness": 2,
+                "ClockTime": 14,
+                "GeographicLatitude": 3.5
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+# Wally packages (installed from registry)
+Packages/
+ServerPackages/
+
+# Rojo output
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+
+# Sourcemap (auto-generated)
+sourcemap.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Rokit
+.rokit/
+
+# Lock files that should be committed are: wally.lock

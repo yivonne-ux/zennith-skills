@@ -1,0 +1,10 @@
+std = "roblox"
+
+[config]
+global_usage = { ignore_pattern = "^__" }
+
+[rules]
+global_usage = "allow"
+unused_variable = "warn"
+shadowing = "warn"
+empty_if = "warn"
