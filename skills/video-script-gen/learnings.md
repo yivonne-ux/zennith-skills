@@ -1,0 +1,2 @@
+# Learnings — video-script-gen
+
