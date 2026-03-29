@@ -89,3 +89,4 @@ agents/main/agent/auth-profiles.json
 workspace-main/.openclaw/
 skills/autoresearch/
 skills/cli-anything/
+.claude/worktrees/
