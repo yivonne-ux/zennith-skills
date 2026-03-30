@@ -66,7 +66,7 @@ Every Pinxin ad with purchases shares this DNA:
 
 ## Notion DB Access
 - DB ID: eb9453da6779419ca72728a83131dbb5
-- Token: [REDACTED — set NOTION_TOKEN env var]
+- Token: [REDACTED - use env var NOTION_API_KEY]
 - Contains: ALL Pinxin ad creatives with headlines, copy, output links, ad set IDs, progress states
 - 28 EGC entries found, all BOFU Shorts type
 

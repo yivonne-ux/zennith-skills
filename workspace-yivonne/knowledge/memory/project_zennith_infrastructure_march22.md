@@ -43,7 +43,7 @@ NEVER: /tmp, Desktop root, random folders
 - Daily: git pull → work → git push
 
 ## Telegram Reporting
-- Bot: @ZennithAdsBot (token: [REDACTED — set TG_BOT_TOKEN env var])
+- Bot: @ZennithAdsBot (token: 8734667533:AAFM5CEuGU5xDUOEoBnHgy529Gk0Hw3MKXU)
 - Chat: 5056806774 (@yivonnehooi)
 - Schedule: 12am, 10am, 3pm, 8pm, 10pm (crontab)
 - Reports: Meta Ads + Shopify + Google Sheet WA sales for Pinxin + Mirra

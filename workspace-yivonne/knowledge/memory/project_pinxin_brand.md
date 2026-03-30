@@ -12,7 +12,7 @@ type: project
 - Working dir: `/Users/yi-vonnehooi/Desktop/BRANDS/Pinxin Vegan/`
 - Brand DNA: `brand-guide/brand-DNA.md`
 - GDrive: `GoogleDrive-love@huemankind.world/My Drive/Pinxin/` (main), also `Knowledge Base/Pinxin-Frozen/` + `Pinxin-Paste/`
-- Notion DB: `eb9453da6779419ca72728a83131dbb5` with API key `REDACTED`
+- Notion DB: `eb9453da6779419ca72728a83131dbb5` with API key `[REDACTED - use env var NOTION_API_KEY]`
 - Products: 18 frozen dishes + 4 paste jars + 4 chilli sauces + satay
 - Palette: PX Green #1C372A + PX Gold #D0AA7F + burgundy #470E23 + browns
 - Fonts: Gotham/Recoleta/Dinot (EN), FZ families + ShangShou + ZaoZiGongFang (CN)

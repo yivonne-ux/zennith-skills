@@ -1,6 +1,6 @@
 ---
-name: Mirra copywriting direction — NOT plant-based
-description: Mirra marketing direction is low calories, lose weight, drop a size. 50+ international menu rotating daily. Never shout "plant-based" as lead message.
+name: Mirra copywriting direction — DIET BENTO, not convenient lunch
+description: "CRITICAL. Mirra = DIET BENTO. NOT convenient lunch bento. Every ad must sell weight loss/body transformation, not meal variety or convenience. Low cal, drop a size, lose weight. Never lead with plant-based OR convenience."
 type: feedback
 ---
 
@@ -8,11 +8,16 @@ type: feedback
 
 User correction: "we dont shout out plant based, our direction is always low calories, lose weight, drop a size way. we have 50+ over international menu, rotating everyday."
 
-### Strategic pillars (what to communicate)
-- Low calorie (under 600kcal)
-- Weight management (lose weight, drop a size, fit into that dress)
-- 50+ international menu options, rotating daily
-- Convenience (delivered, no planning needed)
+### CORE POSITIONING: DIET BENTO (2026-03-22 correction)
+User: "We're not selling convenient lunch bento. We're diet bento."
+This means EVERY ad must lead with the DIET/WEIGHT LOSS outcome.
+Convenience, variety, taste = supporting proof, NEVER the lead.
+
+### Strategic pillars (what to communicate — in priority order)
+1. **DIET RESULT** — lose weight, drop a size, fit into that dress, -4kg (PRIMARY)
+2. **Low calorie** — under 500kcal, the math (PROOF of #1)
+3. **50+ menu** — variety proves it's sustainable (SUPPORT)
+4. **Convenience** — delivered, no planning (NEVER the lead hook)
 
 ### How to say it (brand voice)
 - Girlboss, aspirational, NOT diet culture preachy

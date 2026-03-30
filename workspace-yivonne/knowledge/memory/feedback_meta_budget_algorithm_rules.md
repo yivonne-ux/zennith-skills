@@ -27,7 +27,7 @@ type: feedback
 Formula: **Budget ÷ Ads = min RM30-40/ad/day for MY market** (lower CPM means you need less per ad than US)
 
 ## Token management
-- 60-day exchange via AI Agent app (501769942955037, secret: [REDACTED — set META_APP_SECRET env var])
+- 60-day exchange via AI Agent app (501769942955037, secret: 12949e3c253635e0c70a22ed8300503e)
 - Current token: NEVER EXPIRES (exchanged 2026-03-21)
 - Stored in: `/Users/yi-vonnehooi/Desktop/mirra-workflow/.env`
 - Debug: `debug_token` endpoint with app_id|app_secret as access_token
