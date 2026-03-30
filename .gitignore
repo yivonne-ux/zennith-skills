@@ -88,5 +88,43 @@ agents/main/sessions/
 agents/main/agent/auth-profiles.json
 workspace-main/.openclaw/
 skills/autoresearch/
-skills/cli-anything/
-.claude/worktrees/
+
+# Sensitive files — NEVER commit
+.env
+.meta-token*
+.page_token*
+.shopify-token*
+*.secret
+credentials.json
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Large binary files (use GDrive instead)
+*.mp4
+*.mov
+*.avi
+*.zip
+*.psd
+*.ai
+<<<<<<< Updated upstream
+
+# Sensitive files — NEVER commit
+.meta-token*
+.page_token*
+.shopify-token*
+*.secret
+credentials.json
+
+# macOS
+**/.DS_Store
+
+# Large binary files (use GDrive instead)
+*.mp4
+*.mov
+*.avi
+*.psd
+*.ai
+=======
+>>>>>>> Stashed changes

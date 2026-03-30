@@ -1,0 +1,16 @@
+# Zennith Skills — Code Ownership
+# Each person owns their workspace and projects.
+# Shared areas (intelligence/) are ADD-only.
+
+# Jenn owns
+/workspace-yivonne/ @yivonne-ux
+/projects/apex-meta/ @yivonne-ux
+/brands/ @yivonne-ux
+
+# Tricia owns
+/workspace-tricia/ @tricia-video
+/projects/video-engine/ @tricia-video
+
+# Shared (all can ADD, owner merges)
+/intelligence/ @yivonne-ux
+/skills/ @yivonne-ux
